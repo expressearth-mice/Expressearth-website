@@ -1,0 +1,243 @@
+.destination-management {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #fafafa;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.7rem;
+}
+
+/* Sections */
+.content-section,
+.offer-section,
+.featured-section,
+.why-section,
+.final-cta {
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.content-section p,
+.final-cta p {
+  max-width: 700px;
+  margin: 20px auto;
+  font-size: 1.1rem;
+  color: #666;
+
+  
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 40px;
+  margin-top: 40px;
+}
+@media (max-width: 768px) {
+  .offer-grid {
+    grid-template-columns: 1fr; /* Stack on small screens */
+  }
+}
+
+.offer-card {
+  /* background-color: #fff; */
+  padding: 12px 12px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-in-out;
+  text-align: left;
+}
+
+
+.offer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.icon-wrapper {
+  color: #0d98df  ;
+  margin-bottom: 20px;
+}
+
+.offer-card h4 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.offer-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.featured-section {
+  padding: 40px 20px;
+  background-color:#56ce27  ;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #080808;
+}
+
+.destination-box-group {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.destination-column {
+  flex: 1 1 45%;
+  min-width: 300px;
+}
+
+.column-title {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #0f1011;
+}
+
+.destination-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.destination-card-in {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 15px 20px;
+  min-width: 120px;
+  max-width: 180px;
+  text-align: center;
+  font-weight: 500;
+  color: #2d3436;
+  transition: transform 0.2s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+  background-color: #e3f2fd;
+}
+
+/* Destination Lists */
+.destination-lists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+.destination-lists ul {
+  list-style: none;
+  padding: 0;
+}
+
+.destination-lists li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+/* Why Section */
+.why-section ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.why-section li {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Buttons */
+.cta-button {
+  margin-top: 40px;
+}
+.but-on a {
+  display: inline-block;
+  background-color: #279c03;
+  color: #fff;
+  padding: 0.75rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(37, 132, 170, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.but-on a:hover {
+  background-color: #1c7b02;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(106, 191, 224, 0.4);
+}
+
+.but-on {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+
+.cta-button button {
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  background-color: #3e64ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.cta-button button:hover {
+  background-color: #190396;
+  transform: scale(1.05);
+}
+
+/* Final CTA */
+.final-cta p {
+  margin: 20px auto;
+  font-size: 1.1rem;
+  max-width: 600px;
+  color: #fafafa;
+}

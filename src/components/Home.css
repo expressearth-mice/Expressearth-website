@@ -1,0 +1,840 @@
+/* Global Styles */
+
+body ,html{
+  overflow-x: hidden;
+}
+
+.home-container {
+  
+  font-family: 'Montserrat', sans-serif;
+  color: #080809;
+}
+
+.carousel-image {
+  height: 100vh;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgb(251, 249, 249);
+  z-index: 10;
+  height: 70%;
+  width: 70%;
+  padding: 15px;
+  background-color: rgba(9, 4, 4, 0.3); /* Black with 50% opacity */
+  border-radius: 10px; /* Optional rounded corners */
+}
+
+.carousel-item {
+  position: relative;
+  height: 100vh;
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (max-width: 425px) {
+  .carousel-item {
+    height: 60vh; /* smaller height for mobile */
+  }
+}
+
+.carousel-caption h1,
+.carousel-caption p {
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(83, 83, 83, 0.39); /* Better readability */
+}
+/* .hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index: 10;
+  width: 90%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  max-width: 600px;
+  text-align: center;
+  color: #fff;
+} */
+@media (min-width: 1024px) {
+  .hero-overlay {
+    height: 50%; /* Adjust this value as per your design */
+  }
+}
+/* .hero-overlay {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 900px;
+  text-align: center;
+  color: #fff;
+  margin: 0 auto;
+} */
+
+/* .hero-overlay h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 1rem;
+} */
+
+/* .hero-overlay p {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  margin-bottom: 1.5rem;
+} */
+
+
+.custom-button-link:hover {
+  background-color: #0805be;
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(108, 106, 106, 0.35); /* Enhanced on hover */
+}
+
+.custom-button-link {
+  /* Existing styles... */
+  background-color: rgba(10, 78, 146, 0.9); /* Slightly transparent */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Improves readability */
+}
+
+
+/* Glass Banner */
+.glass-banner {
+  width: 100%;
+  max-width: 100%;
+  margin: 1rem auto;
+  padding: 1rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #0b5197, #cef0f5, #48aeee);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  box-shadow: 0 12px 36px rgba(18, 20, 18, 0.3);
+  color: #011f3a;
+}
+
+.glass-banner h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.glass-banner p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Section Layout */
+.destinations, .services, .testimonials, .contact-cta {
+  padding: 10px 90px;
+  text-align: center;
+}
+
+.view-all{
+  margin-top: 70px;
+ text-align: center;
+}
+
+.travel-banner {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-top: 80px;
+}
+
+@media (min-width: 768px) {
+  .travel-banner {
+    flex-direction: row;
+  }
+}
+
+.travel-image-box {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+@media (min-width: 768px) {
+  .travel-image-box {
+    padding-top: 2.5rem;
+    padding-left: 3rem;
+    width: 50%;
+    /* height: auto; */
+  }
+}
+
+.travel-image-box img {
+  width: 100%;
+  height: 146%;
+  object-fit: cover;
+}
+
+.travel-play-btn {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(10%, 364%);
+  background-color: white;
+  padding: 16px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+}
+
+.travel-play-btn svg {
+  width: 24px;
+  height: 24px;
+  color: #3b82f6;
+}
+
+.travel-content-box {
+  background-color: #0284c7;
+  color: white;
+  padding: 40px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .travel-content-box {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+.travel-callback-text {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.travel-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.travel-subtext {
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.travel-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+
+.travel-stat-item .travel-stat-number {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.travel-stat-label {
+  font-size: 0.9rem;
+}
+
+.stat-icon {
+  font-size: 32px;
+  color: #0a4e92;
+  margin-bottom: 10px;
+}
+
+.destination-grid, .services-grid, .testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+
+.hero-banner {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.2rem;
+  background: #f8f9fa;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.30);
+  width: 90%;
+  margin: -3rem auto 4rem auto; /* Pull up over image */
+  position: relative;
+  z-index: 1;
+  border-radius: 9px;
+}
+.main-heading {
+  font-size: 3rem;
+  letter-spacing: 0.1rem;
+  color: #0d98df;
+  margin-bottom: 0.2rem;
+}
+
+.tag-subtext {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: #272829;
+  line-height: 0.9;
+}
+
+.destination-section {
+  text-align: center;
+  /* margin-top: 3rem; */
+}
+
+.section-title h3 {
+  font-size: 2rem;
+  color: #0d98df;
+  margin-top: 1rem;
+}
+
+.description {
+  max-width: 800px;
+  margin: 1rem auto 2rem;
+  color: #444;
+}
+
+
+/* Destination Cards */
+.destination-card img {
+  width: 100%;
+  border-radius: 10px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.destination-card h3, .service-card h4 {
+  margin-top: 15px;
+}
+.destination-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Service Cards */
+.service-card i {
+  font-size: 2rem;
+  color: #0d98df;
+}
+
+.caption{
+  margin-bottom: 120px;
+}
+
+.captionn{
+  margin-bottom: 160px;
+}
+
+.service-card p {
+  margin-top: 10px;
+}
+
+/* Testimonials */
+.testimonial-card {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-left: 5px solid #0d98df;
+  border-radius: 8px;
+}
+
+.client-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.testimonial-card span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Contact Section */
+.contact-cta {
+  background-color: #0d98df;
+  color: white;
+  padding: 50px 20px;
+  border-radius: 12px;
+}
+
+.contact-cta button:hover {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: white;
+  color: #0d98df;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Scrollable Box */
+.scroll-box {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px 0;
+  scroll-behavior: smooth;
+}
+.subtext {
+  text-align: center;
+}
+.text-center{
+  text-align: center;
+}
+
+/* MICE Card */
+.mice-card {
+  flex: 0 0 auto;
+  min-width: 280px;
+  background-color: #f0f0ff;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 5px solid #0d98df;
+  font-weight: 500;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .hero-section .overlay {
+    padding: 10px;
+  }
+
+  .hero-section button, .contact-cta button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+}
+
+/* FAQ Section */
+.faq-section {
+  background: #f8f9fa;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.faq-section h5 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.faq-section h3{
+  margin-top: 30px;
+}
+.faq-section .faq-item h4 {
+  font-size: 1.25rem; /* Adjust this size as needed */
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+
+.faq-item {
+  margin-bottom: 20px;
+}
+
+
+.faq-item h6 {
+  font-weight: bold;
+}
+
+.faq-item p {
+  margin-top: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Footer */
+.site-footer {
+  background: #0162b5;
+  color: #046ab8;
+  padding: 30px 20px 15px;
+  font-family: 'Segoe UI', sans-serif;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(81, 108, 233, 0.719);
+  box-shadow: 0 -2px 10px #046ab8(0, 0, 0, 0.2);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: 30px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 4rem;
+  padding: 2rem;
+  background-color: #34b34d;
+  color: white;
+}
+
+.footer-about, .footer-links, .footer-services, .footer-newsletter {
+  margin-bottom: 20px;
+}
+.footer-about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+}
+
+.footer-links ul, .footer-services ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.footer-links li, .footer-services li {
+  margin: 8px 0;
+}
+
+.footer-newsletter input {
+  padding: 8px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.footer-newsletter button {
+  padding: 8px 16px;
+  background-color: #046ab8;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.social-icons i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.footer-bottom {
+  grid-column: 1 / -1; /* span all columns */
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.footer-bottom a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  font-size: 28px;
+  width: 56px ;
+  height: 56px ;
+  padding: 0;
+  border-radius: 50%;
+  z-index: 999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Popup Icon */
+.floating-icon {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #0d98df;
+  color: white;
+  font-size: 24px;
+  padding: 14px 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.floating-icon:hover {
+  transform: scale(1.1);
+  background: #046ab8;
+}
+
+/* Custom Button */
+.custom-button-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #046ab8;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button-link:hover {
+  background-color: #0056b3;
+}
+.text-left {
+  flex: 1;
+  min-width: 300px; /* For responsiveness */
+}
+
+.text-right {
+  flex: 1;
+  min-width: 300px;
+}
+.intro-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.text-center font-italic{
+  font-weight: bold;
+
+
+}
+.mice-section {
+  text-align: center;
+  background-color: white;
+  padding: 3rem 2rem; /* Adjusted padding for better spacing */
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem; /* Increased margin for better spacing */
+}
+
+.subtitle, .footer-text {
+  color: #555;
+  margin-bottom: 1.5rem; /* Adjusted margin for spacing */
+}
+
+.mice-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem; /* Adjusted gap between cards */
+  scroll-snap-type: x mandatory;
+  padding: 1.5rem 0; /* Added more space on top and bottom */
+  scrollbar-width: none; /* Firefox */
+}
+
+.mice-slider::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.mice-card {
+  flex: 0 0 auto;
+  width: 200px; /* Adjusted width to match the "Group Size" cards */
+  min-height: 150px; /* Increased height for better readability */
+  background-color: #fff;
+  border-radius: 12px;
+  border: 2px solid #0044ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  scroll-snap-align: start;
+  padding: 1.5rem; /* Increased padding for better content spacing */
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.mice-card:hover {
+  transform: translateY(-5px); /* Hover effect for card */
+}
+
+.icon {
+  font-size: 2.5rem; /* Increased icon size for better visibility */
+  color: #0044ff;
+  margin-bottom: 1rem; /* Increased margin between icon and text */
+}
+
+.card-text {
+  font-size: 0.875rem; /* Slightly smaller text for better fit */
+  color: #555;
+}
+
+.subtext {
+  margin-top: 2rem; /* Adjusted margin for better spacing */
+}
+
+.subtext h6 {
+  color: #666;
+  font-size: 1rem;
+  font-weight: normal;
+}
+/* Case Study Container */
+/* Case Study Container */
+.case-study-container {
+  background: linear-gradient(135deg, #f4f4f9, #e0e7ff); /* Soft gradient background */
+  padding: 2rem 3rem; /* Reduced padding for smaller spacing */
+  border-radius: 20px; /* More subtle rounded corners */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow with less spread */
+  max-width: 75%; /* Reduced max-width for more compact layout */
+  margin: 1.5rem auto; /* Reduced vertical margin */
+  border: 1px solid #e0e7ff; /* Light border to separate the container */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Added transition for hover effects */
+}
+
+.case-study-container:hover {
+  transform: translateY(-5px); /* Slightly lift the container on hover */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Increased shadow effect on hover */
+}
+
+/* Heading */
+h2 {
+  font-size: 1.8rem; /* Reduced font size for a smaller heading */
+  font-family: 'Arial', sans-serif; /* Clean, modern font */
+  color: #2c3e50; /* Darker color for better readability */
+  margin-bottom: 1rem; /* Reduced space below heading */
+  text-transform: uppercase; /* Uppercase to give a more sophisticated look */
+  letter-spacing: 0.8px; /* Reduced spacing between letters */
+}
+
+/* Quote Container */
+.quote-container p {
+  font-size: 1.4rem; /* Smaller font size for the quote */
+  font-style: italic;
+  color: #1a73e8; /* Bold blue color for emphasis */
+  margin-bottom: 1.5rem; /* Reduced space after the quote */
+  line-height: 1.6; /* Reduced line height */
+  font-family: 'Georgia', serif; /* Elegant font for quotes */
+}
+
+/* Primary Text */
+.text-primary {
+  font-weight: 600; /* Semi-bold for strong emphasis */
+  font-size: 1.5rem; /* Smaller font size for primary text */
+  color: #2c3e50;
+}
+
+/* Muted Text */
+.text-muted {
+  color: #7f8c8d; /* Soft gray for muted text */
+  font-size: 1.2rem; /* Smaller font size for muted text */
+}
+
+/* Custom Button Link */
+.custom-button-link {
+  display: inline-block;
+  padding: 0.8rem 2rem; /* Smaller padding for the button */
+  background-color: #1a73e8;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px; /* Reduced border radius for less rounded corners */
+  font-weight: 600;
+  font-size: 1rem; /* Smaller font size for the button text */
+  text-transform: uppercase;
+  letter-spacing: 0.8px; /* Reduced letter-spacing */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+.custom-button-link:hover {
+  background-color: #155ab0;
+  transform: translateY(-3px); /* Slightly lift the button on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+.scrolling-wrapper {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem;
+  gap: 1rem;
+  scroll-behavior: smooth;
+  animation: scroll-left 30s linear infinite;
+}
+
+.blog-card {
+  flex: 0 0 auto;
+  width: 300px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Optional: Hide scrollbar */
+.scrolling-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.scrolling-logos {
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #f4f4f4;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+}
+
+.logo-track {
+  display: inline-block;
+  animation: scroll-left 30s linear infinite;
+}
+
+.logo-track img {
+  height: 50px;
+  margin: 0 25px;
+  vertical-align: middle;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.footer-logo {
+  margin-top: -25px;
+  max-width: 150px;
+  margin-bottom: 10px;
+}

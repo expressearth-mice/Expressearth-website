@@ -1,0 +1,175 @@
+.incentive-travel-container {
+    font-family: 'Arial Nova', 'Montserrat';
+    padding: 2rem;
+    background-color: #f9fafb;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    margin-bottom: 4rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 8rem 2rem;
+    position: relative;
+  }
+  
+  
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .para-section {
+    padding: 40px 20px;
+    background-color: #fff; /* optional */
+    color: #000; /* Ensures text is black */
+  }
+  
+  .para {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero-subtitle, .hero-quote {
+    font-size: 22px;
+    line-height: 1.6;
+    color: #000; /* Black text */
+  }
+  
+  .hero-quote {
+    margin-top: 20px;
+    font-style: italic;
+    font-weight: 600;
+  }
+  
+  
+  .primary-button,
+  .secondary-button {
+    background-color: #279c03;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .primary-button:hover,
+  .secondary-button:hover {
+    background-color: #094c71;
+  }
+  
+  .secondary-button {
+    background-color: white;
+    color: #0E76A8;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #222;
+  }
+  
+  .section-description {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    color: #050505;
+    font-size: 1.2rem;
+  }
+  
+  .offerings-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .offerings-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .offerings-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .offering-card {
+    background-color: #fff;
+    padding: 24px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+    min-height: 34px;
+  }
+  
+  .offering-card:hover {
+    transform: translateY(-5px);
+    color: #279c03;
+  }
+  .offering-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .offering-header svg {
+    font-size: 1.75rem;
+    min-width: 28px;
+    min-height: 28px;
+  }
+  .offering-card h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .offering-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  .link-button {
+    display: inline-block;
+    margin-top: auto;
+    color: #1e40af;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  
+  /* Why Choose Us */
+  .why-choose-us {
+    background-color: #f9fafb;
+    padding: 4rem 0;
+  }
+  
+  .benefits-list {
+    max-width: 700px;
+    margin: 2rem auto;
+    list-style: none;
+    padding: 0;
+    color: #555;
+  }
+
+ .benefits-list li {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  /* Final CTA */
+  .final-cta {
+    background-color: blue;
+    padding: 4rem 0;
+    text-align: center;
+  }
+  

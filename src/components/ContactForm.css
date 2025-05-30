@@ -1,0 +1,65 @@
+.contact-logo-img {
+  max-width: 300px;
+  height: auto;
+  padding: 20px 24px;
+}
+
+.contact-form-wrapper {
+  background-color: #f1f4f7;
+  padding: 0px 0;
+}
+
+.container card{
+  background-color: #0d98df;
+
+}
+.contact-header-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-header-section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #25292c;
+}
+
+.contact-header-section p {
+  font-size: 1rem;
+  color: #0b2013;
+  font-family: Arial;
+  padding: 0px 26px;
+}
+/* .contact-form-container card{
+  background-color: #390f9b;
+} */
+.contact-form-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.05);
+  background-color: #390f9b;
+}
+
+.form-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.submit-button {
+  background-color: #007BFF; /* Change to your desired color */
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Optional: darker on hover */
+}
+

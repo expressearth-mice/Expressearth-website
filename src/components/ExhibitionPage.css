@@ -1,0 +1,150 @@
+.exhibition-page {
+  font-family: 'Arial Nova ', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Hero Section */
+.exhibition-hero-section {
+  background: url('/public/Images/Expressearth website images/Exhibitions-Trade-Shows/people-visiting-trade-show.avif') center center/cover no-repeat;
+  height: 90vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  text-align: center;
+  color: #fff;
+  border-radius: 12px;
+  z-index: 0;
+}
+
+.hero-overlay h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.hero-overlay p {
+  font-size: 20px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  /* padding: 10px 20px; */
+}
+
+/* Intro Section */
+.intro-section {
+  text-align: center;
+}
+
+.intro-section .italic-text {
+  font-style: italic;
+  margin: 20px 0;
+  color: #666;
+}
+
+/* CTA Buttons */
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 28px;
+  background: #0073e6;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.cta-button:hover {
+  background: #15e264;
+}
+
+/* Expertise Section */
+.expertise-section {
+  text-align: center;
+}
+
+.expertise-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.card {
+  background: #f6f8fa;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  color: #0073e6;
+}
+
+.card-icon {
+  font-size: 40px;
+  color: #046ab8;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: #56ce27;
+}
+
+.card p {
+  color: #070707;
+}
+
+.cta-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #046ab8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cta-link:hover {
+  text-decoration: underline;
+}
+
+/* Why Choose Section */
+.why-choose-section {
+  background: #eef5fb;
+  border-radius: 12px;
+  padding: 60px 20px;
+  margin-top: 60px;
+}
+
+.why-choose-section ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.why-choose-section li {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+/* Final CTA */
+.final-cta-section {
+  text-align: center;
+  margin-top: 60px;
+}

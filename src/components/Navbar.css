@@ -1,0 +1,242 @@
+/* ===============================
+   GLASS NAVBAR BASE STYLES
+================================== */
+.glass-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: top 0.4s ease-in-out, opacity 0.3s ease-in-out;
+
+ 
+  background-color: rgba(255, 255, 255, 0.897);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 10px 0;
+
+ 
+  /* background-color: #ffffff;  */
+}
+
+
+/* Push content down below navbar */
+body {
+  padding-top: 55px; /* adjust to match navbar height */
+}
+
+/* Hide on scroll down */
+.glass-navbar.hidden {
+  top: -100px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===============================
+   NAVBAR BRAND + LOGO
+================================== */
+.brand-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+/* ===============================
+   NAV LINKS
+================================== */
+.nav-text {
+  /* color: #ffffff !important; */
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-weight: 0.95rem;
+  margin: 0 0.5rem;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding-bottom: 10px;
+}
+
+.nav-text:hover {
+  color: #8be1fc !important;
+
+}
+
+.nav-text::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #8be1fc;
+  transition: width 0.3s ease;
+}
+
+.my-nav{
+  height: 50px;
+}
+
+.custom-navbar {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  min-height: 40px; /* optional: controls overall height */
+}
+
+.custom-navbar .nav-link {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.9rem; /* optional: reduce font size for compactness */
+}
+
+.custom-navbar .navbar-brand {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 1rem;
+}
+
+
+.nav-text:hover::after,
+.nav-text.active::after {
+  width: 100%;
+}
+
+.nav-text.active {
+  color: #988bfc !important;
+}
+
+/* ===============================
+   SEARCH BAR
+================================== */
+.search-wrapper {
+  max-width: 300px;
+  margin-left: auto;
+  
+}
+
+
+
+.search-input {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid black;
+  color: #000;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+}
+
+.search-input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.btn-outline-glass {
+  color: white;
+  border: 1px solid white;
+  transition: 0.3s ease;
+}
+
+.btn-outline-glass:hover {
+  background-color: white;
+  color: #000;
+}
+
+/* ===============================
+   Responsive Adjustments
+================================== */
+@media (max-width: 992px) {
+  .glass-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .nav-text {
+    margin: 0.3rem ;
+  }
+}
+
+.search-input-wrapper {
+  margin-top: auto;
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: rgb(134, 133, 133);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 9px 9px 9px 30px; /* Add left padding for icon */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.navbar-logo {
+  height: 60px; /* Or any size you want, e.g., 50px, 60px */
+  width: auto;
+}
+
+.navbar {
+  --bs-navbar-brand-padding-y: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.dropdown-menu {
+  transform: translateY(15px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-item.dropdown:hover .dropdown-menu {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    display: block;
+  }
+}
+.dropdown-menu {
+  z-index: 1050; /* Bootstrap's default */
+}
+
+.navbar .dropdown-toggle::after {
+  display: none !important;
+}
+/* Remove Bootstrap caret arrow */
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+/* Optional: clean style */
+.dropdown-menu {
+  border-radius: 0px !;
+  padding: 0.5rem 0;
+  background-color: #fff;
+}
+
+.dropdown-item:hover {
+  background-color: #0162b5;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}

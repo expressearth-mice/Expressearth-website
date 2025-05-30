@@ -1,0 +1,161 @@
+.gifting-page {
+    font-family: 'Poppins', 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.7;
+  }
+    
+  .gifting-hero-section {
+    background-image: url('/public/Images/Expressearth%20website%20images/Gifting/Giftbanner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+  .hero-overlay {
+    text-align: center;
+    background: rgba(253, 252, 252, 0.849);  /* Light white overlay */
+    padding: 40px;
+    border-radius: 12px;
+    color: #333;  /* Dark text for better contrast */
+}
+.hero-overlay h2{
+  color: #fff;
+}
+
+  .intro, .offer-section, .why-choose, .ideal-for, .final-call {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .cta-button {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .cta-button a {
+    background: linear-gradient(135deg, #1707a7, #53a1eb);
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 8px;
+    transition: background 0.3s;
+  }
+  
+  .cta-button a:hover {
+    background: linear-gradient(135deg, #1502bdbe, #245abd);
+  }
+  
+  .offer-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .offer-card {
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .offer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  
+  .offer-card svg {
+    margin-bottom: 15px;
+    color: #2456c0;
+  }
+  
+  .offer-card a {
+    color: #0fd641;
+    font-weight: 600;
+    margin-top: 12px;
+    display: inline-block;
+  }
+  
+  .why-choose ul {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: left;
+  }
+  
+  .why-choose li {
+    margin: 10px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .why-choose li svg {
+    margin-right: 10px;
+    color: #031b86;
+  }
+  
+  .ideal-for ul {
+    text-align: left;
+    max-width: 600px;
+    margin: 20px auto;
+    list-style: disc inside;
+  }
+  
+  .final-call {
+    background: #f9f9f9;
+    padding: 50px 20px;
+    border-radius: 12px;
+  }
+  /* In your external CSS */
+.cloud-shape {
+  background: linear-gradient(145deg, #ffffff, #f0faff);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(173, 216, 230, 0.3);
+  position: relative;
+}
+
+.cloud-shape::before,
+.cloud-shape::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.cloud-shape::before {
+  width: 20px;
+  height: 20px;
+  top: -10px;
+  left: 10px;
+}
+
+.cloud-shape::after {
+  width: 50px;
+  height: 30px;
+  bottom: -10px;
+  right: 15px;
+}
+
+.cloud-badge {
+  background: linear-gradient(135deg, #f0faff, #ffffff);
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cloud-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 123, 255, 0.2);
+}

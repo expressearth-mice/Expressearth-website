@@ -1,0 +1,140 @@
+.destination-section {
+  background-color: #f5faff;
+  text-align: center;
+}
+
+.destination-section h3 {
+  font-size: 1.7rem;
+  color: #0162b5;
+}
+
+/* === Grid for Cards === */
+.destination-grid {
+  display: grid;
+  gap: 30px;
+}
+
+/* === Card Styling === */
+.destination-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* === Overlay Effect === */
+.destination-card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  transition: background 0.3s ease;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.destination-card:hover .overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.destination-card h4 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.destination-card h3 {
+  margin-top: 15px;
+  color: #0162b5;
+}
+
+.destination-card p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
+
+/* === Section Banner Style === */
+.section-heading-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  margin-bottom: 40px;
+  text-align: center;
+  background-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+.banner-text {
+  border: 5px solid rgba(120, 120, 122, 0.3);
+  padding: 40px 60px;
+  border-radius: 16px;
+  background-color: rgba(14, 11, 11, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.banner-text i {
+  font-size: 2rem;
+  color: #050505;
+}
+
+.banner-text h1 {
+  font-size: 2.2rem;
+  margin: 0;
+  color: #f6f6f8;
+  font-weight: bold;
+}
+
+.banner-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: opacity 0.8s ease-in-out;
+  border-radius: 0;
+}
+
+.section-heading-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-text {
+  position: relative;
+  z-index: 2;
+}
+
+.pagination-controls .btn {
+  background-color: #0ebe25;
+}

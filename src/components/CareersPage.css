@@ -1,0 +1,125 @@
+/* General Styles */
+.careers-page {
+  font-family: "Segoe UI", sans-serif;
+  color: #212529;
+  line-height: 1.7;
+}
+
+.careers-hero-section {
+  background-image: url('https://cdn.vectorstock.com/i/500p/11/57/blue-green-ice-mountain-gradient-vector-26161157.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  color: white;
+  text-align: center;
+}
+
+.careers-hero-section h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-text {
+  max-width: 800px;
+  margin: 0 auto 15px;
+  font-size: 1.2rem;
+}
+
+
+/* Explore Careers Section */
+.explore-section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.explore-section ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.explore-section h2 {
+  font-size: 2.2rem;
+}
+
+/* Job Openings Section */
+.job-openings-section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.job-openings-section h3 {
+  font-size: 2rem;
+}
+
+.job-openings-section p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+/* Apply Button */
+.apply-button {
+  margin-top: 20px;
+  background-color: #003366;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.apply-button:hover {
+  background-color: #0056b3;
+}
+
+/* Email Contact Section */
+.email-contact {
+  margin-top: 15px;
+  color: #003366;
+  font-weight: 500;
+}
+
+.email-contact svg {
+  vertical-align: middle;
+}
+
+/* Why Work Section */
+.why-work-section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.why-work-section h3 {
+  font-size: 2rem;
+}
+
+.why-work-section ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+/* Footer Highlight Section */
+.footer-highlight {
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text {
+    font-size: 1rem;
+  }
+
+  .explore-section ul {
+    margin-left: 15px;
+  }
+}

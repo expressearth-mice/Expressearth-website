@@ -1,0 +1,141 @@
+/* General styles */
+.achievement-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.hero-section {
+    position: relative;
+    text-align: center;
+    margin-bottom: 50px;
+    background-image: url('https://img.freepik.com/free-photo/young-women-holding-sports-cup_23-2149044696.jpg?semt=ais_hybrid&w=740');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px; /* Reduced padding to avoid text overlapping with image */
+    color: white;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section p {
+    font-size: 20px;
+    color: #eee;
+    max-width: 700px;
+    margin: 20px auto; /* Ensures proper spacing */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Achievement Cards Grid */
+.achievements-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns in the grid */
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+/* Target the 4th and 5th achievement cards to center them */
+.achievements-list .achievement-card:nth-child(4),
+.achievements-list .achievement-card:nth-child(5) {
+    grid-column: span 3; /* Span across 3 columns instead of 2 for proper centering */
+    justify-self: center; /* Ensure centering */
+    margin-left: 0; /* Optional, if any unintended margins are present */
+}
+
+/* General styling for achievement cards */
+.achievement-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.achievement-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.achievement-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.achievement-card p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Progress Timeline */
+.progress-section {
+    margin-bottom: 50px;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.timeline-item {
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-item span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #007bff;
+}
+
+.timeline-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Call-to-Action Section */
+.cta {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.cta h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.cta button {
+    padding: 15px 40px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta button:hover {
+    background-color: #0056b3;
+}

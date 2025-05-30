@@ -1,0 +1,12 @@
+services:
+  chalk:
+    image: ee-frontend
+    build:
+      context: node_modules/ee-frontend
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 8080:8080
+
+    command: ["node", "--inspect=0.0.0.0:9229", "source"]

@@ -1,0 +1,356 @@
+/* AboutUs.css */
+
+.about-page {
+    background: linear-gradient(-45deg, #0f172a, #6372f5, #f8fafc ,#3b82f6, #548bf8);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #0c0c0c;
+    min-height: 100vh;
+  }
+  
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .partner-logo-small {
+    height: 1.5rem;
+    width: 2.5rem;
+    border-radius: 9999px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    margin: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  }
+  
+  
+  .section-wrapper {
+    padding: 2rem ;
+    background: rgba(255, 255, 255, 0.05); /* subtle contrast */
+    border-radius: 1rem;
+    backdrop-filter: blur(4px);
+    margin: 2rem auto;
+    max-width: 1400px;
+  }
+  
+  .section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-left:20px;
+    padding-right:20px;
+  }
+  
+  .section-title h2 {
+    
+    font-size: 1.76rem;
+    font-weight: 800;
+    color: #1f2937;
+  }
+
+  .my-title{
+    font-family: "Arial-Nova", "montserrat";
+    font-style: italic;
+  }
+
+
+
+  .section-titl {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-left:20px;
+    padding-right:20px;
+  }
+  
+  .section-titl h2 {
+    
+    font-size: 1.86rem;
+    font-weight: 800;
+    color: #1f2937;
+  }
+
+  .my-titl{
+    font-family: "Arial-Nova", "montserrat";
+    
+  }
+
+
+  /* font-family: "Lato", sans-serif;
+  font-size: 2.75 rem;
+  font-size: 25px; 
+  font-weight: 700;
+  font-style: italic; */
+  
+  .section-title p {
+    font-size: 1.125rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 1rem auto 0;
+  }
+  
+  .our-story-section {
+    background: linear-gradient(to bottom right, #f9fafc, #f8fafc);
+  }
+  
+  .story-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 768px) {
+    .story-content {
+      flex-direction: row;
+      align-items: start;
+    }
+  }
+  
+  .story-text {
+    flex: 1;
+    font-size: 1.125rem;
+    color: #080808;
+    line-height: 1.75rem;
+  }
+  
+  .story-img {
+    width: 50%;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    /* margin-top: 3rem; */
+  }
+  
+  .features-grid {
+    display: grid;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 640px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .feature-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon-wrapper svg {
+    width: 40px;
+    height: 40px;
+    color: #1ae635;
+    margin: 0 auto 1rem;
+  }
+  
+  .team-section {
+    background: linear-gradient(to bottom right, #f1f5f9, #ffffff);
+  }
+  
+  .team-grid {
+    display: grid;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 640px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .team-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  .team-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .team-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .team-img {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 60%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+  
+  .values-grid {
+    display: grid;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 2rem auto 0;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  
+  .value-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .value-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .global-expertise-section {
+    background: linear-gradient(to bottom right, #e0f2fe, #f0f9ff);
+  }
+  
+  .region-subtext {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    font-size: 1.125rem;
+    color: #374151;
+  }
+  
+  .region-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .region-btn {
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: none;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .region-btn:hover {
+    background: #1d4ed8;
+  }
+
+  .about-us{
+    font-size: 1.125rem; /* Slightly larger for readability */
+  line-height: 1.8; /* Better spacing between lines */
+  color: #4a4a4a; /* Darker text for readability */
+  margin-bottom: 1.5rem; /* Space between paragraphs */
+  text-align: justify; /* Clean text alignment */
+  
+  
+  letter-spacing: 0.3px;
+  max-width: 800px; /* Limit width for better readability */
+  margin-left: auto;
+  margin-right: auto;
+
+  font-family: "Merriweather", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: italic;
+
+  }
+  
+  .seo-text {
+    font-size: 1.1rem;
+    color: #333;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #0a4e92;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #063970;
+    text-decoration: none;
+  }
+
+  .intro-text {
+    font-size: 1.1rem;
+    color: #444;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .team-horizontal-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+  }
+  
+  .team-horizontal-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .team-horizontal-scroll::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .team-card {
+    flex: 0 0 auto;
+    width: 400px;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .team-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .team-img {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+  }
+  

@@ -1,0 +1,44 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build Docker image'
+    args: [
+      'build', 
+      '-t', 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
+      '.'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push Docker image'
+    args: [
+      'push',
+      'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+    ]
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy to Cloud Run'
+    entrypoint: 'gcloud'
+    args: 
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}'
+      - '--image'
+      - 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+        
+
+substitutions:
+  _PROJECT_ID: 'your-gcp-project-id' 
+  _IMAGE_NAME: 'express-earth-frontend-dev'
+  _SERVICE_NAME: 'express-earth-frontend-service'
+  _REGION: 'asia-south2'
+
+
+images:
+  - 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+  
+options:
+  logging: CLOUD_LOGGING_ONLY

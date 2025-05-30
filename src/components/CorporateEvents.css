@@ -1,0 +1,250 @@
+.corporate-events-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  background-color: #f9f9f9;
+  line-height: 1.6;
+}
+.text-cen{
+  text-align: center;
+}
+
+/* Hero Section */
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  padding: 120px 20px 80px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-section h4 {
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.cta-button {
+  background-color: #0d98df;
+  color: #fff;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0da80d;
+}
+
+/* Section Titles */
+section h2 {
+  font-size: 2rem;
+  /* margin: 50px 0 20px; */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+/* Base grid settings */
+.services-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: stretch;
+}
+
+/* Styling for individual service items */
+.service-item {
+  background: #ffffff;
+  padding: 24px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* Hover effect for service items */
+.service-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Styling for icons within the service item */
+.service-icon {
+  margin-bottom: 12px;
+  color: #279c03;
+}
+
+/* Title styling */
+.service-item h3 {
+  font-size: 1.2rem;
+  margin: 12px 0 10px;
+  min-height: 48px; /* Keeps heading height uniform */
+}
+
+/* Paragraph styling */
+.service-item p {
+  font-size: 0.95rem;
+  color: #555;
+  flex-grow: 1; /* Takes available vertical space */
+  margin-bottom: 16px;
+}
+
+/* Styling for call-to-action link */
+.cta-link {
+  text-decoration: none;
+  color: #0d98df;
+  font-weight: 600;
+  margin-top: auto; /* Push button to the bottom */
+  display: inline-block;
+}
+
+/* Hover effect for cta-link */
+.cta-link:hover {
+  color: #0d98df;
+}
+
+/* Adjust grid layout for medium screens and above */
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  }
+
+  /* Position last two items on the second row, centered under the first three */
+  .services-grid .service-item:nth-child(4),
+  .services-grid .service-item:nth-child(5) {
+    grid-column: span 1; /* They will each occupy one column */
+  }
+
+  .services-grid .service-item:nth-child(4) {
+    grid-column: 1 / span 1; /* The 4th item goes to the first column */
+  }
+  
+  .services-grid .service-item:nth-child(5) {
+    grid-column: 3 / span 1; /* The 5th item goes to the third column */
+  }
+}
+
+
+/* Paragraphs */
+/* section p {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  font-size: 1.05rem;
+  padding: 0 20px;
+  text-align: center;
+} */
+
+/* Signature Services */
+.signature-services {
+  padding: 4rem 2rem;
+  background-color: #f9fafb;
+  text-align: center;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+  padding: 0 20px;
+}
+
+.service-item {
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.service-icon {
+  color: #0d98df;
+  margin-bottom: 15px;
+}
+
+.service-item h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.service-item p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.cta-link {
+  text-decoration: none;
+  color: #0d98df;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.cta-link:hover {
+  color: #1de60b;
+}
+
+/* Why Choose Us Section */
+.why-choose-us {
+  background-color: #f4f4f4;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.why-choose-us ul {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  text-align: left;
+}
+
+.why-choose-us li {
+  padding: 12px 0;
+  font-size: 1.05rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.why-choose-us li strong {
+  color: #333;
+}
+
+/* Final CTA Section */
+.final-cta {
+  background-color: #0162b5;
+  color: #fff;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.final-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.final-cta p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 30px;
+}

@@ -14,7 +14,7 @@ const PopupForm = ({ onClose }) => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -39,57 +39,67 @@ const PopupForm = ({ onClose }) => {
     return newErrors;
   };
 
+  const sanitize = (value) => value?.trim() === '' ? null : value;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-  
+
     setLoading(true);
     setErrorMessage('');
-  
+
+    const formattedFormData = {
+      full_name: sanitize(formData.full_name),
+      email: sanitize(formData.email),
+      phone: sanitize(formData.phone),
+      company_name: sanitize(type === 'company' ? formData.company_name : null),
+      event_date: null,
+      event_type: 'Other',
+      type: type,
+    };
+
+    console.log("Submitting:", formattedFormData); // For debugging
+
     try {
-      const formattedFormData = {
-        ...formData,
-        event_date: null, // No event date for the popup form
-        event_type: 'Other', // Set a default value or include it as per your requirements
-      };
-  
-      const response = await axios.post("https://express-earth-backend-service-929452209573.asia-south2.run.app/api/contact/", formattedFormData);
-  
-      if (response && response.data) {
-        // Check for success using multiple possible response formats
-        if (response.data.success && typeof response.data.success === "string") {
-          setSubmitted(true);
-          setFormData({
-            full_name: '',
-            email: '',
-            phone: '',
-            company_name: '',
-          });
-          setErrors({});
-          setErrorMessage('');
-        } else {
-          setErrorMessage(response.data.error || "Failed to send message. Please try again.");
+      const response = await axios.post(
+        "https://express-earth-backend-service-929452209573.asia-south2.run.app/api/contact/",
+        formattedFormData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-        
+      );
+
+      if (response?.data?.success) {
+        setSubmitted(true);
+        setFormData({
+          full_name: '',
+          email: '',
+          phone: '',
+          company_name: '',
+        });
+        setErrors({});
+        setErrorMessage('');
       } else {
-        setErrorMessage("Unexpected response format. Please try again.");
+        setErrorMessage(response.data.error || "Failed to send message. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error.response ? error.response.data : error);
+      console.error("Error:", error.response?.data || error.message);
       setErrorMessage("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-  
+
   const handleDismiss = () => {
     setSubmitted(false);
-    onClose(); // Close the popup form after submission
+    onClose();
   };
 
   return (
@@ -97,14 +107,14 @@ const PopupForm = ({ onClose }) => {
       <div className="popup-form-box">
         <button className="close-btn" onClick={onClose}>×</button>
         <h3>Get in Touch</h3>
-        
+
         {submitted && (
           <div className="alert alert-success">
             <span>Thank you for reaching out! Our team will connect with you shortly.</span>
             <button onClick={handleDismiss}>Close</button>
           </div>
         )}
-        
+
         {errorMessage && (
           <div className="alert alert-danger">
             <strong>Error: </strong> {errorMessage}
@@ -118,7 +128,6 @@ const PopupForm = ({ onClose }) => {
             placeholder="Full Name"
             value={formData.full_name}
             onChange={handleChange}
-            required
           />
           {errors.full_name && <small className="text-danger">{errors.full_name}</small>}
 
@@ -128,7 +137,6 @@ const PopupForm = ({ onClose }) => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            required
           />
           {errors.email && <small className="text-danger">{errors.email}</small>}
 
@@ -138,7 +146,6 @@ const PopupForm = ({ onClose }) => {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
-            required
           />
           {errors.phone && <small className="text-danger">{errors.phone}</small>}
 

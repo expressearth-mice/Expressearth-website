@@ -58,7 +58,7 @@ const PopupForm = ({ onClose }) => {
         event_type: 'Other', // Set a default value or include it as per your requirements
       };
   
-      const response = await axios.post("https://express-earth-backend-service-929452209573.asia-south2.run.app/contact/", formattedFormData);
+      const response = await axios.post("https://express-earth-backend-service-929452209573.asia-south2.run.app/api/contact/", formattedFormData);
   
       if (response && response.data) {
         // Check for success using multiple possible response formats

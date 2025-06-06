@@ -64,7 +64,7 @@ const Footer = () => {
               With 9+ years of experience, ExpressEarth MICE is your trusted partner
               for corporate events, conferences, incentives, and seamless global travel.
             </p>
-            <p><i className="fas fa-phone-alt"></i> +91-9990351222 <br />
+            <p><i className="fas fa-phone-alt"></i> +91-92660 56660 <br />
               <i className="fas fa-envelope"></i> enquiry@expressearth.com</p>
             <p><i className="fas fa-map-marker-alt"></i> 22, Ground Floor, Vipul Trade Center, Sector 48, Gurugram</p>
             <div className="social-icons">

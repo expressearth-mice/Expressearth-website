@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import axiosInstance from "../api/axios";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/categories/")
+    axiosInstance.get("/api/categories/")
       .then(res => setCategories(res.data))
       .catch(err => console.error(err));
   }, []);

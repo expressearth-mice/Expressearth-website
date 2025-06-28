@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import axiosInstance from "../api/axios";
 
 
 const BlogDetails = () => {
@@ -14,7 +15,7 @@ const BlogDetails = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/posts/${title}/`);
+        const res = await axiosInstance.get(`/api/posts/${title}/`);
         setBlog(res.data);
       } catch (error) {
         console.error("Error fetching post:", error);

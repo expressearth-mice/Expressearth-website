@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./CaseStudyDetails.css";
 import { Link } from "react-router-dom"; // For Link to other blog or destination pages
+import axiosInstance from "../api/axios";
 
 const CaseStudyDetail = () => {
   const { id } = useParams(); // Get the case study ID from the URL parameter
@@ -15,7 +16,7 @@ const CaseStudyDetail = () => {
     // Fetch case study details
     const fetchCaseStudy = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/case-studies/${id}/`);
+        const response = await axiosInstance.get(`/api/case-studies/${id}/`);
         setCaseStudy(response.data);
       } catch (error) {
         console.error("Error fetching case study:", error);
@@ -25,7 +26,7 @@ const CaseStudyDetail = () => {
     // Fetch recent posts
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/posts/");
+        const response = await axiosInstance.get("/api/posts/");
         setRecentPosts(response.data.slice(0, 5)); // Limit to 5 recent posts
       } catch (error) {
         console.error("Error fetching recent posts:", error);
@@ -35,7 +36,7 @@ const CaseStudyDetail = () => {
     // Fetch destinations
     const fetchDestinations = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/destinations/");
+        const response = await axiosInstance.get("/api/destinations/");
         setDestinations(response.data.slice(0, 5)); // Limit to 5 destinations
       } catch (error) {
         console.error("Error fetching destinations:", error);

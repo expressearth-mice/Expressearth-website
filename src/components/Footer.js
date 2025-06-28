@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import axiosInstance from '../api/axios';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -14,8 +15,7 @@ const Footer = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/subscribe/', {
-        method: 'POST',
+      const response = await axiosInstance.post('/api/subscribe/', {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });

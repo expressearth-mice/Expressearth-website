@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useContext } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import {
@@ -9,6 +9,7 @@ import {
   FaHeading,
   FaAlignLeft,
 } from "react-icons/fa";
+import axiosInstance from "../api/axios";
 
 const CreateDestination = () => {
   const [formData, setFormData] = useState({
@@ -28,8 +29,8 @@ const CreateDestination = () => {
   const { authTokens } = useContext(AuthContext); 
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/categories/")
+    axiosInstance
+      .get("/api/categories/")
       .then((res) => setCategories(res.data))
       .catch((err) => {
         console.error(err);
@@ -64,7 +65,7 @@ const CreateDestination = () => {
     });
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/destinations/", data, {
+      await axiosInstance.post("/api/destinations/", data, {
         headers: {
           Authorization: `Bearer ${authTokens?.access}`, 
           "Content-Type": "multipart/form-data",

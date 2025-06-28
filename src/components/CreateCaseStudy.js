@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { AuthContext } from "../context/AuthContext";
+import axiosInstance from "../api/axios";
 
 const bgImage = process.env.PUBLIC_URL + "/Images/bg2.jpg";
 
@@ -17,7 +18,7 @@ function CreateCaseStudy() {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/destinations/").then((res) => {
+    axiosInstance.get("/api/destinations/").then((res) => {
       setDestinations(res.data);
       if (res.data.length > 0) {
         setFormData((prev) => ({ ...prev, destination: res.data[0].id }));

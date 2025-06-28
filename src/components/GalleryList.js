@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../api/axios";
 
 const GalleryList = () => {
   const [galleryItems, setGalleryItems] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/gallery/")
+    axiosInstance.get("/api/gallery/")
       .then(res => setGalleryItems(res.data))
       .catch(err => console.error(err));
   }, []);

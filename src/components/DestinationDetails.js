@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import axiosInstance from "../api/axios";
 
 const hardcodedDestinations = [
   {
@@ -26,8 +27,8 @@ const DestinationDetails = () => {
   const { name: slug } = useParams(); // now 'slug' is the URL param
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/destinations/${slug}/`)
+    axiosInstance
+      .get(`/api/destinations/${slug}/`)
       .then((response) => {
         setDestination(response.data);
         setLoading(false);
@@ -42,7 +43,7 @@ const DestinationDetails = () => {
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/posts/");
+        const response = await axiosInstance.get("/api/posts/");
         const sorted = response.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
         setRecentPosts(sorted.slice(0, 4));
       } catch (error) {

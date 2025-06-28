@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
 import "./ContactForm.css";
+import axiosInstance from "../api/axios";
 
 const ContactForm = () => {
   const navigate = useNavigate();
@@ -84,7 +85,7 @@ const ContactForm = () => {
         captcha: captchaValue,  // Include CAPTCHA value
       };
 
-      const response = await axios.post("http://localhost:8000/api/contact/", formattedFormData);
+      const response = await axiosInstance.post("/api/contact/", formattedFormData);
 
       if (response && response.data) {
         if (response.data.success && typeof response.data.success === "string") {

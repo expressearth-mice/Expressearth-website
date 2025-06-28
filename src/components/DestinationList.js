@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../api/axios";
+import config from "../config/config";
 
 const DestinationList = () => {
   const [destinations, setDestinations] = useState([]);
@@ -9,7 +11,7 @@ const DestinationList = () => {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/destinations/");
+        const response = await axiosInstance.get("/api/destinations/");
         console.log(response.data);  // Log the response to inspect the structure
         setDestinations(response.data);
       } catch (err) {
@@ -33,7 +35,7 @@ const DestinationList = () => {
           <p>{destination.description}</p>
           {/* Handle image path and fallback */}
           <img 
-            src={`http://127.0.0.1:8000${destination.image || '/media/default-image.jpg'}`} 
+            src={`${config.BASE_URL}${destination.image || '/media/default-image.jpg'}`} 
             alt={destination.name} 
           />
           {/* Handle video URL if available */}

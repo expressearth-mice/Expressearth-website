@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Gallery.css";
+import axiosInstance from "../api/axios";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+// const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 function Gallery() {
   const hardcodedData = [
@@ -42,8 +43,8 @@ function Gallery() {
   const itemsPerPage = 6;
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/api/gallery/`)
+    axiosInstance
+      .get(`/api/gallery/`)
       .then((response) => {
         const sorted = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setApiData(sorted);

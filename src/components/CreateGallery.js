@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; // Ensure correct path
+import axiosInstance from "../api/axios";
 
 function CreateGallery() {
   const [title, setTitle] = useState("");
@@ -24,7 +25,7 @@ function CreateGallery() {
     formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:8000/api/gallery/", formData, {
+      await axiosInstance.post("/api/gallery/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${authTokens?.access}`, // ⬅️ Adjust token usage

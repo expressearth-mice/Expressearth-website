@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import axiosInstance from "../api/axios";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
@@ -19,8 +20,8 @@ const CreateCategory = () => {
     }
 
     try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/categories/",
+      await axiosInstance.post(
+        "/api/categories/",
         { name },
         {
           headers: {

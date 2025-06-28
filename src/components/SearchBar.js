@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
+import config from '../config/config';
 const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -14,9 +14,9 @@ const SearchBar = () => {
       setLoading(true);
       try {
         const [blogsRes, casesRes, destsRes] = await Promise.all([
-          fetch('http://127.0.0.1:8000/api/posts/'),
-          fetch('http://127.0.0.1:8000/api/casestudies/'),
-          fetch('http://127.0.0.1:8000/api/destinations/'),
+          fetch(`${config.BASE_URL}/api/posts/`),
+          fetch(`${config.BASE_URL}/api/casestudies/`),
+          fetch(`${config.BASE_URL}/api/destinations/`),
         ]);
 
         const blogs = await blogsRes.json();

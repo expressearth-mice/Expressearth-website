@@ -94,9 +94,8 @@
 // };
 
 // export default BlogPosts;
-
+import axiosInstance from "./api/axios";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 
 function BlogPost() {
@@ -107,11 +106,11 @@ function BlogPost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/posts/?title=${encodeURIComponent(title)}`);
+        const response = await axiosInstance.get(`/api/posts/?title=${encodeURIComponent(title)}`);
         const data = response.data;
 
         if (data.length > 0) {
-          setPost(data[0]); // assuming titles are unique
+          setPost(data[0]); 
         }
         setLoading(false);
       } catch (error) {

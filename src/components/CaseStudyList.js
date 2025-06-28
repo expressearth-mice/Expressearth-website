@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "./CaseStudyList.css";
 import { Link } from "react-router-dom";
+import axiosInstance from "../api/axios";
 
 const CaseStudyList = () => {
   const [caseStudies, setCaseStudies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/case-studies/")
+    axiosInstance
+      .get("/api/case-studies/")
       .then((res) => {
         setCaseStudies(res.data);
         setLoading(false);

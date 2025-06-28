@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { AuthContext } from "../context/AuthContext";
+import axiosInstance from "../api/axios";
 
 const bgImage = process.env.PUBLIC_URL + "/Images/bg2.jpg";
 
@@ -41,7 +42,7 @@ function CreatePost() {
     data.append("video_url", formData.video_url);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/posts/", data, {
+      const res = await axiosInstance.post("/api/posts/", data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${authTokens?.access}`,

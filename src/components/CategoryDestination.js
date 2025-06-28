@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
+import axiosInstance from '../api/axios';
 const CategoryDestinations = () => {
   const { slug } = useParams();
   const [destinations, setDestinations] = useState([]);
@@ -13,7 +13,7 @@ const CategoryDestinations = () => {
         // Ensure slug is formatted correctly for backend (replace spaces with hyphens)
         const formattedSlug = slug.trim().toLowerCase().replace(/\s+/g, '-');
 
-        const res = await fetch(`http://127.0.0.1:8000/api/destinations/?category=${encodeURIComponent(formattedSlug)}`);
+        const res = await axiosInstance.get(`/api/destinations/?category=${encodeURIComponent(formattedSlug)}`);
         const data = await res.json();
         setDestinations(data);
       } catch (err) {

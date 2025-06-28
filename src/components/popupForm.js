@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './popupForm.css';
+import axiosInstance from '../api/axios';
 
 const PopupForm = ({ onClose }) => {
   const [type, setType] = useState('company');
@@ -66,8 +67,8 @@ const PopupForm = ({ onClose }) => {
     console.log("Submitting:", formattedFormData); // For debugging
 
     try {
-      const response = await axios.post(
-        "https://express-earth-backend-service-929452209573.asia-south2.run.app/api/contact/",
+      const response = await axiosInstance.post(
+        "/api/contact/",
         formattedFormData,
         {
           headers: {

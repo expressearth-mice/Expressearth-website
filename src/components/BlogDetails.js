@@ -24,7 +24,7 @@ const BlogDetails = () => {
 
     const fetchRecentPosts = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/api/posts/");
+        const res = await axiosInstance.get("/api/posts/");
         setPosts(res.data.results || res.data); // use `.results` if using pagination
       } catch (error) {
         console.error("Error fetching recent posts:", error);

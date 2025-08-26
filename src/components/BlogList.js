@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "../api/axios";
+import axiosInstance from "../api/axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "./BlogList.css";
@@ -15,7 +15,7 @@ function BlogList() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/posts/");
+        const response = await axiosInstance.get("/api/posts/");
         const sortedPosts = response.data.sort(
           (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
         );

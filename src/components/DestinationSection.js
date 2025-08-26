@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import axiosInstance from "../api/axios";
 import "./DestinationSection.css";
 
 const hardcodedDestinations = [
@@ -29,8 +30,8 @@ const DestinationSection = () => {
   const itemsPerPage = 9;
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/destinations/")
+    axiosInstance
+      .get("/api/destinations/")
       .then((res) => setDestinations([...hardcodedDestinations, ...res.data]))
       .catch((error) => {
         console.error("Error fetching destinations:", error);

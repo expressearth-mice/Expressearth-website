@@ -5,13 +5,13 @@ const config = {
     BASE_URL: 'https://express-earth-backend-service-929452209573.asia-south2.run.app',
   },
   qa: {
-    BASE_URL: 'https://qa.api.example.com/api',
+    BASE_URL: 'https://express-earth-backend-service-929452209573.asia-south2.run.app',
   },
   stage: {
-    BASE_URL: 'https://stage.api.example.com/api',
+    BASE_URL: 'https://express-earth-backend-service-929452209573.asia-south2.run.app',
   },
   prod: {
-    BASE_URL: 'https://api.example.com/api',
+    BASE_URL: 'https://express-earth-backend-service-929452209573.asia-south2.run.app',
   },
 };
 if (!config[ENV]) {

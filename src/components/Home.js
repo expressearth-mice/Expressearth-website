@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import PopupForm from './popupForm';
-import axios from "../api/axios";
+import axiosInstance from "../api/axios";
 
 
 const Home = () => {
@@ -30,7 +30,7 @@ const Home = () => {
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/posts/");
+        const response = await axiosInstance.get("/api/posts/");
         const sorted = response.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
         setRecentPosts(sorted.slice(0, 4));
       } catch (error) {

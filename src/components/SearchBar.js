@@ -13,9 +13,10 @@ const SearchBar = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        //console.log("config.BASE_URL", config.BASE_URL)
         const [blogsRes, casesRes, destsRes] = await Promise.all([
           fetch(`${config.BASE_URL}/api/posts/`),
-          fetch(`${config.BASE_URL}/api/casestudies/`),
+          fetch(`${config.BASE_URL}/api/case-studies/`),
           fetch(`${config.BASE_URL}/api/destinations/`),
         ]);
 

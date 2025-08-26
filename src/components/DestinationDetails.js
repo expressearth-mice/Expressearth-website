@@ -59,7 +59,7 @@ const DestinationDetails = () => {
     // Fetch destinations from the backend
     const fetchDestination = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/destinations/");
+        const response = await axiosInstance.get("/api/destinations/");
         const found = response.data.find((d) => d.name.toLowerCase() === decodedName.toLowerCase());
         if (found) {
           setDestination(found);

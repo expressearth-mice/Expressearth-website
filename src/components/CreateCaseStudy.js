@@ -51,7 +51,7 @@ function CreateCaseStudy() {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/case-studies/", data, {
+      await axiosInstance.post("/api/case-studies/", data, {
         headers: {
           Authorization: `Bearer ${authTokens.access}`,
         },

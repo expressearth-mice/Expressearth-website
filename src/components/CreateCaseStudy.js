@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axiosInstance from "../api/axios";
 
@@ -10,7 +11,8 @@ const bgImage = process.env.PUBLIC_URL + "/Images/bg2.jpg";
 function CreateCaseStudy() {
   const { authTokens } = useContext(AuthContext);
   const [destinations, setDestinations] = useState([]);
-  const [formData, setFormData] = useState({
+  const navigate=useNavigate();
+   const [formData, setFormData] = useState({
     name: "",
     comment: "",
     image: null,
@@ -42,6 +44,7 @@ function CreateCaseStudy() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = new FormData();
     data.append("name", formData.name);
     data.append("comment", formData.comment);
@@ -54,6 +57,7 @@ function CreateCaseStudy() {
       await axiosInstance.post("/api/case-studies/", data, {
         headers: {
           Authorization: `Bearer ${authTokens.access}`,
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -64,6 +68,7 @@ function CreateCaseStudy() {
         image: null,
         destination: destinations.length > 0 ? destinations[0].id : "",
       });
+      setTimeout(() => navigate("/case-studies"), 1500);
     } catch (err) {
       console.error("Error response:", err.response?.data || err.message);
       if (err.response?.data) {

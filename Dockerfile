@@ -7,6 +7,10 @@ WORKDIR /app
 # Copy package.json and package-lock.json from the correct subdirectory
 COPY package*.json ./
 
+# Accept build-time ARG for the API URL
+ARG REACT_APP_ENV
+ENV REACT_APP_ENV=$REACT_APP_ENV
+
 # Install dependencies
 
 # Copy the entire application files from the frontend folder

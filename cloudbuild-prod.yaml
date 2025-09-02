@@ -3,7 +3,7 @@ steps:
     id: 'Build Docker image'
     args: [
       'build', 
-      '-t', 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
+      '-t', 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}',
       '.'
     ]
 
@@ -11,7 +11,7 @@ steps:
     id: 'Push Docker image'
     args: [
       'push',
-      'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+      'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}'
     ]
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -22,7 +22,7 @@ steps:
       - 'deploy'
       - '${_SERVICE_NAME}'
       - '--image'
-      - 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+      - 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}'
       - '--region'
       - '${_REGION}'
       - '--platform'
@@ -35,7 +35,6 @@ steps:
         
 
 substitutions:
-  _PROJECT_ID: 'your-gcp-project-id' 
   _IMAGE_NAME: 'express-earth-web-prod'
   _SERVICE_NAME: 'express-earth-web'
   _REGION: 'asia-south2'
@@ -43,7 +42,7 @@ substitutions:
 
 
 images:
-  - 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}'
+  - 'gcr.io/${PROJECT_ID}/${_IMAGE_NAME}'
   
 options:
   logging: CLOUD_LOGGING_ONLY

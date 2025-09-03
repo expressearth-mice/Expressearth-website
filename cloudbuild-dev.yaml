@@ -3,7 +3,7 @@ steps:
     id: 'Build Docker image'
     args: [
       'build', 
-      '--build-arg', 'REACT_APP_ENV=${_REACT_APP_ENV}'
+      '--build-arg', 'REACT_APP_ENV=${_REACT_APP_ENV}',
       '-t', 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
       '.'
     ]

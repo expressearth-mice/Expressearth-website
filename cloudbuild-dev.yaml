@@ -3,6 +3,7 @@ steps:
     id: 'Build Docker image'
     args: [
       'build', 
+      '--build-arg', 'REACT_APP_ENV=${_REACT_APP_ENV}'
       '-t', 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}',
       '.'
     ]
@@ -28,6 +29,10 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - |
+        REACT_APP_ENV=${_REACT_APP_ENV},
+        NULL=${_NULL}
         
 
 substitutions:
@@ -35,6 +40,7 @@ substitutions:
   _IMAGE_NAME: 'express-earth-frontend-dev'
   _SERVICE_NAME: 'express-earth-frontend-service'
   _REGION: 'asia-south2'
+  _REACT_APP_ENV: 'qa'
 
 
 images:

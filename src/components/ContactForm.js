@@ -35,6 +35,12 @@ const ContactForm = () => {
 
   useEffect(() => {
     setCountries(Country.getAllCountries());
+    if (window.gtag) {
+            window.gtag('event', 'submit', {
+              event_category: 'Contact Form',
+              event_label: 'ContactForm landed',
+            });
+          }
   }, []);
 
   const handleChange = (e) => {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom"; // Import useLocation
 import { ToastContainer } from "react-toastify";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -52,6 +52,14 @@ const AdminComponent = () => <div>Admin-only Section</div>;
 function App() {
   const { role, loading } = useContext(AuthContext);
   const location = useLocation(); // Get current route path
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('config', 'G-2BLX0K94EJ', {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location]);
 
   const publicRoutes = [
     "/",

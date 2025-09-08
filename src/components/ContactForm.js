@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
 import {
-  FaEnvelope, FaPhoneAlt, FaBuilding, FaUser,
-  FaCalendarAlt, FaListUl, FaTimes, FaMapMarkerAlt
+  FaEnvelope,
+  FaPhoneAlt,
+  FaBuilding,
+  FaUser,
+  FaCalendarAlt,
+  FaListUl,
+  FaTimes,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import { Country } from "country-state-city";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import ReCAPTCHA from "react-google-recaptcha";  // Import reCAPTCHA
+import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 import "./ContactForm.css";
 import axiosInstance from "../api/axios";
 
@@ -31,29 +37,30 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [captchaValue, setCaptchaValue] = useState(null);  // Store CAPTCHA value
+  const [captchaValue, setCaptchaValue] = useState(null); // Store CAPTCHA value
 
   useEffect(() => {
     setCountries(Country.getAllCountries());
     if (window.gtag) {
-            window.gtag('event', 'submit', {
-              event_category: 'Contact Form',
-              event_label: 'ContactForm landed',
-            });
-          }
+      window.gtag("event", "form_landed", {
+        event_category: "Contact Form",
+        event_label: "Contact Form Landed",
+      });
+    }
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const validate = () => {
     let newErrors = {};
-    if (!formData.full_name.trim()) newErrors.full_name = "Please enter full name";
+    if (!formData.full_name.trim())
+      newErrors.full_name = "Please enter full name";
     if (!formData.email.trim()) {
       newErrors.email = "Please enter email";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -88,13 +95,19 @@ const ContactForm = () => {
         event_date: formData.event_date
           ? new Date(formData.event_date).toISOString().split("T")[0]
           : null,
-        captcha: captchaValue,  // Include CAPTCHA value
+        captcha: captchaValue, // Include CAPTCHA value
       };
 
-      const response = await axiosInstance.post("/api/contact/", formattedFormData);
+      const response = await axiosInstance.post(
+        "/api/contact/",
+        formattedFormData
+      );
 
       if (response && response.data) {
-        if (response.data.success && typeof response.data.success === "string") {
+        if (
+          response.data.success &&
+          typeof response.data.success === "string"
+        ) {
           setSubmitted(true);
           setFormData({
             full_name: "",
@@ -108,11 +121,19 @@ const ContactForm = () => {
             requirements: "",
           });
           setErrors({});
-          setCaptchaValue(null);  // Reset CAPTCHA
-          setErrorMessage('');  // Clear any previous error message
+          if (window.gtag) {
+            window.gtag("event", "form_submit", {
+              event_category: "Contact Form",
+              event_label: "Contact Form Submitted",
+            });
+          }
+          setCaptchaValue(null); // Reset CAPTCHA
+          setErrorMessage(""); // Clear any previous error message
         } else {
-          setErrorMessage(response.data.error || "Failed to send message. Please try again.");
-        }        
+          setErrorMessage(
+            response.data.error || "Failed to send message. Please try again."
+          );
+        }
       }
     } catch (error) {
       console.error("Error:", error.response ? error.response.data : error);
@@ -137,11 +158,10 @@ const ContactForm = () => {
 
   // Function to handle CAPTCHA response
   const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);  // Save CAPTCHA value
+    setCaptchaValue(value); // Save CAPTCHA value
   };
 
   return (
-
     <div className="contact-form-wrapper">
       <div className="contact-form-wrapper">
         {/* Add logo at the top center */}
@@ -156,9 +176,16 @@ const ContactForm = () => {
       <div className="contact-header-section">
         <h2>Contact us</h2>
         <p>
-          Let’s Plan Your Next Unforgettable Corporate Event<br /><br />
-          Looking to elevate your next meeting, incentive trip, or corporate event? Our expert MICE consultants are here to bring your vision to life with tailor-made solutions, luxury experiences, and seamless execution—anywhere in the world.<br />
-          Whether you're seeking advice, requesting a proposal, or just exploring options, we're happy to connect.
+          Let’s Plan Your Next Unforgettable Corporate Event
+          <br />
+          <br />
+          Looking to elevate your next meeting, incentive trip, or corporate
+          event? Our expert MICE consultants are here to bring your vision to
+          life with tailor-made solutions, luxury experiences, and seamless
+          execution—anywhere in the world.
+          <br />
+          Whether you're seeking advice, requesting a proposal, or just
+          exploring options, we're happy to connect.
         </p>
       </div>
 
@@ -166,15 +193,24 @@ const ContactForm = () => {
         <div className="container">
           <Card className="contact-form-container">
             <Card.Body>
-              <h2 className="form-title">Connect with Us Today              </h2>
+              <h2 className="form-title">Connect with Us Today </h2>
 
               {submitted && (
-                <Alert variant="success" className="d-flex justify-content-between align-items-center">
-                  <span>Thank you for reaching out! Our team will connect with you shortly.</span>
-                  <Button variant="link" onClick={handleDismiss} className="text-danger p-0 fs-5">
+                <Alert
+                  variant="success"
+                  className="d-flex justify-content-between align-items-center"
+                >
+                  <span>
+                    Thank you for reaching out! Our team will connect with you
+                    shortly.
+                  </span>
+                  <Button
+                    variant="link"
+                    onClick={handleDismiss}
+                    className="text-danger p-0 fs-5"
+                  >
                     <FaTimes />
                   </Button>
-
                 </Alert>
               )}
 
@@ -188,15 +224,35 @@ const ContactForm = () => {
                 <Row>
                   <Col md={6}>
                     <Form.Group controlId="full_name" className="mb-3">
-                      <Form.Label><FaUser className="me-2" />Full Name *</Form.Label>
-                      <Form.Control type="text" name="full_name" value={formData.full_name} onChange={handleChange} />
-                      {errors.full_name && <small className="text-danger">{errors.full_name}</small>}
+                      <Form.Label>
+                        <FaUser className="me-2" />
+                        Full Name *
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="full_name"
+                        value={formData.full_name}
+                        onChange={handleChange}
+                      />
+                      {errors.full_name && (
+                        <small className="text-danger">
+                          {errors.full_name}
+                        </small>
+                      )}
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group controlId="company_name" className="mb-3">
-                      <Form.Label><FaBuilding className="me-2" />Company Name</Form.Label>
-                      <Form.Control type="text" name="company_name" value={formData.company_name} onChange={handleChange} />
+                      <Form.Label>
+                        <FaBuilding className="me-2" />
+                        Company Name
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="company_name"
+                        value={formData.company_name}
+                        onChange={handleChange}
+                      />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -204,23 +260,50 @@ const ContactForm = () => {
                 <Row>
                   <Col md={6}>
                     <Form.Group controlId="email" className="mb-3">
-                      <Form.Label><FaEnvelope className="me-2" />Email Address *</Form.Label>
-                      <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} />
-                      {errors.email && <small className="text-danger">{errors.email}</small>}
+                      <Form.Label>
+                        <FaEnvelope className="me-2" />
+                        Email Address *
+                      </Form.Label>
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
+                      {errors.email && (
+                        <small className="text-danger">{errors.email}</small>
+                      )}
                     </Form.Group>
                   </Col>
                   <Col md={6}>
                     <Form.Group controlId="phone" className="mb-3">
-                      <Form.Label><FaPhoneAlt className="me-2" />Phone Number *</Form.Label>
-                      <Form.Control type="tel" name="phone" value={formData.phone} onChange={handleChange} />
-                      {errors.phone && <small className="text-danger">{errors.phone}</small>}
+                      <Form.Label>
+                        <FaPhoneAlt className="me-2" />
+                        Phone Number *
+                      </Form.Label>
+                      <Form.Control
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                      />
+                      {errors.phone && (
+                        <small className="text-danger">{errors.phone}</small>
+                      )}
                     </Form.Group>
                   </Col>
                 </Row>
 
                 <Form.Group controlId="event_type" className="mb-3">
-                  <Form.Label><FaListUl className="me-2" />Event Type</Form.Label>
-                  <Form.Select name="event_type" value={formData.event_type} onChange={handleChange}>
+                  <Form.Label>
+                    <FaListUl className="me-2" />
+                    Event Type
+                  </Form.Label>
+                  <Form.Select
+                    name="event_type"
+                    value={formData.event_type}
+                    onChange={handleChange}
+                  >
                     <option value="">Select</option>
                     <option value="Conference">Conference</option>
                     <option value="Incentive Trip">Incentive Trip</option>
@@ -234,11 +317,20 @@ const ContactForm = () => {
                 <Row>
                   <Col md={4}>
                     <Form.Group controlId="country" className="mb-3">
-                      <Form.Label><FaMapMarkerAlt className="me-2" />Country</Form.Label>
-                      <Form.Select name="country" value={formData.country} onChange={handleChange}>
+                      <Form.Label>
+                        <FaMapMarkerAlt className="me-2" />
+                        Country
+                      </Form.Label>
+                      <Form.Select
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                      >
                         <option value="">Select Country</option>
                         {countries.map((c) => (
-                          <option key={c.isoCode} value={c.name}>{c.name}</option>
+                          <option key={c.isoCode} value={c.name}>
+                            {c.name}
+                          </option>
                         ))}
                       </Form.Select>
                     </Form.Group>
@@ -247,7 +339,11 @@ const ContactForm = () => {
 
                 <Form.Group controlId="attendees" className="mb-3">
                   <Form.Label>Number of Attendees</Form.Label>
-                  <Form.Select name="attendees" value={formData.attendees} onChange={handleChange}>
+                  <Form.Select
+                    name="attendees"
+                    value={formData.attendees}
+                    onChange={handleChange}
+                  >
                     <option value="">Select</option>
                     <option value="10-50">10-50</option>
                     <option value="50-100">50-100</option>
@@ -257,27 +353,54 @@ const ContactForm = () => {
                 </Form.Group>
 
                 <Form.Group controlId="event_date" className="mb-3">
-                  <Form.Label><FaCalendarAlt className="me-2" />Event Date</Form.Label>
-                  <Form.Control type="date" name="event_date" value={formData.event_date} onChange={handleChange} />
+                  <Form.Label>
+                    <FaCalendarAlt className="me-2" />
+                    Event Date
+                  </Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="event_date"
+                    value={formData.event_date}
+                    onChange={handleChange}
+                  />
                 </Form.Group>
 
                 <Form.Group controlId="requirements" className="mb-3">
                   <Form.Label>Requirements</Form.Label>
-                  <Form.Control as="textarea" rows={4} name="requirements" value={formData.requirements} onChange={handleChange} />
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    name="requirements"
+                    value={formData.requirements}
+                    onChange={handleChange}
+                  />
                 </Form.Group>
 
                 {/* Add CAPTCHA here */}
                 <Form.Group controlId="captcha" className="mb-3">
                   <ReCAPTCHA
-                    sitekey="6LfG7hsrAAAAABrKlWfFUvwsE5GhzxM7YD6IfhYP"  // Replace with your actual site key
-                    onChange={handleCaptchaChange}  // Handle CAPTCHA response
+                    sitekey="6LfG7hsrAAAAABrKlWfFUvwsE5GhzxM7YD6IfhYP" // Replace with your actual site key
+                    onChange={handleCaptchaChange} // Handle CAPTCHA response
                   />
-                  {errors.captcha && <small className="text-danger">{errors.captcha}</small>}
+                  {errors.captcha && (
+                    <small className="text-danger">{errors.captcha}</small>
+                  )}
                 </Form.Group>
 
                 <div className="text-center">
-                  <Button style={{ backgroundColor: '##56ce27', borderColor: '#56ce27' }} type="submit" disabled={loading}>
-                    {loading ? <Spinner as="span" animation="border" size="sm" /> : "Submit"}
+                  <Button
+                    style={{
+                      backgroundColor: "##56ce27",
+                      borderColor: "#56ce27",
+                    }}
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <Spinner as="span" animation="border" size="sm" />
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </div>
               </Form>

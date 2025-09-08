@@ -249,11 +249,38 @@ body ,html{
   margin-bottom: 10px;
 }
 
-.destination-grid, .services-grid, .testimonial-grid {
+.services-grid, .testimonial-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
   margin-top: 30px;
+}
+
+.destination-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;   
+  align-items: center;       
+  max-width: 1200px;         
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px; 
+}
+
+.destination-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
 }
 
 

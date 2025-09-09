@@ -24,12 +24,15 @@ function Navbar() {
         { name: "Meetings & Conferences", path: "/meetings-and-conferences" },
         { name: "Incentive Travel", path: "/incentive-travel" },
         { name: "Corporate Events", path: "/corporate-events" },
-        { name: "Exhibitions & Trade Shows", path: "/exhibitions-and-trade-shows" },
+        {
+          name: "Exhibitions & Trade Shows",
+          path: "/exhibitions-and-trade-shows",
+        },
         { name: "Destination Management", path: "/destination-management" },
         { name: "Gifting", path: "/Gifting" },
       ],
     },
-     { name: "Destinations", path: "/destinations" },
+    { name: "Destinations", path: "/destinations" },
     {
       name: "Resources",
       path: "/blogs",
@@ -41,6 +44,11 @@ function Navbar() {
       ],
     },
     { name: "Gallery", path: "/gallery" },
+    {
+      name: "Personal Travel",
+      path: "https://b2c.expressearth.com/",
+      external: true,
+    },
     { name: "Contact Us", path: "/contact" },
   ];
 
@@ -61,7 +69,9 @@ function Navbar() {
 
   return (
     <nav
-      className={`navbar navbar-expand-lg glass-navbar ${isHomePage ? "homepage-navbar" : ""}`}
+      className={`navbar navbar-expand-lg glass-navbar ${
+        isHomePage ? "homepage-navbar" : ""
+      }`}
     >
       <div className="container">
         <button
@@ -75,7 +85,11 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav" ref={navbarCollapseRef}>
+        <div
+          className="collapse navbar-collapse"
+          id="navbarNav"
+          ref={navbarCollapseRef}
+        >
           <NavLink className="navbar-brand" to="/">
             <img
               src="/Images/express_earth_logoo-removebg-preview.png"
@@ -121,10 +135,23 @@ function Navbar() {
                     ))}
                   </ul>
                 </li>
+              ) : tab.external ? (
+                <li className="nav-item" key={idx}>
+                  <a
+                    className="nav-link nav-text"
+                    href={tab.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {tab.name}
+                  </a>
+                </li>
               ) : (
                 <li className="nav-item" key={idx}>
                   <NavLink
-                    className={`nav-link nav-text ${location.pathname === tab.path ? "active" : ""}`}
+                    className={`nav-link nav-text ${
+                      location.pathname === tab.path ? "active" : ""
+                    }`}
                     to={tab.path}
                     onClick={handleNavLinkClick}
                   >
@@ -133,7 +160,6 @@ function Navbar() {
                 </li>
               )
             )}
-            
             {(role.is_admin || role.is_seo) && (
               <>
                 <li className="nav-item">

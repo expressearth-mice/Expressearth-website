@@ -5,12 +5,38 @@ import axiosInstance from "../api/axios";
 import "./DestinationSection.css";
 
 const hardcodedDestinations = [
-  { name: "Switzerland", image: "/Images/switzerland.png", description: "Snow-capped Alps, scenic train rides, and luxury resorts." },
-  { name: "Bali", image: "/Images/bali.jpg", description: "Island paradise with spiritual temples and serene beaches." },
-  { name: "Baku", image: "/Images/baku.jpg", description: "Modern skyline meets ancient city walls in Azerbaijan’s capital." },
-  { name: "Singapore", image: "/Images/singapore.jpg", description: "Tech-forward city with world-class infrastructure and events." },
-  { name: "Japan", image: "/Images/Japan.jpg", description: "Blend of tradition and tech in the Land of the Rising Sun." },
-  { name: "Maldives", image: "/Images/maldives.jpg", description: "Tropical paradise with luxury resorts over turquoise waters." },
+  {
+    name: "Switzerland",
+    image: "/Images/switzerland.png",
+    description: "Snow-capped Alps, scenic train rides, and luxury resorts.",
+  },
+  {
+    name: "Bali",
+    image: "/Images/bali.jpg",
+    description: "Island paradise with spiritual temples and serene beaches.",
+  },
+  {
+    name: "Baku",
+    image: "/Images/baku.jpg",
+    description:
+      "Modern skyline meets ancient city walls in Azerbaijan’s capital.",
+  },
+  {
+    name: "Singapore",
+    image: "/Images/singapore.jpg",
+    description:
+      "Tech-forward city with world-class infrastructure and events.",
+  },
+  {
+    name: "Japan",
+    image: "/Images/Japan.jpg",
+    description: "Blend of tradition and tech in the Land of the Rising Sun.",
+  },
+  {
+    name: "Maldives",
+    image: "/Images/maldives.jpg",
+    description: "Tropical paradise with luxury resorts over turquoise waters.",
+  },
 ];
 
 const sliderImages = [
@@ -32,7 +58,9 @@ const DestinationSection = () => {
   useEffect(() => {
     axiosInstance
       .get("/api/destinations/")
-      .then((res) => setDestinations([...hardcodedDestinations, ...res.data]))
+      .then((res) => {
+        setDestinations([...hardcodedDestinations, ...res.data]);
+      })
       .catch((error) => {
         console.error("Error fetching destinations:", error);
         setDestinations(hardcodedDestinations); // fallback only
@@ -112,7 +140,9 @@ const DestinationSection = () => {
 
         <button
           disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
         >
           Next
         </button>

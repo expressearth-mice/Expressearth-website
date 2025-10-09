@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Button, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
 import {
   FaEnvelope,
@@ -41,12 +41,12 @@ const ContactForm = () => {
 
   useEffect(() => {
     setCountries(Country.getAllCountries());
-    if (window.gtag) {
-      window.gtag("event", "form_landed", {
-        event_category: "Contact Form",
-        event_label: "Contact Form Landed",
-      });
-    }
+    // if (window.gtag) {
+    //   window.gtag("event", "form_landed", {
+    //     event_category: "Contact Form",
+    //     event_label: "Contact Form Landed",
+    //   });
+    // }
   }, []);
 
   const handleChange = (e) => {

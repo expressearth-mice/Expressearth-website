@@ -1,0 +1,148 @@
+.integration-tools-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.integration-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.integration-header h1 {
+  font-size: 32px;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+.tool-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+
+/* .tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+} */
+
+.tool-name {
+  font-size: 18px;
+  color: #222;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tool-logo {
+  height: 50px;
+  max-width: 100px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.tool-card:hover .tool-logo {
+  transform: scale(1.2); /* zoom level */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .integration-header h1 {
+    font-size: 26px;
+  }
+
+  .tools-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .tool-card {
+    padding: 20px 15px;
+    min-height: 100px;
+  }
+
+  .tool-name {
+    font-size: 16px;
+  }
+}
+
+.integration-tools-container {
+  background-color: #f9f9f9;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.integration-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1c3faa;
+}
+
+.scroll-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.scroll-track {
+  display: flex;
+  gap: 50px;
+  animation: scrollRight 40s linear infinite;
+  width: max-content;
+}
+
+.tool-card {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.tool-logo {
+  height: 50px;
+  max-width: 100px;
+  object-fit: contain;
+  /* filter: grayscale(100%); */
+  transition: filter 0.3s ease;
+}
+
+.tool-logo:hover {
+  filter: grayscale(0%);
+}
+
+.tool-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes scrollRight {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}

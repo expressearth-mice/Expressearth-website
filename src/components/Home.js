@@ -3,6 +3,7 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import PopupForm from "./popupForm";
 import axiosInstance from "../api/axios";
+import IntegrationTools from "./ui/IntegrationTools";
 
 const Home = () => {
   useEffect(() => {
@@ -321,6 +322,7 @@ const Home = () => {
           </Link>
         </div>
       </section>
+      <IntegrationTools />
 
       <section class="travel-banner">
         <div class="travel-image-box">

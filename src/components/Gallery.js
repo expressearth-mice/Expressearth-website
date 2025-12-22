@@ -2,35 +2,81 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Gallery.css";
 import axiosInstance from "../api/axios";
+import {
+  Image1,
+  Image2,
+  Image3,
+  Image4,
+  Image5,
+  Image6,
+  Image7,
+  Image8,
+} from "../assests";
 
 // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 function Gallery() {
   const hardcodedData = [
     {
-      title: "Corporate Event Photography",
-      desc: "Explore high-resolution images capturing the grandeur, energy, and detail of our meticulously managed events.",
-      img: "https://5.imimg.com/data5/SELLER/Default/2021/1/CI/JC/JY/32308928/corporate-event-photography.jpg",
-    },
-    {
       title: "MICE Event Video Highlights",
       desc: "Relive the magic of our most iconic events through dynamic highlight reels showcasing destination excellence, flawless execution, and unforgettable moments.",
-      img: "https://indiaoutbound.info/wp-content/uploads/2022/10/mice-1-1.jpg",
+      img: Image1,
     },
     {
-      title: "Event Planning Portfolio Examples",
-      desc: "Get inspired by a showcase of diverse MICE events—from exclusive gala dinners to international trade shows—designed and delivered by ExpressEarth.",
-      img: "https://i.ytimg.com/vi/XJ_-x3Dl3K0/maxresdefault.jpg",
+      title: "",
+      desc: "",
+      img: Image2,
+    },
+    {
+      title: "",
+      desc: "",
+      img: Image3,
+    },
+    {
+      title: "",
+      desc: "",
+      img: Image4,
+    },
+    {
+      title: "",
+      desc: "",
+      img: Image5,
+    },
+
+    {
+      title: "",
+      desc: "",
+      img: Image7,
+    },
+    {
+      title: "",
+      desc: "",
+      img: Image8,
     },
     {
       title: "Successful Event Case Studies",
       desc: "Each frame tells the story of a challenge turned into triumph, an idea transformed into an experience. Discover how we deliver success, one event at a time.",
-      img: "https://weandgoliath.com/wp-content/uploads/2024/07/wg_marketing_event_marketing_95699414-18b2-43ba-8e24-a5159c3c5e0a-768x768.png",
+      img: Image6,
     },
     {
-      title: "Event Management Showcase",
-      desc: "Browse through stunning shots from featured events—each one a testament to our commitment to excellence.",
-      img: "https://expressearth.com/wp-content/uploads/2023/08/WhatsApp-Image-2023-08-04-at-2.03.20-PM-1.jpeg",
+      title: "Corporate Event Photography",
+      desc: "Explore high-resolution images capturing the grandeur, energy, and detail of our meticulously managed events.",
+      img: "https://lh3.googleusercontent.com/p/AF1QipNKPtaK6II_kGAxMcKsw6Sdr10SE1Gu7YjHs3NY=s1360-w1360-h1020-rw",
+    },
+    {
+      title: "",
+      desc: "",
+      img: "https://lh3.googleusercontent.com/p/AF1QipP1LO-pOWx0Rh7xeDk7zOosCeQvK4xuM51kMUZY=s1360-w1360-h1020-rw",
+    },
+    {
+      title: "",
+      desc: "",
+      img: "https://lh3.googleusercontent.com/p/AF1QipOlKmOT0VGn62HZhdbhVVssEGu7s-kYMoqfgM2C=s1360-w1360-h1020-rw",
+    },
+    {
+      title: "",
+      desc: "",
+      img: "https://lh3.googleusercontent.com/p/AF1QipOMSBC8_oE2QWkK7QwtzRoLAj9trk-ig1Osr4SJ=s1360-w1360-h1020-rw",
     },
   ];
 
@@ -46,7 +92,9 @@ function Gallery() {
     axiosInstance
       .get(`/api/gallery/`)
       .then((response) => {
-        const sorted = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        const sorted = response.data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
         setApiData(sorted);
       })
       .catch((error) => {
@@ -85,7 +133,8 @@ function Gallery() {
         <h1 className="fw-bold display-5">ExpressEarth Moments</h1>
         <h2 className="fs-3 mb-3">A Gallery of Excellence</h2>
         <p className="lead">
-          Step into our world of exceptional event planning through a carefully curated collection of visuals from around the globe.
+          Step into our world of exceptional event planning through a carefully
+          curated collection of visuals from around the globe.
         </p>
       </div>
 
@@ -96,18 +145,20 @@ function Gallery() {
           {paginatedItems.map((item, index) => (
             <div className="col-md-6 col-lg-4" key={`gallery-${index}`}>
               <div className="gallery-card h-100 shadow-sm">
-                <div className="gallery-image-wrapper" onClick={() => setSelectedImage(item.img || item.image)}>
+                <div
+                  className="gallery-image-wrapper"
+                  onClick={() => setSelectedImage(item.img || item.image)}
+                >
                   <img
                     src={item.img || item.image}
                     className="gallery-img"
                     alt={item.title}
                   />
-                  <div className="image-overlay-text">
+                  {/* <div className="image-overlay-text">
                     <h5>{item.title}</h5>
                     <p>{item.desc || item.description}</p>
-                  </div>
+                  </div> */}
                 </div>
-
               </div>
             </div>
           ))}
@@ -125,7 +176,9 @@ function Gallery() {
           {[...Array(totalPages)].map((_, i) => (
             <button
               key={i}
-              className={`btn mx-1 ${currentPage === i + 1 ? "btn-primary" : "btn-outline-light"}`}
+              className={`btn mx-1 ${
+                currentPage === i + 1 ? "btn-primary" : "btn-outline-light"
+              }`}
               onClick={() => handlePageChange(i + 1)}
             >
               {i + 1}
@@ -142,7 +195,11 @@ function Gallery() {
       </div>
       {selectedImage && (
         <div className="image-modal" onClick={() => setSelectedImage(null)}>
-          <img src={selectedImage} alt="Full Preview" className="fullscreen-img" />
+          <img
+            src={selectedImage}
+            alt="Full Preview"
+            className="fullscreen-img"
+          />
         </div>
       )}
     </div>

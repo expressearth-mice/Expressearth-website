@@ -4,7 +4,8 @@
   background-color: #f9f9f9;
   line-height: 1.6;
 }
-.text-cen{
+
+.text-cen {
   text-align: center;
 }
 
@@ -49,105 +50,12 @@
 /* Section Titles */
 section h2 {
   font-size: 2rem;
-  /* margin: 50px 0 20px; */
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
 }
-/* Base grid settings */
-.services-grid {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  align-items: stretch;
-}
-
-/* Styling for individual service items */
-.service-item {
-  background: #ffffff;
-  padding: 24px 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-/* Hover effect for service items */
-.service-item:hover {
-  transform: translateY(-5px);
-}
-
-/* Styling for icons within the service item */
-.service-icon {
-  margin-bottom: 12px;
-  color: #279c03;
-}
-
-/* Title styling */
-.service-item h3 {
-  font-size: 1.2rem;
-  margin: 12px 0 10px;
-  min-height: 48px; /* Keeps heading height uniform */
-}
-
-/* Paragraph styling */
-.service-item p {
-  font-size: 0.95rem;
-  color: #555;
-  flex-grow: 1; /* Takes available vertical space */
-  margin-bottom: 16px;
-}
-
-/* Styling for call-to-action link */
-.cta-link {
-  text-decoration: none;
-  color: #0d98df;
-  font-weight: 600;
-  margin-top: auto; /* Push button to the bottom */
-  display: inline-block;
-}
-
-/* Hover effect for cta-link */
-.cta-link:hover {
-  color: #0d98df;
-}
-
-/* Adjust grid layout for medium screens and above */
-@media (min-width: 768px) {
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  }
-
-  /* Position last two items on the second row, centered under the first three */
-  .services-grid .service-item:nth-child(4),
-  .services-grid .service-item:nth-child(5) {
-    grid-column: span 1; /* They will each occupy one column */
-  }
-
-  .services-grid .service-item:nth-child(4) {
-    grid-column: 1 / span 1; /* The 4th item goes to the first column */
-  }
-  
-  .services-grid .service-item:nth-child(5) {
-    grid-column: 3 / span 1; /* The 5th item goes to the third column */
-  }
-}
-
-
-/* Paragraphs */
-/* section p {
-  max-width: 800px;
-  margin: 0 auto 20px;
-  font-size: 1.05rem;
-  padding: 0 20px;
-  text-align: center;
-} */
 
 /* Signature Services */
 .signature-services {
@@ -158,10 +66,19 @@ section h2 {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
   margin-top: 40px;
   padding: 0 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: stretch;
+}
+
+/* ≥768px force 3 columns; auto placement puts 4th in col-1, 5th in col-2.
+   (NO nth-child overrides; that was the bug) */
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .service-item {
@@ -170,7 +87,10 @@ section h2 {
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform .3s ease, box-shadow .3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .service-item:hover {
@@ -192,6 +112,7 @@ section h2 {
   font-size: 0.95rem;
   color: #555;
   margin-bottom: 15px;
+  flex: 1;
 }
 
 .cta-link {

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import config from '../config/config';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import config from "../config/config";
+import "./SearchBar.css";
+
 const SearchBar = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,7 +15,6 @@ const SearchBar = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        //console.log("config.BASE_URL", config.BASE_URL)
         const [blogsRes, casesRes, destsRes] = await Promise.all([
           fetch(`${config.BASE_URL}/api/posts/`),
           fetch(`${config.BASE_URL}/api/case-studies/`),
@@ -25,29 +26,29 @@ const SearchBar = () => {
         const destinations = await destsRes.json();
 
         const formatted = [
-          ...blogs.map(item => ({
+          ...blogs.map((item) => ({
             ...item,
-            type: 'blog',
-            label: item.title || '',
+            type: "blog",
+            label: item.title || "",
             slug: item.slug,
           })),
-          ...cases.map(item => ({
+          ...cases.map((item) => ({
             ...item,
-            type: 'caseStudy',
-            label: item.name || '',
+            type: "caseStudy",
+            label: item.name || "",
             slug: item.slug,
           })),
-          ...destinations.map(item => ({
+          ...destinations.map((item) => ({
             ...item,
-            type: 'destination',
-            label: item.name || '',
+            type: "destination",
+            label: item.name || "",
             slug: item.slug,
           })),
         ];
 
         setAllData(formatted);
       } catch (error) {
-        console.error('Search data fetch error:', error);
+        console.error("Search data fetch error:", error);
       } finally {
         setLoading(false);
       }
@@ -61,29 +62,37 @@ const SearchBar = () => {
     if (!lower) {
       setResults([]);
     } else {
-      const filtered = allData.filter(item =>
-        item.label.toLowerCase().includes(lower)
+      const filtered = allData.filter((item) =>
+        (item.label || "").toLowerCase().includes(lower)
       );
-      setResults(filtered.slice(0, 5));
+      setResults(filtered.slice(0, 6));
     }
   }, [query, allData]);
 
   const getLink = (item) => {
-    if (!item.slug) return '#';
+    if (!item.slug && !item.name && !item.title) return "#";
     switch (item.type) {
-      case 'blog': return `/blogs/${item.title}`;
-      case 'caseStudy': return `/case-studies/${item.slug}`;
-      case 'destination': return `/destinations/${item.name}`;
-      default: return '#';
+      case "blog":
+        return `/blogs/${item.title}`;
+      case "caseStudy":
+        return `/case-studies/${item.slug}`;
+      case "destination":
+        return `/destinations/${item.name}`;
+      default:
+        return "#";
     }
   };
 
   const getTypeLabel = (type) => {
     switch (type) {
-      case 'blog': return '📝 Blog';
-      case 'caseStudy': return '📊 Case Study';
-      case 'destination': return '🌍 Destination';
-      default: return '';
+      case "blog":
+        return "📝 Blog";
+      case "caseStudy":
+        return "📊 Case Study";
+      case "destination":
+        return "🌍 Destination";
+      default:
+        return "";
     }
   };
 
@@ -102,15 +111,13 @@ const SearchBar = () => {
 
       {query && (
         <div className="search-results-dropdown">
-          {loading && <div>Loading...</div>}
+          {loading && <div className="search-loading">Loading...</div>}
 
           {!loading && results.length > 0 && (
             results.map((item, index) => (
               <Link to={getLink(item)} key={index} className="search-result-item">
-                <div>
-                  <strong>{item.label}</strong>
-                  <div className="type-label">{getTypeLabel(item.type)}</div>
-                </div>
+                <div className="sr-title">{item.label}</div>
+                <div className="type-label">{getTypeLabel(item.type)}</div>
               </Link>
             ))
           )}

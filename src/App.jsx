@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom"; // Import useLocation
 import { ToastContainer } from "react-toastify";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'react-toastify/dist/ReactToastify.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { AuthContext } from "./context/AuthContext";
 
@@ -43,9 +42,8 @@ import AchievementPage from "./components/AchievementPage";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import CategoryDestinations from "./components/CategoryDestination";
 import CaseStudyDetail from "./components/CaseStudyDetail";
-import TermsAndConditions from './components/TermsAndConditions';
-
-
+import TermsAndConditions from "./components/TermsAndConditions";
+import Marquee from "./components/ui/marquee";
 
 const AdminComponent = () => <div>Admin-only Section</div>;
 
@@ -53,13 +51,13 @@ function App() {
   const { role, loading } = useContext(AuthContext);
   const location = useLocation(); // Get current route path
 
-  useEffect(() => {
-    if (window.gtag) {
-      window.gtag('config', 'G-2BLX0K94EJ', {
-        page_path: location.pathname + location.search,
-      });
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (window.gtag) {
+  //     window.gtag('config', 'GTM-WMJCBMGG', {
+  //       page_path: location.pathname + location.search,
+  //     });
+  //   }
+  // }, [location]);
 
   const publicRoutes = [
     "/",
@@ -74,7 +72,8 @@ function App() {
     "/categories",
   ];
 
-  const isPublicRoute = publicRoutes.includes(location.pathname) ||
+  const isPublicRoute =
+    publicRoutes.includes(location.pathname) ||
     location.pathname.startsWith("/blogs/") ||
     location.pathname.startsWith("/destinations/");
 
@@ -83,6 +82,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <Marquee speedSec={22} />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -90,11 +90,20 @@ function App() {
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/careers" element={<CareersPage />} />
         <Route path="/mice-services" element={<MiceServices />} />
-        <Route path= "/meetings-and-conferences" element={<MeetingsAndConferences />} />
-        <Route path= "/incentive-travel" element={<IncentiveTravel />} />
+        <Route
+          path="/meetings-and-conferences"
+          element={<MeetingsAndConferences />}
+        />
+        <Route path="/incentive-travel" element={<IncentiveTravel />} />
         <Route path="/corporate-events" element={<CorporateEvents />} />
-        <Route path="/exhibitions-and-trade-shows" element={<ExhibitionPage />} />
-        <Route path="/destination-management" element={<DestinationManagement />} />
+        <Route
+          path="/exhibitions-and-trade-shows"
+          element={<ExhibitionPage />}
+        />
+        <Route
+          path="/destination-management"
+          element={<DestinationManagement />}
+        />
         <Route path="/achievements" element={<AchievementPage />} />
         <Route path="/Gifting" element={<GiftingPage />} />
         <Route path="/blogs" element={<BlogList />} />
@@ -107,18 +116,27 @@ function App() {
         <Route path="/case-category" element={<CategoryPage />} />
         <Route path="/create-case-studies" element={<CreateCaseStudy />} />
         <Route path="/categories" element={<CategoryList />} />
-        <Route path="/categories/:slug" element={<CategoryDestinations/>} />
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/categories/:slug" element={<CategoryDestinations />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-
 
         {/* SEO + Admin Routes */}
         {(role.is_admin || role.is_seo) && (
           <>
             <Route path="/create-post" element={<CreatePost />} />
-            <Route path="/create-destinations" element={<CreateDestination />} />
+            <Route
+              path="/create-destinations"
+              element={<CreateDestination />}
+            />
             <Route path="/create-gallery" element={<CreateGallery />} />
             <Route path="/create-case-studies" element={<CreateCaseStudy />} />
             <Route path="/create-category" element={<CreateCategory />} />
@@ -134,7 +152,6 @@ function App() {
       {/* Show Footer only on public routes */}
       {/* {isPublicRoute && <Footer />} */}
       <Footer />
-
 
       <ToastContainer position="top-center" />
     </>

@@ -1,7 +1,6 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./Navbar.css";
 import { AuthContext } from "../context/AuthContext";
 import SearchBar from "./SearchBar";
@@ -10,9 +9,10 @@ function Navbar() {
   const { role } = useContext(AuthContext);
   const navbarCollapseRef = useRef(null);
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
 
-  // Main Navigation Links
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const closeTimerRef = useRef(null);
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
@@ -52,101 +52,132 @@ function Navbar() {
     { name: "Contact Us", path: "/contact" },
   ];
 
-  // Bootstrap Collapse Toggle for Mobile
   const handleToggle = () => {
-    if (navbarCollapseRef.current) {
-      navbarCollapseRef.current.classList.toggle("show");
-    }
+    navbarCollapseRef.current?.classList.toggle("show");
   };
 
-  // Collapse Navbar when clicking on a link + Smooth Scroll to Top
   const handleNavLinkClick = () => {
-    if (window.innerWidth < 992) {
-      handleToggle();
+    setOpenDropdown(null);
+    if (window.innerWidth < 992) handleToggle();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const openMenu = (key) => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setOpenDropdown(key);
+  };
+
+  const closeMenu = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => setOpenDropdown(null), 260);
+  };
+
+  const toggleMenuMobile = (key, e) => {
+    if (window.innerWidth >= 992) {
+      e.preventDefault();
+      return;
     }
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scroll to the top
+    e.preventDefault();
+    setOpenDropdown((prev) => (prev === key ? null : key));
   };
 
   return (
-    <nav
-      className={`navbar navbar-expand-lg glass-navbar ${
-        isHomePage ? "homepage-navbar" : ""
-      }`}
-    >
-      <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-light glass-navbar">
+      <div className="container-fluid navbar-inner">
+        <NavLink
+          to="/"
+          className="navbar-brand navbar-logo-wrapper"
+          onClick={handleNavLinkClick}
+        >
+          <img
+            src="/Images/express_earth_logoo-removebg-preview.png"
+            alt="ExpressEarth Logo"
+            className="navbar-logo"
+          />
+        </NavLink>
+
         <button
           className="navbar-toggler"
           type="button"
           onClick={handleToggle}
-          aria-controls="navbarNav"
-          aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div
-          className="collapse navbar-collapse"
-          id="navbarNav"
-          ref={navbarCollapseRef}
-        >
-          <NavLink className="navbar-brand" to="/">
-            <img
-              src="/Images/express_earth_logoo-removebg-preview.png"
-              alt="ExpressEarth Logo"
-              className="navbar-logo"
-            />
-          </NavLink>
+        <div className="collapse navbar-collapse" ref={navbarCollapseRef}>
+          <ul className="navbar-nav mx-auto navbar-links">
+            {navLinks.map((tab, idx) => {
+              if (tab.dropdown) {
+                const key = `dd-${idx}`;
+                const isOpen = openDropdown === key;
 
-          <ul className="navbar-nav me-auto">
-            {navLinks.map((tab, idx) =>
-              tab.dropdown ? (
-                <li className="nav-item dropdown" key={idx}>
-                  <div className="d-flex align-items-center">
-                    <NavLink
-                      to={tab.path}
+                return (
+                  <li
+                    key={idx}
+                    className={`nav-item dropdown ee-dropdown ${
+                      isOpen ? "show" : ""
+                    }`}
+                    onMouseEnter={() => openMenu(key)}
+                    onMouseLeave={closeMenu}
+                  >
+                    <div className="d-flex align-items-center">
+                      <NavLink
+                        to={tab.path}
+                        className="nav-link nav-text"
+                        onClick={handleNavLinkClick}
+                      >
+                        {tab.name}
+                      </NavLink>
+
+                      <a
+                        href="#"
+                        className="nav-link dropdown-toggle ee-dd-toggle"
+                        onClick={(e) => toggleMenuMobile(key, e)}
+                        aria-expanded={isOpen ? "true" : "false"}
+                        aria-label={`${tab.name} menu`}
+                      />
+                    </div>
+
+                    <ul
+                      className={`dropdown-menu ee-dropdown-menu ${
+                        isOpen ? "show" : ""
+                      }`}
+                      onMouseEnter={() => openMenu(key)}
+                      onMouseLeave={closeMenu}
+                    >
+                      {tab.items.map((item, i) => (
+                        <li key={i} className="ee-dd-item">
+                          <NavLink
+                            className="dropdown-item"
+                            to={item.path}
+                            onClick={handleNavLinkClick}
+                          >
+                            {item.name}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                );
+              }
+
+              if (tab.external) {
+                return (
+                  <li className="nav-item" key={idx}>
+                    <a
                       className="nav-link nav-text"
-                      style={{ textDecoration: "none" }}
-                      onClick={handleNavLinkClick}
+                      href={tab.path}
+                      target="_blank"
+                      rel="noreferrer"
                     >
                       {tab.name}
-                    </NavLink>
-                    <a
-                      href="#"
-                      className="nav-link dropdown-toggle"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      style={{ paddingLeft: "5px" }}
-                      onClick={(e) => e.preventDefault()}
-                    />
-                  </div>
-                  <ul className="dropdown-menu">
-                    {tab.items.map((item, subIdx) => (
-                      <li key={subIdx}>
-                        <NavLink
-                          className="dropdown-item"
-                          to={item.path}
-                          onClick={handleNavLinkClick}
-                        >
-                          {item.name}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ) : tab.external ? (
-                <li className="nav-item" key={idx}>
-                  <a
-                    className="nav-link nav-text"
-                    href={tab.path}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {tab.name}
-                  </a>
-                </li>
-              ) : (
+                    </a>
+                  </li>
+                );
+              }
+
+              return (
                 <li className="nav-item" key={idx}>
                   <NavLink
                     className={`nav-link nav-text ${
@@ -158,8 +189,9 @@ function Navbar() {
                     {tab.name}
                   </NavLink>
                 </li>
-              )
-            )}
+              );
+            })}
+
             {(role.is_admin || role.is_seo) && (
               <>
                 <li className="nav-item">
@@ -216,7 +248,7 @@ function Navbar() {
             )}
           </ul>
 
-          <div className="search-wrapper d-flex align-items-top">
+          <div className="search-wrapper d-flex align-items-center">
             <SearchBar />
           </div>
         </div>

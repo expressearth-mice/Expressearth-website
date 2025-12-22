@@ -1,0 +1,85 @@
+/* Marquee.css */
+
+/* marquee always below navbar */
+.ee-marquee.ee-marquee--below-navbar {
+    position: fixed;
+    top: var(--ee-navbar-h);
+    left: 0;
+    width: 100%;
+    z-index: 900;
+    overflow: hidden;
+    background: #0d1525;
+    height: var(--ee-marquee-h);
+    display: flex;
+    align-items: center;
+}
+
+.ee-marquee__wrap {
+    position: relative;
+    flex: 1;
+    height: var(--ee-marquee-h);
+    overflow: hidden;
+}
+
+/* subtle left mask */
+.ee-marquee__wrap::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 100%;
+    background: #0d1525;
+    z-index: 2;
+}
+
+/* ✅ no wrapping anywhere */
+.ee-marquee__wrap,
+.ee-marquee__track,
+.ee-marquee__item {
+    white-space: nowrap;
+}
+
+/* ✅ RIGHTWARD (left-to-right) continuous loop:
+   We animate from -50% to 0% (because we have repeated copies).
+   Also we keep base transform at -50% so loop doesn't "jump". */
+.ee-marquee__track {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    align-items: center;
+    will-change: transform;
+    animation: ee-marquee-ltr var(--ee-marquee-speed, 22s) linear infinite;
+    transform: translateX(-50%);
+}
+
+.ee-marquee__item {
+    flex: 0 0 auto;
+    font-size: 16px;
+    letter-spacing: 1.35px;
+    text-transform: uppercase;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    padding-right: 70px;
+}
+
+/* ✅ move content to the RIGHT continuously */
+@keyframes ee-marquee-ltr {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* mobile tweaks */
+@media (max-width: 992px) {
+    .ee-marquee__item {
+        font-size: 14px;
+        letter-spacing: 1.1px;
+        padding-right: 50px;
+    }
+}

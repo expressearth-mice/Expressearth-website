@@ -6,3 +6,4 @@ export const Image5 = require("./image5.png");
 export const Image6 = require("./image6.png");
 export const Image7 = require("./image7.png");
 export const Image8 = require("./image8.png");
+export const Image9 = require("./Echoes-1.png")

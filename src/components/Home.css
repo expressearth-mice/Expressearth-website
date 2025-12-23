@@ -1,6 +1,7 @@
 /* Global Styles */
 
-body ,html{
+body,
+html {
   overflow-x: hidden;
 }
 
@@ -10,24 +11,63 @@ body ,html{
   color: #080809;
 }
 
+.image-hero-wrapper {
+  position: relative;
+}
+
+#heroCarousel {
+  position: relative;
+}
+
 .carousel-image {
   height: 100vh;
   object-fit: cover;
 }
 
 .hero-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
   text-align: center;
   color: rgb(251, 249, 249);
   z-index: 10;
-  height: 70%;
-  width: 70%;
-  padding: 15px;
-  background-color: rgba(9, 4, 4, 0.3); /* Black with 50% opacity */
-  border-radius: 10px; /* Optional rounded corners */
+
+  /* keep overlay always on image and responsive */
+  width: min(900px, 90%) !important;
+  height: auto !important;
+  padding: 18px 20px !important;
+
+  background-color: rgba(9, 4, 4, 0.45) !important;
+  border-radius: 12px;
+}
+
+.carousel-caption.hero-overlay{
+  padding: 18px 20px 42px !important;  
+}
+
+.carousel-caption.hero-overlay .custom-button-link {
+  margin-top: 22px !important; 
+}
+
+.carousel-caption.hero-overlay p{
+  margin-bottom: 18px !important;      
+}
+
+
+.hero-overlay h1 {
+  font-size: clamp(24px, 3.5vw, 48px);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.hero-overlay p {
+  font-size: clamp(14px, 1.6vw, 18px);
+  margin-bottom: 18px;
+}
+
+.hero-overlay .custom-button-link {
+  display: inline-block;
 }
 
 .carousel-item {
@@ -40,6 +80,17 @@ body ,html{
 @media (max-width: 425px) {
   .carousel-item {
     height: 60vh; /* smaller height for mobile */
+  }
+
+  .carousel-image {
+    height: 60vh;
+  }
+
+  /* overlay is already hidden on mobile via d-none d-md-block,
+     but keeping safe responsive sizing */
+  .hero-overlay {
+    width: 92% !important;
+    padding: 14px 14px !important;
   }
 }
 
@@ -64,7 +115,7 @@ body ,html{
 } */
 @media (min-width: 1024px) {
   .hero-overlay {
-    height: 50%; /* Adjust this value as per your design */
+    height: auto !important;
   }
 }
 /* .hero-overlay {

@@ -44,6 +44,12 @@ import CategoryDestinations from "./components/CategoryDestination";
 import CaseStudyDetail from "./components/CaseStudyDetail";
 import TermsAndConditions from "./components/TermsAndConditions";
 import Marquee from "./components/ui/marquee";
+import CorporateOffsitesPage from "./components/CorporateOffsitesPage";
+import DealerMeet from "./components/DealerMeet";
+import InternationalGroupTravel from "./components/InternationalGroupTravel";
+import R_R_Planning from "./components/R_R_Planning";
+import ConferenceManagement from "./components/ConferenceManagement";
+import IncentivePage from "./components/IncentivePage";
 
 const AdminComponent = () => <div>Admin-only Section</div>;
 
@@ -128,6 +134,18 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/dealermeet" element={<DealerMeet />} />
+        <Route path="/corporateoffsites" element={<CorporateOffsitesPage />} />
+        <Route
+          path="/internationalgrouptravel"
+          element={<InternationalGroupTravel />}
+        />
+        <Route path="/r&rplanning" element={<R_R_Planning />} />
+        <Route
+          path="/conferencemanagement"
+          element={<ConferenceManagement />}
+        />
+        <Route path="/incentivetravel" element={<IncentivePage />} />
 
         {/* SEO + Admin Routes */}
         {(role.is_admin || role.is_seo) && (

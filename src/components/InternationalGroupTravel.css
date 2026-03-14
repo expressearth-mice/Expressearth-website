@@ -1,0 +1,983 @@
+.travel-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 78vh;
+    padding: 40px 32px;
+
+    background: linear-gradient(90deg, #2f5f9a 0%, #2e7da2 40%, #4caf50 100%);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* LEFT SIDE */
+
+.travel-left {
+    flex: 1;
+    color: white;
+    margin-left: 32px;
+}
+
+.travel-content {
+    max-width: 560px;
+}
+
+.travel-content h1 {
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.08;
+    margin-bottom: 18px;
+}
+
+.travel-sub {
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 20px;
+}
+
+.travel-line {
+    width: 360px;
+    height: 2px;
+    background: white;
+    margin: 16px 0 22px;
+    opacity: 0.75;
+}
+
+.travel-tag {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.travel-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.travel-btn:hover {
+    background: #43a047;
+    transform: scale(1.05);
+}
+
+
+/* RIGHT FORM */
+
+.travel-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 32px;
+}
+
+.travel-form-card {
+    background: #f3f3f3;
+    padding: 28px 24px;
+    width: 380px;
+    border-radius: 24px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+}
+
+.travel-form-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0c3558;
+    text-transform: none;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.travel-form-card input {
+    width: 100%;
+    padding: 12px 13px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    background: #f7f7f7;
+}
+
+.travel-radio-group {
+    display: flex;
+    justify-content: space-around;
+    margin: 8px 0 16px 0;
+}
+
+.travel-radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.travel-radio-group input[type="radio"] {
+    margin: 0;
+    cursor: pointer;
+}
+
+.travel-submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #2f6fc4, #1e57a5);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.travel-submit-btn:hover {
+    opacity: 0.9;
+}
+
+/* GROUP TRAVEL SECTION */
+
+.group-travel-section {
+    background: #2f6699;
+    padding: 64px 48px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.group-travel-container {
+    max-width: 1050px;
+    margin: auto;
+}
+
+.group-travel-heading {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 42px;
+    text-transform: none;
+    color: #ffff;
+}
+
+.group-travel-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 42px;
+}
+
+/* LEFT TEXT */
+
+.group-travel-text {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.7;
+
+}
+
+.group-travel-text p {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.travel-highlight {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 22px;
+    color: #ffff;
+}
+
+.travel-tagline {
+    margin-top: 18px;
+    font-size: 15px;
+    opacity: 0.9;
+    font-weight: 200;
+
+}
+
+
+/* RIGHT IMAGE */
+
+.group-travel-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.group-travel-image img {
+    width: 100%;
+    max-width: 430px;
+    /* control width */
+    height: 360px;
+    /* increase height */
+    object-fit: cover;
+
+    /* only two rounded corners */
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+/* MAIN SECTION */
+
+.partner-section {
+    padding: 40px;
+    /* only 30px space around section */
+    background: #ffffff;
+}
+
+
+/* FLEX CONTAINER */
+
+.partner-container {
+    display: flex;
+    gap: 28px;
+    /* space between image and green box */
+    align-items: stretch;
+    /* make both same height */
+}
+
+
+/* LEFT IMAGE */
+
+.partner-image {
+    flex: 1.2;
+    /* slightly wider */
+    display: flex;
+}
+
+.partner-image img {
+    width: 100%;
+    height: 100%;
+    /* match height of green card */
+    min-height: 430px;
+    /* increase height */
+    object-fit: cover;
+
+    border-top-right-radius: 120px;
+    border-bottom-left-radius: 20px;
+}
+
+
+/* RIGHT GREEN CARD */
+
+.partner-content {
+    flex: 1.2;
+    /* same width as image */
+
+    background: #49a84e;
+    color: white;
+
+    padding: 38px;
+    border-radius: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* center content vertically */
+}
+
+
+/* HEADING */
+
+.partner-content h2 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    line-height: 1.3;
+    color: #fff;
+    text-transform: none;
+    text-align: center;
+}
+
+
+/* PARAGRAPH */
+
+.partner-content p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+
+/* BUTTON */
+
+.partner-btn {
+    margin-top: 16px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 600;
+
+    background: transparent;
+    color: white;
+
+    border: 2px dashed white;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: 0.3s;
+
+    align-self: center;
+    /* center button */
+}
+
+.partner-btn:hover {
+    background: white;
+    color: #49a84e;
+}
+
+/* INTERNATIONAL CARD */
+
+.intl-card {
+    flex: 0 0 calc((100% - 60px) / 3);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid #49b657;
+    background: #ffffff;
+    margin-right: 2px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* IMAGE */
+
+.intl-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+
+/* BLUE CONTENT AREA */
+
+.intl-card-content {
+    background: #2f6fa7;
+    color: white;
+
+    padding: 30px 25px;
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    /* makes all cards same height */
+}
+
+
+/* TITLE */
+
+.intl-card-content h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #ffff;
+}
+
+
+/* TEXT */
+
+.intl-card-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+    /* pushes button down */
+}
+
+
+/* BUTTON */
+
+.intl-card-content .card-btn {
+    background: #49b657 !important;
+    border: none;
+    padding: 12px 26px;
+    color: white;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+
+    align-self: center;
+
+}
+
+
+/* WHY INTERNATIONAL SECTION */
+
+/* WHY INTERNATIONAL SECTION */
+
+.why-international-section {
+    padding: 48px 32px;
+    background: #2f6fa7;
+}
+
+
+/* MAIN CONTAINER */
+
+.why-international-container {
+    max-width: 1080px;
+    margin: auto;
+    display: flex;
+    gap: 34px;
+    align-items: flex-start;
+}
+
+
+/* LEFT WHITE BOX */
+
+.why-international-left {
+    flex: 1.2;
+    background: #ffffff;
+    padding: 34px;
+    border-radius: 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    /* controls vertical alignment */
+}
+
+
+/* MAIN HEADING */
+
+.why-international-left h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0b2239;
+    margin: 0;
+    line-height: 1.3;
+    text-align: left;
+
+    text-transform: none;
+}
+
+
+/* SUB HEADING */
+
+.why-international-left h4 {
+    font-size: 14px;
+    color: #1d3557;
+    margin: 0;
+}
+
+
+/* ITEM BLOCK */
+
+.why-international-left .why-item {
+    margin: 0;
+}
+
+
+/* ITEM TITLE */
+
+.why-international-left .why-item h5 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    color: #0b2239;
+}
+
+
+/* ITEM TEXT */
+
+.why-international-left .why-item p {
+    font-size: 14px !important;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #1b2a41 !important;
+    margin: 6px 0 0;
+    text-align: left !important;
+}
+
+
+/* RIGHT IMAGE COLUMN */
+
+.why-international-right {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+/* IMAGES */
+
+.why-international-right img {
+    width: 100%;
+    height: 220px;
+    /* fixed height like design */
+
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* CTA SECTION */
+
+.group-travel-cta {
+    position: relative;
+    background-image: url("../assests/IT_Team(3).jpg");
+    /* replace with your image */
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* BLUE OVERLAY */
+
+.cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 90, 140, 0.85);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* CONTENT */
+
+.cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    text-align: center;
+    color: white;
+}
+
+
+/* HEADING */
+
+.cta-content h2 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 16px;
+
+    color: #ffff;
+    text-transform: none;
+}
+
+
+/* SUBTEXT */
+
+.cta-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    opacity: 0.95;
+}
+
+
+/* CTA BUTTON */
+
+.cta-btn {
+    background: transparent !important;
+    color: white;
+    border: 2px dashed white;
+    padding: 14px 28px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cta-btn:hover {
+    background: green !important;
+    color: #ffff;
+}
+
+@media (max-width:1024px) {
+
+    .travel-section {
+        padding: 50px 28px;
+        gap: 30px;
+    }
+
+    .travel-left {
+        margin-left: 0;
+    }
+
+    .travel-content h1 {
+        font-size: 40px;
+    }
+
+    .travel-line {
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .travel-right {
+        margin-right: 0;
+    }
+
+    .travel-form-card {
+        width: 100%;
+        max-width: 390px;
+    }
+}
+
+
+
+
+@media (max-width:768px) {
+
+    /* HERO SECTION */
+
+    .travel-section {
+        flex-direction: column;
+        min-height: auto;
+        text-align: center;
+        padding: 45px 20px;
+    }
+
+    .travel-left {
+        margin-left: 0;
+    }
+
+    .travel-right {
+        width: 100%;
+        justify-content: center;
+        margin-right: 0;
+    }
+
+    .travel-form-card {
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .travel-content h1 {
+        font-size: 34px;
+    }
+
+    .travel-sub {
+        font-size: 16px;
+        max-width: 100%;
+    }
+
+    .travel-line {
+        margin: 20px auto;
+    }
+
+    .travel-tag {
+        font-size: 20px;
+        max-width: 100%;
+    }
+
+    .travel-btn {
+        margin: 0 auto;
+    }
+
+
+    /* GROUP TRAVEL */
+
+    .group-travel-grid {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .group-travel-text {
+        text-align: center;
+    }
+
+    .group-travel-image img {
+        height: 320px;
+    }
+
+
+    /* PARTNER */
+
+    .partner-container {
+        flex-direction: column;
+    }
+
+    .partner-image img {
+        min-height: 350px;
+    }
+
+    .partner-content {
+        text-align: center;
+    }
+
+
+    /* INTERNATIONAL CARDS */
+
+    .intl-card {
+        flex: 0 0 100%;
+    }
+
+
+    /* WHY SECTION */
+
+    .why-international-section {
+        padding: 44px 20px;
+    }
+
+    .why-international-container {
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+    }
+
+    .why-international-left {
+        width: 100%;
+        max-width: 620px;
+        padding: 30px 24px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .why-international-left h2 {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .why-international-left h4 {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .why-international-left .why-item h5,
+    .why-international-left .why-item p {
+        text-align: center !important;
+    }
+
+    .why-international-right {
+        flex-direction: row;
+        width: 100%;
+        max-width: 620px;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .why-international-right img {
+        height: 200px;
+        width: 50%;
+    }
+
+
+    /* CTA */
+
+    .group-travel-cta {
+        min-height: 420px;
+        height: auto;
+        padding: 56px 20px;
+    }
+
+    .cta-content {
+        width: 100%;
+        max-width: 620px;
+        padding: 0 20px;
+    }
+
+    .cta-content h2 {
+        font-size: 32px;
+        line-height: 1.25;
+    }
+
+    .cta-content p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .cta-btn {
+        font-size: 16px;
+        padding: 14px 24px;
+    }
+
+}
+
+
+
+/* =====================================
+428px (Mobile)
+===================================== */
+
+@media (max-width:428px) {
+
+    /* HERO */
+
+    .travel-content h1 {
+        font-size: 28px;
+        line-height: 1.25;
+    }
+
+    .travel-sub {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .travel-tag {
+        font-size: 17px;
+    }
+
+    .travel-line {
+        margin: 20px auto;
+    }
+
+    .travel-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+
+    .travel-form-card {
+        padding: 26px 18px;
+        border-radius: 18px;
+    }
+
+    .travel-form-card h2 {
+        font-size: 18px;
+    }
+
+    .travel-form-card input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .travel-radio-group {
+        justify-content: space-between;
+    }
+
+    .travel-radio-group label {
+        font-size: 14px;
+    }
+
+
+    /* GROUP TRAVEL */
+
+    .group-travel-section {
+        padding: 60px 25px;
+    }
+
+    .group-travel-heading {
+        font-size: 28px;
+    }
+
+    .group-travel-text {
+        font-size: 15px;
+    }
+
+    .group-travel-image img {
+        height: 260px;
+    }
+
+
+    /* PARTNER */
+
+    .partner-section {
+        padding: 30px 20px;
+    }
+
+    .partner-content {
+        padding: 35px 25px;
+    }
+
+    .partner-content h2 {
+        font-size: 24px;
+    }
+
+    .partner-content p {
+        font-size: 15px;
+    }
+
+
+    /* INTERNATIONAL CARDS */
+
+    .intl-card-content h3 {
+        font-size: 20px;
+    }
+
+    .intl-card-content p {
+        font-size: 14px;
+    }
+
+
+    /* WHY SECTION */
+
+    .why-international-section {
+        padding: 38px 14px;
+    }
+
+    .why-international-left {
+        padding: 26px 16px;
+        border-radius: 18px;
+    }
+
+    .why-international-left h2 {
+        font-size: 22px;
+        line-height: 1.3;
+    }
+
+    .why-international-left h4 {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .why-international-left .why-item h5 {
+        font-size: 14px;
+        line-height: 1.35;
+    }
+
+    .why-international-left .why-item p {
+        font-size: 13px !important;
+        line-height: 1.6;
+    }
+
+    .why-international-right {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .why-international-right img {
+        width: 100%;
+        height: 180px;
+        border-radius: 14px;
+    }
+
+
+    /* CTA */
+
+    .group-travel-cta {
+        min-height: 340px;
+        height: auto;
+        padding: 46px 14px;
+    }
+
+    .cta-content {
+        max-width: 100%;
+        padding: 0 14px;
+    }
+
+    .cta-content h2 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .cta-content p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 22px;
+    }
+
+    .cta-btn {
+        width: 100%;
+        max-width: 300px;
+        font-size: 14px;
+        padding: 13px 18px;
+    }
+
+}

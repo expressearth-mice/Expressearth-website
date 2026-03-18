@@ -196,11 +196,11 @@ const team = [
     title: "Pitch Pirate",
     img: "/Images/Team-Images-for-website/12.png",
   },
-  {
-    name: "Harsh Sharma",
-    title: "On-Ground Navigator",
-    img: "/Images/Team-Images-for-website/10.png",
-  },
+  // {
+  //   name: "Harsh Sharma",
+  //   title: "On-Ground Navigator",
+  //   img: "/Images/Team-Images-for-website/10.png",
+  // },
   {
     name: "Anjali Kumari",
     title: "Client Whisperer",

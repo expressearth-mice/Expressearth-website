@@ -281,3 +281,34 @@ body {
     line-height: 1.4;
   }
 }
+
+@media (min-width: 993px) {
+  .navbar-collapse {
+    min-width: 0;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .navbar-collapse::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navbar-links {
+    flex-wrap: nowrap;
+    flex: 0 0 max-content;
+  }
+
+  .navbar-links .nav-item {
+    flex: 0 0 auto;
+  }
+
+  .search-wrapper {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}

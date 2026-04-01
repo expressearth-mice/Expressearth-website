@@ -250,3 +250,34 @@ body {
     /* ✅ mobile dropdown gap */
   }
 }
+
+@media (max-width: 767px) {
+  :root {
+    --ee-navbar-h: 72px;
+    --ee-marquee-h: 36px;
+  }
+
+  .navbar-inner {
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .navbar-logo {
+    height: 48px;
+  }
+
+  .navbar-toggler {
+    padding: 6px 9px;
+  }
+
+  .navbar-collapse {
+    max-height: calc(100vh - var(--ee-navbar-h) - 20px);
+    overflow-y: auto;
+  }
+
+  .nav-text {
+    width: 100%;
+    white-space: normal;
+    line-height: 1.4;
+  }
+}

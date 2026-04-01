@@ -10,9 +10,10 @@ import {
   ShieldCheck,
   PackageCheck,
   UserCheck,
-  Send
+  Send,
 } from "lucide-react";
 import "./GiftingPage.css";
+import HorizontalSlider from "./ui/HorizontalSlider";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -28,10 +29,31 @@ const GiftingPage = () => {
     "Destination events",
   ];
 
-  return (
+  const whyChooseItems = [
+    {
+      icon: <PackageCheck size={28} />,
+      title: "Luxury-Centric Selections",
+      text: "Only the finest products curated from top global and Indian brands.",
+    },
+    {
+      icon: <Brush size={28} />,
+      title: "Branded & Thematic Presentation",
+      text: "Every gift is beautifully packaged and aligned with your event’s branding.",
+    },
+    {
+      icon: <UserCheck size={28} />,
+      title: "Personalized Touches",
+      text: "Engraved names, tailored messages, or localized elements, every detail matters.",
+    },
+    {
+      icon: <Briefcase size={28} />,
+      title: "Seamless Gifting Management",
+      text: "From procurement to distribution, everything is handled by our dedicated team.",
+    },
+  ];
 
+  return (
     <div className="gifting-page">
-      {/* Hero Section */}
       <div className="gifting-hero-section">
         <div className="hero-overlay">
           <motion.h1 initial="hidden" animate="show" variants={fadeIn}>
@@ -46,7 +68,6 @@ const GiftingPage = () => {
         </div>
       </div>
 
-      {/* Introduction */}
       <motion.section className="intro" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
         <p>
           At ExpressEarth, we understand that gifting is more than just an exchange — it’s an experience,
@@ -56,42 +77,45 @@ const GiftingPage = () => {
         </p>
         <i>Because the smallest touches often leave the deepest impressions.</i>
         <div className="cta-button">
-          <Send size={18} /> Looking for the perfect gift mix?  <a href="/contact">Request a Gifting Consultation</a>
+          <Send size={18} /> Looking for the perfect gift mix? <a href="/contact">Request a Gifting Consultation</a>
         </div>
       </motion.section>
 
-      {/* What We Offer */}
       <motion.section className="offer-section" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
         <h2><ShoppingBag size={32} /> What We Offer</h2>
         <p>Our gifting solutions align with the tone and theme of your event — from luxury MICE events to international incentives and leadership summits.</p>
 
-        <div className="offer-cards">
+        <HorizontalSlider className="offer-cards" itemCount={6}>
           {[
             { icon: <Brush size={32} />, title: "Customized Gifting Curation", text: "From concept to packaging, we tailor gifts to your brand ethos and audience." },
             { icon: <Briefcase size={32} />, title: "Welcome Kits & Delegate Hampers", text: "Make your guests feel special from the moment they arrive with elegantly packaged kits containing essentials, personalized items, and local souvenirs." },
             { icon: <PackageCheck size={32} />, title: "Luxury Merchandise & Branded Keepsakes", text: "From monogrammed leather accessories to fine stationery, we source high-end merchandise that reflects premium aesthetics." },
             { icon: <Leaf size={32} />, title: "Eco-Friendly & Sustainable Gifting", text: "Make a statement of purpose with ethically sourced, earth-conscious gifting options that leave a positive impact." },
             { icon: <Globe size={32} />, title: "Global Sourcing & Delivery", text: "Whether your event is in India or overseas, we manage end-to-end logistics including international sourcing, custom clearance, and on-ground delivery." },
-            { icon: <Globe size={32} />, title: " Themed Gifting for Special Occasions", text: "Celebrate festivals, milestones, and corporate achievements with thoughtfully themed gift sets tailored to the occasion — be it Diwali, New Year, product launches, or anniversaries." },
+            { icon: <Globe size={32} />, title: "Themed Gifting for Special Occasions", text: "Celebrate festivals, milestones, and corporate achievements with thoughtfully themed gift sets tailored to the occasion — be it Diwali, New Year, product launches, or anniversaries." },
           ].map((item, index) => (
-            <motion.div className="offer-card" key={index} variants={fadeIn}>
+            <div className="offer-card" key={index}>
               {item.icon}
               <h3>{item.title}</h3>
               <p>{item.text}</p>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </HorizontalSlider>
       </motion.section>
 
-      {/* Why Choose Us */}
       <motion.section className="why-choose" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
         <h2><ShieldCheck size={32} /> Why Choose ExpressEarth for Gifting?</h2>
-        <ul>
-          <li><PackageCheck size={18} /> Luxury-Centric Selections: Only the finest products curated from top global and Indian brands.          </li>
-          <li><Brush size={18} /> Branded & Thematic Presentation: Every gift is beautifully packaged and aligned with your event’s branding.</li>
-          <li><UserCheck size={18} /> Personalized Touches: Engraved names, tailored messages, or localized elements — every detail matters.          </li>
-          <li><Briefcase size={18} /> Seamless Gifting Management: From procurement to distribution, everything is handled by our dedicated team.          </li>
-        </ul>
+        <HorizontalSlider className="why-choose-cards" itemCount={whyChooseItems.length}>
+          {whyChooseItems.map((item, index) => (
+            <div className="why-choose-card" key={index}>
+              <div className="why-choose-card-icon">{item.icon}</div>
+              <div className="why-choose-card-content">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </div>
+          ))}
+        </HorizontalSlider>
         <div className="cta-button">
           <Send size={18} /> Let’s Make Your Gifting Stand Out → <a href="/contact">Get in Touch with Our Gifting Experts</a>
         </div>
@@ -117,15 +141,11 @@ const GiftingPage = () => {
         </div>
       </section>
 
-
-
-      {/* Final Call */}
       <motion.section className="final-call" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn}>
-        <h2> Let’s Create Something Special</h2>
-        <p>We’re here to help you create moments that last beyond the event. Let’s design a gifting experience your guests will remember — and talk about.
-        </p>
+        <h2>Let’s Create Something Special</h2>
+        <p>We’re here to help you create moments that last beyond the event. Let’s design a gifting experience your guests will remember — and talk about.</p>
         <div className="cta-button">
-        <a href="/contact">Speak to Our Gifting Specialists Today</a>
+          <a href="/contact">Speak to Our Gifting Specialists Today</a>
         </div>
       </motion.section>
     </div>

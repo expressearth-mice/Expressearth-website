@@ -197,6 +197,15 @@ function Navbar() {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link nav-text text-success"
+                    to="/dashboard"
+                    onClick={handleNavLinkClick}
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link nav-text text-success"
                     to="/create-post"
                     onClick={handleNavLinkClick}
                   >

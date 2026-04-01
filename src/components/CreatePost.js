@@ -1,14 +1,17 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
+import React, { useEffect, useState, useContext } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axiosInstance from "../api/axios";
 
 const bgImage = process.env.PUBLIC_URL + "/Images/bg2.jpg";
 
 function CreatePost() {
-  const { authTokens } = useContext(AuthContext);
+  const { getValidAccessToken } = useContext(AuthContext);
+  const { title } = useParams();
+  const navigate = useNavigate();
+  const isEditMode = Boolean(title);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -19,6 +22,36 @@ function CreatePost() {
   });
 
   const [content, setContent] = useState(""); // rich text body (optional display or future field)
+  const [loading, setLoading] = useState(isEditMode);
+
+  useEffect(() => {
+    if (!isEditMode) {
+      setLoading(false);
+      return;
+    }
+
+    const fetchPost = async () => {
+      try {
+        const res = await axiosInstance.get(`/api/posts/${title}/`);
+        const post = res.data;
+        setFormData({
+          title: post.title || "",
+          description: post.description || "",
+          category: post.category || "Meetings",
+          image: null,
+          video_url: post.video_url || "",
+        });
+        setContent(post.long_des || "");
+      } catch (err) {
+        console.error("Error fetching post for editing:", err);
+        alert("Unable to load post for editing.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [isEditMode, title]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,19 +75,46 @@ function CreatePost() {
     data.append("video_url", formData.video_url);
 
     try {
-      const res = await axiosInstance.post("/api/posts/", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${authTokens?.access}`,
-        },
-      });
+      const accessToken = await getValidAccessToken();
+      if (!accessToken) {
+        alert("Your session has expired. Please log in again.");
+        return;
+      }
 
-      alert("Post created successfully!");
+      const request = isEditMode
+        ? axiosInstance.put(`/api/posts/${title}/`, data, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+        : axiosInstance.post("/api/posts/", data, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+      const res = await request;
+
+      alert(isEditMode ? "Post updated successfully!" : "Post created successfully!");
+      const updatedPost = res.data || {};
+      const postUrlPart =
+        updatedPost.slug || updatedPost.title
+          ? updatedPost.slug || encodeURIComponent(updatedPost.title)
+          : title;
+
+      if (isEditMode && postUrlPart) {
+        navigate(`/blogs/${postUrlPart}`);
+        return;
+      }
+
       setFormData({
         title: "",
         description: "",
         category: "Meetings",
         image: null,
+        video_url: "",
       });
       setContent("");
     } catch (err) {
@@ -66,6 +126,10 @@ function CreatePost() {
       }
     }
   };
+
+  if (loading) {
+    return <div className="text-center mt-5">Loading editor...</div>;
+  }
 
   return (
     <div className="container mt-4">
@@ -90,7 +154,9 @@ function CreatePost() {
             boxShadow: "0 0 10px rgba(0,0,0,0.2)",
           }}
         >
-          <h2 className="text-center mb-4">Create Post</h2>
+          <h2 className="text-center mb-4">
+            {isEditMode ? "Edit Post" : "Create Post"}
+          </h2>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <input
               type="text"
@@ -145,7 +211,7 @@ function CreatePost() {
               placeholder="You can write blog long des here (not submitted yet)..."
             />
             <button type="submit" className="btn btn-primary w-100">
-              Submit Post
+              {isEditMode ? "Update Post" : "Submit Post"}
             </button>
             {content && (
               <div
@@ -159,7 +225,6 @@ function CreatePost() {
                 />
               </div>
             )}
-
           </form>
         </div>
       </div>

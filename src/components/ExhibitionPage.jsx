@@ -1,7 +1,8 @@
 import React from "react";
 import "./ExhibitionPage.css";
-import { FaMapMarkedAlt, FaPaintBrush, FaCogs, FaGlobe, FaRocket } from "react-icons/fa";
+import { FaMapMarkedAlt, FaPaintBrush, FaGlobe, FaRocket } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
+import HorizontalSlider from "./ui/HorizontalSlider";
 
 const ExhibitionPage = () => {
   return (
@@ -34,7 +35,7 @@ const ExhibitionPage = () => {
         As one of India’s leading trade fair organizers and a global MICE force, we help companies navigate complex exhibition landscapes with elegance and ease.
         </p>
 
-        <div className="expertise-cards">
+        <HorizontalSlider className="expertise-cards" itemCount={6}>
 
           <div className="exhibition-card">
             <FaMapMarkedAlt className="card-icon" />
@@ -89,7 +90,7 @@ const ExhibitionPage = () => {
             <a href="/contact" className="cta-link"> Stress-Free Execution → Talk to Our Event Support Team</a>
           </div>
 
-        </div>
+        </HorizontalSlider>
       </section>
 
       {/* Why Choose Us Section */}

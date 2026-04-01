@@ -3,6 +3,7 @@ import { Briefcase, Globe, Mic, PieChart, Users, Phone, Building, Settings, Shie
 import { motion } from 'framer-motion';
 import './MeetingsAndConferences.css';
 import { Link } from 'react-router-dom';
+import HorizontalSlider from './ui/HorizontalSlider';
 
 const MeetingsAndConferences = () => {
   return (
@@ -53,7 +54,7 @@ const MeetingsAndConferences = () => {
         className="offer-section timeline-section"
       >
         <h2 className="offer-title">What We Offer</h2>
-        <div className="timeline">
+        <HorizontalSlider className="meetings-cards-row" itemCount={5}>
           {[
             {
               icon: <Briefcase />,
@@ -81,15 +82,15 @@ const MeetingsAndConferences = () => {
               desc: 'Full-service AGM planning including compliance, logistics, technology, and shareholder engagement.',
             },
           ].map((item, idx) => (
-            <div key={idx} className="timeline-item">
-              <div className="timeline-icon">{item.icon}</div>
-              <div className="timeline-content">
-                <h3 className="timeline-title">{item.title}</h3>
-                <p className="timeline-desc">{item.desc}</p>
+            <div key={idx} className="meetings-card">
+              <div className="meetings-card-icon">{item.icon}</div>
+              <div className="meetings-card-content">
+                <h3 className="meetings-card-title">{item.title}</h3>
+                <p className="meetings-card-desc">{item.desc}</p>
               </div>
             </div>
           ))}
-        </div>
+        </HorizontalSlider>
       </motion.section>
 
       {/* Why Choose Us Section */}
@@ -104,24 +105,25 @@ const MeetingsAndConferences = () => {
           {[
             {
               icon: <Building />,
-              text: ' Luxury Approach to MICE – Premium venues, personalized experiences, and attention to detail that reflect your brand prestige',
+              text: ' Luxury Approach to MICE, Premium venues, personalized experiences, and attention to detail that reflect your brand prestige',
             },
             {
               icon: <Settings />,
-              text: 'End-to-End Execution –Venue sourcing, travel management, production, staffing — all managed by our in-house team.',
+              text: 'End-to-End Execution, Venue sourcing, travel management, production, staffing — all managed by our in-house team.',
             },
             {
               icon: <Globe />,
-              text: ' Global Expertise – Seamless event execution in top MICE destinations across the globe.',
+              text: ' Global Expertise, Seamless event execution in top MICE destinations across the globe.',
             },
             {
               icon: <ShieldCheck />,
-              text: 'Tailored for Impact –  We listen, strategize, and deliver exactly what your event needs — nothing generic, always extraordinary.',
+              text: 'Tailored for Impact, We listen, strategize, and deliver exactly what your event needs — nothing generic, always extraordinary.',
             },
           ].map((item, idx) => (
             <div key={idx} className="testimonial-item">
               <div className="testimonial-icon">{item.icon}</div>
-              <p className="testimonial-quote">{item.text}</p>
+              <h3 className="testimonial-heading">{item.text.split(',')[0].trim()}</h3>
+              <p className="testimonial-quote">{item.text.split(',').slice(1).join(',').trim()}</p>
             </div>
           ))}
         </div>

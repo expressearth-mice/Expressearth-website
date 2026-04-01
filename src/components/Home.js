@@ -1,11 +1,60 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PopupForm from "./popupForm";
 import axiosInstance from "../api/axios";
 import IntegrationTools from "./ui/IntegrationTools";
+import HorizontalSlider from "./ui/HorizontalSlider";
+import homeVideo from "../assests/home .mp4";
+
+const travelStats = [
+  {
+    icon: "fas fa-globe",
+    label: "Countries Network",
+    target: 30,
+    step: 1,
+    interval: 45,
+    formatValue: (value) => `${value}+`,
+  },
+  {
+    icon: "fas fa-hotel",
+    label: "Hotel Partners",
+    target: 500,
+    step: 10,
+    interval: 55,
+    formatValue: (value) => `${value}+`,
+  },
+  {
+    icon: "fas fa-smile-beam",
+    label: "Satisfied Clients",
+    target: 100000,
+    step: 2500,
+    interval: 80,
+    formatValue: (value) => {
+      if (value >= 100000) {
+        return "1 Lakh+";
+      }
+
+      if (value >= 1000) {
+        return `${Math.round(value / 1000)}K+`;
+      }
+
+      return `${value}+`;
+    },
+  },
+  {
+    icon: "fas fa-briefcase",
+    label: "Successful Events",
+    target: 1000,
+    step: 25,
+    interval: 70,
+    formatValue: (value) => `${value}+`,
+  },
+];
 
 const Home = () => {
+  const location = useLocation();
+
   useEffect(() => {
     if (window.gtag) {
       window.gtag("event", "click", {
@@ -19,7 +68,10 @@ const Home = () => {
   const [showIcon, setShowIcon] = useState(false);
   const [recentPosts, setRecentPosts] = useState([]);
   const [activeFAQ, setActiveFAQ] = useState(null);
-
+  const [hasStartedTravelStats, setHasStartedTravelStats] = useState(false);
+  const [animatedTravelStats, setAnimatedTravelStats] = useState(
+    travelStats.map(() => 0)
+  );
   const toggleFAQ = (index) => {
     setActiveFAQ(activeFAQ === index ? null : index);
   };
@@ -29,37 +81,36 @@ const Home = () => {
       icon: "fa-building",
       label: "Luxury Conferences",
       destinations: "20+",
-      slug: "Luxury Conferences",
+      slug: "/meetings-and-conferences",
     },
     {
       icon: "fa-plane-departure",
       label: "Incentive Travel",
       destinations: "15+",
-      slug: "Incentive Travel",
+      slug: "/incentive-travel",
     },
     {
       icon: "fa-umbrella-beach",
       label: "Corporate Retreats",
       destinations: "12+",
-      slug: "Corporate Retreats",
+      slug: "/incentive-travel",
     },
     {
       icon: "fa-people-arrows",
       label: "Business Networking",
       destinations: "18+",
-      slug: "Business Networking",
+      slug: "/meetings-and-conferences",
     },
     {
       icon: "fa-store",
       label: "Exhibitions & Trade Shows",
       destinations: "10+",
-      slug: "Exhibitions & Trade Shows",
-    },
+      slug: "/exhibitions-and-trade-shows"},
     {
       icon: "fa-map-marker-alt",
       label: "Destination Meetings",
       destinations: "25+",
-      slug: "Destination Meetings",
+      slug: "/destination-management",
     },
   ];
 
@@ -86,6 +137,59 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (location.hash === "#home-faqs") {
+      const faqSection = document.getElementById("home-faqs");
+
+      if (faqSection) {
+        window.requestAnimationFrame(() => {
+          faqSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => {
+            window.history.replaceState(
+              null,
+              "",
+              `${location.pathname}${location.search}`
+            );
+          }, 700);
+        });
+      }
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (!hasStartedTravelStats) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setAnimatedTravelStats((prev) => {
+        const next = prev.map((value, index) => {
+          const stat = travelStats[index];
+
+          if (value >= stat.target) {
+            return stat.target;
+          }
+
+          return Math.min(value + stat.step, stat.target);
+        });
+
+        const allComplete = next.every(
+          (value, index) => value >= travelStats[index].target
+        );
+
+        if (allComplete) {
+          window.clearInterval(intervalId);
+        }
+
+        return next;
+      });
+    }, 60);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [hasStartedTravelStats]);
+
   const handleClosePopup = () => {
     setShowPopup(false);
     setShowIcon(true); // Show icon after closing
@@ -95,6 +199,20 @@ const Home = () => {
     setShowPopup(true);
     setShowIcon(false); // Hide icon when popup is open
   };
+
+  const handleTravelStatsHover = () => {
+    setHasStartedTravelStats(true);
+  };
+
+  const splitMiceCardText = (text) => {
+    const parts = text.split(/\s+[–-]\s+/u);
+
+    return {
+      title: parts[0] || text,
+      details: parts.slice(1).join(" - "),
+    };
+  };
+
   return (
     <div className="home-container">
       {showPopup && <PopupForm onClose={handleClosePopup} />}
@@ -126,8 +244,10 @@ const Home = () => {
                 className="d-block w-100 carousel-image"
                 alt="Slide 1"
               />
-              <div className="carousel-caption hero-overlay d-none d-md-block">
-                <h1>Turning MICE Experiences into Unforgettable Journeys</h1>
+              <div className="carousel-caption hero-overlay">
+                <h1 className="hero-title-box">
+                  Turning MICE Experiences into Unforgettable Journeys
+                </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -145,8 +265,10 @@ const Home = () => {
                 className="d-block w-100 carousel-image"
                 alt="Slide 2"
               />
-              <div className="carousel-caption hero-overlay d-none d-md-block">
-                <h1>Turning MICE Experiences into Unforgettable Journeys</h1>
+              <div className="carousel-caption hero-overlay">
+                <h1 className="hero-title-box">
+                  Turning MICE Experiences into Unforgettable Journeys
+                </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -164,8 +286,10 @@ const Home = () => {
                 className="d-block w-100 carousel-image"
                 alt="Slide 3"
               />
-              <div className="carousel-caption hero-overlay d-none d-md-block">
-                <h1>Turning MICE Experiences into Unforgettable Journeys</h1>
+              <div className="carousel-caption hero-overlay">
+                <h1 className="hero-title-box">
+                  Turning MICE Experiences into Unforgettable Journeys
+                </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -183,8 +307,10 @@ const Home = () => {
                 className="d-block w-100 carousel-image"
                 alt="Slide 4"
               />
-              <div className="carousel-caption hero-overlay d-none d-md-block">
-                <h1>Turning MICE Experiences into Unforgettable Journeys</h1>
+              <div className="carousel-caption hero-overlay">
+                <h1 className="hero-title-box">
+                  Turning MICE Experiences into Unforgettable Journeys
+                </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -202,8 +328,10 @@ const Home = () => {
                 className="d-block w-100 carousel-image"
                 alt="Slide 5"
               />
-              <div className="carousel-caption hero-overlay d-none d-md-block">
-                <h1>Turning MICE Experiences into Unforgettable Journeys</h1>
+              <div className="carousel-caption hero-overlay">
+                <h1 className="hero-title-box">
+                  Turning MICE Experiences into Unforgettable Journeys
+                </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -249,13 +377,22 @@ const Home = () => {
         </div>
       </section>
       {/* Destinations */}
-      <section className="destinations">
+      <section
+        className="destinations"
+        // style={{
+        //   backgroundImage:
+        //     "linear-gradient(rgba(8, 59, 112, 0.55), rgba(8, 59, 112, 0.55)), url('/Images/switzerland.png')",
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        //   backgroundRepeat: "no-repeat",
+        // }}
+      >
         <div className="destination-section">
           <div className="intro-row">
             <div className="text-left">
               {/* <p className="highlight">DESTINATIONS WE RECOMMEND</p> */}
-              <h3 className="section-title">DESTINATIONS WE RECOMMEND</h3>
-              <h5>
+              <h3 className="section-title">Destinations We Recommend</h3>
+              <h5 className="section-subtitle">
                 Handpicked Global Locations for Exceptional MICE Experiences
               </h5>
             </div>
@@ -324,28 +461,27 @@ const Home = () => {
       </section>
       <IntegrationTools />
 
-      <section class="travel-banner">
-        <div class="travel-image-box">
-          <img
-            src="\Images\HOME\PLAN. EXECUTE. INSPIRE\cascade-park-stone-flow-splash-ban_1417-1272.jpg"
-            alt="Travel"
+      <section className="travel-banner">
+        <div className="travel-image-box">
+          <video
+            className="travel-video"
+            src={homeVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
           />
-          <button class="travel-play-btn">
-            <svg viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" fill="currentColor" />
-            </svg>
-          </button>
         </div>
 
-        <div class="travel-content-box">
-          <p class="travel-callback-text">
+        <div className="travel-content-box">
+          <p className="travel-callback-text">
             CONNECT WITH US FOR UNFORGETTABLE MICE EXPERIENCES
           </p>
 
-          <h1 class="travel-heading">PLAN. EXECUTE. INSPIRE.</h1>
+          <h1 className="travel-heading">Plan. Execute. Inspire.</h1>
 
-          <p class="travel-subtext">
-            At <strong>ExpressEarth</strong>, we don’t just organize events — we
+                    <p className="travel-subtext">
+            <span className="travel-subtext-initial">At ExpressEarth</span>, we don’t just organize events — we
             craft immersive corporate experiences. With over a decade of
             expertise in the MICE industry, we specialize in curating high-end
             conferences, incentive retreats, and global business summits. Our
@@ -353,138 +489,132 @@ const Home = () => {
             ensuring every moment leaves a lasting impression.
           </p>
 
-          <div class="travel-subheading-box">
-            <h6 class="travel-tagline">
+          <div className="travel-subheading-box">
+            <h6 className="travel-tagline">
               From Vision to Reality – We Make It Happen.
             </h6>
-            <h5 class="travel-impact"> Our Global Impact</h5>
+            <h5 className="travel-impact"> Our Global Impact</h5>
           </div>
 
-          <div class="travel-stats-grid">
-            <div class="travel-stat-item">
-              <i class="fas fa-globe fa-2x travel-icon"></i>
-              <p class="travel-stat-number">30+</p>
-              <p class="travel-stat-label">Countries Network</p>
-            </div>
-            <div class="travel-stat-item">
-              <i class="fas fa-hotel fa-2x travel-icon"></i>
-              <p class="travel-stat-number">500+</p>
-              <p class="travel-stat-label">Hotel Partners</p>
-            </div>
-            <div class="travel-stat-item">
-              <i class="fas fa-smile-beam fa-2x travel-icon"></i>
-              <p class="travel-stat-number">1 Lakh+</p>
-              <p class="travel-stat-label">Satisfied Clients</p>
-            </div>
-            <div class="travel-stat-item">
-              <i class="fas fa-briefcase fa-2x travel-icon"></i>
-              <p class="travel-stat-number">1000+</p>
-              <p class="travel-stat-label">Successful Events</p>
-            </div>
+          <div
+            className="travel-stats-grid"
+            onMouseEnter={handleTravelStatsHover}
+          >
+            {travelStats.map((stat, index) => (
+              <div key={stat.label} className="travel-stat-item">
+                <i className={`${stat.icon} fa-2x travel-icon`}></i>
+                <p className="travel-stat-number">
+                  {stat.formatValue(animatedTravelStats[index])}
+                </p>
+                <p className="travel-stat-label">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="mice-section container mt-3 mb-5">
-        <h2 className="text-center mb-3 fw-bold">MICE BY DESTINATION</h2>
-        <h5 className="text-center text-muted mb-5">
+      <section className="mice-section home-mice-section">
+        <h2 className="c">Mice By Destination</h2>
+        <h5 className="section-subheading">
           Explore the world's finest destinations, designed for unforgettable
           corporate experiences.
         </h5>
 
         {/* Horizontal scroll wrapper */}
-        <div className="scroll-container d-flex gap-3 overflow-auto px-2 pb-3">
-          {miceDestinations.map((item, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0"
-              style={{ width: "300px" }}
-            >
-              <Link
-                to={`/categories/${item.slug}`}
-                className="text-decoration-none"
-              >
-                <div className="card mice-card text-center shadow-sm p-3 h-100">
-                  <i className={`fa ${item.icon} fa-2x text-primary mb-3`}></i>
-                  <h6 className="fw-semibold mb-1">{item.label}</h6>
-                  <p className="text-muted small mb-0">
-                    {item.destinations} Destinations
-                  </p>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+        <HorizontalSlider
+          className="scroll-container mice-scroll-container"
+          shellClassName="mice-scroll-shell"
+          arrowClassName="mice-scroll-arrow"
+          itemCount={miceDestinations.length}
+          leftAriaLabel="Scroll destination cards left"
+          rightAriaLabel="Scroll destination cards right"
+        >
+            {miceDestinations.map((item, index) => (
+              <div key={index} className="mice-scroll-item">
+                <Link to={item.slug} className="mice-link">
+                  <div className="mice-card mice-card-panel">
+                    <i className={`fa ${item.icon} fa-2x mice-card-icon`}></i>
+                    <h6 className="mice-card-title">{item.label}</h6>
+                    <p className="mice-card-meta">
+                      {item.destinations} Destinations
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+        </HorizontalSlider>
 
-        <div className="subtext text-center mt-4">
-          <h6 className="text-secondary">
-            Where business meets luxury—tailor your next event with
+        <div className="subtext subtext-block">
+          <h6 className="subtext-note">
+            Where business meets luxury, tailor your next event with
             ExpressEarth!
           </h6>
         </div>
 
-        <h2 className="text-center mt-5 mb-4 ">MICE BY GROUP SIZE</h2>
-        <h5 className="text-center text-muted mb-5">
+        <h2 className="section-heading section-heading-spacing">Mice By Group Size</h2>
+        <h5 className="section-subheading">
           Seamless event planning for every group, from intimate gatherings to
           grand corporate affairs.
         </h5>
 
-        <div className="scroll-container d-flex gap-3 overflow-auto px-2 pb-3 ">
-          {[
-            {
-              icon: "fa-solid fa-users",
+        <HorizontalSlider
+          className="scroll-container mice-scroll-container"
+          shellClassName="mice-scroll-shell"
+          arrowClassName="mice-scroll-arrow"
+          itemCount={5}
+          leftAriaLabel="Scroll group size cards left"
+          rightAriaLabel="Scroll group size cards right"
+        >
+            {[
+              {
+              
               text: "Large Corporate Groups – 500+ Participants | 20+ Destinations",
-              slug: "large-corporate-groups",
+      
             },
             {
-              icon: "fa-solid fa-user-group",
+              
               text: "Small Business Teams – 50–200 Participants | 15+ Destinations",
-              slug: "small-business-teams",
+              
             },
             {
-              icon: "fa-solid fa-user-tie",
+              
               text: "Executive Retreats & Couples – 2–50 Participants | 12+ Destinations",
-              slug: "executive-retreats-couples",
+              
             },
             {
-              icon: "fa-solid fa-champagne-glasses",
+              
               text: "Incentive & Special Interest Groups – Customizable | 18+ Destinations",
-              slug: "incentive-special-interest-groups",
+              
             },
             {
-              icon: "fa-solid fa-globe",
+              
               text: "Global Conferences – 1000+ Participants | 10+ Destinations",
-              slug: "global-conferences",
+              
             },
           ].map((item, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0"
-              style={{ width: "300px" }}
-            >
-              <Link
-                to={`/categories/${item.slug}`}
-                className="text-decoration-none"
-              >
-                <div className="card mice-card text-center shadow-sm p-3 h-100">
-                  <i className={`${item.icon} fa-2x text-primary mb-3`}></i>
-                  <p className="text-muted small mb-0">{item.text}</p>
-                </div>
-              </Link>
+            <div key={index} className="mice-scroll-item">
+              <div className="mice-card mice-card-panel">
+                <h6 className="mice-card-title">
+                  {splitMiceCardText(item.text).title}
+                </h6>
+                <p className="mice-card-meta">
+                  {splitMiceCardText(item.text).details}
+                </p>
+              </div>
             </div>
           ))}
-        </div>
+        </HorizontalSlider>
 
-        <div className="subtext text-center mt-4">
-          <h6>
+        <div className="subtext subtext-block">
+          <h6 className="subtext-note">
             Whatever the size, we craft experiences that leave a lasting impact!
           </h6>
         </div>
       </section>
       {/* Testimonials */}
       <section className="testimonials">
-        <div className="testimonial-title">
-          <h3>CLIENT EXPERIENCES THAT SPEAK FOR THEMSELVES</h3>
+        <div className="testimonial-title" >
+          <h3>Client Experiences That Speak For Themselves</h3>
           <h6>
             Hear from our satisfied groups who have experienced seamless
             planning, exceptional service, and unforgettable journeys with us.
@@ -521,7 +651,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="text-center mt-4">
+        <div className="testimonial-cta">
           <p>What’s your story? Let us craft your perfect travel experience!</p>
           <Link to="/contact" className="custom-button-link">
             Contact Us
@@ -530,41 +660,48 @@ const Home = () => {
       </section>
 
       {/*Recent blog*/}
-      <section className="blogs-updates mt-5 mb-5">
-        <h2 className="text-center mb-4">Latest News & Blogs</h2>
-        <p className="text-center lead">Trends, Insights & MICE Updates!</p>
+      <section className="blogs-updates blogs-updates-section">
+        <h2 className="blogs-title">Latest News & Blogs</h2>
+        <p className="blogs-lead">Trends, Insights & MICE Updates!</p>
 
-        <div className="scrolling-wrapper mt-4">
-          {recentPosts.map((post) => (
-            <div key={post.id} className="blog-card">
-              <img src={post.image} alt={post.title} />
-              <div className="card-body">
-                <h5>
-                  <Link
-                    to={`/blogs/${post.slug}`}
-                    className="text-dark text-decoration-none"
-                  >
-                    {post.title}
-                  </Link>
-                </h5>
-                <p>{post.description.slice(0, 80)}...</p>
+        <div className="blogs-scrolling-wrapper">
+          <div className="blogs-scrolling-track">
+            {[...recentPosts, ...recentPosts].map((post, index) => (
+              <div
+                key={`${post.id}-${index}`}
+                className="blog-card"
+                aria-hidden={index >= recentPosts.length}
+              >
+                <img src={post.image} alt={post.title} />
+                <div className="card-body">
+                  <h5>
+                    <Link
+                      to={`/blogs/${post.slug}`}
+                      className="blog-link"
+                      tabIndex={index >= recentPosts.length ? -1 : 0}
+                    >
+                      {post.title}
+                    </Link>
+                  </h5>
+                  <p>{post.description.slice(0, 80)}...</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="text-center mt-3">
+        <div className="blogs-cta">
           <Link to="/blogs" className="custom-button-link">
             Explore Blogs
           </Link>
         </div>
       </section>
 
-      <section className="relative bg-white py-20 px-4 md:px-8 text-center overflow-hidden">
+      <section className="case-study-section">
         {/* Top curved SVG */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-0 rotate-180">
+        <div className="case-study-wave case-study-wave-top">
           <svg
-            className="relative block w-full h-16"
+            className="case-study-wave-svg"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
             viewBox="0 0 1200 120"
@@ -573,35 +710,30 @@ const Home = () => {
           </svg>
         </div>
 
-        <div className="relative max-w-4xl mx-auto z-10">
-          <div className="inline-block">
-            <h2 className="font-bold text-lg md:text-xl">
+        <div className="case-study-content">
+          <div className="case-study-content-inner">
+            <h2 className="case-study-kicker">
               Real Success Stories
             </h2>
-            <p className="text-lg md:text-xl lg:text-2xl">
+            <p className="case-study-title">
               Transforming Corporate Travel & Events
             </p>
-            <h3
-              className="mt-10 text-2xl text-indigo-600 font-bold italic px-2"
-              style={{
-                color: "blue",
-              }}
-            >
+            <h3 className="case-study-quote">
               “ExpressEarth MICE delivered a seamless and personalized corporate
               travel experience. Their expertise in handling large-scale events,
               attention to detail, and customized solutions truly set them
               apart.”
             </h3>
           </div>
-          <p className="mt-6 text-gray-600">
+          <p className="case-study-description">
             That’s what a senior manager from a{" "}
-            <span className="italic">[Fortune 500 Company]</span> had to say
+            <span className="case-study-company">[Fortune 500 Company]</span> had to say
             about their experience with ExpressEarth MICE. From end-to-end event
             planning to flawless execution, we ensure every journey is a
             success.
           </p>
 
-          <p className="mt-3 text-gray-600">
+          <p className="case-study-description case-study-description-secondary">
             Discover how our innovative solutions and industry expertise create
             unforgettable corporate experiences.
           </p>
@@ -612,16 +744,9 @@ const Home = () => {
 
         {/* Bottom curved SVG */}
         {/* Top rotated curved SVG (180°) */}
-        <div
-          className="w-full overflow-hidden leading-0"
-          style={{
-            transform: "rotate(180deg)", // Rotate the whole div
-            marginTop: "2rem",
-            marginBottom: "3rem",
-          }}
-        >
+        <div className="case-study-wave case-study-wave-bottom">
           <svg
-            className="relative block w-full h-16"
+            className="case-study-wave-svg"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
             viewBox="0 0 1200 120"
@@ -631,14 +756,14 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="bg-gray-50 text-center py-16 px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+      <section className="achievements-section">
+        <h2 className="achievements-title">
           Excellence Recognized, Trust Earned
         </h2>
-        <p className="text-gray-700 max-w-3xl mx-auto mb-6 text-base md:text-lg">
+        <p className="achievements-text">
           Discover the awards, accreditations, and industry recognition that
           make{" "}
-          <span className="text-green-600 font-medium">ExpressEarth MICE</span>{" "}
+          <span className="achievements-brand">ExpressEarth MICE</span>{" "}
           a trusted name in corporate travel and event management. With 9 years
           of excellence, we continue to set new benchmarks in delivering
           unforgettable experiences.
@@ -652,7 +777,7 @@ const Home = () => {
 
       {/* FAQs Section */}
 
-      <section className="faq-section">
+      <section id="home-faqs" className="faq-section">
         <h3>FAQs</h3>
         <section className="faq-section">
           {[
@@ -690,12 +815,7 @@ const Home = () => {
             <div key={index} className="faq-item">
               <h4
                 onClick={() => toggleFAQ(index)}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+                className="faq-question-row"
               >
                 {faq.question}
                 <span>{activeFAQ === index ? "⌃" : "⌄"}</span>
@@ -718,3 +838,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

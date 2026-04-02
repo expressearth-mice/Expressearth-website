@@ -288,10 +288,14 @@ body {
     display: flex !important;
     align-items: center;
     gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: visible;
     scrollbar-width: none;
     -ms-overflow-style: none;
+  }
+
+  .glass-navbar,
+  .navbar-inner {
+    overflow: visible;
   }
 
   .navbar-collapse::-webkit-scrollbar {

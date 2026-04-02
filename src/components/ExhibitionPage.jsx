@@ -49,7 +49,7 @@ const ExhibitionPage = () => {
             <FaPaintBrush className="card-icon" />
             <h3>Booth Fabrication Services</h3>
             <p>
-            Your booth is your brand’s physical presence. We provide high-end, customized booth fabrication services — blending aesthetics, functionality, and brand messaging seamlessly.
+            Your booth is your brand’s physical presence. We provide high-end, customized booth fabrication services, blending aesthetics, functionality, and brand messaging seamlessly.
             </p>
             <a href="/contact" className="cta-link">Design That Delivers → Get a 3D Concept Today</a>
           </div>
@@ -76,7 +76,7 @@ const ExhibitionPage = () => {
             <FaRocket className="card-icon" />
             <h3> Industry Exhibition Planning Services</h3>
             <p>
-            We take a 360° approach — strategy, creative, logistics, staffing, branding, lead tracking — making your participation smooth and successful with our full-scale industry exhibition planning services.
+            We take a 360° approach — strategy, creative, logistics, staffing, branding, lead tracking, making your participation smooth and successful with our full-scale industry exhibition planning services.
             </p>
             <a href="/contact" className="cta-link"> Maximize ROI → Let’s Build Your Trade Show Strategy</a>
           </div>
@@ -85,7 +85,7 @@ const ExhibitionPage = () => {
             <FaRocket className="card-icon" />
             <h3> End-to-End Coordination & Support            </h3>
             <p>
-            From the initial planning stages to on-ground execution, our team provides seamless coordination every step of the way — so you can focus on showcasing your brand while we handle the rest.
+            From the initial planning stages to on-ground execution, our team provides seamless coordination every step of the way, so you can focus on showcasing your brand while we handle the rest.
             </p>
             <a href="/contact" className="cta-link"> Stress-Free Execution → Talk to Our Event Support Team</a>
           </div>
@@ -97,7 +97,7 @@ const ExhibitionPage = () => {
       <section className="why-choose-section container">
         <h2>Why Brands Choose ExpressEarth</h2>
         <ul>
-          <li><strong>Global Reach, Local Expertise:</strong>  We manage exhibitions across continents — with cultural fluency and logistical expertise.</li>
+          <li><strong>Global Reach, Local Expertise:</strong>  We manage exhibitions across continents, with cultural fluency and logistical expertise.</li>
           <li><strong>Custom-Built Booths & Brand Storytelling:</strong>Stand out in the crowd with booths designed to engage and convert.</li>
           <li><strong>End-to-End Participation Management:</strong>From flight bookings to on-ground staffing, everything is handled in-house.</li>
           <li><strong>Lead-Driven Strategy:</strong>Beyond visuals, we focus on footfall, interest, and high-value connections.</li>

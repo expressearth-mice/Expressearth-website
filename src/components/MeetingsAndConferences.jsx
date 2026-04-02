@@ -109,7 +109,7 @@ const MeetingsAndConferences = () => {
             },
             {
               icon: <Settings />,
-              text: 'End-to-End Execution, Venue sourcing, travel management, production, staffing — all managed by our in-house team.',
+              text: 'End-to-End Execution, Venue sourcing, travel management, production, staffing, all managed by our in-house team.',
             },
             {
               icon: <Globe />,
@@ -117,7 +117,7 @@ const MeetingsAndConferences = () => {
             },
             {
               icon: <ShieldCheck />,
-              text: 'Tailored for Impact, We listen, strategize, and deliver exactly what your event needs — nothing generic, always extraordinary.',
+              text: 'Tailored for Impact, We listen, strategize, and deliver exactly what your event needs, nothing generic, always extraordinary.',
             },
           ].map((item, idx) => (
             <div key={idx} className="testimonial-item">

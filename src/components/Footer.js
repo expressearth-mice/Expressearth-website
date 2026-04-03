@@ -121,7 +121,7 @@ const Footer = () => {
               <li><Link to="/achievements" style={linkStyle} onClick={handleClick}><i className="fas fa-trophy"></i> Achievements</Link></li>
               <li><Link to="/careers" style={linkStyle} onClick={handleClick}><i className="fas fa-user-tie"></i> Careers</Link></li>
               <li><Link to="/contact" style={linkStyle} onClick={handleClick}><i className="fas fa-envelope-open-text"></i> Contact Us</Link></li>
-              <li><Link to="/" style={linkStyle} onClick={handleClick}><i className="fas fa-lightbulb"></i> FAQs</Link></li>
+              <li><Link to="/#home-faqs" style={linkStyle}><i className="fas fa-lightbulb"></i> FAQs</Link></li>
             </ul>
           </div>
 

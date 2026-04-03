@@ -2,6 +2,7 @@
 import React from "react";
 import { Briefcase, Rocket, Award, Wine, Users } from "lucide-react";
 import "./CorporateEvents.css";
+import HorizontalSlider from "./ui/HorizontalSlider";
 
 const CorporateEvents = () => {
   return (
@@ -17,24 +18,24 @@ const CorporateEvents = () => {
         <h1>Corporate Events</h1>
         <h4>Product Launches | Gala Dinners | Networking Events</h4>
         <a href="/contact" className="cta-button">
-          Let’s Curate Something Iconic
+          Let's Curate Something Iconic
         </a>
       </section>
 
       {/* Intro */}
-      <section>
+      <section className="intro-section">
         <h2>
           <Briefcase size={32} /> Where Business Meets Celebration
         </h2>
         <div className="text-cen">
-          At ExpressEarth, we don’t just organize corporate events — we create
-          unforgettable experiences that reflect your brand’s prestige and
-          values. Whether it’s a high-profile product launch, an elegant gala
+          At ExpressEarth, we don't just organize corporate events - we create
+          unforgettable experiences that reflect your brand's prestige and
+          values. Whether it's a high-profile product launch, an elegant gala
           dinner, or a memorable networking event, we blend luxury, creativity,
           and precision to deliver moments that truly matter.
           <br />
           <br />
-          Because first impressions last — and we make sure yours is
+          Because first impressions last - and we make sure yours is
           extraordinary.
         </div>
       </section>
@@ -50,14 +51,14 @@ const CorporateEvents = () => {
           corporate gathering.
         </p>
 
-        <div className="services-grid">
+        <HorizontalSlider className="services-grid" itemCount={5}>
           <div className="service-item">
             <Wine size={28} className="service-icon" />
             <h3>Gala Dinners & Milestone Celebrations</h3>
             <p>
               Looking to host an exquisite evening? Our team of seasoned
-              corporate gala dinner organizers ensures every detail — from
-              lighting and decor to entertainment and cuisine — is nothing short
+              corporate gala dinner organizers ensures every detail - from
+              lighting and decor to entertainment and cuisine - is nothing short
               of spectacular.
             </p>
             <a href="/gallery" className="cta-link">
@@ -84,7 +85,7 @@ const CorporateEvents = () => {
             <h3>Corporate Anniversaries</h3>
             <p>
               Celebrate your journey with finesse. As experienced corporate
-              anniversary event planners, we bring your company’s story to life
+              anniversary event planners, we bring your company's story to life
               through themed setups, legacy displays, and unforgettable
               presentations.
             </p>
@@ -111,14 +112,14 @@ const CorporateEvents = () => {
             <p>
               Honor your top achievers with class. As luxury corporate award
               ceremony organizers, we deliver prestigious experiences that
-              inspire excellence and loyalty — complete with staging, AV,
+              inspire excellence and loyalty - complete with staging, AV,
               gifting, and red-carpet flair.
             </p>
             <a href="/achievements" className="cta-link">
               Celebrate Success Right
             </a>
           </div>
-        </div>
+        </HorizontalSlider>
       </section>
 
       {/* Why Choose Us Section */}
@@ -126,31 +127,31 @@ const CorporateEvents = () => {
         <h2>Why Choose ExpressEarth?</h2>
         <ul>
           <li>
-            <strong>Luxury Brand Experience</strong> – We align every detail
-            with your brand’s tone, prestige, and purpose.
+            <strong>Luxury Brand Experience</strong> - We align every detail
+            with your brand's tone, prestige, and purpose.
           </li>
           <li>
-            <strong>Creative Concepts & Storytelling</strong> – Your event is
-            more than logistics — it’s a narrative. And we tell it beautifully.
+            <strong>Creative Concepts & Storytelling</strong> - Your event is
+            more than logistics - it's a narrative. And we tell it beautifully.
           </li>
           <li>
-            <strong>Global Venue Curation</strong> – From rooftop lounges to
+            <strong>Global Venue Curation</strong> - From rooftop lounges to
             heritage castles, we source the perfect setting anywhere in the
             world.
           </li>
           <li>
-            <strong>End-to-End Services</strong> – One expert partner. Complete
-            event execution — from ideation to applause.
+            <strong>End-to-End Services</strong> - One expert partner. Complete
+            event execution from ideation to applause.
           </li>
         </ul>
         <a href="/contact" className="cta-button">
-          Let’s Bring Your Vision to Life
+          Let's Bring Your Vision to Life
         </a>
       </section>
 
       {/* Final CTA Section */}
       <section className="final-cta">
-        <h2>Let’s Design Your Next Signature Event</h2>
+        <h2>Let's Design Your Next Signature Event</h2>
         <p>
           Whether you're planning a landmark celebration or launching your next
           innovation, our team is here to make it magnificent.

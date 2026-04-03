@@ -3,7 +3,7 @@ body {
   background-image: url('C:\Users\HP\Desktop\my-BLOGG\Frontend\frontend\Images\bg5.jpg');
   background-size: cover;
   color: #070707;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--ee-font-body);
   }
 
 

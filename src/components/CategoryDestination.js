@@ -56,7 +56,6 @@ const CategoryDestinations = () => {
         h2 {
           text-align: center;
           margin-bottom: 25px;
-          font-family: 'Arial Nova', Arial, sans-serif;
           font-size: 1.8rem;
           text-transform: capitalize;
         }

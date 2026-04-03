@@ -1,17 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --ee-font-heading: "Arial Nova", Arial, sans-serif;
+  --ee-font-body: "Montserrat", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--ee-font-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body,
+p,
+div,
+span,
+li,
+a,
+label,
+small,
+strong,
+em,
+blockquote,
+figcaption,
+button,
+input,
+select,
+textarea,
+option {
+  font-family: var(--ee-font-body) !important;
 }
-html {
-  scroll-behavior: smooth;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.section-title,
+.section-titl,
+.hero-title,
+.banner-title,
+.main-heading,
+.blogs-title,
+.case-title,
+.section-heading,
+.testimonial-title,
+.contact-title,
+.offer-title {
+  font-family: var(--ee-font-heading) !important;
+}
+
+code,
+pre {
+  font-family: var(--ee-font-body) !important;
+}
+
+img,
+video,
+iframe,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+a,
+span {
+  overflow-wrap: anywhere;
+}
+
+#root {
+  width: 100%;
+  overflow-x: clip;
+}
+
+@media (max-width: 767px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  iframe {
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+  }
 }

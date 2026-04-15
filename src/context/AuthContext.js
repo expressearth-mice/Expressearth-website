@@ -57,28 +57,71 @@ export const AuthProvider = ({ children }) => {
     window.location.href = "/login";
   };
 
+  const refreshAccessToken = useCallback(
+    async (tokensToRefresh) => {
+      const refreshToken = tokensToRefresh?.refresh;
+      if (!refreshToken) {
+        logout();
+        return null;
+      }
+
+      try {
+        const res = await axiosInstance.post("/api/token/refresh/", {
+          refresh: refreshToken,
+        });
+
+        const data = res.data;
+        const updatedTokens = {
+          ...tokensToRefresh,
+          access: data.access,
+        };
+
+        setAuthTokens(updatedTokens);
+        localStorage.setItem("authTokens", JSON.stringify(updatedTokens));
+        const decoded = jwtDecode(data.access);
+        setUser(decoded);
+        await fetchUserRole(data.access);
+        return updatedTokens.access;
+      } catch (err) {
+        console.warn("Token refresh failed", err);
+        logout();
+        return null;
+      }
+    },
+    [fetchUserRole]
+  );
+
   const updateToken = useCallback(async () => {
-    try {
-      const res = await axiosInstance.post("/api/token/refresh/", {
-        refresh: authTokens?.refresh,
-      });
+    await refreshAccessToken(authTokens);
+  }, [authTokens, refreshAccessToken]);
 
-      const data = res.data;
-      const updatedTokens = {
-        ...authTokens,
-        access: data.access,
-      };
+  const getValidAccessToken = useCallback(async () => {
+    const storedTokens = localStorage.getItem("authTokens");
+    const parsedTokens = storedTokens ? JSON.parse(storedTokens) : authTokens;
 
-      setAuthTokens(updatedTokens);
-      localStorage.setItem("authTokens", JSON.stringify(updatedTokens));
-      const decoded = jwtDecode(data.access);
-      setUser(decoded);
-      await fetchUserRole(data.access);  // <-- only here
-    } catch (err) {
-      console.warn("Token refresh failed", err);
-      logout();
+    if (!parsedTokens?.access) {
+      return null;
     }
-  }, [authTokens, fetchUserRole]);
+
+    try {
+      const decoded = jwtDecode(parsedTokens.access);
+      const now = Math.floor(Date.now() / 1000);
+
+      if (decoded.exp <= now + 60) {
+        return await refreshAccessToken(parsedTokens);
+      }
+
+      if (!authTokens || authTokens.access !== parsedTokens.access) {
+        setAuthTokens(parsedTokens);
+        setUser(decoded);
+      }
+
+      return parsedTokens.access;
+    } catch (err) {
+      console.warn("Invalid access token", err);
+      return await refreshAccessToken(parsedTokens);
+    }
+  }, [authTokens, refreshAccessToken]);
 
   // Only set interval when tokens exist
   useEffect(() => {
@@ -135,6 +178,7 @@ export const AuthProvider = ({ children }) => {
         role,
         loading,
         getAuthHeader,
+        getValidAccessToken,
       }}
     >
       {children}

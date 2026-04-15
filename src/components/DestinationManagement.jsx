@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { FaMapMarkerAlt, FaPlaneDeparture, FaUniversity, FaTruckMoving } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './DestinationManagement.css';
+import HorizontalSlider from './ui/HorizontalSlider';
 
 const heroImage ="/Images/Expressearth website images/Destination-management/travel.avif";
 
@@ -42,7 +42,7 @@ const DestinationManagement = () => {
           As a luxury MICE leader, ExpressEarth provides all-inclusive services for corporate events, incentives, and conferences, whether hosted within India or abroad.
         </p>
 
-        <div className="offer-grid">
+        <HorizontalSlider className="offer-grid" itemCount={4}>
           <div className="offer-card">
             <div className="icon-wrapper"><FaMapMarkerAlt size={40} /></div>
             <h4>Event Destination Planning Services</h4>
@@ -70,7 +70,7 @@ const DestinationManagement = () => {
             <p>From on-ground transport and material movement to guest hospitality desks and real-time updates, our logistics management for events ensures zero disruptions.</p>
             <Link to="/destinations" className="cta-link">Flawless Execution Awaits</Link>
           </div>
-        </div>
+        </HorizontalSlider>
       </section>
 
       {/* Destinations */}
@@ -79,23 +79,23 @@ const DestinationManagement = () => {
         <div className="destination-box-group">
           <div>
             <h4>National</h4>
-            <div className="destination-boxes">
+            <HorizontalSlider className="destination-boxes" itemCount={nationalDestinations.length}>
               {nationalDestinations.map((place) => (
                 <div className="destination-card-in" key={place}>{place}</div>
               ))}
-            </div>
+            </HorizontalSlider>
           </div>
           <div>
             <h4>International</h4>
-            <div className="destination-boxes">
+            <HorizontalSlider className="destination-boxes" itemCount={internationalDestinations.length}>
               {internationalDestinations.map((place) => (
                 <div className="destination-card-in" key={place}>{place}</div>
               ))}
-            </div>
+            </HorizontalSlider>
           </div>
         </div>
         <div className="but-on">
-          <Link to="/contact" className="">
+          <Link to="/contact" className="featured-btn">
             Have a Destination in Mind?
           </Link>
         </div>
@@ -108,7 +108,7 @@ const DestinationManagement = () => {
           <li>Pan-India & Global Expertise — From iconic Indian cities to international capitals.</li>
           <li>Luxury-Centric Approach — From premium stays to bespoke experiences, your guests get first-class treatment.</li>
           <li>Integrated Execution — Single-window project management with multilingual teams and tech support.</li>
-          <li>Stress-Free Coordination — Flights, visas, transport, venues, staff, gifts — we’ve got it covered.</li>
+          <li>Stress-Free Coordination — Flights, visas, transport, venues, staff, gifts, we’ve got it covered.</li>
         </ul>
         <div className="but-on">
           <Link to="/contact" className="">
@@ -120,7 +120,7 @@ const DestinationManagement = () => {
       {/* Final Call to Action */}
       <section className="final-cta">
         <h3>Plan Your Next Destination Event with Us</h3>
-        <p>Let’s create an event that speaks your brand’s language — no matter the location.</p>
+        <p>Let’s create an event that speaks your brand’s language, no matter the location.</p>
         <div className="but-on">
           <Link to="/contact" className="cta-link">
             Talk to Our Destination Experts Today

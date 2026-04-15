@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 
 import { Link } from "react-router-dom";
 import IntegrationTools from "./ui/IntegrationTools";
+import HorizontalSlider from "./ui/HorizontalSlider";
 
 const SectionWrapper = ({ children, className = "" }) => (
   <section className={`section-wrapper ${className}`}>{children}</section>
@@ -33,8 +34,8 @@ const SectionTitle = ({ title, subtitle }) => (
   </div>
 );
 
-const Head = ({ title, subtitle }) => (
-  <div className="section-titl">
+const Head = ({ title, subtitle, className = "" }) => (
+  <div className={`section-titl ${className}`.trim()}>
     <h2
       className="my-titl"
       style={{ fontFamily: `"Arial Nova", "Montserrat"` }}
@@ -47,7 +48,7 @@ const Head = ({ title, subtitle }) => (
 
 const OurStory = () => (
   <SectionWrapper className="our-story-section">
-    <Head title="Our Story" />
+    <Head title="Our Story" className="our-story-head" />
     <div className="story-content">
       <motion.div
         className="story-text"
@@ -196,11 +197,6 @@ const team = [
     title: "Pitch Pirate",
     img: "/Images/Team-Images-for-website/12.png",
   },
-  // {
-  //   name: "Harsh Sharma",
-  //   title: "On-Ground Navigator",
-  //   img: "/Images/Team-Images-for-website/10.png",
-  // },
   {
     name: "Anjali Kumari",
     title: "Client Whisperer",
@@ -220,7 +216,7 @@ const MeetTheTeam = () => (
         pros, our team is the heartbeat of every seamless event.
       </p>
     </div>
-    <div className="team-horizontal-scroll">
+    <HorizontalSlider className="team-horizontal-scroll" itemCount={team.length}>
       {team.map((member, idx) => (
         <motion.div
           key={idx}
@@ -234,7 +230,7 @@ const MeetTheTeam = () => (
           <p>{member.title}</p>
         </motion.div>
       ))}
-    </div>
+    </HorizontalSlider>
   </SectionWrapper>
 );
 
@@ -253,7 +249,7 @@ const MissionValues = () => (
       subtitle="Driven by purpose. Defined by Values."
     />
     <SectionTitle title="&ldquo;To deliver exceptional, inspiring, and unforgettable corporate travel and event experiences, while building long-term relationships based on trust and value&rdquo;" />
-    <div className="values-grid">
+    <HorizontalSlider className="values-grid" itemCount={values.length}>
       {values.map((val, i) => (
         <motion.div
           key={i}
@@ -268,7 +264,7 @@ const MissionValues = () => (
           <h4>{val.title}</h4>
         </motion.div>
       ))}
-    </div>
+    </HorizontalSlider>
   </SectionWrapper>
 );
 
@@ -278,13 +274,13 @@ const TrustedByBrands = () => (
     <div className="grid md:grid-cols-2 items-center gap-8 mb-10">
       <div className="space-y-4">
         {/* Testimonials */}
-        <blockquote className="bg-white p-4 shadow rounded-lg border-l-4 border-blue-500">
+        <blockquote className="bg-white p-4 shadow rounded-lg border-l-4 testimonial-blue">
           <span>
             “ExpressEarth made our global summit seamless and spectacular!” –{" "}
             <strong>Zydus Team Leader</strong>
           </span>
         </blockquote>
-        <blockquote className="bg-white p-4 shadow rounded-lg border-l-4 border-green-500">
+        <blockquote className="bg-white p-4 shadow rounded-lg border-l-4 testimonial-green">
           <span>
             “Impeccable attention to detail. It felt like white-glove service
             from start to finish.” – <strong>Cello World Delegate</strong>

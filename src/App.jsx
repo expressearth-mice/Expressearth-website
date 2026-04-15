@@ -151,12 +151,17 @@ function App() {
         {(role.is_admin || role.is_seo) && (
           <>
             <Route path="/create-post" element={<CreatePost />} />
+            <Route path="/edit-post/:title" element={<CreatePost />} />
             <Route
               path="/create-destinations"
               element={<CreateDestination />}
             />
             <Route path="/create-gallery" element={<CreateGallery />} />
             <Route path="/create-case-studies" element={<CreateCaseStudy />} />
+            <Route
+              path="/edit-case-study/:id"
+              element={<CreateCaseStudy />}
+            />
             <Route path="/create-category" element={<CreateCategory />} />
           </>
         )}

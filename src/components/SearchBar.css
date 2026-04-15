@@ -85,3 +85,25 @@
     font-size: 14px;
     opacity: 0.8;
 }
+
+@media (max-width: 767px) {
+    .search-input-wrapper {
+        height: 42px;
+        padding: 0 12px;
+        border-radius: 12px;
+    }
+
+    .search-input {
+        font-size: 14px;
+    }
+
+    .search-results-dropdown {
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .search-result-item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+}

@@ -66,7 +66,11 @@ function BlogList() {
               posts.slice(0, 7).map((post) => (
                 <Link to={`/blogs/${post.slug ? post.slug : encodeURIComponent(post.title)}`} key={post.id} className="recent-post-link">
                   <div className="recent-post">
-                    {post.image && <img src={post.image} alt={post.title} />}
+                    {post.image && (
+                      <div className="recent-post-image-wrap">
+                        <img className="recent-post-image" src={post.image} alt={post.title} />
+                      </div>
+                    )}
                     <p>{post.title}</p>
                   </div>
                 </Link>
@@ -86,15 +90,17 @@ function BlogList() {
             {currentPosts.map((post) => (
               <div key={post.id} className="card blog-card">
                 {post.image && (
-                  <img className="card-img-top" src={post.image} alt={post.title} />
+                  <div className="blog-card-image-wrap">
+                    <img className="blog-card-image" src={post.image} alt={post.title} />
+                  </div>
                 )}
                 <div className="card-body">
-                  <h5 className="card-title">
+                  <h5 className="blog-card-title">
                     <Link to={`/blogs/${post.slug ? post.slug : encodeURIComponent(post.title)}`} className="blog-link">
                       {post.title}
                     </Link>
                   </h5>
-                  <p className="card-text">
+                  <p className="blog-card-text">
                     {post.description.length > 100
                       ? `${post.description.substring(0, 100)}... `
                       : post.description + " "}

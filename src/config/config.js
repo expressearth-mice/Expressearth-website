@@ -20,3 +20,5 @@ const config = {
 if (!config[ENV]) {
   throw new Error(`Invalid REACT_APP_ENV: ${ENV}`);
 }
+
+export default config[ENV];

@@ -36,10 +36,39 @@ const services = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What exactly does ExpressEarth handle in a dealer meet?",
+    answer:
+      "ExpressEarth takes care of everything from planning and venue selection to production, logistics, and final execution, ensuring a smooth and impactful experience.",
+  },
+  {
+    question: "Why should we choose ExpressEarth instead of managing it in-house?",
+    answer:
+      "With ExpressEarth as a MICE expert and corporate event management company, brands get better execution, stronger engagement, and a professionally managed event without the stress.",
+  },
+  {
+    question: "Does ExpressEarth manage dealer meets end-to-end?",
+    answer:
+      "Yes, ExpressEarth is an end-to-end service provider, handling everything from concept creation and design to on-ground execution and coordination.",
+  },
+  {
+    question: "Can ExpressEarth customize the dealer meet as per our business goals?",
+    answer:
+      "Absolutely. ExpressEarth designs every event based on your objectives—whether it’s dealer engagement, product launches, or recognition and reward programs.",
+  },
+  {
+    question: "Can ExpressEarth organize dealer meets outside India as well?",
+    answer:
+      "Yes, ExpressEarth plans and executes dealer meets across India and international destinations, delivering global-standard experiences with seamless execution.",
+  },
+];
+
 function DealerMeet() {
   const formRef = useRef(null);
   const inputRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [activeFAQ, setActiveFAQ] = useState(0);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -55,6 +84,11 @@ function DealerMeet() {
   });
 
   const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [faqForm, setFaqForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
   const handleChange = (e) => {
     setFormData({
@@ -125,6 +159,41 @@ function DealerMeet() {
     }
   };
 
+  const handleFaqFormChange = (key) => (e) => {
+    setFaqForm((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleFaqSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const payload = {
+        full_name: faqForm.name,
+        company_name: null,
+        email: faqForm.email,
+        phone: "1234567890",
+        event_date: null,
+        event_type: faqForm.message || "Dealer Meet FAQ Question",
+        type: "Individual",
+      };
+
+      await axiosInstance.post("/api/contact/", payload);
+
+      alert("Your question has been submitted successfully");
+      setFaqForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(
+        "DealerMeet FAQ submit error:",
+        error.response?.data || error.message || error,
+      );
+      alert("Error submitting your question");
+    }
+  };
+
   useEffect(() => {
     const updateVisibleCards = () => {
       setVisibleCards(window.innerWidth <= 768 ? 1 : 3);
@@ -160,6 +229,10 @@ function DealerMeet() {
 
   const handleOpenPopup = () => {
     setShowPopup(true);
+  };
+
+  const toggleFAQ = (faqIndex) => {
+    setActiveFAQ((currentFAQ) => (currentFAQ === faqIndex ? null : faqIndex));
   };
 
   return (
@@ -371,32 +444,32 @@ function DealerMeet() {
 
       {/* -------- SECTION 5 -------- */}
 
-      <section className="why-section">
-        <div className="why-container">
-          <div className="why-left">
-            <h2 className="why-title">
+      <section className="dealer-why-section">
+        <div className="dealer-why-container">
+          <div className="dealer-why-left">
+            <h2 className="dealer-why-title">
               Why Brands Choose <br /> ExpressEarth
             </h2>
 
-            <p className="why-sub">
+            <p className="dealer-why-sub">
               Your Brand. Our Expertise. Zero Compromise.
             </p>
 
-            <div className="why-image">
+            <div className="dealer-why-image">
               <img src={IT_6} alt="Team Event" />
             </div>
 
-            <h3 className="why-left-heading">
+            <h3 className="dealer-why-left-heading">
               Experienced Dealer Meet Organizers
             </h3>
 
-            <p className="why-left-text">
+            <p className="dealer-why-left-text">
               We handle everything, from invitations to final execution.
             </p>
           </div>
 
-          <div className="why-right">
-            <div className="why-item">
+          <div className="dealer-why-right">
+            <div className="dealer-why-item">
               <h3>Premium Corporate Event Management Services</h3>
               <p>
                 The same precision trusted by large enterprises, global brands,
@@ -404,7 +477,7 @@ function DealerMeet() {
               </p>
             </div>
 
-            <div className="why-item">
+            <div className="dealer-why-item">
               <h3>Creative Concepts & High-Impact Production</h3>
               <p>
                 We bring ideas to life with immersive setups and engagement-led
@@ -412,12 +485,98 @@ function DealerMeet() {
               </p>
             </div>
 
-            <div className="why-item">
+            <div className="dealer-why-item">
               <h3>Seamless Execution Anywhere</h3>
               <p>
                 From metro cities to international hubs, we operate with
                 absolute reliability.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="dealer-faq-section">
+        <div className="dealer-faq-inner">
+          <div className="dealer-faq-grid">
+            <div className="dealer-faq-content">
+              <div className="dealer-faq-header">
+                <p className="dealer-faq-tag">FAQ</p>
+                <p className="dealer-faq-eyebrow">Frequently Asked Questions</p>
+                {/* <h2 className="dealer-faq-title">
+                  Common questions about dealer meet planning
+                </h2> */}
+              </div>
+
+              <div className="dealer-faq-list">
+                {faqs.map((faq, faqIndex) => (
+                  <div
+                    className={`dealer-faq-item ${
+                      activeFAQ === faqIndex ? "active" : ""
+                    }`}
+                    key={faq.question}
+                  >
+                    <button
+                      className="dealer-faq-question"
+                      type="button"
+                      onClick={() => toggleFAQ(faqIndex)}
+                      aria-expanded={activeFAQ === faqIndex}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        className={`dealer-faq-icon ${
+                          activeFAQ === faqIndex ? "open" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {activeFAQ === faqIndex && (
+                      <p className="dealer-faq-answer">{faq.answer}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="dealer-faq-form-wrap">
+              <h3 className="dealer-faq-form-title">Ask a different question</h3>
+
+              <form className="dealer-faq-form" onSubmit={handleFaqSubmit}>
+                <label className="dealer-faq-field">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    value={faqForm.name}
+                    onChange={handleFaqFormChange("name")}
+                    required
+                  />
+                </label>
+
+                <label className="dealer-faq-field">
+                  <span>Email Address</span>
+                  <input
+                    type="email"
+                    value={faqForm.email}
+                    onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="dealer-faq-field dealer-faq-field-message">
+                  <span>Message</span>
+                  <textarea
+                    rows="4"
+                    value={faqForm.message}
+                    onChange={handleFaqFormChange("message")}
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="dealer-faq-submit">
+                  Submit
+                </button>
+              </form>
             </div>
           </div>
         </div>

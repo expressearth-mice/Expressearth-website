@@ -13,47 +13,85 @@ function CreateCaseStudy() {
   const navigate = useNavigate();
   const { id: idOrSlug } = useParams();
   const isEditMode = Boolean(idOrSlug);
+
   const [formData, setFormData] = useState({
     name: "",
     comment: "",
     image: null,
     destination: "",
   });
-  const [caseStudyId, setCaseStudyId] = useState(null);
+
+  const [caseStudyId, setCaseStudyId] = useState(null); // ✅ real ID
   const [loading, setLoading] = useState(isEditMode);
 
+  /* ---------------- DESTINATIONS ---------------- */
   useEffect(() => {
-    axiosInstance.get("/api/destinations/").then(async (res) => {
-      setDestinations(res.data);
-      if (!isEditMode && res.data.length > 0) {
-        setFormData((prev) => ({ ...prev, destination: res.data[0].id }));
-      }
+    const fetchDestinations = async () => {
+      try {
+        const res = await axiosInstance.get("/api/destinations/");
+        setDestinations(res.data);
 
-      if (!isEditMode) {
-        setLoading(false);
+        if (!isEditMode && res.data.length > 0) {
+          setFormData((prev) => ({
+            ...prev,
+            destination: res.data[0].id,
+          }));
+        }
+
+        if (!isEditMode) setLoading(false);
+      } catch (err) {
+        console.error(err);
       }
-    });
+    };
+
+    fetchDestinations();
   }, [isEditMode]);
 
+  /* ---------------- FIXED EDIT FETCH ---------------- */
   useEffect(() => {
     if (!isEditMode) return;
 
     const fetchCaseStudy = async () => {
       try {
-        const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`);
-        const item = res.data;
-        setCaseStudyId(item.id || null);
+        let item;
+
+        const isNumeric = !isNaN(idOrSlug);
+
+        if (isNumeric) {
+          // ✅ fetch by ID
+          const res = await axiosInstance.get(
+            `/api/case-studies/${idOrSlug}/`
+          );
+          item = res.data;
+        } else {
+          // ✅ fetch by slug
+          const res = await axiosInstance.get(
+            `/api/case-studies/?slug=${idOrSlug}`
+          );
+          item = res.data[0];
+        }
+
+        if (!item) {
+          alert("Case study not found!");
+          return;
+        }
+
+        setCaseStudyId(item.id); // ✅ IMPORTANT
+
         setFormData((prev) => ({
           ...prev,
           name: item.name || "",
           comment: item.comment || "",
           image: null,
           destination:
-            item.destination?.id || item.destination || prev.destination || "",
+            item.destination?.id ||
+            item.destination ||
+            prev.destination ||
+            "",
         }));
       } catch (err) {
-        console.error("Error fetching case study for editing:", err);
-        alert("Unable to load case study for editing.");
+        console.error("Error fetching case study:", err);
+        alert("Unable to load case study.");
       } finally {
         setLoading(false);
       }
@@ -62,6 +100,7 @@ function CreateCaseStudy() {
     fetchCaseStudy();
   }, [idOrSlug, isEditMode]);
 
+  /* ---------------- HANDLERS ---------------- */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -76,6 +115,7 @@ function CreateCaseStudy() {
     setFormData((prev) => ({ ...prev, comment: value }));
   };
 
+  /* ---------------- FIXED SUBMIT ---------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -83,25 +123,26 @@ function CreateCaseStudy() {
     data.append("name", formData.name);
     data.append("comment", formData.comment);
     data.append("destination", formData.destination);
-    if (formData.image) {
-      data.append("image", formData.image);
-    }
+    if (formData.image) data.append("image", formData.image);
 
     try {
       const accessToken = await getValidAccessToken();
       if (!accessToken) {
-        alert("Your session has expired. Please log in again.");
+        alert("Session expired. Please login again.");
         return;
       }
 
-      const updateIdentifier = caseStudyId || idOrSlug;
       const request = isEditMode
-        ? axiosInstance.put(`/api/case-studies/${updateIdentifier}/`, data, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "multipart/form-data",
-            },
-          })
+        ? axiosInstance.put(
+            `/api/case-studies/${caseStudyId}/`, // ✅ FIXED (always ID)
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
         : axiosInstance.post("/api/case-studies/", data, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -112,8 +153,9 @@ function CreateCaseStudy() {
       const res = await request;
 
       alert(isEditMode ? "Case study updated!" : "Case study created!");
+
       if (isEditMode) {
-        navigate(`/case-studies/${res.data?.slug || res.data?.id || updateIdentifier}`);
+        navigate(`/case-studies/${res.data?.slug || idOrSlug}`);
         return;
       }
 
@@ -121,22 +163,18 @@ function CreateCaseStudy() {
         name: "",
         comment: "",
         image: null,
-        destination: destinations.length > 0 ? destinations[0].id : "",
+        destination:
+          destinations.length > 0 ? destinations[0].id : "",
       });
+
       setTimeout(() => navigate("/case-studies"), 1500);
     } catch (err) {
-      console.error("Error response:", err.response?.data || err.message);
-      if (err.response?.data) {
-        const errors = err.response.data;
-        const messages = Object.entries(errors)
-          .map(([key, value]) => `${key}: ${value}`)
-          .join("\n");
-        alert(`Error creating case study:\n${messages}`);
-      } else {
-        alert("Error creating case study.");
-      }
+      console.error("Error:", err.response?.data || err.message);
+      alert("Error saving case study.");
     }
   };
+
+  /* ---------------- UI (UNCHANGED) ---------------- */
 
   if (loading) {
     return <div className="text-center mt-5">Loading editor...</div>;
@@ -166,6 +204,7 @@ function CreateCaseStudy() {
           <h2 className="text-center mb-4">
             {isEditMode ? "Edit Case Study" : "Create Case Study"}
           </h2>
+
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <input
               type="text"

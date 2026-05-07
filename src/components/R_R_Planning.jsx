@@ -58,10 +58,39 @@ const whyChooseCards = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What does an employee rewards and recognition program include?",
+    answer:
+      "An employee rewards and recognition program includes planning, engagement design, awards, events, and complete execution. As a MICE expert in India, ExpressEarth ensures every element is thoughtfully managed to create meaningful experiences.",
+  },
+  {
+    question: "Can ExpressEarth handle the entire R&R program end-to-end?",
+    answer:
+      "Yes, ExpressEarth is an end-to-end service provider, managing everything from concept and theme creation to execution and on-ground coordination for a seamless experience.",
+  },
+  {
+    question: "Do you organize employee awards and recognition events?",
+    answer:
+      "Absolutely. ExpressEarth plans and executes employee awards, corporate recognition events, and appreciation programs that celebrate achievements and strengthen company culture.",
+  },
+  {
+    question: "Can R&R programs be customized for our company culture?",
+    answer:
+      "Yes, every program is tailored to your organization’s goals, values, and workforce, ensuring the recognition feels authentic, engaging, and impactful.",
+  },
+  {
+    question: "How do rewards and recognition programs benefit organizations?",
+    answer:
+      "Well-designed R&R programs help boost motivation, improve engagement, and increase employee retention, creating a more positive and high-performing workplace.",
+  },
+];
+
 const R_R_Planning = () => {
   const formRef = useRef(null);
   const inputRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [activeFAQ, setActiveFAQ] = useState(0);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -74,6 +103,12 @@ const R_R_Planning = () => {
     phone: "",
     type: "Company",
     company: "",
+  });
+
+  const [faqForm, setFaqForm] = useState({
+    name: "",
+    email: "",
+    message: "",
   });
 
   const handleChange = (e) => {
@@ -101,6 +136,35 @@ const R_R_Planning = () => {
     } catch (error) {
       console.log(error);
       alert("Error submitting form");
+    }
+  };
+
+  const handleFaqFormChange = (key) => (e) => {
+    setFaqForm((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleFaqSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post("/api/contact/", {
+        name: faqForm.name,
+        email: faqForm.email,
+        phone: "1234567890",
+        type: "Individual",
+        company: "",
+        message: faqForm.message,
+      });
+
+      alert("Your question has been submitted successfully");
+      setFaqForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(error);
+      alert("Error submitting your question");
     }
   };
 
@@ -140,6 +204,11 @@ const R_R_Planning = () => {
   const handleOpenPopup = () => {
     setShowPopup(true);
   };
+
+  const toggleFAQ = (faqIndex) => {
+    setActiveFAQ((currentFAQ) => (currentFAQ === faqIndex ? null : faqIndex));
+  };
+
   return (
     <>
       {showPopup && <PopupForm onClose={handleClosePopup} />}
@@ -389,6 +458,92 @@ const R_R_Planning = () => {
               <p>{item.text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="rr-faq-section">
+        <div className="rr-faq-inner">
+          <div className="rr-faq-grid">
+            <div className="rr-faq-content">
+              <div className="rr-faq-header">
+                <p className="rr-faq-tag">FAQ</p>
+                <p className="rr-faq-eyebrow">Frequently Asked Questions</p>
+                <h2 className="rr-faq-title">
+                  Common questions about rewards and recognition planning
+                </h2>
+              </div>
+
+              <div className="rr-faq-list">
+                {faqs.map((faq, faqIndex) => (
+                  <div
+                    className={`rr-faq-item ${
+                      activeFAQ === faqIndex ? "active" : ""
+                    }`}
+                    key={faq.question}
+                  >
+                    <button
+                      className="rr-faq-question"
+                      type="button"
+                      onClick={() => toggleFAQ(faqIndex)}
+                      aria-expanded={activeFAQ === faqIndex}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        className={`rr-faq-icon ${
+                          activeFAQ === faqIndex ? "open" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {activeFAQ === faqIndex && (
+                      <p className="rr-faq-answer">{faq.answer}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rr-faq-form-wrap">
+              <h3 className="rr-faq-form-title">Ask a different question</h3>
+
+              <form className="rr-faq-form" onSubmit={handleFaqSubmit}>
+                <label className="rr-faq-field">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    value={faqForm.name}
+                    onChange={handleFaqFormChange("name")}
+                    required
+                  />
+                </label>
+
+                <label className="rr-faq-field">
+                  <span>Email Address</span>
+                  <input
+                    type="email"
+                    value={faqForm.email}
+                    onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="rr-faq-field rr-faq-field-message">
+                  <span>Message</span>
+                  <textarea
+                    rows="4"
+                    value={faqForm.message}
+                    onChange={handleFaqFormChange("message")}
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="rr-faq-submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
 

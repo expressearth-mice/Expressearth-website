@@ -67,11 +67,40 @@ const destinations = [
   { name: "Maldives", image: maldivesImg },
 ];
 
+const faqs = [
+  {
+    question: "What is an incentive travel program?",
+    answer:
+      "An incentive travel program is a reward-based travel experience designed to recognize and motivate employees, partners, or top performers. As a MICE expert in India, ExpressEarth creates journeys that combine appreciation with meaningful engagement.",
+  },
+  {
+    question: "What does ExpressEarth handle in incentive travel?",
+    answer:
+      "ExpressEarth manages everything from destination planning and itineraries to travel, stays, activities, and on-ground execution. As an end-to-end service provider, every detail is handled seamlessly.",
+  },
+  {
+    question: "Can incentive travel programs be customized?",
+    answer:
+      "Absolutely. Every program is custom-designed based on your goals, team preferences, and budget, whether it’s luxury relaxation, adventure, or a mix of both.",
+  },
+  {
+    question: "Do you organize international incentive trips?",
+    answer:
+      "Yes, ExpressEarth organizes both domestic and international incentive travel programs, backed by its expertise as a MICE expert, ensuring smooth execution across global destinations.",
+  },
+  {
+    question: "How does incentive travel benefit companies?",
+    answer:
+      "Incentive travel helps boost motivation, improve performance, and strengthen loyalty. Well-designed programs by a MICE expert like ExpressEarth turn rewards into long-term business impact.",
+  },
+];
+
 const IncentivePage = () => {
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
   const [showPopup, setShowPopup] = useState(false);
+  const [activeFAQ, setActiveFAQ] = useState(0);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [serviceIndex, setServiceIndex] = useState(0);
@@ -79,6 +108,11 @@ const IncentivePage = () => {
     typeof window !== "undefined" && window.innerWidth <= 768 ? 1 : 3,
   );
   const [galleryIndex, setGalleryIndex] = useState(1);
+  const [faqForm, setFaqForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -195,6 +229,46 @@ const IncentivePage = () => {
       );
       alert("Error submitting form");
     }
+  };
+
+  const handleFaqFormChange = (key) => (e) => {
+    setFaqForm((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleFaqSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const payload = {
+        full_name: faqForm.name,
+        company_name: null,
+        email: faqForm.email,
+        phone: "1234567890",
+        event_date: null,
+        event_type: faqForm.message || "Incentive Travel FAQ Question",
+        type: "Individual",
+      };
+
+      await axiosInstance.post("/api/contact/", payload);
+
+      alert("Your question has been submitted successfully");
+
+      setFaqForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(
+        "IncentivePage FAQ submit error:",
+        error.response?.data || error.message || error,
+      );
+      alert("Error submitting your question");
+    }
+  };
+
+  const toggleFAQ = (faqIndex) => {
+    setActiveFAQ((currentFAQ) => (currentFAQ === faqIndex ? null : faqIndex));
   };
 
   return (
@@ -538,6 +612,96 @@ const IncentivePage = () => {
               <div className="incentive-why-image-card">
                 <img src={why2} alt="" />
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="incentive-faq-section">
+        <div className="incentive-faq-inner">
+          <div className="incentive-faq-grid">
+            <div className="incentive-faq-content">
+              <div className="incentive-faq-header">
+                <p className="incentive-faq-tag">FAQ</p>
+                <p className="incentive-faq-eyebrow">
+                  Frequently Asked Questions
+                </p>
+                {/* <h2 className="incentive-faq-title">
+                  Common questions about incentive travel programs
+                </h2> */}
+              </div>
+
+              <div className="incentive-faq-list">
+                {faqs.map((faq, faqIndex) => (
+                  <div
+                    className={`incentive-faq-item ${
+                      activeFAQ === faqIndex ? "active" : ""
+                    }`}
+                    key={faq.question}
+                  >
+                    <button
+                      className="incentive-faq-question"
+                      type="button"
+                      onClick={() => toggleFAQ(faqIndex)}
+                      aria-expanded={activeFAQ === faqIndex}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        className={`incentive-faq-icon ${
+                          activeFAQ === faqIndex ? "open" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {activeFAQ === faqIndex && (
+                      <p className="incentive-faq-answer">{faq.answer}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="incentive-faq-form-wrap">
+              <h3 className="incentive-faq-form-title">
+                Ask a different question
+              </h3>
+
+              <form className="incentive-faq-form" onSubmit={handleFaqSubmit}>
+                <label className="incentive-faq-field">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    value={faqForm.name}
+                    onChange={handleFaqFormChange("name")}
+                    required
+                  />
+                </label>
+
+                <label className="incentive-faq-field">
+                  <span>Email Address</span>
+                  <input
+                    type="email"
+                    value={faqForm.email}
+                    onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="incentive-faq-field incentive-faq-field-message">
+                  <span>Message</span>
+                  <textarea
+                    rows="4"
+                    value={faqForm.message}
+                    onChange={handleFaqFormChange("message")}
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="incentive-faq-submit">
+                  Submit
+                </button>
+              </form>
             </div>
           </div>
         </div>

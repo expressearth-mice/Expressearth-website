@@ -60,11 +60,40 @@ const whyChooseCards = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What does ExpressEarth handle in conference management?",
+    answer:
+      "ExpressEarth manages everything from planning, venue selection, and logistics to delegate management and on-ground execution. As a MICE expert in India, every conference is delivered with structure and precision.",
+  },
+  {
+    question: "Do you provide end-to-end conference management services?",
+    answer:
+      "Yes, ExpressEarth is an end-to-end service provider, handling everything from concept planning and vendor coordination to execution and post-event closure.",
+  },
+  {
+    question: "Can conferences be customized based on our business needs?",
+    answer:
+      "Absolutely. Every conference is strategically planned based on your objectives, audience, and industry requirements, ensuring meaningful engagement and effective outcomes.",
+  },
+  {
+    question: "Do you manage large-scale conferences and conventions?",
+    answer:
+      "Yes, ExpressEarth specializes in large conferences, conventions, and multi-day events, delivering seamless execution as experienced MICE conference organizers.",
+  },
+  {
+    question: "Do you handle delegate management and logistics as well?",
+    answer:
+      "Yes, ExpressEarth takes care of registrations, travel, accommodation, and complete delegate coordination, ensuring a smooth and well-managed conference experience.",
+  },
+];
+
 const ConferenceManagement = () => {
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
   const [showPopup, setShowPopup] = useState(false);
+  const [activeFAQ, setActiveFAQ] = useState(0);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -77,6 +106,12 @@ const ConferenceManagement = () => {
     phone: "",
     type: "Company",
     company: "",
+  });
+
+  const [faqForm, setFaqForm] = useState({
+    name: "",
+    email: "",
+    message: "",
   });
 
   const handleChange = (e) => {
@@ -154,6 +189,44 @@ const ConferenceManagement = () => {
 
   const handleOpenPopup = () => {
     setShowPopup(true);
+  };
+
+  const handleFaqFormChange = (key) => (e) => {
+    setFaqForm((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleFaqSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const payload = {
+        full_name: faqForm.name,
+        company_name: null,
+        email: faqForm.email,
+        phone: "1234567890",
+        event_date: null,
+        event_type: faqForm.message || "Conference Management FAQ Question",
+        type: "Individual",
+      };
+
+      await axiosInstance.post("/api/contact/", payload);
+      alert("Your question has been submitted successfully");
+      setFaqForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(
+        "ConferenceManagement FAQ submit error:",
+        error.response?.data || error.message || error,
+      );
+      alert("Error submitting your question");
+    }
+  };
+
+  const toggleFAQ = (faqIndex) => {
+    setActiveFAQ((currentFAQ) => (currentFAQ === faqIndex ? null : faqIndex));
   };
 
   return (
@@ -440,6 +513,92 @@ const ConferenceManagement = () => {
                 <p>{item.text}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="cm-faq-section">
+        <div className="cm-faq-inner">
+          <div className="cm-faq-grid">
+            <div className="cm-faq-content">
+              <div className="cm-faq-header">
+                <p className="cm-faq-tag">FAQ</p>
+                <p className="cm-faq-eyebrow">Frequently Asked Questions</p>
+                {/* <h2 className="cm-faq-title">
+                  Common questions about conference management
+                </h2> */}
+              </div>
+
+              <div className="cm-faq-list">
+                {faqs.map((faq, faqIndex) => (
+                  <div
+                    className={`cm-faq-item ${
+                      activeFAQ === faqIndex ? "active" : ""
+                    }`}
+                    key={faq.question}
+                  >
+                    <button
+                      className="cm-faq-question"
+                      type="button"
+                      onClick={() => toggleFAQ(faqIndex)}
+                      aria-expanded={activeFAQ === faqIndex}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        className={`cm-faq-icon ${
+                          activeFAQ === faqIndex ? "open" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {activeFAQ === faqIndex && (
+                      <p className="cm-faq-answer">{faq.answer}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="cm-faq-form-wrap">
+              <h3 className="cm-faq-form-title">Ask a different question</h3>
+
+              <form className="cm-faq-form" onSubmit={handleFaqSubmit}>
+                <label className="cm-faq-field">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    value={faqForm.name}
+                    onChange={handleFaqFormChange("name")}
+                    required
+                  />
+                </label>
+
+                <label className="cm-faq-field">
+                  <span>Email Address</span>
+                  <input
+                    type="email"
+                    value={faqForm.email}
+                    onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="cm-faq-field cm-faq-field-message">
+                  <span>Message</span>
+                  <textarea
+                    rows="4"
+                    value={faqForm.message}
+                    onChange={handleFaqFormChange("message")}
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="cm-faq-submit">
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>

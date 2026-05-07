@@ -83,7 +83,7 @@ const IntegrationTools = () => {
   return (
     <div className="integration-tools-container">
       <div className="integration-header">
-        <h1>Seamlessly integrate with the tools you already use!</h1>
+        <h1>Trusted by companies like</h1>
       </div>
 
       <div className="scroll-wrapper">

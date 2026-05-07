@@ -36,8 +36,37 @@ const services = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What’s included in a corporate offsite?",
+    answer:
+      "A corporate offsite includes complete planning, accommodation, travel, activities, and on-ground execution. As a MICE expert in India, ExpressEarth ensures every detail is managed seamlessly, creating a smooth and engaging experience for your team.",
+  },
+  {
+    question: "Why should we hire a MICE expert?",
+    answer:
+      "A MICE expert brings structure, creativity, and efficiency to your offsite. With a strong presence as a MICE company in Delhi NCR and Gurgaon, ExpressEarth ensures better coordination, cost control, and impactful outcomes aligned with your business goals.",
+  },
+  {
+    question: "Do you handle everything end-to-end?",
+    answer:
+      "Yes, ExpressEarth is an end-to-end service provider, taking care of everything from initial planning and concept development to execution and on-ground management, so your team can focus on the experience.",
+  },
+  {
+    question: "Can you customize the offsite for our team?",
+    answer:
+      "Absolutely. Every offsite is custom-designed based on your team’s goals, whether it’s team bonding, leadership alignment, or improving collaboration and performance.",
+  },
+  {
+    question: "Where do you organize offsites?",
+    answer:
+      "We organize offsites across India and international destinations, backed by our expertise as a MICE expert and a trusted MICE company in Gurgaon and Delhi NCR, ensuring consistent quality wherever you go.",
+  },
+];
+
 function CorporateOffsitesPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const [activeFAQ, setActiveFAQ] = useState(0);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -53,6 +82,11 @@ function CorporateOffsitesPage() {
   });
 
   const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [faqForm, setFaqForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
   useEffect(() => {
     const updateVisibleCards = () => {
@@ -150,6 +184,41 @@ function CorporateOffsitesPage() {
     }
   };
 
+  const handleFaqFormChange = (key) => (e) => {
+    setFaqForm((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleFaqSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const payload = {
+        full_name: faqForm.name,
+        company_name: null,
+        email: faqForm.email,
+        phone: "1234567890",
+        event_date: null,
+        event_type: faqForm.message || "Corporate Offsite FAQ Question",
+        type: "Individual",
+      };
+
+      await axiosInstance.post("/api/contact/", payload);
+
+      alert("Your question has been submitted successfully");
+      setFaqForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(
+        "CorporateOffsitesPage FAQ submit error:",
+        error.response?.data || error.message || error,
+      );
+      alert("Error submitting your question");
+    }
+  };
+
   const formRef = useRef(null);
   const firstInputRef = useRef(null);
 
@@ -159,6 +228,12 @@ function CorporateOffsitesPage() {
 
   const handleOpenPopup = () => {
     setShowPopup(true);
+  };
+
+  const toggleFAQ = (faqIndex) => {
+    setActiveFAQ((currentFAQ) =>
+      currentFAQ === faqIndex ? null : faqIndex,
+    );
   };
 
   return (
@@ -408,6 +483,92 @@ function CorporateOffsitesPage() {
                   another outing.
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="offsite-faq-section">
+        <div className="container offsiteFaqInner">
+          <div className="offsiteFaqGrid">
+            <div className="offsiteFaqContent">
+              <div className="offsiteFaqHeader">
+                <p className="offsiteFaqTag">FAQ</p>
+                <p className="offsiteFaqEyebrow">Frequently Asked Questions</p>
+                {/* <h2 className="offsiteFaqTitle">
+                  Common questions about planning a corporate offsite
+                </h2> */}
+              </div>
+
+              <div className="offsiteFaqList">
+                {faqs.map((faq, faqIndex) => (
+                  <div
+                    className={`offsiteFaqItem ${
+                      activeFAQ === faqIndex ? "active" : ""
+                    }`}
+                    key={faq.question}
+                  >
+                    <button
+                      className="offsiteFaqQuestion"
+                      type="button"
+                      onClick={() => toggleFAQ(faqIndex)}
+                      aria-expanded={activeFAQ === faqIndex}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        className={`offsiteFaqIcon ${
+                          activeFAQ === faqIndex ? "open" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {activeFAQ === faqIndex && (
+                      <p className="offsiteFaqAnswer">{faq.answer}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="offsiteFaqFormWrap">
+              <h3 className="offsiteFaqFormTitle">Ask a different question</h3>
+
+              <form className="offsiteFaqForm" onSubmit={handleFaqSubmit}>
+                <label className="offsiteFaqField">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    value={faqForm.name}
+                    onChange={handleFaqFormChange("name")}
+                    required
+                  />
+                </label>
+
+                <label className="offsiteFaqField">
+                  <span>Email Address</span>
+                  <input
+                    type="email"
+                    value={faqForm.email}
+                    onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="offsiteFaqField offsiteFaqFieldMessage">
+                  <span>Message</span>
+                  <textarea
+                    value={faqForm.message}
+                    onChange={handleFaqFormChange("message")}
+                    rows="4"
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="offsiteFaqSubmit">
+                  Submit
+                </button>
+              </form>
             </div>
           </div>
         </div>

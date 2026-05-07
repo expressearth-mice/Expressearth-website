@@ -188,6 +188,7 @@ body {
     gap: 8px;
     font-size: 14px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .radioItem input[type="radio"] {
@@ -684,6 +685,213 @@ body {
     line-height: 1.6;
 }
 
+/* FAQ SECTION */
+
+.offsite-faq-section {
+    padding: 68px 0;
+    background: #2c6ea7;
+}
+
+.offsiteFaqInner {
+    width: min(1100px, calc(100% - 60px));
+}
+
+.offsiteFaqGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.72fr);
+    gap: 88px;
+    align-items: start;
+}
+
+.offsiteFaqContent {
+    min-width: 0;
+}
+
+.offsiteFaqHeader {
+    color: #ffffff;
+    margin-bottom: 22px;
+}
+
+.offsiteFaqTag {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.offsiteFaqEyebrow {
+    margin: 0 0 8px;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    opacity: 1;
+}
+
+/* .offsiteFaqTitle {
+    margin: 0;
+    max-width: 520px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.88);
+    margin-left: -30px;
+} */
+
+.offsiteFaqList {
+    display: grid;
+    gap: 0;
+}
+
+.offsiteFaqItem {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 0;
+}
+
+.offsiteFaqItem.active {
+    background: transparent;
+}
+
+.offsiteFaqQuestion {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.offsiteFaqIcon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #7bd85d;
+    position: relative;
+    box-shadow: 0 0 0 4px rgba(123, 216, 93, 0.12);
+}
+
+.offsiteFaqIcon::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-right: 1.8px solid #ffffff;
+    border-bottom: 1.8px solid #ffffff;
+    transform: translate(-50%, -62%) rotate(45deg);
+    transition: transform 0.25s ease;
+}
+
+.offsiteFaqIcon.open::before {
+    transform: translate(-50%, -35%) rotate(-135deg);
+}
+
+.offsiteFaqAnswer {
+    margin: 0;
+    padding: 0 34px 16px 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 13px;
+    line-height: 1.65;
+    max-width: 620px;
+}
+
+.offsiteFaqFormWrap {
+    color: #ffffff;
+    padding-top: 42px;
+    width: 100%;
+    max-width: 360px;
+    margin-left: 34px;
+}
+
+.offsiteFaqFormTitle {
+    margin: 0 0 22px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #ffffff;
+    width: 100%;
+    max-width: 360px;
+    margin-top: 50px;
+}
+
+.offsiteFaqForm {
+    display: grid;
+    gap: 16px;
+    width: 300px;
+    max-width: 360px;
+    margin-left: 30px;
+}
+
+.offsiteFaqField {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+}
+
+.offsiteFaqField span {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.offsiteFaqField input,
+.offsiteFaqField textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.85);
+    background: transparent;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 0 0 8px;
+    outline: none;
+    resize: none;
+}
+
+.offsiteFaqField input::placeholder,
+.offsiteFaqField textarea::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.offsiteFaqFieldMessage textarea {
+    max-height: 65px;
+}
+
+.offsiteFaqSubmit {
+    justify-self: end;
+    margin-top: 6px;
+    min-width: 116px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7ddc63 0%, #a6ef75 100%);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(122, 217, 93, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.offsiteFaqSubmit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(122, 217, 93, 0.32);
+}
+
 /* CTA SECTION */
 
 .cta-section {
@@ -949,6 +1157,22 @@ body {
         height: 240px;
     }
 
+    .offsiteFaqTitle {
+        font-size: 16px;
+    }
+
+    .offsiteFaqEyebrow {
+        font-size: 30px;
+    }
+
+    .offsiteFaqGrid {
+        gap: 56px;
+    }
+
+    .offsiteFaqFormWrap {
+        padding-top: 30px;
+    }
+
     /* CTA */
 
     .cta-title {
@@ -1082,6 +1306,56 @@ body {
 
     .whyRight {
         padding-top: 0;
+    }
+
+    .offsite-faq-section {
+        padding: 56px 0;
+    }
+
+    .offsiteFaqInner {
+        width: min(1100px, calc(100% - 40px));
+    }
+
+    .offsiteFaqGrid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .offsiteFaqTitle {
+        font-size: 14px;
+    }
+
+    .offsiteFaqEyebrow {
+        font-size: 26px;
+    }
+
+    .offsiteFaqQuestion {
+        font-size: 14px;
+        padding: 15px 0;
+    }
+
+    .offsiteFaqAnswer {
+        padding-right: 18px;
+    }
+
+    .offsiteFaqFormWrap {
+        padding-top: 0;
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .offsiteFaqFormTitle {
+        font-size: 22px;
+        margin-bottom: 18px;
+        max-width: 100%;
+    }
+
+    .offsiteFaqForm {
+        max-width: 100%;
+    }
+
+    .offsiteFaqSubmit {
+        justify-self: start;
     }
 
     /* CTA */
@@ -1280,6 +1554,57 @@ body {
 
     .whyBullet {
         padding: 18px;
+    }
+
+    .offsite-faq-section {
+        padding: 46px 0;
+    }
+
+    .offsiteFaqInner {
+        width: min(1100px, calc(100% - 28px));
+    }
+
+    .offsiteFaqTitle {
+        font-size: 13px;
+    }
+
+    .offsiteFaqEyebrow {
+        font-size: 22px;
+    }
+
+    .offsiteFaqQuestion {
+        font-size: 13px;
+        gap: 12px;
+        padding: 14px 0;
+    }
+
+    .offsiteFaqIcon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .offsiteFaqAnswer {
+        font-size: 12px;
+        line-height: 1.6;
+        padding: 0 8px 14px 0;
+    }
+
+    .offsiteFaqFormTitle {
+        font-size: 20px;
+    }
+
+    .offsiteFaqField span {
+        font-size: 11px;
+    }
+
+    .offsiteFaqField input,
+    .offsiteFaqField textarea {
+        font-size: 13px;
+    }
+
+    .offsiteFaqSubmit {
+        width: 100%;
+        justify-self: stretch;
     }
 
     /* CTA */

@@ -50,6 +50,8 @@ import InternationalGroupTravel from "./components/InternationalGroupTravel";
 import R_R_Planning from "./components/R_R_Planning";
 import ConferenceManagement from "./components/ConferenceManagement";
 import IncentivePage from "./components/IncentivePage";
+import International from "./components/International";
+import Domestic from "./components/Domestic";
 
 const AdminComponent = () => <div>Admin-only Section</div>;
 
@@ -146,7 +148,9 @@ function App() {
           element={<ConferenceManagement />}
         />
         <Route path="/incentivetravel" element={<IncentivePage />} />
-
+        <Route path="/international-destinations" element={<International />} />
+        <Route path="/domestic-destinations" element={<Domestic />} />
+       
         {/* SEO + Admin Routes */}
         {(role.is_admin || role.is_seo) && (
           <>

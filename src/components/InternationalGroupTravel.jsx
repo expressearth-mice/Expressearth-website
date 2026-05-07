@@ -44,11 +44,40 @@ const internationalServices = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What is included in an international group tour package?",
+    answer:
+      "An international group tour package includes flights, visas, accommodation, transfers, curated experiences, and complete travel management. As a MICE expert in India, ExpressEarth ensures a seamless and well-coordinated journey.",
+  },
+  {
+    question: "Does ExpressEarth handle everything for international travel?",
+    answer:
+      "Yes, ExpressEarth is an end-to-end service provider, managing everything from itinerary planning and bookings to on-ground coordination, so your group can travel stress-free.",
+  },
+  {
+    question: "Can international travel packages be customized for our group?",
+    answer:
+      "Absolutely. Every international trip is tailored based on your group size, preferences, pace, and travel goals, ensuring a personalized and well-balanced experience.",
+  },
+  {
+    question: "Do you offer multi-country or world tour packages?",
+    answer:
+      "Yes, ExpressEarth curates foreign tour packages and world tour packages, combining multiple destinations into a seamless, well-planned global journey.",
+  },
+  {
+    question: "Which destinations do you cover for international group travel?",
+    answer:
+      "We organize travel across Asia, Europe, the Middle East, and beyond, backed by our expertise as a MICE expert, delivering consistent quality across global destinations.",
+  },
+];
+
 const InternationalGroupTravel = () => {
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
   const [showPopup, setShowPopup] = useState(false);
+  const [activeFAQ, setActiveFAQ] = useState(0);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -61,6 +90,12 @@ const InternationalGroupTravel = () => {
     phone: "",
     type: "Company",
     company: "",
+  });
+
+  const [faqForm, setFaqForm] = useState({
+    name: "",
+    email: "",
+    message: "",
   });
 
   const handleChange = (e) => {
@@ -142,6 +177,45 @@ const InternationalGroupTravel = () => {
 
   const handleOpenPopup = () => {
     setShowPopup(true);
+  };
+
+  const handleFaqFormChange = (key) => (e) => {
+    setFaqForm((prev) => ({ ...prev, [key]: e.target.value }));
+  };
+
+  const handleFaqSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const payload = {
+        full_name: faqForm.name,
+        company_name: null,
+        email: faqForm.email,
+        phone: "1234567890",
+        event_date: null,
+        event_type: faqForm.message || "International Group Travel FAQ Question",
+        type: "Individual",
+      };
+
+      await axiosInstance.post("/api/contact/", payload);
+
+      alert("Your question has been submitted successfully");
+      setFaqForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(
+        "InternationalGroupTravel FAQ submit error:",
+        error.response?.data || error.message || error,
+      );
+      alert("Error submitting your question");
+    }
+  };
+
+  const toggleFAQ = (faqIndex) => {
+    setActiveFAQ((currentFAQ) => (currentFAQ === faqIndex ? null : faqIndex));
   };
 
   return (
@@ -419,6 +493,92 @@ const InternationalGroupTravel = () => {
             <img src={IT_6} alt="Team Event" />
 
             <img src={IT_7} alt="Corporate Group" />
+          </div>
+        </div>
+      </section>
+
+      <section className="travel-faq-section">
+        <div className="travel-faq-inner">
+          <div className="travel-faq-grid">
+            <div className="travel-faq-content">
+              <div className="travel-faq-header">
+                <p className="travel-faq-tag">FAQ</p>
+                <p className="travel-faq-eyebrow">Frequently Asked Questions</p>
+                {/* <h2 className="travel-faq-title">
+                  Common questions about international group travel
+                </h2> */}
+              </div>
+
+              <div className="travel-faq-list">
+                {faqs.map((faq, faqIndex) => (
+                  <div
+                    className={`travel-faq-item ${
+                      activeFAQ === faqIndex ? "active" : ""
+                    }`}
+                    key={faq.question}
+                  >
+                    <button
+                      className="travel-faq-question"
+                      type="button"
+                      onClick={() => toggleFAQ(faqIndex)}
+                      aria-expanded={activeFAQ === faqIndex}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        className={`travel-faq-icon ${
+                          activeFAQ === faqIndex ? "open" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    {activeFAQ === faqIndex && (
+                      <p className="travel-faq-answer">{faq.answer}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="travel-faq-form-wrap">
+              <h3 className="travel-faq-form-title">Ask a different question</h3>
+
+              <form className="travel-faq-form" onSubmit={handleFaqSubmit}>
+                <label className="travel-faq-field">
+                  <span>Name</span>
+                  <input
+                    type="text"
+                    value={faqForm.name}
+                    onChange={handleFaqFormChange("name")}
+                    required
+                  />
+                </label>
+
+                <label className="travel-faq-field">
+                  <span>Email Address</span>
+                  <input
+                    type="email"
+                    value={faqForm.email}
+                    onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="travel-faq-field travel-faq-field-message">
+                  <span>Message</span>
+                  <textarea
+                    rows="4"
+                    value={faqForm.message}
+                    onChange={handleFaqFormChange("message")}
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="travel-faq-submit">
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>

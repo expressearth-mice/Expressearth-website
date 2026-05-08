@@ -5,7 +5,7 @@ import PopupForm from "./popupForm";
 import axiosInstance from "../api/axios";
 import IntegrationTools from "./ui/IntegrationTools";
 import HorizontalSlider from "./ui/HorizontalSlider";
-import homeVideo from "../assests/home.mp4";
+//import homeVideo from "/assets/home.mp4";
 
 const travelStats = [
   {
@@ -465,7 +465,7 @@ const Home = () => {
         <div className="travel-image-box">
           <video
             className="travel-video"
-            src={homeVideo}
+            src= "/assets/home.mp4"
             autoPlay
             muted
             loop

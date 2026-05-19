@@ -7,6 +7,7 @@ import IT_6 from "../assests/IT_Team(1).jpg";
 import bg from "../assests/dealerbg.png";
 import axiosInstance from "../api/axios";
 import PopupForm from "./popupForm";
+import { trackFormSubmit, trackContact } from "../utils/fbPixel";
 
 const services = [
   {
@@ -111,6 +112,14 @@ function DealerMeet() {
         type: formData.type,
       };
 
+      trackContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        type: "DealerMeet",
+      });
+
       await axiosInstance.post("/api/contact/", payload);
 
       alert("Form Submitted Successfully");
@@ -135,6 +144,12 @@ function DealerMeet() {
     e.preventDefault();
 
     try {
+      trackFormSubmit({
+        name: "Newsletter Subscription",
+        email: subscribeEmail,
+        type: "DealerMeet_Email",
+      });
+
       const payload = {
         full_name: subscribeEmail,
         company_name: null,
@@ -167,6 +182,13 @@ function DealerMeet() {
     e.preventDefault();
 
     try {
+      trackFormSubmit({
+        name: "DealerMeet FAQ Inquiry",
+        email: faqForm.email,
+        message: faqForm.message,
+        type: "DealerMeet_FAQ",
+      });
+
       const payload = {
         full_name: faqForm.name,
         company_name: null,

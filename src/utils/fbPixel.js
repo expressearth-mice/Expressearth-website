@@ -85,6 +85,39 @@ export const trackSearch = (searchData) => {
   });
 };
 
+export const trackFormSubmit = (formData) => {
+  fbPixelEvent("Submit", {
+    content_name: formData.name || "Form Submission",
+    content_category: formData.category || "form",
+    ...formData,
+  });
+};
+
+export const trackContact = (contactData) => {
+  fbPixelEvent("Contact", {
+    content_name: contactData.name || "",
+    phone_number: contactData.phone || "",
+    email: contactData.email || "",
+    ...contactData,
+  });
+};
+
+export const trackDownload = (downloadData) => {
+  fbPixelEvent("Download", {
+    content_name: downloadData.name || "",
+    content_type: downloadData.type || "file",
+    ...downloadData,
+  });
+};
+
+export const trackViewCategory = (categoryData) => {
+  fbPixelEvent("ViewCategory", {
+    content_name: categoryData.name || "",
+    content_category: categoryData.category || "",
+    ...categoryData,
+  });
+};
+
 export const trackCustomEvent = (eventName, eventData) => {
   fbPixelEvent(eventName, eventData);
 };

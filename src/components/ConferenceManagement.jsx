@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axiosInstance from "../api/axios";
 import "./ConferenceManagement.css";
+import { trackFormSubmit, trackContact } from "../utils/fbPixel";
 import CM_1 from "../assests/CM_1.png";
 import CM_2 from "../assests/CM_2.png";
 import CM_3 from "../assests/CM_3.png";
@@ -125,6 +126,14 @@ const ConferenceManagement = () => {
     e.preventDefault();
 
     try {
+      trackContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        type: "ConferenceManagement",
+      });
+
       const payload = {
         full_name: formData.name,
         company_name: formData.type === "Company" ? formData.company : null,
@@ -199,6 +208,13 @@ const ConferenceManagement = () => {
     e.preventDefault();
 
     try {
+      trackFormSubmit({
+        name: "ConferenceManagement FAQ Inquiry",
+        email: faqForm.email,
+        message: faqForm.message,
+        type: "ConferenceManagement_FAQ",
+      });
+
       const payload = {
         full_name: faqForm.name,
         company_name: null,

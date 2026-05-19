@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./R_R_Planning.css";
+import { trackFormSubmit, trackContact } from "../utils/fbPixel";
 import RR_3 from "../assests/RR_3.png";
 import RR_4 from "../assests/RR_4.jpg";
 import RR_6 from "../assests/RR_6.jpg";
@@ -122,6 +123,14 @@ const R_R_Planning = () => {
     e.preventDefault();
 
     try {
+      trackContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        type: "RecognitionRewards",
+      });
+
       await axios.post("/api/contact/", formData);
 
       alert("Form Submitted Successfully");
@@ -147,6 +156,13 @@ const R_R_Planning = () => {
     e.preventDefault();
 
     try {
+      trackFormSubmit({
+        name: "RecognitionRewards FAQ Inquiry",
+        email: faqForm.email,
+        message: faqForm.message,
+        type: "RecognitionRewards_FAQ",
+      });
+
       await axios.post("/api/contact/", {
         name: faqForm.name,
         email: faqForm.email,

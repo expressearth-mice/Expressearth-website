@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './popupForm.css';
 import axiosInstance from '../api/axios';
+import { trackContact } from '../utils/fbPixel';
 
 const PopupForm = ({ onClose }) => {
   const [type, setType] = useState('company');
@@ -63,6 +64,14 @@ const PopupForm = ({ onClose }) => {
       event_type: 'Other',
       type: type,
     };
+
+    trackContact({
+      name: formData.full_name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company_name,
+      type: "PopupForm",
+    });
 
     console.log("Submitting:", formattedFormData); // For debugging
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./IncentivePage.css";
 import axiosInstance from "../api/axios";
+import { trackFormSubmit, trackContact } from "../utils/fbPixel";
 
 import ig1 from "../assests/IP_5.jpg";
 import ig2 from "../assests/IP_6.jpg";
@@ -201,6 +202,14 @@ const IncentivePage = () => {
     e.preventDefault();
 
     try {
+      trackContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        type: "IncentiveTravel",
+      });
+
       const payload = {
         full_name: formData.name,
         company_name: formData.type === "Company" ? formData.company : null,
@@ -239,6 +248,13 @@ const IncentivePage = () => {
     e.preventDefault();
 
     try {
+      trackFormSubmit({
+        name: "IncentiveTravel FAQ Inquiry",
+        email: faqForm.email,
+        message: faqForm.message,
+        type: "IncentiveTravel_FAQ",
+      });
+
       const payload = {
         full_name: faqForm.name,
         company_name: null,

@@ -105,7 +105,8 @@ const Home = () => {
       icon: "fa-store",
       label: "Exhibitions & Trade Shows",
       destinations: "10+",
-      slug: "/exhibitions-and-trade-shows"},
+      slug: "/exhibitions-and-trade-shows"
+    },
     {
       icon: "fa-map-marker-alt",
       label: "Destination Meetings",
@@ -240,7 +241,7 @@ const Home = () => {
             {/* Carousel Item 1 */}
             <div className="carousel-item active">
               <img
-                src="\Images\HOME\Banner image\A.avif"
+                src="/Images/HOME/Banner image/A.avif"
                 className="d-block w-100 carousel-image"
                 alt="Slide 1"
               />
@@ -379,13 +380,13 @@ const Home = () => {
       {/* Destinations */}
       <section
         className="destinations"
-        // style={{
-        //   backgroundImage:
-        //     "linear-gradient(rgba(8, 59, 112, 0.55), rgba(8, 59, 112, 0.55)), url('/Images/switzerland.png')",
-        //   backgroundSize: "cover",
-        //   backgroundPosition: "center",
-        //   backgroundRepeat: "no-repeat",
-        // }}
+      // style={{
+      //   backgroundImage:
+      //     "linear-gradient(rgba(8, 59, 112, 0.55), rgba(8, 59, 112, 0.55)), url('/Images/switzerland.png')",
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      //   backgroundRepeat: "no-repeat",
+      // }}
       >
         <div className="destination-section">
           <div className="intro-row">
@@ -465,12 +466,17 @@ const Home = () => {
         <div className="travel-image-box">
           <video
             className="travel-video"
-            src= "/Images/home.mp4"
             autoPlay
             muted
             loop
             playsInline
-          />
+            preload="auto"
+          >
+            <source
+              src={`${process.env.PUBLIC_URL}/Images/home.mp4`}
+              type="video/mp4"
+            />
+          </video>
         </div>
 
         <div className="travel-content-box">
@@ -480,7 +486,7 @@ const Home = () => {
 
           <h1 className="travel-heading">Plan. Execute. Inspire.</h1>
 
-                    <p className="travel-subtext">
+          <p className="travel-subtext">
             <span className="travel-subtext-initial">At ExpressEarth</span>, we don’t just organize events — we
             craft immersive corporate experiences. With over a decade of
             expertise in the MICE industry, we specialize in curating high-end
@@ -529,19 +535,19 @@ const Home = () => {
           leftAriaLabel="Scroll destination cards left"
           rightAriaLabel="Scroll destination cards right"
         >
-            {miceDestinations.map((item, index) => (
-              <div key={index} className="mice-scroll-item">
-                <Link to={item.slug} className="mice-link">
-                  <div className="mice-card mice-card-panel">
-                    <i className={`fa ${item.icon} fa-2x mice-card-icon`}></i>
-                    <h6 className="mice-card-title">{item.label}</h6>
-                    <p className="mice-card-meta">
-                      {item.destinations} Destinations
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            ))}
+          {miceDestinations.map((item, index) => (
+            <div key={index} className="mice-scroll-item">
+              <Link to={item.slug} className="mice-link">
+                <div className="mice-card mice-card-panel">
+                  <i className={`fa ${item.icon} fa-2x mice-card-icon`}></i>
+                  <h6 className="mice-card-title">{item.label}</h6>
+                  <p className="mice-card-meta">
+                    {item.destinations} Destinations
+                  </p>
+                </div>
+              </Link>
+            </div>
+          ))}
         </HorizontalSlider>
 
         <div className="subtext subtext-block">
@@ -565,31 +571,31 @@ const Home = () => {
           leftAriaLabel="Scroll group size cards left"
           rightAriaLabel="Scroll group size cards right"
         >
-            {[
-              {
-              
+          {[
+            {
+
               text: "Large Corporate Groups – 500+ Participants | 20+ Destinations",
-      
+
             },
             {
-              
+
               text: "Small Business Teams – 50–200 Participants | 15+ Destinations",
-              
+
             },
             {
-              
+
               text: "Executive Retreats & Couples – 2–50 Participants | 12+ Destinations",
-              
+
             },
             {
-              
+
               text: "Incentive & Special Interest Groups – Customizable | 18+ Destinations",
-              
+
             },
             {
-              
+
               text: "Global Conferences – 1000+ Participants | 10+ Destinations",
-              
+
             },
           ].map((item, index) => (
             <div key={index} className="mice-scroll-item">

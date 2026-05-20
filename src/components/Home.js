@@ -465,7 +465,7 @@ const Home = () => {
         <div className="travel-image-box">
           <video
             className="travel-video"
-            src= "/assets/home.mp4"
+            src= "/Images/home.mp4"
             autoPlay
             muted
             loop

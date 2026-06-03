@@ -473,7 +473,7 @@ const Home = () => {
             preload="auto"
           >
             <source
-              src={`${process.env.PUBLIC_URL}/Images/home-web.mp4`}
+              src="/Images/home-web.mp4"
               type="video/mp4"
             />
           </video>

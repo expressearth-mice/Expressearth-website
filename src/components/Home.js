@@ -463,19 +463,16 @@ const Home = () => {
       <IntegrationTools />
 
       <section className="travel-banner">
-        <div className="travel-image-box">
+        <div style={{ background: "red", padding: "20px" }}>
+          <h1 style={{ color: "white" }}>VIDEO TEST</h1>
+
           <video
-            className="travel-video"
+            width="500"
+            controls
             autoPlay
             muted
-            loop
-            playsInline
-            preload="auto"
           >
-            <source
-              src="/Images/home-web.mp4"
-              type="video/mp4"
-            />
+            <source src="/Images/home-web.mp4" type="video/mp4" />
           </video>
         </div>
 

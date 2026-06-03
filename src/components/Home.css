@@ -219,6 +219,7 @@ html {
   background-color: white;
   margin-top: 80px;
   align-items: stretch;
+  border: 8px solid red !important;
 }
 
 @media (min-width: 768px) {
@@ -233,6 +234,7 @@ html {
   height: 400px;
   overflow: hidden;
   border-radius: 18px;
+  border: 8px solid black !important;
 }
 
 @media (min-width: 768px) {

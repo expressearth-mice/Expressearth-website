@@ -468,13 +468,22 @@ const Home = () => {
 
           <video
             width="500"
+            height="500"
             controls
-            autoPlay
             muted
+            preload="auto"
             playsInline
+            style={{
+              border: "5px solid yellow",
+              display: "block",
+              zIndex: 9999,
+              position: "relative"
+            }}
           >
-            <source src="/the-process-h264.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
+            <source
+              src="https://dev.expressearth.com/the-process-h264.mp4"
+              type="video/mp4"
+            />
           </video>
         </div>
 

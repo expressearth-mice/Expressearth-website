@@ -32,7 +32,14 @@ function Navbar() {
         { name: "Gifting", path: "/Gifting" },
       ],
     },
-    { name: "Destinations", path: "/destinations" },
+    { name: "Destinations",
+      path: "/international-destinations",
+      dropdown: true,
+      items: [
+        { name: "International Destinations", path: "/international-destinations" },
+        { name: "Domestic Destinations", path: "/domestic-destinations" },
+      ], 
+     },
     {
       name: "Resources",
       path: "/blogs",

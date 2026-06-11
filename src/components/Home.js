@@ -463,27 +463,17 @@ const Home = () => {
       <IntegrationTools />
 
       <section className="travel-banner">
-        <div style={{ background: "red", padding: "20px" }}>
-          <h1 style={{ color: "white" }}>VIDEO TEST</h1>
-
+        <div className="travel-image-box">
           <video
-            width="500"
-            height="500"
-            controls
+            className="travel-video"
+            autoPlay
             muted
+            loop
             preload="auto"
             playsInline
-            style={{
-              border: "5px solid yellow",
-              display: "block",
-              zIndex: 9999,
-              position: "relative"
-            }}
           >
-            <source
-              src="https://dev.expressearth.com/the-process-h264.mp4"
-              type="video/mp4"
-            />
+            <source src="/Images/home-web.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         </div>
 

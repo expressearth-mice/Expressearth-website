@@ -471,8 +471,10 @@ const Home = () => {
             controls
             autoPlay
             muted
+            playsInline
           >
-            <source src="/Images/home-web.mp4" type="video/mp4" />
+            <source src="/the-process-h264.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         </div>
 

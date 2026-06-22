@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSnackbar } from "notistack";
 import { Link } from 'react-router-dom';
 import './Home.css';
 import axiosInstance from '../api/axios';
@@ -6,34 +7,55 @@ import axiosInstance from '../api/axios';
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const handleSubscribe = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      alert('Please enter a valid email address.');
-      return;
-    }
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    enqueueSnackbar("Please enter a valid email address.", {
+      variant: "error",
+    });
+    return;
+  }
 
-    try {
-      const response = await axiosInstance.post('/api/subscribe/', {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+  try {
+    const response = await axiosInstance.post("/api/subscribe/", {
+      email,
+    });
 
-      const data = await response.json();
+    setSubscribed(true);
+    setEmail("");
 
-      if (response.ok) {
-        setSubscribed(true);
-        setEmail('');
-        alert(data.message || 'Thanks for subscribing!');
-      } else {
-        alert(data.email?.[0] || 'You are already subscribed.');
+    enqueueSnackbar(
+      response.data.message || "Thanks for subscribing!",
+      {
+        variant: "success",
       }
-    } catch (err) {
-      console.error(err);
-      alert('Something went wrong. Please try again later.');
+    );
+  } catch (err) {
+    console.error(err);
+
+    let errorMessage = "Something went wrong. Please try again later.";
+
+    if (err.response?.data) {
+      const data = err.response.data;
+
+      if (typeof data === "string") {
+        errorMessage = data;
+      } else if (data.message) {
+        errorMessage = data.message;
+      } else if (data.email) {
+        errorMessage = Array.isArray(data.email)
+          ? data.email[0]
+          : data.email;
+      }
     }
-  };
+
+    enqueueSnackbar(errorMessage, {
+      variant: "error",
+    });
+  }
+};
 
   const linkStyle = {
     textDecoration: 'none',

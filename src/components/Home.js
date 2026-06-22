@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Home.css";
 import { Link, useLocation } from "react-router-dom";
 import PopupForm from "./popupForm";
@@ -72,6 +72,7 @@ const Home = () => {
   const [animatedTravelStats, setAnimatedTravelStats] = useState(
     travelStats.map(() => 0)
   );
+  const travelStatsRef = useRef(null);
   const toggleFAQ = (index) => {
     setActiveFAQ(activeFAQ === index ? null : index);
   };
@@ -130,6 +131,27 @@ const Home = () => {
 
     fetchRecentPosts();
   }, []);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStartedTravelStats) {
+          setHasStartedTravelStats(true);
+
+          // stop observing after first trigger
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.3,
+      }
+    );
+
+    if (travelStatsRef.current) {
+      observer.observe(travelStatsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasStartedTravelStats]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -201,9 +223,6 @@ const Home = () => {
     setShowIcon(false); // Hide icon when popup is open
   };
 
-  const handleTravelStatsHover = () => {
-    setHasStartedTravelStats(true);
-  };
 
   const splitMiceCardText = (text) => {
     const parts = text.split(/\s+[–-]\s+/u);
@@ -502,7 +521,7 @@ const Home = () => {
 
           <div
             className="travel-stats-grid"
-            onMouseEnter={handleTravelStatsHover}
+            ref={travelStatsRef}
           >
             {travelStats.map((stat, index) => (
               <div key={stat.label} className="travel-stat-item">

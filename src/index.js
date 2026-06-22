@@ -1,17 +1,26 @@
-// ✅ CORRECT index.js
 import { BrowserRouter } from "react-router-dom";
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
+import { SnackbarProvider } from "notistack";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <BrowserRouter> {/* ✅ Only ONE BrowserRouter */}
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+  <BrowserRouter>
+    <SnackbarProvider
+      maxSnack={3}
+      autoHideDuration={3000}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+    >
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </SnackbarProvider>
   </BrowserRouter>
 );

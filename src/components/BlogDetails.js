@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
+import { blog_url, blog_detail_url } from "../api/urls";
 import "./BlogDetails.css";
 
 
@@ -21,14 +22,45 @@ const BlogDetails = () => {
         const res = await axiosInstance.get(`/api/posts/${title}/`);
         setBlog(res.data);
       } catch (error) {
-        console.error("Error fetching post:", error);
+        try {
+          const res = await axiosInstance.get(blog_detail_url(title));
+          const data = res.data;
+          setBlog({
+            ...data,
+            description: data.short_description,
+            image: data.images?.[0]?.image || data.image,
+            long_des: data.content,
+          });
+        } catch (err2) {
+          console.error("Error fetching post:", err2);
+        }
       }
     };
 
     const fetchRecentPosts = async () => {
       try {
-        const res = await axiosInstance.get("/api/posts/");
-        setPosts(res.data.results || res.data); // use `.results` if using pagination
+        const [oldRes, newRes] = await Promise.allSettled([
+          axiosInstance.get("/api/posts/"),
+          axiosInstance.get(blog_url),
+        ]);
+
+        const oldPosts =
+          oldRes.status === "fulfilled"
+            ? oldRes.value.data?.results || oldRes.value.data || []
+            : [];
+        const newPostsRaw =
+          newRes.status === "fulfilled"
+            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            : [];
+
+        const newPosts = newPostsRaw.map((post) => ({
+          id: post.id,
+          slug: post.slug,
+          title: post.title,
+          image: post.images?.[0]?.image || post.image || "",
+        }));
+
+        setPosts([...oldPosts, ...newPosts]);
       } catch (error) {
         console.error("Error fetching recent posts:", error);
       }

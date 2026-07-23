@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axiosInstance from "../api/axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { blog_url } from "../api/urls";
 import "./BlogList.css";
 
 function BlogList() {
@@ -15,8 +16,28 @@ function BlogList() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axiosInstance.get("/api/posts/");
-        const sortedPosts = response.data.sort(
+        const [oldRes, newRes] = await Promise.allSettled([
+          axiosInstance.get("/api/posts/"),
+          axiosInstance.get(blog_url),
+        ]);
+
+        const oldPosts =
+          oldRes.status === "fulfilled" ? oldRes.value.data || [] : [];
+        const newPostsRaw =
+          newRes.status === "fulfilled"
+            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            : [];
+
+        const newPosts = newPostsRaw.map((post) => ({
+          id: post.id,
+          slug: post.slug,
+          title: post.title,
+          description: post.short_description || "",
+          image: post.images?.[0]?.image || post.image || "",
+          updated_at: post.updated_at || post.created_at,
+        }));
+
+        const sortedPosts = [...oldPosts, ...newPosts].sort(
           (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
         );
         setPosts(sortedPosts);

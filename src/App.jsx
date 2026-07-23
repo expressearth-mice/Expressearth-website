@@ -25,6 +25,10 @@ import ContactForm from "./components/ContactForm";
 import CareersPage from "./components/CareersPage";
 import CreateCaseStudy from "./components/CreateCaseStudy";
 import CaseStudyList from "./components/CaseStudyList";
+import CreatePostNew from "./components/CreatePostNew";
+import ManageBlogs from "./components/blogs/ManageBlogs";
+import CreateCaseStudyNew from "./components/CreateCaseStudyNew";
+import ManageCaseStudiesNew from "./components/ManageCaseStudiesNew";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import LoginForm from "./components/LoginForm";
@@ -167,6 +171,23 @@ function App() {
               element={<CreateCaseStudy />}
             />
             <Route path="/create-category" element={<CreateCategory />} />
+
+            {/* New admin CRUD pages */}
+            <Route path="/create-post-new" element={<CreatePostNew />} />
+            <Route path="/blogs-new" element={<ManageBlogs />} />
+            <Route path="/blogs-new/:title" element={<ManageBlogs />} />
+            <Route
+              path="/create-case-studies-new"
+              element={<CreateCaseStudyNew />}
+            />
+            <Route
+              path="/case-studies-new"
+              element={<ManageCaseStudiesNew />}
+            />
+            <Route
+              path="/case-studies-new/:id"
+              element={<ManageCaseStudiesNew />}
+            />
           </>
         )}
 

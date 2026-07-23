@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "./CaseStudyDetails.css";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
+import { case_study_detail_url, delete_case_study_url } from "../api/urls";
 
 const CaseStudyDetail = () => {
   const { id: idOrSlug } = useParams();
@@ -11,6 +12,7 @@ const CaseStudyDetail = () => {
 
   const [caseStudy, setCaseStudy] = useState(null);
   const [caseStudyId, setCaseStudyId] = useState(null); // ✅ store real ID
+  const [isNewSystem, setIsNewSystem] = useState(false); // which API this item lives in
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,37 +24,52 @@ const CaseStudyDetail = () => {
       setLoading(true);
 
       let item;
+      let fromNewSystem = false;
       const isNumeric = !isNaN(idOrSlug);
 
       if (isNumeric) {
         // ✅ Fetch by ID
-        const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`);
-        item = res.data;
+        try {
+          const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`);
+          item = res.data;
+        } catch (err) {
+          item = null;
+        }
       } else {
         // ❌ Backend filter broken → fetch all
-        const res = await axiosInstance.get(`/api/case-studies/`);
-
-        if (!res.data || res.data.length === 0) {
-          alert("No case studies found!");
-          return;
+        try {
+          const res = await axiosInstance.get(`/api/case-studies/`);
+          item = (res.data || []).find((cs) => cs.slug === idOrSlug);
+        } catch (err) {
+          item = null;
         }
-
-        // ✅ STRICT match only
-        item = res.data.find(cs => cs.slug === idOrSlug);
-
-        console.log("All slugs:", res.data.map(cs => cs.slug));
-        console.log("URL slug:", idOrSlug);
       }
 
       if (!item) {
-        alert("Exact case study not found!");
+        // Fall back to the new case-study API
+        try {
+          const res = await axiosInstance.get(case_study_detail_url(idOrSlug));
+          const data = res.data;
+          item = {
+            ...data,
+            name: data.title,
+            comment: data.content || data.short_description,
+            image: data.images?.[0]?.image || data.image,
+          };
+          fromNewSystem = true;
+        } catch (err) {
+          item = null;
+        }
+      }
+
+      if (!item) {
+        alert("Case study not found!");
         return;
       }
 
-      console.log("Final selected item:", item);
-
       setCaseStudy(item);
       setCaseStudyId(item.id);
+      setIsNewSystem(fromNewSystem);
 
     } catch (error) {
       console.error("Error fetching case study:", error);
@@ -92,9 +109,11 @@ const CaseStudyDetail = () => {
     try {
       const accessToken = await getValidAccessToken();
 
-      console.log("Deleting ID:", caseStudyId); // DEBUG
+      const deleteUrl = isNewSystem
+        ? delete_case_study_url(caseStudyId)
+        : `/api/case-studies/${caseStudyId}/`;
 
-      await axiosInstance.delete(`/api/case-studies/${caseStudyId}/`, {
+      await axiosInstance.delete(deleteUrl, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -137,7 +156,11 @@ const CaseStudyDetail = () => {
       {canManageCaseStudies && (
         <div className="d-flex gap-2 justify-content-end px-4 pt-4">
           <Link
-            to={`/edit-case-study/${caseStudy.slug || caseStudyId}`}
+            to={
+              isNewSystem
+                ? `/case-studies-new/${caseStudy.slug || caseStudyId}`
+                : `/edit-case-study/${caseStudy.slug || caseStudyId}`
+            }
             className="btn btn-outline-primary"
           >
             Edit Case Study

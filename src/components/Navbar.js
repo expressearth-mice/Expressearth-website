@@ -8,7 +8,9 @@ import SearchBar from "./SearchBar";
 function Navbar() {
   const { role } = useContext(AuthContext);
   const navbarCollapseRef = useRef(null);
+  const navLinksRef = useRef(null);
   const location = useLocation();
+  const isAdminOrSeo = role.is_admin || role.is_seo;
 
   const [openDropdown, setOpenDropdown] = useState(null);
   const closeTimerRef = useRef(null);
@@ -88,6 +90,13 @@ function Navbar() {
     setOpenDropdown((prev) => (prev === key ? null : key));
   };
 
+  const handleNavLinksWheel = (e) => {
+    if (!isAdminOrSeo || !navLinksRef.current) return;
+    if (e.deltaY === 0) return;
+    e.preventDefault();
+    navLinksRef.current.scrollLeft += e.deltaY;
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light glass-navbar">
       <div className="container-fluid navbar-inner">
@@ -113,7 +122,13 @@ function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" ref={navbarCollapseRef}>
-          <ul className="navbar-nav mx-auto navbar-links">
+          <ul
+            className={`navbar-nav mx-auto navbar-links ${
+              isAdminOrSeo ? "ee-scrollable" : ""
+            }`}
+            ref={navLinksRef}
+            onWheel={handleNavLinksWheel}
+          >
             {navLinks.map((tab, idx) => {
               if (tab.dropdown) {
                 const key = `dd-${idx}`;
@@ -199,7 +214,7 @@ function Navbar() {
               );
             })}
 
-            {(role.is_admin || role.is_seo) && (
+            {isAdminOrSeo && (
               <>
                 <li className="nav-item">
                   <NavLink
@@ -263,6 +278,10 @@ function Navbar() {
               </>
             )}
           </ul>
+
+          <a href="tel:+919266056660" className="navbar-phone">
+            +91-92660 56660
+          </a>
 
           <div className="search-wrapper d-flex align-items-center">
             <SearchBar />

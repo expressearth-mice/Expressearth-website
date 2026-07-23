@@ -2,22 +2,46 @@ import React, { useEffect, useState } from "react";
 import "./CaseStudyList.css";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
+import { case_study_url } from "../api/urls";
 
 const CaseStudyList = () => {
   const [caseStudies, setCaseStudies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axiosInstance
-      .get("/api/case-studies/")
-      .then((res) => {
-        setCaseStudies(res.data);
+    const fetchCaseStudies = async () => {
+      try {
+        const [oldRes, newRes] = await Promise.allSettled([
+          axiosInstance.get("/api/case-studies/"),
+          axiosInstance.get(case_study_url),
+        ]);
+
+        const oldStudies =
+          oldRes.status === "fulfilled" ? oldRes.value.data || [] : [];
+        const newRaw =
+          newRes.status === "fulfilled"
+            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            : [];
+
+        const newStudies = newRaw.map((item) => ({
+          id: item.id,
+          slug: item.slug,
+          name: item.title,
+          image: item.images?.[0]?.image || item.image || "",
+          comment: item.short_description || item.content || "",
+          author_name: item.author_name || "",
+          author_quote: item.author_quote || "",
+        }));
+
+        setCaseStudies([...oldStudies, ...newStudies]);
         setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Error fetching case studies:", err);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCaseStudies();
   }, []);
 
   if (loading) {

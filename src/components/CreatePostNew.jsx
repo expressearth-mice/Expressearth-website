@@ -28,6 +28,32 @@ const createSlug = (value) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+// Recursively flattens DRF-style field errors, e.g. { slug: ["already exists"] }
+// or nested variants like { errors: { slug: ["already exists"] } }.
+const flattenFieldErrors = (obj, prefix = "") => {
+  if (!obj || typeof obj !== "object") return [];
+
+  return Object.entries(obj).flatMap(([field, value]) => {
+    const label = prefix ? `${prefix}.${field}` : field;
+
+    if (Array.isArray(value)) {
+      const text = value.filter((v) => typeof v === "string").join(", ");
+      if (!text.trim()) return [];
+      return [field === "non_field_errors" ? text : `${label}: ${text}`];
+    }
+
+    if (typeof value === "string") {
+      if (!value.trim()) return [];
+      return [field === "non_field_errors" ? value : `${label}: ${value}`];
+    }
+
+    if (value && typeof value === "object")
+      return flattenFieldErrors(value, label);
+
+    return [];
+  });
+};
+
 const getApiMessage = (payload, fallback) => {
   const message =
     payload?.message ??
@@ -37,7 +63,18 @@ const getApiMessage = (payload, fallback) => {
     payload?.data?.detail;
 
   if (Array.isArray(message)) return message.join(", ");
-  return typeof message === "string" && message.trim() ? message : fallback;
+  if (typeof message === "string" && message.trim()) return message;
+
+  if (payload && typeof payload === "object" && !Array.isArray(payload)) {
+    const source =
+      payload.errors && typeof payload.errors === "object"
+        ? payload.errors
+        : payload;
+    const fieldErrors = flattenFieldErrors(source);
+    if (fieldErrors.length) return fieldErrors.join(" | ");
+  }
+
+  return fallback;
 };
 
 function CreatePostNew() {
@@ -175,7 +212,7 @@ function CreatePostNew() {
 
   return (
     <main className="admin-new-page">
-      <div className="container">
+      <div className="container-fluid px-4">
         <div className="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
           <div>
             <span className="text-muted text-uppercase small fw-semibold">
@@ -194,85 +231,89 @@ function CreatePostNew() {
         <QuickLinksNew />
 
         <form className="card shadow-sm p-4" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Title</label>
-            <input
-              type="text"
-              name="title"
-              placeholder="Enter blog title"
-              className="form-control"
-              value={form.title}
-              onChange={updateField}
-              required
-            />
-          </div>
+          <div className="admin-new-form-grid mb-3">
+            <div>
+              <div className="mb-3">
+                <label className="form-label">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Enter blog title"
+                  className="form-control"
+                  value={form.title}
+                  onChange={updateField}
+                  required
+                />
+              </div>
 
-          <div className="mb-3">
-            <label className="form-label">Short Description</label>
-            <textarea
-              name="shortDescription"
-              placeholder="Write a short summary of the blog"
-              className="form-control"
-              rows="3"
-              value={form.shortDescription}
-              onChange={updateField}
-              required
-            />
-          </div>
+              <div className="mb-3">
+                <label className="form-label">Short Description</label>
+                <textarea
+                  name="shortDescription"
+                  placeholder="Write a short summary of the blog"
+                  className="form-control"
+                  rows="3"
+                  value={form.shortDescription}
+                  onChange={updateField}
+                  required
+                />
+              </div>
 
-          <div className="mb-3">
-            <label className="form-label">Blog Images</label>
-            <div className="admin-new-upload">
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                className="form-control"
-                disabled={images.length >= MAX_IMAGES}
-                onChange={handleImages}
-                ref={fileInputRef}
-              />
-              <small className="text-muted d-block mt-2">
-                Upload up to {MAX_IMAGES} images ({images.length}/{MAX_IMAGES}{" "}
-                selected).
-              </small>
+              <div className="mb-0">
+                <label className="form-label">Blog Images</label>
+                <div className="admin-new-upload">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="form-control"
+                    disabled={images.length >= MAX_IMAGES}
+                    onChange={handleImages}
+                    ref={fileInputRef}
+                  />
+                  <small className="text-muted d-block mt-2">
+                    Upload up to {MAX_IMAGES} images, with a maximum total size
+                    of 2.5 MB ({images.length}/{MAX_IMAGES} selected).
+                  </small>
+                </div>
+
+                {previews.length > 0 && (
+                  <div className="d-flex flex-wrap gap-3 mt-3">
+                    {previews.map((item, index) => (
+                      <figure key={item.url} className="position-relative m-0">
+                        <img
+                          alt={item.name}
+                          src={item.url}
+                          style={{
+                            width: 120,
+                            height: 90,
+                            objectFit: "cover",
+                            borderRadius: 6,
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-danger position-absolute top-0 end-0"
+                          onClick={() => removeImage(index)}
+                        >
+                          &times;
+                        </button>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {previews.length > 0 && (
-              <div className="d-flex flex-wrap gap-3 mt-3">
-                {previews.map((item, index) => (
-                  <figure key={item.url} className="position-relative m-0">
-                    <img
-                      alt={item.name}
-                      src={item.url}
-                      style={{
-                        width: 120,
-                        height: 90,
-                        objectFit: "cover",
-                        borderRadius: 6,
-                      }}
-                    />
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-danger position-absolute top-0 end-0"
-                      onClick={() => removeImage(index)}
-                    >
-                      &times;
-                    </button>
-                  </figure>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="mb-3 admin-new-editor">
-            <label className="form-label">Blog Content</label>
-            <ReactQuill
-              theme="snow"
-              value={content}
-              onChange={setContent}
-              placeholder="Write the complete blog content here..."
-            />
+            <div className="admin-new-editor mb-0">
+              <label className="form-label">Blog Content</label>
+              <ReactQuill
+                theme="snow"
+                value={content}
+                onChange={setContent}
+                placeholder="Write the complete blog content here..."
+              />
+            </div>
           </div>
 
           <fieldset className="border rounded p-3 mb-3">

@@ -4,6 +4,41 @@ import "./CaseStudyDetails.css";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { case_study_detail_url, delete_case_study_url } from "../api/urls";
+import Skeleton from "./Skeleton";
+
+const getImageList = (item) => {
+  if (!item) return [];
+  if (Array.isArray(item.images)) return item.images;
+  if (typeof item.images === "string" && item.images.trim()) {
+    return [{ id: null, image: item.images }];
+  }
+  if (typeof item.image === "string" && item.image.trim()) {
+    return [{ id: null, image: item.image }];
+  }
+  return [];
+};
+
+const CaseStudyDetailSkeleton = () => (
+  <div className="case-study-detail-container">
+    <Skeleton className="case-study-detail-banner" />
+
+    <div className="case-study-detail-content">
+      <Skeleton
+        className="skeleton-title"
+        style={{ width: "45%", height: 42, margin: "0 auto 20px" }}
+      />
+      <Skeleton
+        className="skeleton-text"
+        style={{ width: "25%", margin: "0 auto 24px" }}
+      />
+      <Skeleton className="skeleton-text" style={{ width: "100%" }} />
+      <Skeleton className="skeleton-text" style={{ width: "96%" }} />
+      <Skeleton className="skeleton-text" style={{ width: "92%" }} />
+      <Skeleton className="skeleton-text" style={{ width: "88%" }} />
+      <Skeleton className="skeleton-text" style={{ width: "70%" }} />
+    </div>
+  </div>
+);
 
 const CaseStudyDetail = () => {
   const { id: idOrSlug } = useParams();
@@ -128,7 +163,7 @@ const CaseStudyDetail = () => {
   };
 
   if (loading || !caseStudy) {
-    return <div>Loading...</div>;
+    return <CaseStudyDetailSkeleton />;
   }
 
   const destinationName =
@@ -138,20 +173,14 @@ const CaseStudyDetail = () => {
         (item) => String(item.id) === String(caseStudy.destination)
       )?.name;
 
-  const bannerText =
-    caseStudy.description ||
-    destinationName ||
-    "Explore this case study from ExpressEarth.";
+  const caseStudyImages = getImageList(caseStudy);
 
   return (
     <div className="case-study-detail-container">
       <div
         className="case-study-detail-banner"
         style={{ backgroundImage: `url(${caseStudy.image})` }}
-      >
-        <h1>{caseStudy.name}</h1>
-        <p>{bannerText}</p>
-      </div>
+      />
 
       {canManageCaseStudies && (
         <div className="d-flex gap-2 justify-content-end px-4 pt-4">
@@ -177,7 +206,7 @@ const CaseStudyDetail = () => {
       )}
 
       <div className="case-study-detail-content">
-        <h2>Case Study Details</h2>
+        <h2>{caseStudy.name}</h2>
 
         {destinationName && (
           <p>
@@ -192,6 +221,19 @@ const CaseStudyDetail = () => {
           />
         ) : (
           <p>No case study details available.</p>
+        )}
+
+        {caseStudyImages.length > 1 && (
+          <div className="case-study-gallery">
+            {caseStudyImages.map((img, index) => (
+              <img
+                key={img.id || index}
+                alt={`${caseStudy.name} ${index + 1}`}
+                src={img.image}
+                className="case-study-gallery-image"
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>

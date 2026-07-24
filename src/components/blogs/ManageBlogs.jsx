@@ -43,6 +43,20 @@ const getApiMessage = (payload, fallback) => {
   return typeof message === "string" && message.trim() ? message : fallback;
 };
 
+// New-format posts return `images` as an array of {id, image, image_url};
+// old-format posts return a single `image` string (or `images` as a string). Normalize both to an array.
+const getImageList = (item) => {
+  if (!item) return [];
+  if (Array.isArray(item.images)) return item.images;
+  if (typeof item.images === "string" && item.images.trim()) {
+    return [{ id: null, image: item.images }];
+  }
+  if (typeof item.image === "string" && item.image.trim()) {
+    return [{ id: null, image: item.image }];
+  }
+  return [];
+};
+
 function ManageBlogs() {
   const { title: blogSlug } = useParams();
   const navigate = useNavigate();
@@ -117,7 +131,7 @@ function ManageBlogs() {
       ogDescription: selectedBlog.og_description || "",
     });
     setEditContent(selectedBlog.content || "");
-    setExistingImages(selectedBlog.images || []);
+    setExistingImages(getImageList(selectedBlog));
     setDeletedImageIds([]);
     setReplacementImage(null);
     setIsEditing(true);
@@ -240,17 +254,17 @@ function ManageBlogs() {
     }
   };
 
-  const renderCard = (blog) => (
+  const renderCard = (blog) => {
+    const blogImages = getImageList(blog);
+    return (
     <Link
       className="admin-new-card"
       key={blog.id}
       to={`/blogs-new/${encodeURIComponent(blog.slug)}`}
     >
       <div className="admin-new-card__image">
-        {blog.images?.[0]?.image ? (
-          <img alt={blog.title} src={blog.images[0].image} />
-        ) : blog.image ? (
-          <img alt={blog.title} src={blog.image} />
+        {blogImages[0]?.image ? (
+          <img alt={blog.title} src={blogImages[0].image} />
         ) : (
           <span className="text-muted">No image</span>
         )}
@@ -263,11 +277,12 @@ function ManageBlogs() {
         <span className="text-primary small fw-semibold">View full post</span>
       </div>
     </Link>
-  );
+    );
+  };
 
   return (
     <main className="admin-new-page">
-      <div className="container">
+      <div className="container-fluid px-4">
         <div className="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
           <div>
             <span className="text-muted text-uppercase small fw-semibold">
@@ -358,11 +373,11 @@ function ManageBlogs() {
                       {isDeleting ? "Deleting..." : "Delete Blog"}
                     </button>
                   </div>
-                  {selectedBlog.images?.[0]?.image && (
+                  {getImageList(selectedBlog)[0]?.image && (
                     <img
                       alt={selectedBlog.title}
                       className="admin-new-detail__hero"
-                      src={selectedBlog.images[0].image}
+                      src={getImageList(selectedBlog)[0].image}
                     />
                   )}
                   <h2 className="h3">{selectedBlog.title}</h2>
@@ -375,19 +390,20 @@ function ManageBlogs() {
                       __html: selectedBlog.content || "",
                     }}
                   />
-                  {selectedBlog.images && selectedBlog.images.length > 0 && (
+                  {getImageList(selectedBlog).length > 0 && (
                     <div className="mt-4">
                       <h3 className="h6">Blog Images</h3>
                       <div className="d-flex flex-wrap gap-2">
-                        {selectedBlog.images.map((img, index) => (
+                        {getImageList(selectedBlog).map((img, index) => (
                           <img
                             key={img.id || index}
                             alt={`${selectedBlog.title} ${index + 1}`}
                             src={img.image}
                             style={{
-                              width: 100,
-                              height: 80,
-                              objectFit: "cover",
+                              width: 240,
+                              height: 125,
+                              objectFit: "contain",
+                              background: "#f1f1f1",
                               borderRadius: 6,
                             }}
                           />
@@ -453,9 +469,10 @@ function ManageBlogs() {
                               alt={`Blog ${index + 1}`}
                               src={img.image}
                               style={{
-                                width: 100,
-                                height: 80,
-                                objectFit: "cover",
+                                width: 240,
+                                height: 125,
+                                objectFit: "contain",
+                                background: "#f1f1f1",
                                 borderRadius: 6,
                               }}
                             />

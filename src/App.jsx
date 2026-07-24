@@ -59,6 +59,22 @@ import Domestic from "./components/Domestic";
 
 const AdminComponent = () => <div>Admin-only Section</div>;
 
+// const ScrollToTop = () => {
+//   const { pathname } = useLocation();
+
+//   useEffect(() => {
+//     if ("scrollRestoration" in window.history) {
+//       window.history.scrollRestoration = "manual";
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     window.scrollTo(0, 0);
+//   }, [pathname]);
+
+//   return null;
+// };
+
 function App() {
   const { role, loading } = useContext(AuthContext);
   const location = useLocation(); // Get current route path
@@ -93,6 +109,7 @@ function App() {
 
   return (
     <>
+      {/* <ScrollToTop /> */}
       <Navbar />
       <Marquee speedSec={22} />
       <Routes>
@@ -154,7 +171,7 @@ function App() {
         <Route path="/incentivetravel" element={<IncentivePage />} />
         <Route path="/international-destinations" element={<International />} />
         <Route path="/domestic-destinations" element={<Domestic />} />
-       
+
         {/* SEO + Admin Routes */}
         {(role.is_admin || role.is_seo) && (
           <>
@@ -166,10 +183,7 @@ function App() {
             />
             <Route path="/create-gallery" element={<CreateGallery />} />
             <Route path="/create-case-studies" element={<CreateCaseStudy />} />
-            <Route
-              path="/edit-case-study/:id"
-              element={<CreateCaseStudy />}
-            />
+            <Route path="/edit-case-study/:id" element={<CreateCaseStudy />} />
             <Route path="/create-category" element={<CreateCategory />} />
 
             {/* New admin CRUD pages */}

@@ -43,6 +43,20 @@ const getApiMessage = (payload, fallback) => {
   return typeof message === "string" && message.trim() ? message : fallback;
 };
 
+// New-format case studies return `images` as an array of {id, image, image_url};
+// old-format case studies return a single `image` string (or `images` as a string). Normalize both to an array.
+const getImageList = (item) => {
+  if (!item) return [];
+  if (Array.isArray(item.images)) return item.images;
+  if (typeof item.images === "string" && item.images.trim()) {
+    return [{ id: null, image: item.images }];
+  }
+  if (typeof item.image === "string" && item.image.trim()) {
+    return [{ id: null, image: item.image }];
+  }
+  return [];
+};
+
 function ManageCaseStudiesNew() {
   const { id: caseStudySlug } = useParams();
   const navigate = useNavigate();
@@ -119,7 +133,7 @@ function ManageCaseStudiesNew() {
       ogDescription: selectedCaseStudy.og_description || "",
     });
     setEditContent(selectedCaseStudy.content || "");
-    setExistingImages(selectedCaseStudy.images || []);
+    setExistingImages(getImageList(selectedCaseStudy));
     setDeletedImageIds([]);
     setReplacementImage(null);
     setIsEditing(true);
@@ -251,17 +265,17 @@ function ManageCaseStudiesNew() {
     }
   };
 
-  const renderCard = (caseStudy) => (
+  const renderCard = (caseStudy) => {
+    const caseStudyImages = getImageList(caseStudy);
+    return (
     <Link
       className="admin-new-card"
       key={caseStudy.id}
       to={`/case-studies-new/${encodeURIComponent(caseStudy.slug)}`}
     >
       <div className="admin-new-card__image">
-        {caseStudy.images?.[0]?.image ? (
-          <img alt={caseStudy.title} src={caseStudy.images[0].image} />
-        ) : caseStudy.image ? (
-          <img alt={caseStudy.title} src={caseStudy.image} />
+        {caseStudyImages[0]?.image ? (
+          <img alt={caseStudy.title} src={caseStudyImages[0].image} />
         ) : (
           <span className="text-muted">No image</span>
         )}
@@ -276,11 +290,12 @@ function ManageCaseStudiesNew() {
         </span>
       </div>
     </Link>
-  );
+    );
+  };
 
   return (
     <main className="admin-new-page">
-      <div className="container">
+      <div className="container-fluid px-4">
         <div className="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
           <div>
             <span className="text-muted text-uppercase small fw-semibold">
@@ -371,11 +386,11 @@ function ManageCaseStudiesNew() {
                       {isDeleting ? "Deleting..." : "Delete Case Study"}
                     </button>
                   </div>
-                  {selectedCaseStudy.images?.[0]?.image && (
+                  {getImageList(selectedCaseStudy)[0]?.image && (
                     <img
                       alt={selectedCaseStudy.title}
                       className="admin-new-detail__hero"
-                      src={selectedCaseStudy.images[0].image}
+                      src={getImageList(selectedCaseStudy)[0].image}
                     />
                   )}
                   <h2 className="h3">{selectedCaseStudy.title}</h2>
@@ -388,20 +403,20 @@ function ManageCaseStudiesNew() {
                       __html: selectedCaseStudy.content || "",
                     }}
                   />
-                  {selectedCaseStudy.images &&
-                    selectedCaseStudy.images.length > 0 && (
+                  {getImageList(selectedCaseStudy).length > 0 && (
                       <div className="mt-4">
                         <h3 className="h6">Case Study Images</h3>
                         <div className="d-flex flex-wrap gap-2">
-                          {selectedCaseStudy.images.map((img, index) => (
+                          {getImageList(selectedCaseStudy).map((img, index) => (
                             <img
                               key={img.id || index}
                               alt={`${selectedCaseStudy.title} ${index + 1}`}
                               src={img.image}
                               style={{
-                                width: 100,
-                                height: 80,
-                                objectFit: "cover",
+                                width: 240,
+                                height: 125,
+                                objectFit: "contain",
+                                background: "#f1f1f1",
                                 borderRadius: 6,
                               }}
                             />
@@ -467,9 +482,10 @@ function ManageCaseStudiesNew() {
                               alt={`Case study ${index + 1}`}
                               src={img.image}
                               style={{
-                                width: 100,
-                                height: 80,
-                                objectFit: "cover",
+                                width: 240,
+                                height: 125,
+                                objectFit: "contain",
+                                background: "#f1f1f1",
                                 borderRadius: 6,
                               }}
                             />

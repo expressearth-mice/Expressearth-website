@@ -175,7 +175,6 @@
   display: none;
 }
 
-.card,
 .exhibition-card {
   background: #f6f8fa;
   border-radius: 12px;
@@ -193,7 +192,6 @@
   scroll-snap-align: start;
 }
 
-.card:hover,
 .exhibition-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
@@ -211,14 +209,12 @@
   margin-right: auto;
 }
 
-.card h3,
 .exhibition-card h3 {
   font-size: 22px;
   margin-bottom: 8px;
   color: #56CE27;
 }
 
-.card p,
 .exhibition-card p {
   color: #070707;
   flex: 1;
@@ -380,7 +376,6 @@
     padding: 0 4rem 1rem 1.25rem;
   }
 
-  .card,
   .exhibition-card {
     flex-basis: min(42vw, 360px);
     min-width: 320px;
@@ -463,7 +458,6 @@
     padding: 0 3.75rem 1rem 1rem;
   }
 
-  .card,
   .exhibition-card {
     flex-basis: calc(100vw - 4.75rem);
     min-width: calc(100vw - 4.75rem);
@@ -546,7 +540,6 @@
     padding: 0 3.25rem 0.9rem 0.85rem;
   }
 
-  .card,
   .exhibition-card {
     flex-basis: calc(100vw - 4.1rem);
     min-width: calc(100vw - 4.1rem);
@@ -568,7 +561,6 @@
     right: 0.35rem;
   }
 
-  .card h3,
   .exhibition-card h3 {
     font-size: 1.05rem;
   }

@@ -72,3 +72,19 @@
 .admin-new-editor .ql-container {
   min-height: 200px;
 }
+
+.admin-new-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem 2rem;
+}
+
+.admin-new-form-grid .admin-new-editor .ql-container {
+  min-height: 320px;
+}
+
+@media (max-width: 991px) {
+  .admin-new-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

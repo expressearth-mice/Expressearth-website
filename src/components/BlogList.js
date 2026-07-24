@@ -4,6 +4,61 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { blog_url } from "../api/urls";
 import "./BlogList.css";
+import Skeleton from "./Skeleton";
+
+const BlogListSkeleton = () => (
+  <>
+    <div className="blog-banner">
+      <img
+        src="/Images/Expressearth website images/BLOG/banner image/aerial-picture-river-surrounded-by-islands-covered-greenery-sunlight_181624-6504 (1) (1).avif"
+        alt="Blog Banner"
+        className="blog-banner"
+      />
+      <h1 className="banner-title">Blog & Insights</h1>
+    </div>
+
+    <div className="blog-container">
+      <aside className="sidebar">
+        <h2>Recent Posts</h2>
+        <div className="recent-posts">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div className="recent-post" key={index}>
+              <div className="recent-post-image-wrap">
+                <Skeleton style={{ width: "100%", height: 120 }} />
+              </div>
+              <Skeleton
+                className="skeleton-text"
+                style={{ width: "80%", margin: "0 auto" }}
+              />
+            </div>
+          ))}
+        </div>
+      </aside>
+
+      <main className="blog-cards">
+        <div className="cards-header">
+          <h2>Latest Blog Posts</h2>
+          <hr className="divider" />
+        </div>
+
+        <div className="card-group">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div className="card blog-card" key={index}>
+              <div className="blog-card-image-wrap">
+                <Skeleton style={{ width: "100%", height: 190 }} />
+              </div>
+              <div className="card-body">
+                <Skeleton className="skeleton-title" style={{ width: "80%" }} />
+                <Skeleton className="skeleton-text" style={{ width: "100%" }} />
+                <Skeleton className="skeleton-text" style={{ width: "90%" }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  </>
+);
 
 function BlogList() {
   const { authTokens } = useContext(AuthContext);
@@ -65,7 +120,7 @@ function BlogList() {
   };
 
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>;
+    return <BlogListSkeleton />;
   }
 
   return (

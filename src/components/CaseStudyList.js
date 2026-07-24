@@ -3,6 +3,55 @@ import "./CaseStudyList.css";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { case_study_url } from "../api/urls";
+import Skeleton from "./Skeleton";
+
+const CASE_STUDY_SKELETON_COUNT = 4;
+
+const CaseStudyListSkeleton = () => (
+  <>
+    <div
+      className="case-study-banner"
+      style={{
+        backgroundImage:
+          "url('https://plus.unsplash.com/premium_photo-1661375427386-64ac35086427?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2FzZSUyMHN0dWR5fGVufDB8fDB8fHww')",
+      }}
+    >
+      <h1 className="banner-title">CASE STUDIES</h1>
+      <p className="banner-description">
+        Discover how ExpressEarth has successfully delivered memorable MICE
+        events through our detailed case studies and client success stories.
+      </p>
+    </div>
+
+    <div className="case-study-list-container">
+      <div className="left-panel">
+        <h2 className="case-title">OUR SUCCESS STORIES</h2>
+        <p className="case-subtitle">
+          See how we bring visions to life through our highlight of successful
+          events, featuring summaries of the execution, client feedback, and
+          the impact of our tailored event strategies.
+        </p>
+      </div>
+
+      <div
+        className="right-panel"
+        style={{ display: "flex", flexDirection: "column", gap: "32px" }}
+      >
+        {Array.from({ length: CASE_STUDY_SKELETON_COUNT }).map((_, index) => (
+          <div className="case-card" key={index}>
+            <Skeleton className="case-card-img" style={{ minHeight: 200 }} />
+            <div className="case-card-body">
+              <Skeleton className="skeleton-title" style={{ width: "55%" }} />
+              <Skeleton className="skeleton-text" style={{ width: "95%" }} />
+              <Skeleton className="skeleton-text" style={{ width: "85%" }} />
+              <Skeleton className="skeleton-text" style={{ width: "40%" }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </>
+);
 
 const CaseStudyList = () => {
   const [caseStudies, setCaseStudies] = useState([]);
@@ -45,7 +94,7 @@ const CaseStudyList = () => {
   }, []);
 
   if (loading) {
-    return <div className="loading-text">Loading case studies...</div>;
+    return <CaseStudyListSkeleton />;
   }
 
   return (

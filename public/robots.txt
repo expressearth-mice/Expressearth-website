@@ -1,3 +1,17 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /dashboard
+Disallow: /login
+Disallow: /create-post
+Disallow: /create-post-new
+Disallow: /edit-post/
+Disallow: /create-destinations
+Disallow: /create-gallery
+Disallow: /create-case-studies
+Disallow: /edit-case-study/
+Disallow: /create-category
+Disallow: /blogs-new/
+Disallow: /case-studies-new/
+
+Sitemap: https://www.expressearth.com/sitemap.xml

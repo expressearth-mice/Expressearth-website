@@ -111,6 +111,24 @@ body {
 }
 
 /* ===============================
+   PHONE NUMBER
+================================== */
+.navbar-phone {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0d1525;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.navbar-phone:hover {
+  color: #0162b5;
+}
+
+/* ===============================
    SEARCH BAR WRAPPER
 ================================== */
 .search-wrapper {
@@ -200,6 +218,10 @@ body {
 
   .navbar-inner {
     padding: 0 12px;
+  }
+
+  .navbar-phone {
+    margin-top: 10px;
   }
 
   .search-wrapper {
@@ -309,6 +331,21 @@ body {
 
   .navbar-links .nav-item {
     flex: 0 0 auto;
+  }
+
+  /* Admin/SEO: extra links can overflow, so allow horizontal scroll */
+  .navbar-links.ee-scrollable {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .navbar-links.ee-scrollable::-webkit-scrollbar {
+    display: none;
   }
 
   .search-wrapper {

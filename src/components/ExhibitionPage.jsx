@@ -45,7 +45,7 @@ const ExhibitionPage = () => {
             <a href="/contact" className="cta-link">Simplify the Process → Book Your Planning Session</a>
           </div>
 
-          <div className="card">
+          <div className="exhibition-card">
             <FaPaintBrush className="card-icon" />
             <h3>Booth Fabrication Services</h3>
             <p>
@@ -63,7 +63,7 @@ const ExhibitionPage = () => {
             <a href="/contact" className="cta-link"> Launch Your Product Right →Schedule a Showcase Strategy</a>
           </div>
 
-          <div className="card">
+          <div className="exhibition-card">
             <FaGlobe className="card-icon" />
             <h3>Trade Fair Organizers in India & Beyond            </h3>
             <p>
@@ -81,7 +81,7 @@ const ExhibitionPage = () => {
             <a href="/contact" className="cta-link"> Maximize ROI → Let’s Build Your Trade Show Strategy</a>
           </div>
 
-          <div className="card">
+          <div className="exhibition-card">
             <FaRocket className="card-icon" />
             <h3> End-to-End Coordination & Support            </h3>
             <p>

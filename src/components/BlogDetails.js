@@ -2,8 +2,41 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
+import { blog_url, blog_detail_url } from "../api/urls";
 import "./BlogDetails.css";
+import Skeleton from "./Skeleton";
 
+const BlogDetailsSkeleton = () => (
+  <div className="blog-detail-page">
+    <div className="blog-detail-banner">
+      <Skeleton className="blog-detail-banner-image" style={{ height: 300 }} />
+    </div>
+
+    <div className="blog-detail-layout">
+      <div className="blog-detail-main">
+        <Skeleton
+          className="blog-detail-featured-image"
+          style={{ height: 320 }}
+        />
+        <Skeleton className="skeleton-text" style={{ width: "100%" }} />
+        <Skeleton className="skeleton-text" style={{ width: "96%" }} />
+        <Skeleton className="skeleton-text" style={{ width: "92%" }} />
+        <Skeleton className="skeleton-text" style={{ width: "88%" }} />
+        <Skeleton className="skeleton-text" style={{ width: "70%" }} />
+      </div>
+
+      <aside className="blog-detail-sidebar">
+        <h3>Recent Posts</h3>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div className="blog-detail-recent-card" key={index}>
+            <Skeleton className="blog-detail-recent-image" />
+            <Skeleton className="skeleton-text" style={{ width: "80%" }} />
+          </div>
+        ))}
+      </aside>
+    </div>
+  </div>
+);
 
 const BlogDetails = () => {
   const { title } = useParams();
@@ -12,23 +45,58 @@ const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const [posts, setPosts] = useState([]);
   const [videoEmbed, setVideoEmbed] = useState(null);
+  const [loading, setLoading] = useState(true);
   const canManagePosts = role.is_admin || role.is_seo;
 
 
   useEffect(() => {
+    setLoading(true);
     const fetchPost = async () => {
       try {
         const res = await axiosInstance.get(`/api/posts/${title}/`);
         setBlog(res.data);
       } catch (error) {
-        console.error("Error fetching post:", error);
+        try {
+          const res = await axiosInstance.get(blog_detail_url(title));
+          const data = res.data;
+          setBlog({
+            ...data,
+            description: data.short_description,
+            image: data.images?.[0]?.image || data.image,
+            long_des: data.content,
+          });
+        } catch (err2) {
+          console.error("Error fetching post:", err2);
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
     const fetchRecentPosts = async () => {
       try {
-        const res = await axiosInstance.get("/api/posts/");
-        setPosts(res.data.results || res.data); // use `.results` if using pagination
+        const [oldRes, newRes] = await Promise.allSettled([
+          axiosInstance.get("/api/posts/"),
+          axiosInstance.get(blog_url),
+        ]);
+
+        const oldPosts =
+          oldRes.status === "fulfilled"
+            ? oldRes.value.data?.results || oldRes.value.data || []
+            : [];
+        const newPostsRaw =
+          newRes.status === "fulfilled"
+            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            : [];
+
+        const newPosts = newPostsRaw.map((post) => ({
+          id: post.id,
+          slug: post.slug,
+          title: post.title,
+          image: post.images?.[0]?.image || post.image || "",
+        }));
+
+        setPosts([...oldPosts, ...newPosts]);
       } catch (error) {
         console.error("Error fetching recent posts:", error);
       }
@@ -75,6 +143,8 @@ const BlogDetails = () => {
       alert("Unable to delete this blog post.");
     }
   };
+
+  if (loading) return <BlogDetailsSkeleton />;
 
   if (!blog) return <p style={{ textAlign: "center", marginTop: "2rem" }}>Blog not found!</p>;
 

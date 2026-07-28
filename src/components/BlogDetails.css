@@ -19,9 +19,8 @@
 
 .blog-detail-banner-title {
   position: absolute;
-  left: 50%;
+  left: 20px;
   bottom: 20px;
-  transform: translateX(-50%);
   width: min(90%, 900px);
   margin: 0;
   padding: 0.75rem 1rem;
@@ -30,6 +29,7 @@
   color: #fff;
   font-size: clamp(1.6rem, 3vw, 2.6rem);
   line-height: 1.25;
+  text-align: left;
 }
 
 .blog-detail-actions {
@@ -50,7 +50,6 @@
 .blog-detail-main {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 800px;
 }
 
 .blog-detail-featured-image {
@@ -63,6 +62,15 @@
 .blog-detail-content {
   font-size: 1.05rem;
   color: #555;
+}
+
+.blog-detail-content h1,
+.blog-detail-content h2,
+.blog-detail-content h3,
+.blog-detail-content h4,
+.blog-detail-content h5,
+.blog-detail-content h6 {
+  text-align: left !important;
 }
 
 .blog-detail-content p,
@@ -109,6 +117,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  position: sticky;
+  top: 2rem;
 }
 
 .blog-detail-sidebar h3 {
@@ -174,6 +184,7 @@
   .blog-detail-sidebar {
     flex-basis: auto;
     max-height: none;
+    position: static;
   }
 }
 

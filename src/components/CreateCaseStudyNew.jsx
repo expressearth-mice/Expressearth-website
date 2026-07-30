@@ -236,12 +236,17 @@ function CreateCaseStudyNew() {
                 <input
                   type="text"
                   name="title"
+                  maxLength="200"
                   placeholder="Enter case study title"
                   className="form-control"
                   value={form.title}
                   onChange={updateField}
                   required
                 />
+                <small className="text-muted d-block mt-1">
+                  {form.title.length}/200 characters ({200 - form.title.length}{" "}
+                  remaining)
+                </small>
               </div>
 
               <div className="mb-3">
@@ -324,12 +329,17 @@ function CreateCaseStudyNew() {
               <input
                 type="text"
                 name="slug"
+                maxLength="255"
                 placeholder="example-case-study-title"
                 className="form-control"
                 value={form.slug}
                 onChange={updateSlug}
                 required
               />
+              <small className="text-muted d-block mt-1">
+                {form.slug.length}/255 characters ({255 - form.slug.length}{" "}
+                remaining)
+              </small>
             </div>
 
             <div className="mb-3">
@@ -337,19 +347,22 @@ function CreateCaseStudyNew() {
               <input
                 type="text"
                 name="metaTitle"
-                maxLength="60"
+                maxLength="255"
                 className="form-control"
                 value={form.metaTitle}
                 onChange={updateField}
                 required
               />
+              <small className="text-muted d-block mt-1">
+                {form.metaTitle.length}/255 characters (
+                {255 - form.metaTitle.length} remaining)
+              </small>
             </div>
 
             <div className="mb-3">
               <label className="form-label">Meta Description</label>
               <textarea
                 name="metaDescription"
-                maxLength="160"
                 rows="3"
                 className="form-control"
                 value={form.metaDescription}
@@ -363,19 +376,22 @@ function CreateCaseStudyNew() {
               <input
                 type="text"
                 name="ogTitle"
-                maxLength="60"
+                maxLength="255"
                 className="form-control"
                 value={form.ogTitle}
                 onChange={updateField}
                 required
               />
+              <small className="text-muted d-block mt-1">
+                {form.ogTitle.length}/255 characters (
+                {255 - form.ogTitle.length} remaining)
+              </small>
             </div>
 
             <div className="mb-0">
               <label className="form-label">Open Graph Description</label>
               <textarea
                 name="ogDescription"
-                maxLength="200"
                 rows="3"
                 className="form-control"
                 value={form.ogDescription}

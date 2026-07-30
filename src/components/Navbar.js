@@ -125,7 +125,7 @@ function Navbar() {
           <ul
             className={`navbar-nav mx-auto navbar-links ${
               isAdminOrSeo ? "ee-scrollable" : ""
-            }`}
+            } ${openDropdown ? "ee-dropdown-open" : ""}`}
             ref={navLinksRef}
             onWheel={handleNavLinksWheel}
           >

@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -214,9 +220,7 @@ function ManageBlogs() {
       }
     } catch (err) {
       console.error("Error updating blog:", err);
-      alert(
-        getApiMessage(err?.response?.data, "Unable to update the blog."),
-      );
+      alert(getApiMessage(err?.response?.data, "Unable to update the blog."));
     } finally {
       setIsSaving(false);
     }
@@ -236,19 +240,16 @@ function ManageBlogs() {
         return;
       }
 
-      const res = await axiosInstance.delete(
-        delete_blog_url(selectedBlog.id),
-        { headers: { Authorization: `Bearer ${accessToken}` } },
-      );
+      const res = await axiosInstance.delete(delete_blog_url(selectedBlog.id), {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
 
       alert(getApiMessage(res?.data, "Blog deleted successfully."));
       navigate("/blogs-new", { replace: true });
       await loadBlogs();
     } catch (err) {
       console.error("Error deleting blog:", err);
-      alert(
-        getApiMessage(err?.response?.data, "Unable to delete the blog."),
-      );
+      alert(getApiMessage(err?.response?.data, "Unable to delete the blog."));
     } finally {
       setIsDeleting(false);
     }
@@ -257,26 +258,26 @@ function ManageBlogs() {
   const renderCard = (blog) => {
     const blogImages = getImageList(blog);
     return (
-    <Link
-      className="admin-new-card"
-      key={blog.id}
-      to={`/blogs-new/${encodeURIComponent(blog.slug)}`}
-    >
-      <div className="admin-new-card__image">
-        {blogImages[0]?.image ? (
-          <img alt={blog.title} src={blogImages[0].image} />
-        ) : (
-          <span className="text-muted">No image</span>
-        )}
-      </div>
-      <div className="admin-new-card__body">
-        <h2 className="h6 mb-1">{blog.title}</h2>
-        <p className="text-muted small mb-2">
-          {blog.short_description || "No short description available."}
-        </p>
-        <span className="text-primary small fw-semibold">View full post</span>
-      </div>
-    </Link>
+      <Link
+        className="admin-new-card"
+        key={blog.id}
+        to={`/blogs-new/${encodeURIComponent(blog.slug)}`}
+      >
+        <div className="admin-new-card__image">
+          {blogImages[0]?.image ? (
+            <img alt={blog.title} src={blogImages[0].image} />
+          ) : (
+            <span className="text-muted">No image</span>
+          )}
+        </div>
+        <div className="admin-new-card__body">
+          <h2 className="h6 mb-1">{blog.title}</h2>
+          <p className="text-muted small mb-2">
+            {blog.short_description || "No short description available."}
+          </p>
+          <span className="text-primary small fw-semibold">View full post</span>
+        </div>
+      </Link>
     );
   };
 
@@ -381,9 +382,7 @@ function ManageBlogs() {
                     />
                   )}
                   <h2 className="h3">{selectedBlog.title}</h2>
-                  <p className="text-muted">
-                    {selectedBlog.short_description}
-                  </p>
+                  <p className="text-muted">{selectedBlog.short_description}</p>
                   <div
                     className="admin-new-detail__content"
                     dangerouslySetInnerHTML={{
@@ -421,11 +420,16 @@ function ManageBlogs() {
                     <input
                       type="text"
                       name="title"
+                      maxLength="200"
                       className="form-control"
                       value={editForm.title}
                       onChange={updateField}
                       required
                     />
+                    <small className="text-muted d-block mt-1">
+                      {editForm.title.length}/200 characters (
+                      {200 - editForm.title.length} remaining)
+                    </small>
                   </div>
 
                   <div className="mb-3">
@@ -479,9 +483,7 @@ function ManageBlogs() {
                             <button
                               type="button"
                               className="btn btn-sm btn-danger position-absolute top-0 end-0"
-                              onClick={() =>
-                                deleteExistingImage(img.id, index)
-                              }
+                              onClick={() => deleteExistingImage(img.id, index)}
                             >
                               &times;
                             </button>
@@ -510,11 +512,16 @@ function ManageBlogs() {
                       <input
                         type="text"
                         name="slug"
+                        maxLength="255"
                         className="form-control"
                         value={editForm.slug}
                         onChange={updateSlug}
                         required
                       />
+                      <small className="text-muted d-block mt-1">
+                        {editForm.slug.length}/255 characters (
+                        {255 - editForm.slug.length} remaining)
+                      </small>
                     </div>
 
                     <div className="mb-3">
@@ -522,19 +529,22 @@ function ManageBlogs() {
                       <input
                         type="text"
                         name="metaTitle"
-                        maxLength="60"
+                        maxLength="255"
                         className="form-control"
                         value={editForm.metaTitle}
                         onChange={updateField}
                         required
                       />
+                      <small className="text-muted d-block mt-1">
+                        {editForm.metaTitle.length}/255 characters (
+                        {255 - editForm.metaTitle.length} remaining)
+                      </small>
                     </div>
 
                     <div className="mb-3">
                       <label className="form-label">Meta Description</label>
                       <textarea
                         name="metaDescription"
-                        maxLength="160"
                         rows="3"
                         className="form-control"
                         value={editForm.metaDescription}
@@ -548,12 +558,16 @@ function ManageBlogs() {
                       <input
                         type="text"
                         name="ogTitle"
-                        maxLength="60"
+                        maxLength="255"
                         className="form-control"
                         value={editForm.ogTitle}
                         onChange={updateField}
                         required
                       />
+                      <small className="text-muted d-block mt-1">
+                        {editForm.ogTitle.length}/255 characters (
+                        {255 - editForm.ogTitle.length} remaining)
+                      </small>
                     </div>
 
                     <div className="mb-0">
@@ -562,7 +576,6 @@ function ManageBlogs() {
                       </label>
                       <textarea
                         name="ogDescription"
-                        maxLength="200"
                         rows="3"
                         className="form-control"
                         value={editForm.ogDescription}
@@ -597,9 +610,7 @@ function ManageBlogs() {
               <h2 className="h6 mb-3">Other Posts</h2>
               <div className="d-flex flex-column gap-3">
                 {blogs
-                  .filter(
-                    (blog) => String(blog.id) !== String(selectedBlog.id),
-                  )
+                  .filter((blog) => String(blog.id) !== String(selectedBlog.id))
                   .slice(0, 5)
                   .map(renderCard)}
               </div>

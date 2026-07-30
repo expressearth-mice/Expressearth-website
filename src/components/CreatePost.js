@@ -97,7 +97,11 @@ function CreatePost() {
 
       const res = await request;
 
-      alert(isEditMode ? "Post updated successfully!" : "Post created successfully!");
+      alert(
+        isEditMode
+          ? "Post updated successfully!"
+          : "Post created successfully!",
+      );
       const updatedPost = res.data || {};
       const postUrlPart =
         updatedPost.slug || updatedPost.title
@@ -161,12 +165,17 @@ function CreatePost() {
             <input
               type="text"
               name="title"
+              maxLength="200"
               placeholder="Title"
               className="form-control mb-3"
               value={formData.title}
               onChange={handleChange}
               required
             />
+            <small className="text-muted d-block mb-3">
+              {formData.title.length}/200 characters (
+              {200 - formData.title.length} remaining)
+            </small>
             <input
               type="text"
               name="description"
@@ -233,4 +242,3 @@ function CreatePost() {
 }
 
 export default CreatePost;
-

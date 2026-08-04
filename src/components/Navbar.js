@@ -106,7 +106,7 @@ function Navbar() {
           onClick={handleNavLinkClick}
         >
           <img
-            src="/Images/express_earth_logoo-removebg-preview.png"
+            src="/Images/home_logo.png"
             alt="ExpressEarth Logo"
             className="navbar-logo"
           />

@@ -77,7 +77,7 @@ const Footer = () => {
             {/* <h3><i className="fas fa-globe"></i> ExpressEarth MICE</h3> */}
 
             <img
-              src="/Images/express_earth_logoo-removebg-preview.png"
+              src="/Images/expressearth_white_logo.png"
               alt="ExpressEarth Logo"
               className="footer-logo"
             />

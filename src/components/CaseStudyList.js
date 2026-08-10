@@ -82,7 +82,7 @@ const CaseStudyList = () => {
           author_quote: item.author_quote || "",
         }));
 
-        setCaseStudies([...oldStudies, ...newStudies]);
+        setCaseStudies([...newStudies, ...[...oldStudies].reverse()]);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching case studies:", err);

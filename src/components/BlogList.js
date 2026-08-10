@@ -92,9 +92,7 @@ function BlogList() {
           updated_at: post.updated_at || post.created_at,
         }));
 
-        const sortedPosts = [...oldPosts, ...newPosts].sort(
-          (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-        );
+        const sortedPosts = [...newPosts, ...[...oldPosts].reverse()];
         setPosts(sortedPosts);
         setLoading(false);
       } catch (error) {

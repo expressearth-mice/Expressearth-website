@@ -5,17 +5,8 @@ const rootDir = path.resolve(__dirname, "..");
 
 const SITE_URL = (process.env.SITE_URL || "https://www.expressearth.com").replace(/\/+$/, "");
 
-const API_BY_ENV = {
-  local: "http://localhost:8000",
-  qa: "https://express-earth-backend-service-929452209573.asia-south2.run.app",
-  stage: "https://express-earth-backend-service-929452209573.asia-south2.run.app",
-  prod: "https://api.expressearth.com",
-};
-
 const API_URL = (
-  process.env.REACT_APP_API_URL?.trim() ||
-  API_BY_ENV[process.env.REACT_APP_ENV || "prod"] ||
-  API_BY_ENV.prod
+  process.env.REACT_APP_API_URL?.trim() || "https://api.expressearth.com"
 ).replace(/\/+$/, "");
 
 const STATIC_ROUTES = [

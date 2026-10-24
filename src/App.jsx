@@ -79,6 +79,10 @@ function App() {
   const { role, loading } = useContext(AuthContext);
   const location = useLocation(); // Get current route path
 
+  useEffect(() => {
+    console.log("REACT_APP_API_URL:", process.env.REACT_APP_API_URL);
+  }, []);
+
   // useEffect(() => {
   //   if (window.gtag) {
   //     window.gtag('config', 'GTM-WMJCBMGG', {

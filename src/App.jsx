@@ -340,7 +340,6 @@ function App() {
         <Route path="/case-studies" element={<CaseStudyList />} />
         <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
         <Route path="/case-category" element={<CategoryPage />} />
-        <Route path="/create-case-studies" element={<CreateCaseStudy />} />
         <Route path="/categories" element={<CategoryList />} />
         <Route path="/categories/:slug" element={<CategoryDestinations />} />
         <Route

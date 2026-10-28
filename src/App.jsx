@@ -96,8 +96,8 @@ function App() {
     const pathname = (location.pathname || "/").replace(/\/+$/, "") || "/";
     const pageSeo = {
       "/": {
-        title: "ExpressEarth | Corporate MICE, Incentive Travel & Events",
-        description: "ExpressEarth is a corporate MICE and event management company in Gurugram, India, delivering incentive travel, corporate offsites, dealer meets, conferences and events across India and international destinations.",
+        title: "Event Management & MICE Company in Delhi NCR, India | ExpressEarth",
+        description: "Looking for an event management or MICE company in Delhi, Gurugram or India? ExpressEarth plans corporate events, product launches, annual days, family days, conferences, offsites and incentive group tours.",
       },
       "/about": {
         title: "About ExpressEarth | Corporate MICE & Event Experts",
@@ -112,36 +112,36 @@ function App() {
         description: "Explore career opportunities at ExpressEarth across corporate event planning, MICE operations, incentive travel, sales and event management.",
       },
       "/mice-services": {
-        title: "Corporate MICE Company in India | ExpressEarth",
-        description: "Explore ExpressEarth's corporate MICE services, including meetings and conferences, incentive travel, corporate events, exhibitions and destination management across India and international destinations.",
+        title: "MICE Agency & Corporate Event Management in Delhi NCR | ExpressEarth",
+        description: "ExpressEarth is a MICE agency for corporate meetings, conferences, incentive tours, dealer meets, offsites and events in Delhi NCR and across India, with international group travel planning.",
       },
       "/dealermeet": {
-        title: "Dealer Meet Organisers in India | ExpressEarth",
-        description: "Plan dealer and distributor meets with ExpressEarth. We manage venue sourcing, travel, hospitality, stage and AV production, branding, delegate logistics and end-to-end event execution across India and abroad.",
+        title: "Dealer Meet Management Company in Delhi NCR & India | ExpressEarth",
+        description: "Plan dealer meets and distributor conferences in Delhi NCR and across India. ExpressEarth coordinates venues, travel, hospitality, stage and AV, branding, delegate logistics and on-ground execution.",
       },
       "/corporateoffsites": {
-        title: "Corporate Offsite Management Company | ExpressEarth",
-        description: "ExpressEarth plans corporate offsites, leadership retreats and team-building experiences, with end-to-end travel, accommodation, activities and on-ground coordination across India and international destinations.",
+        title: "Corporate Offsite Management Company in Delhi NCR | ExpressEarth",
+        description: "Organise corporate offsites from Delhi NCR with ExpressEarth. We coordinate destinations, hotels, team-building activities, group transport and on-ground support across India and abroad.",
       },
       "/incentive-travel": {
-        title: "Corporate Incentive Travel Company in India | ExpressEarth",
-        description: "Motivate and reward teams with corporate incentive travel programmes by ExpressEarth, from destination planning and group travel to hotels, experiences and on-ground management in India and abroad.",
+        title: "Incentive Tour Organisers in Delhi NCR & India | ExpressEarth",
+        description: "Incentive tour organisers for corporate teams in Delhi NCR and across India. ExpressEarth plans reward trips, destination experiences, hotels, group logistics and on-ground management in India and abroad.",
       },
       "/incentivetravel": {
         title: "Corporate Incentive Travel & Reward Trips | ExpressEarth",
         description: "Design employee reward trips and sales incentive travel with ExpressEarth. We coordinate destinations, group logistics, stays and experiences for corporate teams.",
       },
       "/meetings-and-conferences": {
-        title: "Corporate Meetings & Conference Management | ExpressEarth",
-        description: "ExpressEarth manages corporate meetings, conferences, leadership summits, seminars and forums, including venue sourcing, AV production, delegate travel, registration and on-site execution.",
+        title: "Corporate Conference & Meeting Organisers in Delhi NCR | ExpressEarth",
+        description: "Corporate conference organisers for Delhi NCR and India. Plan leadership summits, seminars, annual conferences and business meetings with venue sourcing, AV, registration and delegate logistics.",
       },
       "/conferencemanagement": {
-        title: "Conference Management Company in India | ExpressEarth",
-        description: "Plan corporate conferences and conventions with ExpressEarth. Our team coordinates venues, speakers, delegate management, travel, accommodation, AV production and event logistics.",
+        title: "Conference Management Company in Delhi NCR & India | ExpressEarth",
+        description: "Plan corporate conferences, annual sales meets and leadership summits in Delhi NCR and across India. ExpressEarth coordinates venues, speakers, delegates, AV, travel and event logistics.",
       },
       "/corporate-events": {
-        title: "Corporate Event Management Company in India | ExpressEarth",
-        description: "Plan corporate events with ExpressEarth, including annual days, product launches, employee engagement events and business gatherings with end-to-end production and logistics.",
+        title: "Corporate Event Management Company in Delhi NCR, India | ExpressEarth",
+        description: "Event management for product launches, annual day celebrations, employee family days and corporate gatherings in Delhi NCR and across India, including production, venue and event logistics.",
       },
       "/exhibitions-and-trade-shows": {
         title: "Exhibition and Trade Show Management | ExpressEarth",
@@ -152,12 +152,12 @@ function App() {
         description: "Coordinate corporate group travel and destination experiences with ExpressEarth, including local logistics, hotels, transfers, activities and on-ground support for MICE groups.",
       },
       "/internationalgrouptravel": {
-        title: "International Group Travel for Corporates | ExpressEarth",
-        description: "ExpressEarth coordinates international group travel for corporate teams, including destination planning, hotels, transfers, experiences and trip logistics for incentive and business groups.",
+        title: "Corporate Group Tour Management in Delhi NCR & India | ExpressEarth",
+        description: "Corporate group tour management from Delhi NCR across India and international destinations, including incentive trips, hotel coordination, transfers, experiences and group logistics.",
       },
       "/r&rplanning": {
-        title: "Rewards and Recognition Event Planning | ExpressEarth",
-        description: "Plan rewards and recognition programmes with ExpressEarth, from incentive travel and award ceremonies to employee celebrations and sales team recognition events.",
+        title: "Rewards & Recognition Event Planners in Delhi NCR | ExpressEarth",
+        description: "Plan rewards and recognition events, employee celebrations, award ceremonies and sales incentive trips in Delhi NCR and across India with ExpressEarth.",
       },
       "/international-destinations": {
         title: "International Destinations for Corporate Groups | ExpressEarth",

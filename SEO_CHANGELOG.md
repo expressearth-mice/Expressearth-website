@@ -7,6 +7,7 @@
 - Repaired incentive-travel enquiry links, including a CTA that previously pointed to a missing page fragment.
 - Fixed destination-category fetching to use Axios response data; added links from the category index to category pages and route-specific metadata for those pages.
 - Extended the sitemap generator to include category URLs returned by the API.
+- Added a sitemap safeguard: if any content API fails during the prebuild, an existing sitemap is preserved instead of being overwritten with a potentially incomplete URL list.
 - Expanded robots.txt exclusions to cover additional admin/editor route variants.
 - Removed the duplicate public route for case-study creation so the existing role-gated route is authoritative.
 - Updated the dealer-meet and corporate-offsite FAQs to remove repetitive keyword stuffing and replace unsupported superlatives with concrete service scope and planning considerations.

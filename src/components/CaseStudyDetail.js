@@ -136,7 +136,7 @@ const CaseStudyDetail = () => {
     const descriptionText = String(rawDescription)
       .replace(/<[^>]*>/g, " ")
       .replace(/&nbsp;/g, " ")
-      .replace(/\\s+/g, " ")
+      .replace(/\s+/g, " ")
       .trim()
       .slice(0, 160);
     const canonicalUrl = "https://www.expressearth.com/case-studies/" + encodeURIComponent(caseStudy.slug || idOrSlug || "");

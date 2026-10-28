@@ -15,8 +15,8 @@ const CorporateEvents = () => {
             "url('/Images/Expressearth website images/Corporate/corporate.avif')",
         }}
       >
-        <h1>Corporate Events</h1>
-        <h4>Product Launches | Gala Dinners | Networking Events</h4>
+        <h1>Corporate Event Management in Delhi NCR</h1>
+        <h4>Product Launches | Annual Days | Employee Family Days | Conferences</h4>
         <a href="/contact" className="cta-button">
           Let's Curate Something Iconic
         </a>
@@ -28,11 +28,7 @@ const CorporateEvents = () => {
           <Briefcase size={32} /> Where Business Meets Celebration
         </h2>
         <div className="text-cen">
-          At ExpressEarth, we don't just organize corporate events - we create
-          unforgettable experiences that reflect your brand's prestige and
-          values. Whether it's a high-profile product launch, an elegant gala
-          dinner, or a memorable networking event, we blend luxury, creativity,
-          and precision to deliver moments that truly matter.
+          ExpressEarth plans corporate event management programmes in Delhi NCR and across India, including product launches, annual day celebrations, employee family days, gala dinners, award ceremonies and networking events. We coordinate venue planning, production, branding, guest logistics and on-ground execution around your brief, audience and business objectives.
           <br />
           <br />
           Because first impressions last - and we make sure yours is

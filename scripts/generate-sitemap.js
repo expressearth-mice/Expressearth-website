@@ -1,7 +1,8 @@
-const { writeFileSync } = require("node:fs");
+const { existsSync, writeFileSync } = require("node:fs");
 const path = require("node:path");
 
 const rootDir = path.resolve(__dirname, "..");
+let apiFetchFailed = false;
 
 const SITE_URL = (process.env.SITE_URL || "https://www.expressearth.com").replace(/\/+$/, "");
 
@@ -47,6 +48,7 @@ async function fetchList(endpoint) {
     const data = await res.json();
     return Array.isArray(data) ? data : (data?.results ?? []);
   } catch (err) {
+    apiFetchFailed = true;
     console.warn(`[sitemap] Could not fetch ${endpoint}: ${err.message}. Skipping those URLs.`);
     return [];
   }
@@ -56,41 +58,44 @@ function toDateOnly(value) {
   const date = value ? new Date(value) : null;
   return date && !Number.isNaN(date.getTime())
     ? date.toISOString().slice(0, 10)
-    : new Date().toISOString().slice(0, 10);
+    : null;
 }
 
 function xmlEscape(value) {
-  return String(value).replace(/&/g, "&amp;");
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 function urlEntry({ loc, lastmod, changefreq, priority }) {
   return [
     "  <url>",
     `    <loc>${xmlEscape(loc)}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
+    lastmod ? `    <lastmod>${lastmod}</lastmod>` : null,
     `    <changefreq>${changefreq}</changefreq>`,
     `    <priority>${priority}</priority>`,
     "  </url>",
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 async function main() {
-  const today = new Date().toISOString().slice(0, 10);
-
   const entries = STATIC_ROUTES.map((route) =>
     urlEntry({
       loc: `${SITE_URL}${route.path}`,
-      lastmod: today,
       changefreq: route.changefreq,
       priority: route.priority,
     }),
   );
 
-  const [oldPosts, newBlogs, oldCaseStudies, newCaseStudies] = await Promise.all([
+  const [oldPosts, newBlogs, oldCaseStudies, newCaseStudies, categories] = await Promise.all([
     fetchList("/api/posts/"),
     fetchList("/api/express-earth/blog/"),
     fetchList("/api/case-studies/"),
     fetchList("/api/express-earth/case-study/"),
+    fetchList("/api/categories/"),
   ]);
 
   const seenBlogSlugs = new Set();
@@ -123,6 +128,24 @@ async function main() {
     );
   }
 
+  const seenCategorySlugs = new Set();
+  for (const category of categories) {
+    const categoryName = String(category?.name || "").trim();
+    const slug = category?.slug || categoryName.toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+    if (!slug || seenCategorySlugs.has(slug)) continue;
+    seenCategorySlugs.add(slug);
+    entries.push(
+      urlEntry({
+        loc: `${SITE_URL}/categories/${encodeURIComponent(slug)}`,
+        lastmod: toDateOnly(category.updated_at ?? category.created_at),
+        changefreq: "monthly",
+        priority: "0.5",
+      }),
+    );
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries.join("\n")}
@@ -130,9 +153,13 @@ ${entries.join("\n")}
 `;
 
   const outPath = path.join(rootDir, "public", "sitemap.xml");
+  if (apiFetchFailed && existsSync(outPath)) {
+    console.warn("[sitemap] One or more API lists failed; leaving the existing sitemap unchanged to preserve previously generated dynamic URLs.");
+    return;
+  }
   writeFileSync(outPath, xml, "utf-8");
   console.log(
-    `[sitemap] Wrote ${entries.length} URLs (${seenBlogSlugs.size} blogs, ${seenCaseStudySlugs.size} case studies) to public/sitemap.xml`,
+    `[sitemap] Wrote ${entries.length} URLs (${seenBlogSlugs.size} blogs, ${seenCaseStudySlugs.size} case studies, ${seenCategorySlugs.size} categories) to public/sitemap.xml`,
   );
 }
 

@@ -262,7 +262,7 @@ const Home = () => {
               <img
                 src="/Images/HOME/Banner image/A.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 1"
+                alt="Corporate event and MICE services by ExpressEarth"
               />
               <div className="carousel-caption hero-overlay">
                 <h1 className="hero-title-box">
@@ -283,7 +283,7 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\B.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 2"
+                alt="Corporate conferences and incentive travel experiences"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
@@ -304,7 +304,7 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\C.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 3"
+                alt="Corporate group travel and offsite experiences"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
@@ -325,7 +325,7 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\D.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 4"
+                alt="Business events and employee engagement programmes"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
@@ -346,7 +346,7 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\E.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 5"
+                alt="Corporate event production and group experiences"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">

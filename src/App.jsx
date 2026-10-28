@@ -126,6 +126,38 @@ function App() {
         title: "Conference Management Company in India | ExpressEarth",
         description: "Plan corporate conferences and conventions with ExpressEarth. Our team coordinates venues, speakers, delegate management, travel, accommodation, AV production and event logistics.",
       },
+      "/corporate-events": {
+        title: "Corporate Event Management Company in India | ExpressEarth",
+        description: "Plan corporate events with ExpressEarth, including annual days, product launches, employee engagement events and business gatherings with end-to-end production and logistics.",
+      },
+      "/exhibitions-and-trade-shows": {
+        title: "Exhibition and Trade Show Management | ExpressEarth",
+        description: "ExpressEarth supports exhibition and trade show planning with event coordination, booth and venue logistics, production support and on-ground execution for business events.",
+      },
+      "/destination-management": {
+        title: "Destination Management Services in India | ExpressEarth",
+        description: "Coordinate corporate group travel and destination experiences with ExpressEarth, including local logistics, hotels, transfers, activities and on-ground support for MICE groups.",
+      },
+      "/internationalgrouptravel": {
+        title: "International Group Travel for Corporates | ExpressEarth",
+        description: "ExpressEarth coordinates international group travel for corporate teams, including destination planning, hotels, transfers, experiences and trip logistics for incentive and business groups.",
+      },
+      "/r&rplanning": {
+        title: "Rewards and Recognition Event Planning | ExpressEarth",
+        description: "Plan rewards and recognition programmes with ExpressEarth, from incentive travel and award ceremonies to employee celebrations and sales team recognition events.",
+      },
+      "/international-destinations": {
+        title: "International Destinations for Corporate Groups | ExpressEarth",
+        description: "Explore international destinations for corporate incentive trips, offsites and group travel, with ExpressEarth coordinating stays, experiences and group logistics.",
+      },
+      "/domestic-destinations": {
+        title: "India Destinations for Corporate Offsites and Incentives | ExpressEarth",
+        description: "Explore destinations across India for corporate offsites, incentive travel and group events, with planning support for accommodation, activities and on-ground logistics.",
+      },
+      "/Gifting": {
+        title: "Corporate Gifting and Gift-with-Purchase Solutions | ExpressEarth",
+        description: "Explore corporate gifting and gift-with-purchase solutions from ExpressEarth for employee engagement, customer rewards, channel programmes and brand activations.",
+      },
     };
 
     const metadata = pageSeo[location.pathname];
@@ -146,7 +178,7 @@ function App() {
     setMeta('meta[name="description"]', { name: "description" }, metadata.description);
     setMeta('meta[property="og:title"]', { property: "og:title" }, metadata.title);
     setMeta('meta[property="og:description"]', { property: "og:description" }, metadata.description);
-    setMeta('meta[property="og:url"]', { property: "og:url" }, window.location.origin + location.pathname);
+    setMeta('meta[property="og:url"]', { property: "og:url" }, "https://www.expressearth.com" + location.pathname);
     setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, metadata.title);
     setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, metadata.description);
 

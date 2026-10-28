@@ -257,9 +257,9 @@ function CorporateOffsitesPage() {
             <p className="offsitePriceNote">
               *Starting price for groups of 40–100 people. Twin-share stay,
               all meals and round-trip transportation included; taxes extra.
-              Indicative packages for Mussoorie, Jim Corbett, Jaipur, Pushkar,
-              Nainital, Dharamshala and other destinations. Final price depends
-              on dates, availability and confirmed inclusions.
+              Destinations include Mussoorie, Jim Corbett, Jaipur, Pushkar,
+              Nainital, Dharamshala, Shimla, Kasauli, Kufri and Manali. Final
+              price depends on dates, availability and confirmed inclusions.
             </p>
 
             <div className="heroDivider" />
@@ -374,8 +374,9 @@ function CorporateOffsitesPage() {
                 2-day packages start at ₹7,000 per person, excluding taxes.
                 The starting package includes twin-share accommodation, all
                 meals and round-trip transportation. Destination options can
-                include Mussoorie, Jim Corbett, Jaipur, Pushkar, Nainital and
-                Dharamshala, subject to dates and availability. This is an
+                include Mussoorie, Jim Corbett, Jaipur, Pushkar, Nainital,
+                Dharamshala, Shimla, Kasauli, Kufri and Manali, subject to dates
+                and availability. This is an
                 indicative starting price; the final quote depends on your
                 group's requirements. Contact us to discuss your team's brief.
               </p>

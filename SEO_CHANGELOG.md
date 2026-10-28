@@ -9,6 +9,8 @@
 - Extended the sitemap generator to include category URLs returned by the API.
 - Expanded robots.txt exclusions to cover additional admin/editor route variants.
 - Removed the duplicate public route for case-study creation so the existing role-gated route is authoritative.
+- Updated the dealer-meet and corporate-offsite FAQs to remove repetitive keyword stuffing and replace unsupported superlatives with concrete service scope and planning considerations.
+- Improved the dealer-meet H1 to match the page's service intent.
 
 ### Validation and deployment
 

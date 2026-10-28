@@ -93,7 +93,7 @@ function App() {
 
   // Route-aware metadata for public pages. Detail pages refine this using their fetched content.
   useEffect(() => {
-    const pathname = (location.pathname || "/").replace(/\\/+$/, "") || "/";
+    const pathname = (location.pathname || "/").replace(/\/+$/, "") || "/";
     const pageSeo = {
       "/": {
         title: "ExpressEarth | Corporate MICE, Incentive Travel & Events",
@@ -211,9 +211,9 @@ function App() {
 
     const slugToWords = (slug) => decodeURIComponent(slug || "")
       .replace(/[-_]+/g, " ")
-      .replace(/\\s+/g, " ")
+      .replace(/\s+/g, " ")
       .trim()
-      .replace(/\\b\\w/g, (character) => character.toUpperCase());
+      .replace(/\b\w/g, (character) => character.toUpperCase());
 
     let metadata = pageSeo[pathname];
     if (!metadata && pathname.startsWith("/blogs/")) {

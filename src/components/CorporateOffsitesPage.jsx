@@ -40,17 +40,17 @@ const faqs = [
   {
     question: "What’s included in a corporate offsite?",
     answer:
-      "A corporate offsite includes complete planning, accommodation, travel, activities, and on-ground execution. As a MICE expert in India, ExpressEarth ensures every detail is managed seamlessly, creating a smooth and engaging experience for your team.",
+      "A typical scope can include planning, accommodation, travel, activities and on-ground coordination. Final inclusions depend on your destination, group size, dates and budget.",
   },
   {
     question: "Why should we hire a MICE expert?",
     answer:
-      "A MICE expert brings structure, creativity, and efficiency to your offsite. With a strong presence as a MICE company in Delhi NCR and Gurgaon, ExpressEarth ensures better coordination, cost control, and impactful outcomes aligned with your business goals.",
+      "An event partner can coordinate venue options, transport, accommodation, activity providers, schedules and contingency planning, giving your internal team a clear point of contact.",
   },
   {
     question: "Do you handle everything end-to-end?",
     answer:
-      "Yes, ExpressEarth is an end-to-end service provider, taking care of everything from initial planning and concept development to execution and on-ground management, so your team can focus on the experience.",
+      "Depending on the brief, support can include initial planning, concept development, supplier coordination, travel and accommodation, activities and on-ground management.",
   },
   {
     question: "Can you customize the offsite for our team?",
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: "Where do you organize offsites?",
     answer:
-      "We organize offsites across India and international destinations, backed by our expertise as a MICE expert and a trusted MICE company in Gurgaon and Delhi NCR, ensuring consistent quality wherever you go.",
+      "We can plan offsites in India and international destinations. Destination options depend on your dates, group size, travel requirements and budget.",
   },
 ];
 

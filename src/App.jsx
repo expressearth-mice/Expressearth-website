@@ -91,12 +91,25 @@ function App() {
   //   }
   // }, [location]);
 
-  // Route-specific metadata helps each service page target its own search intent.
+  // Route-aware metadata for public pages. Detail pages refine this using their fetched content.
   useEffect(() => {
+    const pathname = (location.pathname || "/").replace(/\\/+$/, "") || "/";
     const pageSeo = {
       "/": {
         title: "ExpressEarth | Corporate MICE, Incentive Travel & Events",
         description: "ExpressEarth is a corporate MICE and event management company in Gurugram, India, delivering incentive travel, corporate offsites, dealer meets, conferences and events across India and international destinations.",
+      },
+      "/about": {
+        title: "About ExpressEarth | Corporate MICE & Event Experts",
+        description: "Learn about ExpressEarth, a Gurugram-based corporate MICE and event management company delivering corporate travel, conferences, incentive programmes and business events.",
+      },
+      "/contact": {
+        title: "Contact ExpressEarth | Corporate MICE Enquiries",
+        description: "Contact ExpressEarth to plan corporate MICE programmes, incentive travel, dealer meets, offsites, conferences and business events in India and internationally.",
+      },
+      "/careers": {
+        title: "Careers at ExpressEarth | MICE & Event Management Jobs",
+        description: "Explore career opportunities at ExpressEarth across corporate event planning, MICE operations, incentive travel, sales and event management.",
       },
       "/mice-services": {
         title: "Corporate MICE Company in India | ExpressEarth",
@@ -116,7 +129,7 @@ function App() {
       },
       "/incentivetravel": {
         title: "Corporate Incentive Travel & Reward Trips | ExpressEarth",
-        description: "Design memorable employee reward trips and sales incentive travel with ExpressEarth. We coordinate destinations, group logistics, stays and experiences for corporate teams.",
+        description: "Design employee reward trips and sales incentive travel with ExpressEarth. We coordinate destinations, group logistics, stays and experiences for corporate teams.",
       },
       "/meetings-and-conferences": {
         title: "Corporate Meetings & Conference Management | ExpressEarth",
@@ -158,11 +171,82 @@ function App() {
         title: "Corporate Gifting and Gift-with-Purchase Solutions | ExpressEarth",
         description: "Explore corporate gifting and gift-with-purchase solutions from ExpressEarth for employee engagement, customer rewards, channel programmes and brand activations.",
       },
+      "/blogs": {
+        title: "Corporate MICE, Events & Incentive Travel Insights | ExpressEarth",
+        description: "Read ExpressEarth insights on corporate MICE, incentive travel, dealer meets, offsites, conferences, destinations and business event planning.",
+      },
+      "/case-studies": {
+        title: "Corporate MICE & Event Case Studies | ExpressEarth",
+        description: "Explore ExpressEarth case studies showcasing corporate events, incentive travel, dealer meets, conferences and group travel programmes.",
+      },
+      "/destinations": {
+        title: "Corporate Group Travel Destinations | ExpressEarth",
+        description: "Explore destinations for corporate incentive travel, MICE groups, offsites and business events with planning support from ExpressEarth.",
+      },
+      "/achievements": {
+        title: "ExpressEarth Achievements | Corporate MICE & Events",
+        description: "Discover ExpressEarth's milestones and experience in corporate MICE, incentive travel, conferences and event management.",
+      },
+      "/gallery": {
+        title: "Corporate Events & Incentive Travel Gallery | ExpressEarth",
+        description: "View highlights from ExpressEarth corporate events, incentive trips, conferences, dealer meets and group travel experiences.",
+      },
+      "/case-category": {
+        title: "Corporate Event Case Study Categories | ExpressEarth",
+        description: "Browse ExpressEarth case studies by category to explore corporate events, incentive travel and MICE programme experience.",
+      },
+      "/categories": {
+        title: "Corporate Travel & Event Categories | ExpressEarth",
+        description: "Browse ExpressEarth content categories covering corporate MICE, incentive travel, destinations and event management.",
+      },
+      "/privacy-policy": {
+        title: "Privacy Policy | ExpressEarth",
+        description: "Read the ExpressEarth privacy policy to understand how information is handled when you use our website or contact our team.",
+      },
+      "/terms-and-conditions": {
+        title: "Terms and Conditions | ExpressEarth",
+        description: "Read the terms and conditions governing use of the ExpressEarth website and its content.",
+      },
     };
 
-    const metadata = pageSeo[location.pathname];
+    const slugToWords = (slug) => decodeURIComponent(slug || "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\\s+/g, " ")
+      .trim()
+      .replace(/\\b\\w/g, (character) => character.toUpperCase());
+
+    let metadata = pageSeo[pathname];
+    if (!metadata && pathname.startsWith("/blogs/")) {
+      const blogTitle = slugToWords(pathname.slice("/blogs/".length));
+      metadata = {
+        title: blogTitle ? blogTitle + " | ExpressEarth Insights" : "Corporate MICE Insights | ExpressEarth",
+        description: blogTitle
+          ? "Read " + blogTitle + " insights from ExpressEarth on corporate MICE, incentive travel and business event planning."
+          : pageSeo["/blogs"].description,
+      };
+    }
+    if (!metadata && pathname.startsWith("/case-studies/")) {
+      const caseTitle = slugToWords(pathname.slice("/case-studies/".length));
+      metadata = {
+        title: caseTitle ? caseTitle + " | ExpressEarth Case Study" : pageSeo["/case-studies"].title,
+        description: caseTitle
+          ? "Explore this ExpressEarth case study covering corporate MICE, event planning, incentive travel or group programme execution."
+          : pageSeo["/case-studies"].description,
+      };
+    }
+    if (!metadata && pathname.startsWith("/destinations/")) {
+      const destination = slugToWords(pathname.slice("/destinations/".length));
+      metadata = {
+        title: destination ? "Corporate Group Travel in " + destination + " | ExpressEarth" : pageSeo["/destinations"].title,
+        description: destination
+          ? "Explore corporate group travel, incentive trip and MICE planning options for " + destination + " with ExpressEarth."
+          : pageSeo["/destinations"].description,
+      };
+    }
+
     if (!metadata || typeof document === "undefined") return;
 
+    const canonicalUrl = "https://www.expressearth.com" + pathname;
     document.title = metadata.title;
 
     const setMeta = (selector, attributes, content) => {
@@ -178,7 +262,7 @@ function App() {
     setMeta('meta[name="description"]', { name: "description" }, metadata.description);
     setMeta('meta[property="og:title"]', { property: "og:title" }, metadata.title);
     setMeta('meta[property="og:description"]', { property: "og:description" }, metadata.description);
-    setMeta('meta[property="og:url"]', { property: "og:url" }, "https://www.expressearth.com" + location.pathname);
+    setMeta('meta[property="og:url"]', { property: "og:url" }, canonicalUrl);
     setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, metadata.title);
     setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, metadata.description);
 
@@ -188,7 +272,7 @@ function App() {
       canonical.setAttribute("rel", "canonical");
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute("href", "https://www.expressearth.com" + location.pathname);
+    canonical.setAttribute("href", canonicalUrl);
   }, [location.pathname]);
 
   const publicRoutes = [

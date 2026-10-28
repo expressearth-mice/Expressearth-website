@@ -12,7 +12,6 @@ import {
 } from "react-icons/fa";
 import { Country } from "country-state-city";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 import "./ContactForm.css";
 import axiosInstance from "../api/axios";
@@ -104,10 +103,14 @@ const ContactForm = () => {
       );
 
       if (response && response.data) {
-        if (
-          response.data.success &&
-          typeof response.data.success === "string"
-        ) {
+        const successValue = response.data.success;
+        const requestSucceeded =
+          successValue === true ||
+          (typeof successValue === "string" &&
+            successValue.trim() !== "" &&
+            successValue.trim().toLowerCase() !== "false");
+
+        if (requestSucceeded) {
           setSubmitted(true);
           setFormData({
             full_name: "",
@@ -167,7 +170,7 @@ const ContactForm = () => {
         {/* Add logo at the top center */}
         <div className="contact-logo text-center my-1">
           <img
-            src="\Images\express_earth_logoo-removebg-preview.png"
+            src="/Images/express_earth_logoo-removebg-preview.png"
             alt="Expressearth Logo"
             className="contact-logo-img"
           />

@@ -251,6 +251,10 @@ function CorporateOffsitesPage() {
               Bonding | Offsite Planning | Seamless Execution
             </div>
 
+            <p className="offsiteStartingPrice">
+              Startup and small-business offsite packages from ₹7,000 per person*
+            </p>
+
             <div className="heroDivider" />
 
             <div className="heroHeadline2">
@@ -357,12 +361,13 @@ function CorporateOffsitesPage() {
               </h5>
 
               <p className="p">
-                At ExpressEarth, we design corporate offsites, team offsites,
-                and corporate retreats that blend purpose, productivity, and
-                unforgettable experiences. Whether it’s a corporate offsite
-                event, leadership meet, or company-wide team offsite, we create
-                environments that help teams think better, bond deeper, and
-                perform stronger.
+                ExpressEarth plans corporate offsites and team retreats for
+                startups, small businesses and larger teams in Delhi NCR and
+                across India. Choose from team-bonding breaks, leadership
+                retreats and strategy meets tailored to your group, dates and
+                goals. Offsite packages start from ₹7,000 per person, with final
+                pricing based on destination, group size, travel dates and
+                inclusions. Contact us to discuss a package for your team.
               </p>
 
               <h3 className="h3">Let’s Plan Your Next Offsite</h3>

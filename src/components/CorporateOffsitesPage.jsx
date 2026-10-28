@@ -252,7 +252,14 @@ function CorporateOffsitesPage() {
             </div>
 
             <p className="offsiteStartingPrice">
-              Startup and small-business offsite packages from ₹7,000 per person*
+              1 Night / 2 Days Corporate Offsites from ₹7,000 per person*
+            </p>
+            <p className="offsitePriceNote">
+              *Starting price for groups of 40–100 people. Twin-share stay,
+              all meals and round-trip transportation included; taxes extra.
+              Indicative packages for Mussoorie, Jim Corbett, Jaipur, Pushkar,
+              Nainital, Dharamshala and other destinations. Final price depends
+              on dates, availability and confirmed inclusions.
             </p>
 
             <div className="heroDivider" />
@@ -363,11 +370,14 @@ function CorporateOffsitesPage() {
               <p className="p">
                 ExpressEarth plans corporate offsites and team retreats for
                 startups, small businesses and larger teams in Delhi NCR and
-                across India. Choose from team-bonding breaks, leadership
-                retreats and strategy meets tailored to your group, dates and
-                goals. Offsite packages start from ₹7,000 per person, with final
-                pricing based on destination, group size, travel dates and
-                inclusions. Contact us to discuss a package for your team.
+                across India. For teams of 40–100 people, selected 1-night,
+                2-day packages start at ₹7,000 per person, excluding taxes.
+                The starting package includes twin-share accommodation, all
+                meals and round-trip transportation. Destination options can
+                include Mussoorie, Jim Corbett, Jaipur, Pushkar, Nainital and
+                Dharamshala, subject to dates and availability. This is an
+                indicative starting price; the final quote depends on your
+                group's requirements. Contact us to discuss your team's brief.
               </p>
 
               <h3 className="h3">Let’s Plan Your Next Offsite</h3>

@@ -188,7 +188,7 @@ function App() {
       canonical.setAttribute("rel", "canonical");
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute("href", window.location.origin + location.pathname);
+    canonical.setAttribute("href", "https://www.expressearth.com" + location.pathname);
   }, [location.pathname]);
 
   const publicRoutes = [

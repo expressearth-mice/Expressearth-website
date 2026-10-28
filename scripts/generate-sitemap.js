@@ -1,7 +1,8 @@
-const { writeFileSync } = require("node:fs");
+const { existsSync, writeFileSync } = require("node:fs");
 const path = require("node:path");
 
 const rootDir = path.resolve(__dirname, "..");
+let apiFetchFailed = false;
 
 const SITE_URL = (process.env.SITE_URL || "https://www.expressearth.com").replace(/\/+$/, "");
 
@@ -47,6 +48,7 @@ async function fetchList(endpoint) {
     const data = await res.json();
     return Array.isArray(data) ? data : (data?.results ?? []);
   } catch (err) {
+    apiFetchFailed = true;
     console.warn(`[sitemap] Could not fetch ${endpoint}: ${err.message}. Skipping those URLs.`);
     return [];
   }
@@ -151,6 +153,10 @@ ${entries.join("\n")}
 `;
 
   const outPath = path.join(rootDir, "public", "sitemap.xml");
+  if (apiFetchFailed && existsSync(outPath)) {
+    console.warn("[sitemap] One or more API lists failed; leaving the existing sitemap unchanged to preserve previously generated dynamic URLs.");
+    return;
+  }
   writeFileSync(outPath, xml, "utf-8");
   console.log(
     `[sitemap] Wrote ${entries.length} URLs (${seenBlogSlugs.size} blogs, ${seenCaseStudySlugs.size} case studies, ${seenCategorySlugs.size} categories) to public/sitemap.xml`,

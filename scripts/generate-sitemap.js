@@ -88,11 +88,12 @@ async function main() {
     }),
   );
 
-  const [oldPosts, newBlogs, oldCaseStudies, newCaseStudies] = await Promise.all([
+  const [oldPosts, newBlogs, oldCaseStudies, newCaseStudies, categories] = await Promise.all([
     fetchList("/api/posts/"),
     fetchList("/api/express-earth/blog/"),
     fetchList("/api/case-studies/"),
     fetchList("/api/express-earth/case-study/"),
+    fetchList("/api/categories/"),
   ]);
 
   const seenBlogSlugs = new Set();
@@ -125,6 +126,24 @@ async function main() {
     );
   }
 
+  const seenCategorySlugs = new Set();
+  for (const category of categories) {
+    const categoryName = String(category?.name || "").trim();
+    const slug = category?.slug || categoryName.toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+    if (!slug || seenCategorySlugs.has(slug)) continue;
+    seenCategorySlugs.add(slug);
+    entries.push(
+      urlEntry({
+        loc: `${SITE_URL}/categories/${encodeURIComponent(slug)}`,
+        lastmod: toDateOnly(category.updated_at ?? category.created_at),
+        changefreq: "monthly",
+        priority: "0.5",
+      }),
+    );
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries.join("\n")}
@@ -134,7 +153,7 @@ ${entries.join("\n")}
   const outPath = path.join(rootDir, "public", "sitemap.xml");
   writeFileSync(outPath, xml, "utf-8");
   console.log(
-    `[sitemap] Wrote ${entries.length} URLs (${seenBlogSlugs.size} blogs, ${seenCaseStudySlugs.size} case studies) to public/sitemap.xml`,
+    `[sitemap] Wrote ${entries.length} URLs (${seenBlogSlugs.size} blogs, ${seenCaseStudySlugs.size} case studies, ${seenCategorySlugs.size} categories) to public/sitemap.xml`,
   );
 }
 

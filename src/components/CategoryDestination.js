@@ -14,7 +14,7 @@ const CategoryDestinations = () => {
         const formattedSlug = slug.trim().toLowerCase().replace(/\s+/g, '-');
 
         const res = await axiosInstance.get(`/api/destinations/?category=${encodeURIComponent(formattedSlug)}`);
-        const data = await res.json();
+        const data = Array.isArray(res.data) ? res.data : (res.data?.results ?? []);
         setDestinations(data);
       } catch (err) {
         console.error("Failed to fetch destinations", err);

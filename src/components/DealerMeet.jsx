@@ -17,22 +17,22 @@ const services = [
   },
   {
     title: "Stage, AV & Experience Design",
-    text: "We deliver world-class setups using premium AV systems, LED screens, lighting, themed décor, and digital engagement, just like the top event management companies around the world.",
+    text: "Coordinate stage design, AV, LED screens, lighting, décor and digital engagement based on your brief, venue and event objectives.",
     btn: "See Experience Options",
   },
   {
     title: "Business Event Management",
-    text: "As an expert business event organizer, we ensure your meeting supports real business goals: engagement, recognition, product awareness, and relationship-building.",
+    text: "Plan dealer meets around your business objectives, such as dealer engagement, product awareness, recognition and relationship-building.",
     btn: "Request a Custom Plan",
   },
   {
     title: "National & International Dealer Meets",
-    text: "Whether you’re hosting in India or abroad, our dealer meets event planners and production teams to deliver seamless execution with global standards.",
+    text: "Plan dealer meets in India or overseas, with venue, travel, production, hospitality and on-ground logistics coordinated around your programme.",
     btn: "Explore Locations",
   },
   {
     title: "Corporate Event Planning",
-    text: "We are a leading corporate event management company, handling conferences, leadership summits, award nights, and annual business gatherings for top brands across sectors.",
+    text: "We can also coordinate related business events such as conferences, leadership summits, award nights and annual business gatherings.",
     btn: "Talk to a Planner",
   },
 ];
@@ -46,12 +46,12 @@ const faqs = [
   {
     question: "Why should we choose ExpressEarth instead of managing it in-house?",
     answer:
-      "With ExpressEarth as a MICE expert and corporate event management company, brands get better execution, stronger engagement, and a professionally managed event without the stress.",
+      "An event partner can give your internal team one point of coordination for venue, production, travel, hospitality and on-site logistics.",
   },
   {
     question: "Does ExpressEarth manage dealer meets end-to-end?",
     answer:
-      "Yes, ExpressEarth is an end-to-end service provider, handling everything from concept creation and design to on-ground execution and coordination.",
+      "The agreed scope can cover concept development, supplier coordination, production, delegate logistics and on-ground execution.",
   },
   {
     question: "Can ExpressEarth customize the dealer meet as per our business goals?",
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: "Can ExpressEarth organize dealer meets outside India as well?",
     answer:
-      "Yes, ExpressEarth plans and executes dealer meets across India and international destinations, delivering global-standard experiences with seamless execution.",
+      "We can plan dealer meets in India and overseas. Destination feasibility depends on your group size, dates, travel requirements and budget.",
   },
 ];
 
@@ -265,7 +265,7 @@ function DealerMeet() {
       <section className="dealer-section">
         <div className="dealer-left">
           <div className="dealer-content">
-            <h1>Dealer Meet Organizers</h1>
+            <h1>Dealer Meet Organisers in India</h1>
 
             <p className="dealer-sub">
               Dealer Meets | Channel Partner Events | Product Launches

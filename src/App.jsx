@@ -126,10 +126,6 @@ function App() {
         title: "Conference Management Company in India | ExpressEarth",
         description: "Plan corporate conferences and conventions with ExpressEarth. Our team coordinates venues, speakers, delegate management, travel, accommodation, AV production and event logistics.",
       },
-      "/incentive-travel": {
-        title: "Corporate Incentive Travel Company in India | ExpressEarth",
-        description: "Motivate and reward teams with corporate incentive travel programmes by ExpressEarth, from destination planning and group travel to hotels, experiences and on-ground management in India and abroad.",
-      },
     };
 
     const metadata = pageSeo[location.pathname];

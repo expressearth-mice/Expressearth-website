@@ -106,6 +106,41 @@ const BlogDetails = () => {
     fetchRecentPosts();
   }, [title]);
 
+  useEffect(() => {
+    if (!blog || typeof document === "undefined") return;
+
+    const titleText = String(blog.title || "Corporate MICE Insights").trim();
+    const rawDescription = blog.short_description || blog.description || blog.long_des || "";
+    const descriptionText = String(rawDescription)
+      .replace(/<[^>]*>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/\\s+/g, " ")
+      .trim()
+      .slice(0, 160);
+
+    document.title = titleText + " | ExpressEarth";
+    const setMeta = (selector, attributes, content) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+    setMeta('meta[name="description"]', { name: "description" }, descriptionText || "Insights on corporate MICE, incentive travel and event planning from ExpressEarth.");
+    setMeta('meta[property="og:title"]', { property: "og:title" }, titleText + " | ExpressEarth");
+    setMeta('meta[property="og:description"]', { property: "og:description" }, descriptionText || "Insights on corporate MICE, incentive travel and event planning from ExpressEarth.");
+    setMeta('meta[property="og:url"]', { property: "og:url" }, "https://www.expressearth.com/blogs/" + encodeURIComponent(title || ""));
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://www.expressearth.com/blogs/" + encodeURIComponent(title || ""));
+  }, [blog, title]);
+
   const getEmbeddedVideoUrl = (url) => {
     if (!url) return "";
     if (url.includes("youtube.com/watch?v=")) {

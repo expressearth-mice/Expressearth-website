@@ -91,6 +91,78 @@ function App() {
   //   }
   // }, [location]);
 
+  // Route-specific metadata helps each service page target its own search intent.
+  useEffect(() => {
+    const pageSeo = {
+      "/": {
+        title: "ExpressEarth | Corporate MICE, Incentive Travel & Events",
+        description: "ExpressEarth is a corporate MICE and event management company in Gurugram, India, delivering incentive travel, corporate offsites, dealer meets, conferences and events across India and international destinations.",
+      },
+      "/mice-services": {
+        title: "Corporate MICE Company in India | ExpressEarth",
+        description: "Explore ExpressEarth's corporate MICE services, including meetings and conferences, incentive travel, corporate events, exhibitions and destination management across India and international destinations.",
+      },
+      "/dealermeet": {
+        title: "Dealer Meet Organisers in India | ExpressEarth",
+        description: "Plan dealer and distributor meets with ExpressEarth. We manage venue sourcing, travel, hospitality, stage and AV production, branding, delegate logistics and end-to-end event execution across India and abroad.",
+      },
+      "/corporateoffsites": {
+        title: "Corporate Offsite Management Company | ExpressEarth",
+        description: "ExpressEarth plans corporate offsites, leadership retreats and team-building experiences, with end-to-end travel, accommodation, activities and on-ground coordination across India and international destinations.",
+      },
+      "/incentive-travel": {
+        title: "Corporate Incentive Travel Company in India | ExpressEarth",
+        description: "Motivate and reward teams with corporate incentive travel programmes by ExpressEarth, from destination planning and group travel to hotels, experiences and on-ground management in India and abroad.",
+      },
+      "/incentivetravel": {
+        title: "Corporate Incentive Travel & Reward Trips | ExpressEarth",
+        description: "Design memorable employee reward trips and sales incentive travel with ExpressEarth. We coordinate destinations, group logistics, stays and experiences for corporate teams.",
+      },
+      "/meetings-and-conferences": {
+        title: "Corporate Meetings & Conference Management | ExpressEarth",
+        description: "ExpressEarth manages corporate meetings, conferences, leadership summits, seminars and forums, including venue sourcing, AV production, delegate travel, registration and on-site execution.",
+      },
+      "/conferencemanagement": {
+        title: "Conference Management Company in India | ExpressEarth",
+        description: "Plan corporate conferences and conventions with ExpressEarth. Our team coordinates venues, speakers, delegate management, travel, accommodation, AV production and event logistics.",
+      },
+      "/incentive-travel": {
+        title: "Corporate Incentive Travel Company in India | ExpressEarth",
+        description: "Motivate and reward teams with corporate incentive travel programmes by ExpressEarth, from destination planning and group travel to hotels, experiences and on-ground management in India and abroad.",
+      },
+    };
+
+    const metadata = pageSeo[location.pathname];
+    if (!metadata || typeof document === "undefined") return;
+
+    document.title = metadata.title;
+
+    const setMeta = (selector, attributes, content) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+
+    setMeta('meta[name="description"]', { name: "description" }, metadata.description);
+    setMeta('meta[property="og:title"]', { property: "og:title" }, metadata.title);
+    setMeta('meta[property="og:description"]', { property: "og:description" }, metadata.description);
+    setMeta('meta[property="og:url"]', { property: "og:url" }, window.location.origin + location.pathname);
+    setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, metadata.title);
+    setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, metadata.description);
+
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", window.location.origin + location.pathname);
+  }, [location.pathname]);
+
   const publicRoutes = [
     "/",
     "/about",

@@ -262,11 +262,11 @@ const Home = () => {
               <img
                 src="/Images/HOME/Banner image/A.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 1"
+                alt="Corporate event and MICE services by ExpressEarth"
               />
               <div className="carousel-caption hero-overlay">
                 <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
+                  Corporate Event Management &amp; MICE Company in Delhi NCR
                 </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
@@ -283,12 +283,12 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\B.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 2"
+                alt="Corporate conferences and incentive travel experiences"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -304,12 +304,12 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\C.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 3"
+                alt="Corporate group travel and offsite experiences"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -325,12 +325,12 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\D.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 4"
+                alt="Business events and employee engagement programmes"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -346,12 +346,12 @@ const Home = () => {
               <img
                 src="\Images\HOME\Banner image\E.avif"
                 className="d-block w-100 carousel-image"
-                alt="Slide 5"
+                alt="Corporate event production and group experiences"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -391,7 +391,7 @@ const Home = () => {
           </button>
           {/* Banner Section */}
           <section className="hero-banner">
-            <h1 className="main-heading">We Create Experiences</h1>
+            <h2 className="main-heading">We Create Experiences</h2>
             <p className="tag-subtext">Where Business Meets Luxury Travel</p>
           </section>
         </div>
@@ -501,7 +501,7 @@ const Home = () => {
             CONNECT WITH US FOR UNFORGETTABLE MICE EXPERIENCES
           </p>
 
-          <h1 className="travel-heading">Plan. Execute. Inspire.</h1>
+          <h2 className="travel-heading">Plan. Execute. Inspire.</h2>
 
           <p className="travel-subtext">
             <span className="travel-subtext-initial">At ExpressEarth</span>, we don’t just organize events — we

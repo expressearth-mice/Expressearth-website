@@ -42,8 +42,7 @@ const IncentiveTravel = () => {
           <p className="section-description">
             Our team specializes in developing high-end corporate reward travel programs that align with your brand values and performance goals. Whether it's a tropical escape, a snow-covered adventure, or a cultural deep dive — we turn achievements into experiences of a lifetime.
           </p>
-          <Link to="/contact">
-            <a href="#consultatio" className="primary-button  performance-btn">Let’s Talk Goals </a></Link>
+          <Link to="/contact" className="primary-button performance-btn">Let’s Talk Goals</Link>
         </div>
       </section>
 
@@ -117,7 +116,7 @@ const IncentiveTravel = () => {
             <li><span className="benefit-highlight">Custom Branding & Engagement</span> — Your brand identity is infused into every aspect of the journey, making each moment uniquely yours.</li>
             <li><span className="benefit-highlight">ROI-Driven Programs</span> — Our incentive travel programs are designed to boost retention, morale, and measurable performance.</li>
           </ul>
-          <a href="#measure-roi" className="primary-button mt-8">Let’s Make It Count</a>
+          <a href="/contact" className="primary-button mt-8">Let’s Make It Count</a>
           
         </div>
       </section>

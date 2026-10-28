@@ -11,7 +11,9 @@ Disallow: /create-gallery
 Disallow: /create-case-studies
 Disallow: /edit-case-study/
 Disallow: /create-category
-Disallow: /blogs-new/
-Disallow: /case-studies-new/
+Disallow: /blogs-new
+Disallow: /case-studies-new
+Disallow: /create-case-studies-new
+Disallow: /admin-only-section
 
 Sitemap: https://www.expressearth.com/sitemap.xml

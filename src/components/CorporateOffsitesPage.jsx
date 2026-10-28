@@ -40,17 +40,17 @@ const faqs = [
   {
     question: "What’s included in a corporate offsite?",
     answer:
-      "A corporate offsite includes complete planning, accommodation, travel, activities, and on-ground execution. As a MICE expert in India, ExpressEarth ensures every detail is managed seamlessly, creating a smooth and engaging experience for your team.",
+      "A typical scope can include planning, accommodation, travel, activities and on-ground coordination. Final inclusions depend on your destination, group size, dates and budget.",
   },
   {
     question: "Why should we hire a MICE expert?",
     answer:
-      "A MICE expert brings structure, creativity, and efficiency to your offsite. With a strong presence as a MICE company in Delhi NCR and Gurgaon, ExpressEarth ensures better coordination, cost control, and impactful outcomes aligned with your business goals.",
+      "An event partner can coordinate venue options, transport, accommodation, activity providers, schedules and contingency planning, giving your internal team a clear point of contact.",
   },
   {
     question: "Do you handle everything end-to-end?",
     answer:
-      "Yes, ExpressEarth is an end-to-end service provider, taking care of everything from initial planning and concept development to execution and on-ground management, so your team can focus on the experience.",
+      "Depending on the brief, support can include initial planning, concept development, supplier coordination, travel and accommodation, activities and on-ground management.",
   },
   {
     question: "Can you customize the offsite for our team?",
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: "Where do you organize offsites?",
     answer:
-      "We organize offsites across India and international destinations, backed by our expertise as a MICE expert and a trusted MICE company in Gurgaon and Delhi NCR, ensuring consistent quality wherever you go.",
+      "We can plan offsites in India and international destinations. Destination options depend on your dates, group size, travel requirements and budget.",
   },
 ];
 
@@ -251,6 +251,17 @@ function CorporateOffsitesPage() {
               Bonding | Offsite Planning | Seamless Execution
             </div>
 
+            <p className="offsiteStartingPrice">
+              1 Night / 2 Days Corporate Offsites from ₹7,000 per person*
+            </p>
+            <p className="offsitePriceNote">
+              *Starting price for groups of 40–100 people. Twin-share stay,
+              all meals and round-trip transportation included; taxes extra.
+              Destinations include Mussoorie, Jim Corbett, Jaipur, Pushkar,
+              Nainital, Dharamshala, Shimla, Kasauli, Kufri and Manali. Final
+              price depends on dates, availability and confirmed inclusions.
+            </p>
+
             <div className="heroDivider" />
 
             <div className="heroHeadline2">
@@ -357,12 +368,17 @@ function CorporateOffsitesPage() {
               </h5>
 
               <p className="p">
-                At ExpressEarth, we design corporate offsites, team offsites,
-                and corporate retreats that blend purpose, productivity, and
-                unforgettable experiences. Whether it’s a corporate offsite
-                event, leadership meet, or company-wide team offsite, we create
-                environments that help teams think better, bond deeper, and
-                perform stronger.
+                ExpressEarth plans corporate offsites and team retreats for
+                startups, small businesses and larger teams in Delhi NCR and
+                across India. For teams of 40–100 people, selected 1-night,
+                2-day packages start at ₹7,000 per person, excluding taxes.
+                The starting package includes twin-share accommodation, all
+                meals and round-trip transportation. Destination options can
+                include Mussoorie, Jim Corbett, Jaipur, Pushkar, Nainital,
+                Dharamshala, Shimla, Kasauli, Kufri and Manali, subject to dates
+                and availability. This is an
+                indicative starting price; the final quote depends on your
+                group's requirements. Contact us to discuss your team's brief.
               </p>
 
               <h3 className="h3">Let’s Plan Your Next Offsite</h3>

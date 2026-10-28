@@ -6,37 +6,37 @@ import './MiceService.css';
 const services = [
   {
     title: "Meetings & Conferences",
-    description: "Seamless corporate meetings, leadership summits, and agile-scale conferences designed for impact.",
+    description: "Plan leadership meetings, sales conferences and corporate gatherings with venue sourcing, delegate logistics and event production.",
     icon: <FaRegCalendar color="#046ab8" />,
     link: "/meetings-and-conferences"
   },
   {
     title: "Incentive Travel",
-    description: "Reward your top performers with library-incented special experiences that inspire and motivate.",
+    description: "Reward employees and channel partners with tailored incentive trips, destination experiences and coordinated group travel.",
     icon: <FaPlane color="#046ab8" />,
     link: "/incentive-travel"
   },
   {
     title: "Corporate Events",
-    description: "From grand product launches to gala dinners and immersive experiences, we create events that leave a lasting impression.",
+    description: "Coordinate product launches, annual days, award ceremonies and employee events with venue, production and on-site support.",
     icon: <FaBullhorn color="#046ab8" />,
     link: "/corporate-events"
   },
   {
     title: "Exhibitions & Trade Shows",
-    description: "Global participation, booth management, and team-first brand attribution planning for maximum brand impact.",
+    description: "Coordinate exhibition participation, booth logistics, branded environments and on-site support for trade shows and business events.",
     icon: <FaBuilding color="#046ab8" />,
     link: "/exhibitions-and-trade-shows"
   },
   {
     title: "Destination Management",
-    description: "Complete event planning solutions, including logistics, venue selection, and on-ground support for international events.",
+    description: "Manage corporate group logistics, including hotels, transfers, activities and local coordination at the destination.",
     icon: <FaMapMarkedAlt color="#046ab8" />,
     link: "/destination-management"
   },
   {
     title: "Gifting",
-    description: "Customized corporate gifting solutions to enhance your brand presence and create memorable experiences.",
+    description: "Source corporate gifts and gift-with-purchase solutions for employee engagement, customer rewards and channel programmes.",
     icon: <FaGift color="#046ab8" />,
     link: "/Gifting"
   }
@@ -63,8 +63,8 @@ const MiceServices = () => {
 
       <section className="mice-services-section">
         <p className="mice-services-intro">
-          At ExpressEarth MICE, we specialize in delivering world-class corporate events, incentive travel, and destination management services. Whether you're planning a high-profile conference, a luxury incentive trip, or a large-scale exhibition, we ensure seamless execution with a touch of excellence. 
-          Explore our comprehensive MICE solutions designed to elevate your business experiences. Click on any service below to learn more!
+          ExpressEarth plans corporate MICE programmes across India and international destinations, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. Our team can coordinate venue sourcing, group travel, accommodation, event production and on-ground logistics around your programme requirements.
+          Explore the services below, then contact us to discuss your event type, destination, group size and dates.
         </p>
         <h2 className="mice-services-heading">
           OUR KEY SERVICES
@@ -94,10 +94,8 @@ const MiceServices = () => {
             Looking for a tailor-made event solution? Get in touch with our experts today!
           </p>
 
-          <Link to="/contact" className="mice-services-contact-link">
-            <button className="custom-button-link" type="button">
-              Contact Our Experts
-            </button>
+          <Link to="/contact" className="mice-services-contact-link custom-button-link">
+            Contact Our Experts
           </Link>
         </div>
       </section>

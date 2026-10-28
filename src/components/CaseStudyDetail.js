@@ -128,6 +128,43 @@ const CaseStudyDetail = () => {
 
 }, [idOrSlug]);
 
+  useEffect(() => {
+    if (!caseStudy || typeof document === "undefined") return;
+
+    const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
+    const rawDescription = caseStudy.short_description || caseStudy.description || caseStudy.comment || caseStudy.content || "";
+    const descriptionText = String(rawDescription)
+      .replace(/<[^>]*>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/\\s+/g, " ")
+      .trim()
+      .slice(0, 160);
+    const canonicalUrl = "https://www.expressearth.com/case-studies/" + encodeURIComponent(caseStudy.slug || idOrSlug || "");
+
+    document.title = titleText + " | ExpressEarth Case Study";
+    const setMeta = (selector, attributes, content) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+    const description = descriptionText || "Explore this ExpressEarth case study covering corporate MICE, event planning and group programme execution.";
+    setMeta('meta[name="description"]', { name: "description" }, description);
+    setMeta('meta[property="og:title"]', { property: "og:title" }, titleText + " | ExpressEarth Case Study");
+    setMeta('meta[property="og:description"]', { property: "og:description" }, description);
+    setMeta('meta[property="og:url"]', { property: "og:url" }, canonicalUrl);
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", canonicalUrl);
+  }, [caseStudy, idOrSlug]);
+
   /* ✅ FIXED DELETE */
   const handleDelete = async () => {
     const confirmed = window.confirm(

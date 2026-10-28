@@ -196,8 +196,8 @@ function App() {
         description: "Browse ExpressEarth case studies by category to explore corporate events, incentive travel and MICE programme experience.",
       },
       "/categories": {
-        title: "Corporate Travel & Event Categories | ExpressEarth",
-        description: "Browse ExpressEarth content categories covering corporate MICE, incentive travel, destinations and event management.",
+        title: "Destination Categories for Corporate Group Travel | ExpressEarth",
+        description: "Browse destination categories for corporate incentive trips, offsites and MICE group travel with ExpressEarth.",
       },
       "/privacy-policy": {
         title: "Privacy Policy | ExpressEarth",
@@ -241,6 +241,15 @@ function App() {
         description: destination
           ? "Explore corporate group travel, incentive trip and MICE planning options for " + destination + " with ExpressEarth."
           : pageSeo["/destinations"].description,
+      };
+    }
+    if (!metadata && pathname.startsWith("/categories/")) {
+      const category = slugToWords(pathname.slice("/categories/".length));
+      metadata = {
+        title: category ? category + " Destinations for Corporate Groups | ExpressEarth" : pageSeo["/categories"].title,
+        description: category
+          ? "Explore " + category.toLowerCase() + " destinations for corporate incentive travel, offsites and MICE group trips with ExpressEarth."
+          : pageSeo["/categories"].description,
       };
     }
 

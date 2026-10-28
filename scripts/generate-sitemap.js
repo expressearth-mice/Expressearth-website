@@ -56,7 +56,7 @@ function toDateOnly(value) {
   const date = value ? new Date(value) : null;
   return date && !Number.isNaN(date.getTime())
     ? date.toISOString().slice(0, 10)
-    : new Date().toISOString().slice(0, 10);
+    : null;
 }
 
 function xmlEscape(value) {
@@ -72,20 +72,17 @@ function urlEntry({ loc, lastmod, changefreq, priority }) {
   return [
     "  <url>",
     `    <loc>${xmlEscape(loc)}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
+    lastmod ? `    <lastmod>${lastmod}</lastmod>` : null,
     `    <changefreq>${changefreq}</changefreq>`,
     `    <priority>${priority}</priority>`,
     "  </url>",
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 async function main() {
-  const today = new Date().toISOString().slice(0, 10);
-
   const entries = STATIC_ROUTES.map((route) =>
     urlEntry({
       loc: `${SITE_URL}${route.path}`,
-      lastmod: today,
       changefreq: route.changefreq,
       priority: route.priority,
     }),

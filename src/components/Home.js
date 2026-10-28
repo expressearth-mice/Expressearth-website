@@ -266,7 +266,7 @@ const Home = () => {
               />
               <div className="carousel-caption hero-overlay">
                 <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
+                  Corporate Event Management &amp; MICE Company in Delhi NCR
                 </h1>
                 <p>
                   From world-class conferences to luxury incentive travel,
@@ -286,9 +286,9 @@ const Home = () => {
                 alt="Slide 2"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -307,9 +307,9 @@ const Home = () => {
                 alt="Slide 3"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -328,9 +328,9 @@ const Home = () => {
                 alt="Slide 4"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions
@@ -349,9 +349,9 @@ const Home = () => {
                 alt="Slide 5"
               />
               <div className="carousel-caption hero-overlay">
-                <h1 className="hero-title-box">
-                  Turning MICE Experiences into Unforgettable Journeys
-                </h1>
+                <h2 className="hero-title-box">
+                  Corporate Events, Conferences &amp; Incentive Travel
+                </h2>
                 <p>
                   From world-class conferences to luxury incentive travel,
                   ExpressEarth delivers seamless, high-end event solutions

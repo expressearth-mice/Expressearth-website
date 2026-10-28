@@ -56,7 +56,7 @@ const MiceServices = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <h1 className="mice-services-hero-title">
-          Our Services<br />Crafting Extraordinary MICE Experiences
+          Corporate MICE Services<br />Meetings, Incentive Travel, Conferences &amp; Events
         </h1>
       </section>
 

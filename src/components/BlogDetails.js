@@ -114,7 +114,7 @@ const BlogDetails = () => {
     const descriptionText = String(rawDescription)
       .replace(/<[^>]*>/g, " ")
       .replace(/&nbsp;/g, " ")
-      .replace(/\\s+/g, " ")
+      .replace(/\s+/g, " ")
       .trim()
       .slice(0, 160);
 

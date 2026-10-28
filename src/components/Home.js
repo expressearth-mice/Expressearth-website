@@ -391,7 +391,7 @@ const Home = () => {
           </button>
           {/* Banner Section */}
           <section className="hero-banner">
-            <h1 className="main-heading">We Create Experiences</h1>
+            <h2 className="main-heading">We Create Experiences</h2>
             <p className="tag-subtext">Where Business Meets Luxury Travel</p>
           </section>
         </div>
@@ -501,7 +501,7 @@ const Home = () => {
             CONNECT WITH US FOR UNFORGETTABLE MICE EXPERIENCES
           </p>
 
-          <h1 className="travel-heading">Plan. Execute. Inspire.</h1>
+          <h2 className="travel-heading">Plan. Execute. Inspire.</h2>
 
           <p className="travel-subtext">
             <span className="travel-subtext-initial">At ExpressEarth</span>, we don’t just organize events — we

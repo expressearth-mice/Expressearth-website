@@ -35,6 +35,30 @@ const services = [
     link: "/destination-management"
   },
   {
+    title: "Dealer & Distributor Meets",
+    description: "Plan dealer conferences, channel partner meets and recognition programmes with venue, branding, production and delegate coordination.",
+    icon: <FaBuilding color="#046ab8" />,
+    link: "/dealermeet"
+  },
+  {
+    title: "Corporate Offsites",
+    description: "Arrange team retreats and leadership offsites with destination, accommodation, meals, group transport and on-ground planning.",
+    icon: <FaMapMarkedAlt color="#046ab8" />,
+    link: "/corporateoffsites"
+  },
+  {
+    title: "Conference Management",
+    description: "Coordinate corporate conferences, annual sales meets and leadership programmes, including venues, production and delegate logistics.",
+    icon: <FaRegCalendar color="#046ab8" />,
+    link: "/conferencemanagement"
+  },
+  {
+    title: "International Group Travel",
+    description: "Plan international group programmes with destination research, accommodation, transfers, activities and group coordination.",
+    icon: <FaPlane color="#046ab8" />,
+    link: "/internationalgrouptravel"
+  },
+  {
     title: "Gifting",
     description: "Source corporate gifts and gift-with-purchase solutions for employee engagement, customer rewards and channel programmes.",
     icon: <FaGift color="#046ab8" />,

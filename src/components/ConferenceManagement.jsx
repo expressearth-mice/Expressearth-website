@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import "./ConferenceManagement.css";
 import { trackFormSubmit, trackContact } from "../utils/fbPixel";
@@ -13,27 +14,27 @@ import PopupForm from "./popupForm";
 const services = [
   {
     title: "End-to-End Conference Management",
-    text: "Complete ownership of planning, coordination, vendor management, logistics, and on-ground execution for seamless conferences.",
+    text: "Coordinate planning, suppliers, schedules, delegate logistics and on-site delivery according to the agreed conference scope.",
     btn: "Start Conference Planning",
   },
   {
     title: "Corporate Conferences & Leadership Events",
-    text: "Expert planning for corporate conference services, leadership conference planning, and corporate summit planners, ensuring content flow, delegate experience, and executive presence are handled with precision.",
+    text: "Plan leadership meetings, annual sales conferences and corporate summits around the agenda, speakers, audience and event format.",
     btn: "Plan a Corporate Conference",
   },
   {
     title: "Meetings, Seminars & Business Conferences",
-    text: "Structured meeting and conference planning by experienced business meeting planners and seminar event organizers, tailored to organisational goals and audience profiles.",
+    text: "Coordinate business meetings, seminars and multi-session programmes with schedules, venue arrangements and attendee support shaped around the brief.",
     btn: "Plan a Business Meeting",
   },
   {
     title: "Venue, Delegate & Logistics Management",
-    text: "Professional conference venue planning, delegate coordination, registrations, travel, and accommodation management for smooth operations at scale.",
+    text: "Arrange venue options, registration support, delegate communication, accommodation and group transfers when included in the event brief.",
     btn: "Plan Your Conference Venue",
   },
   {
     title: "Large Conferences, Conventions & Trade Events",
-    text: "Specialised solutions for large conference organizers, annual conference management, convention planning services, and trade conference management, built for scale, compliance, and control.",
+    text: "Support multi-day conferences, conventions and trade events with production, supplier coordination and delegate logistics based on programme requirements.",
     btn: " Manage a Large-Scale Conference",
   },
 ];
@@ -41,23 +42,23 @@ const services = [
 const whyChooseCards = [
   {
     num: "01",
-    title: "Experienced Conference Event Planners",
-    text: "We bring deep expertise as conference organizers, managing multi-day, multi-stakeholder conferences.",
+    title: "Planning around your conference objectives",
+    text: "We align the proposed format, agenda, venue and operating plan with the objectives and audience you share.",
   },
   {
     num: "02",
-    title: "Strategic Corporate Conference Planning",
-    text: "Our planning approach aligns objectives, audience engagement, content flow, and logistics.",
+    title: "Venue and programme coordination",
+    text: "We coordinate venue requirements, session flow, speaker needs and delegate movement within the agreed scope.",
   },
   {
     num: "03",
-    title: "End-to-End Conference Event Management",
-    text: "From planning to post-event closure, we manage every layer of conference execution.",
+    title: "Delegate and supplier coordination",
+    text: "Support can include supplier communication, registrations, travel, accommodation and on-site coordination.",
   },
   {
     num: "04",
-    title: "Trusted MICE Conference Organizers",
-    text: "We deliver structured, scalable conference solutions for national and international MICE programs.",
+    title: "India and international programme support",
+    text: "We can discuss conference locations in India and overseas, subject to group requirements, dates and destination feasibility.",
   },
 ];
 
@@ -65,27 +66,27 @@ const faqs = [
   {
     question: "What does ExpressEarth handle in conference management?",
     answer:
-      "ExpressEarth manages everything from planning, venue selection, and logistics to delegate management and on-ground execution. As a MICE expert in India, every conference is delivered with structure and precision.",
+      "The agreed scope can include venue sourcing, production, registration, delegate travel, accommodation, schedules and on-site coordination. Exact services depend on your event brief.",
   },
   {
     question: "Do you provide end-to-end conference management services?",
     answer:
-      "Yes, ExpressEarth is an end-to-end service provider, handling everything from concept planning and vendor coordination to execution and post-event closure.",
+      "ExpressEarth can coordinate planning through on-site delivery when that full scope is requested. Responsibilities are confirmed against the brief and proposal.",
   },
   {
     question: "Can conferences be customized based on our business needs?",
     answer:
-      "Absolutely. Every conference is strategically planned based on your objectives, audience, and industry requirements, ensuring meaningful engagement and effective outcomes.",
+      "Yes. The format, venue, agenda, production and delegate arrangements can be planned around your objectives, audience, dates and budget.",
   },
   {
     question: "Do you manage large-scale conferences and conventions?",
     answer:
-      "Yes, ExpressEarth specializes in large conferences, conventions, and multi-day events, delivering seamless execution as experienced MICE conference organizers.",
+      "We can discuss multi-day conferences and conventions. Feasibility and the required supplier and operations plan depend on location, attendance and programme complexity.",
   },
   {
     question: "Do you handle delegate management and logistics as well?",
     answer:
-      "Yes, ExpressEarth takes care of registrations, travel, accommodation, and complete delegate coordination, ensuring a smooth and well-managed conference experience.",
+      "Delegate support can include registration, travel, accommodation, transfers and event-day coordination, depending on the agreed scope.",
   },
 ];
 
@@ -322,12 +323,11 @@ const ConferenceManagement = () => {
 
         <div className="cm-hero-content">
           <div className="cm-hero-copy">
-            <h1>Conference Management</h1>
+            <h1>Corporate Conference Management in Delhi NCR &amp; India</h1>
 
             <p className="cm-sub">
-              Conference Management | Corporate Conference Planning | Conference
-              Event Management | MICE Conference Organizers | Convention
-              Planning Services
+              Corporate conferences | Leadership meets | Annual sales
+              conferences | Seminars | Delegate management
             </p>
 
             <div className="cm-line"></div>
@@ -352,19 +352,21 @@ const ConferenceManagement = () => {
           </div>
 
           <h2>
-            Curated Conference
+            Corporate Conference
             <br />
-            Management &amp; Planning
+            Planning and Management
             <br />
             Services
           </h2>
 
           <p>
-            At ExpressEarth, we deliver end-to-end conference management
-            solutions designed for organisations that value clarity, structure,
-            and flawless execution. As experienced conference event planners and
-            conference organizers, we manage complex conferences, summits, and
-            conventions with strategic planning and seamless delivery.
+            ExpressEarth plans corporate conferences, leadership meets, annual
+            sales conferences and seminars in Delhi NCR and across India.
+            Depending on the brief, support can include venue sourcing, stage
+            and AV coordination, registration, speaker and agenda logistics,
+            accommodation, group transfers and on-site event management. The
+            proposed scope is shaped around your audience, programme, location
+            and dates.
           </p>
 
           <button className="cm-curated-btn" onClick={handleOpenPopup}>
@@ -394,15 +396,15 @@ const ConferenceManagement = () => {
       <section className="cm-trusted-section">
         <div className="cm-trusted-left">
           <h2>
-            Your Trusted Conference
+            Conference Management Support
             <br />
-            Management Company
+            for Corporate Teams
           </h2>
 
           <p className="cm-trusted-intro">
-            As a full-service conference management company, ExpressEarth
-            supports organisations with structured conference planning services
-            across industries and scales.
+            ExpressEarth coordinates conference planning for organisations
+            that need support with venues, production, delegate logistics and
+            on-site operations.
           </p>
 
           <img
@@ -412,9 +414,9 @@ const ConferenceManagement = () => {
           />
 
           <p className="cm-trusted-note">
-            Every conference is planned with intent, coordination, and control;
-            ensuring leadership confidence, delegate engagement, and operational
-            excellence.
+            Planning begins with your objectives, audience, event format, dates
+            and budget. We then define the practical requirements and
+            responsibilities for the agreed programme.
           </p>
 
           <button className="cm-trusted-btn" onClick={handleOpenPopup}>
@@ -423,37 +425,37 @@ const ConferenceManagement = () => {
         </div>
 
         <div className="cm-trusted-right">
-          <div className="cm-trusted-pill">Our expertise spans</div>
+          <div className="cm-trusted-pill">Conference programme components</div>
 
           <div className="cm-expertise-list">
             <div className="cm-expertise-item">
               <span className="cm-expertise-num">01</span>
-              <p>Corporate conference planning</p>
+              <p>Leadership meetings and annual sales conferences</p>
             </div>
 
             <div className="cm-expertise-item">
               <span className="cm-expertise-num">02</span>
-              <p>Business conference organizers</p>
+              <p>Seminars and multi-session programmes</p>
             </div>
 
             <div className="cm-expertise-item">
               <span className="cm-expertise-num">03</span>
-              <p>Conference event management</p>
+              <p>Stage, audio-visual and production coordination</p>
             </div>
 
             <div className="cm-expertise-item">
               <span className="cm-expertise-num">04</span>
-              <p>Meeting and conference planning</p>
+              <p>Venue sourcing and event schedules</p>
             </div>
 
             <div className="cm-expertise-item">
               <span className="cm-expertise-num">05</span>
-              <p>Seminar event organizers</p>
+              <p>Registration and delegate support</p>
             </div>
 
             <div className="cm-expertise-item">
               <span className="cm-expertise-num">06</span>
-              <p>MICE conference organizers</p>
+              <p>Accommodation, transfers and on-site logistics</p>
             </div>
           </div>
         </div>
@@ -516,8 +518,8 @@ const ConferenceManagement = () => {
           </h2>
 
           <p className="cm-why-sub">
-            Conferences That Communicate Authority. Execution That Never
-            Falters.
+            Conference plans built around your audience, agenda and
+            operating requirements.
           </p>
 
           <div className="cm-why-grid">
@@ -619,9 +621,13 @@ const ConferenceManagement = () => {
         </div>
       </section>
 
+      <nav className="cm-related-services" aria-label="Related corporate event services">
+        <p>Planning a wider corporate programme? Explore our <Link to="/corporate-events">corporate event management</Link>, <Link to="/dealermeet">dealer meet management</Link> and <Link to="/corporateoffsites">corporate offsite planning</Link> services.</p>
+      </nav>
+
       <section className="cm-final-cta-section">
         <h2 className="cm-final-cta-heading">
-          Ready to Plan a Conference That Delivers Impact?
+          Planning a Corporate Conference in Delhi NCR or Elsewhere?
         </h2>
 
         <div className="cm-final-cta-image-wrap">
@@ -633,12 +639,13 @@ const ConferenceManagement = () => {
         </div>
 
         <p className="cm-final-cta-text">
-          Let ExpressEarth manage your next conference with precision,
-          structure, and professional excellence.
+          Share your event dates, expected attendance, location and programme
+          brief. ExpressEarth can help scope the venue, production, delegate
+          and on-site requirements.
         </p>
 
         <button className="cm-final-cta-btn" onClick={handleOpenPopup}>
-          Speak to Our Conference Management Specialists Today
+          Discuss Your Conference Requirements
         </button>
       </section>
     </>

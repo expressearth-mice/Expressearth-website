@@ -38,6 +38,11 @@ const services = [
 
 const faqs = [
   {
+    question: "What is included in the ₹7,000 per-person offsite starting package?",
+    answer:
+      "Selected 1-night, 2-day packages start at ₹7,000 per person for groups of 40–100. The starting package includes twin-share accommodation, all meals and round-trip transportation. Taxes are extra, and the final price depends on destination, dates, availability and confirmed inclusions.",
+  },
+  {
     question: "What’s included in a corporate offsite?",
     answer:
       "A typical scope can include planning, accommodation, travel, activities and on-ground coordination. Final inclusions depend on your destination, group size, dates and budget.",
@@ -244,11 +249,11 @@ function CorporateOffsitesPage() {
       <section className="hero">
         <div className="heroInner">
           <div className="heroLeft">
-            <h1 className="heroTopLabel">Corporate Offsites</h1>
+            <h1 className="heroTopLabel">Corporate Offsite Management in Delhi NCR</h1>
 
             <div className="heroSubLine">
-              Team Offsites | Leadership Retreats | Strategy Meets | Team
-              Bonding | Offsite Planning | Seamless Execution
+              Startup and corporate team offsites | Leadership retreats
+              | Strategy meets | Team-building programmes
             </div>
 
             <p className="offsiteStartingPrice">

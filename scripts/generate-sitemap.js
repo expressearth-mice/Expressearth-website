@@ -42,18 +42,44 @@ const STATIC_ROUTES = [
 ];
 
 async function fetchList(endpoint) {
+  const items = [];
+  const visited = new Set();
+  const apiOrigin = new URL(API_URL).origin;
+  let currentUrl = API_URL + endpoint;
+
   try {
-    const res = await fetch(`${API_URL}${endpoint}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    return Array.isArray(data) ? data : (data?.results ?? []);
+    while (currentUrl) {
+      const pageUrl = new URL(currentUrl);
+      if (pageUrl.origin !== apiOrigin) {
+        throw new Error("Pagination URL points outside the configured API host");
+      }
+      if (visited.has(pageUrl.href)) {
+        throw new Error("Pagination loop detected");
+      }
+      visited.add(pageUrl.href);
+
+      const res = await fetch(pageUrl.href);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        items.push(...data);
+        break;
+      }
+      if (Array.isArray(data?.results)) {
+        items.push(...data.results);
+      }
+
+      currentUrl = data?.next ? new URL(data.next, pageUrl).href : null;
+    }
+
+    return items;
   } catch (err) {
     apiFetchFailed = true;
-    console.warn(`[sitemap] Could not fetch ${endpoint}: ${err.message}. Skipping those URLs.`);
+    console.warn("[sitemap] Could not fetch all pages from " + endpoint + ": " + err.message + ". Skipping those URLs.");
     return [];
   }
 }
-
 function toDateOnly(value) {
   const date = value ? new Date(value) : null;
   return date && !Number.isNaN(date.getTime())

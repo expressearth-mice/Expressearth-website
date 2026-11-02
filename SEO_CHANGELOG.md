@@ -30,6 +30,7 @@
 - Updated the offsite route's meta description to match the confirmed offer and its qualifications.
 - Updated the sitemap generator to follow same-origin paginated API responses, while detecting loops and refusing pagination links to a different host; failed retrieval still preserves the existing sitemap.
 - Fixed the homepage "Home Page Loaded" analytics effect so it fires once on mount rather than after every render.
+- Removed duplicate Font Awesome CDN stylesheet requests because the app already imports the installed local Font Awesome package; removed the duplicate Google Fonts preconnect pair and a duplicate Bootstrap CSS import.
 - Re-fetched each changed source file after its commit and checked the intended copy, links, package details and effect dependency.
 
 ### Validation and outstanding checks

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import dealerHero from "../assests/DE_2.jpeg";
 import dealerStage from "../assests/DE_1.png";
 import dealerTeam from "../assests/DE_Team.jpg";

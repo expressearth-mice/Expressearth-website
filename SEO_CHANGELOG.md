@@ -26,6 +26,7 @@
 - Added crawlable internal links from the conference page to corporate events, dealer meets and corporate offsites.
 - Reworked dealer meet page copy to clarify the service scope, Delhi NCR/India relevance and programme planning; removed unsupported "flawless", "premium" and absolute reliability claims.
 - Added crawlable internal links from the dealer meet page to conference management, corporate events and incentive travel.
+- Expanded the main MICE services hub with crawlable cards for dealer/distributor meets, corporate offsites, conference management and international group travel so these commercial pages are easier to discover from the primary service index.
 - Updated the corporate offsite page H1 for Delhi NCR intent and added a visible FAQ explaining the confirmed ₹7,000 starting package: 1 night / 2 days, 40–100 people, twin-share stay, all meals, round-trip transportation, taxes extra. The page lists Mussoorie, Jim Corbett, Jaipur, Pushkar, Nainital, Dharamshala, Shimla, Kasauli, Kufri and Manali.
 - Updated the offsite route's meta description to match the confirmed offer and its qualifications.
 - Updated the sitemap generator to follow same-origin paginated API responses, while detecting loops and refusing pagination links to a different host; failed retrieval still preserves the existing sitemap.

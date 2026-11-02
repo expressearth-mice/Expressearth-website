@@ -19,7 +19,13 @@ const hardcodedDestinations = [
 
 const DestinationDetails = () => {
   const { name } = useParams();
-  const decodedName = decodeURIComponent(name);
+  const decodedName = (() => {
+    try {
+      return decodeURIComponent(name || "");
+    } catch {
+      return name || "";
+    }
+  })();
   const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
   const [recentPosts, setRecentPosts] = useState([]);
@@ -27,6 +33,8 @@ const DestinationDetails = () => {
   const { name: slug } = useParams(); // now 'slug' is the URL param
 
   useEffect(() => {
+    setLoading(true);
+    setDestination(null);
     axiosInstance
       .get(`/api/destinations/${slug}/`)
       .then((response) => {
@@ -34,7 +42,7 @@ const DestinationDetails = () => {
         setLoading(false);
       })
       .catch(() => {
-        const fallback = hardcodedDestinations.find((d) => d.name.toLowerCase() === decodeURIComponent(slug).toLowerCase());
+        const fallback = hardcodedDestinations.find((d) => d.name.toLowerCase() === decodedName.toLowerCase());
         setDestination(fallback || null);
         setLoading(false);
       });
@@ -77,6 +85,23 @@ const DestinationDetails = () => {
 
     fetchDestination();
   }, [decodedName]); // Refetch whenever the destination name changes
+
+  useEffect(() => {
+    if (loading || typeof document === "undefined") return;
+
+    const robotsMeta = document.head.querySelector('meta[name="robots"]');
+    if (!destination) {
+      document.title = "Destination not found | ExpressEarth";
+      if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
+      const staleCanonical = document.head.querySelector('link[rel="canonical"]');
+      if (staleCanonical) staleCanonical.remove();
+      return;
+    }
+
+    if (robotsMeta) {
+      robotsMeta.setAttribute("content", "index, follow, max-image-preview:large");
+    }
+  }, [destination, loading]);
 
   if (loading) return <h2 style={{ textAlign: "center", marginTop: "50px" }}>Loading...</h2>;
   if (!destination) return <h2 style={{ textAlign: "center", marginTop: "50px" }}>Destination Not Found</h2>;

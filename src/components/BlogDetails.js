@@ -51,6 +51,7 @@ const BlogDetails = () => {
 
   useEffect(() => {
     setLoading(true);
+    setBlog(null);
     const fetchPost = async () => {
       try {
         const res = await axiosInstance.get(`/api/posts/${title}/`);
@@ -107,7 +108,20 @@ const BlogDetails = () => {
   }, [title]);
 
   useEffect(() => {
-    if (!blog || typeof document === "undefined") return;
+    if (loading || typeof document === "undefined") return;
+
+    const robotsMeta = document.head.querySelector('meta[name="robots"]');
+    if (!blog) {
+      document.title = "Blog post not found | ExpressEarth";
+      if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
+      const staleCanonical = document.head.querySelector('link[rel="canonical"]');
+      if (staleCanonical) staleCanonical.remove();
+      return;
+    }
+
+    if (robotsMeta) {
+      robotsMeta.setAttribute("content", "index, follow, max-image-preview:large");
+    }
 
     const titleText = String(blog.title || "Corporate MICE Insights").trim();
     const rawDescription = blog.short_description || blog.description || blog.long_des || "";
@@ -139,7 +153,7 @@ const BlogDetails = () => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", "https://www.expressearth.com/blogs/" + encodeURIComponent(title || ""));
-  }, [blog, title]);
+  }, [blog, title, loading]);
 
   const getEmbeddedVideoUrl = (url) => {
     if (!url) return "";

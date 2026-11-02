@@ -1,8 +1,21 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { NotFound } from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("renders useful navigation when a route is not found", () => {
+  render(
+    <MemoryRouter>
+      <NotFound />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /page not found/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /explore mice services/i })
+  ).toHaveAttribute("href", "/mice-services");
+  expect(
+    screen.getByRole("link", { name: /contact expressearth/i })
+  ).toHaveAttribute("href", "/contact");
 });

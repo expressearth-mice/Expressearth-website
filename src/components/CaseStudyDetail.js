@@ -57,6 +57,7 @@ const CaseStudyDetail = () => {
   const fetchCaseStudy = async () => {
     try {
       setLoading(true);
+      setCaseStudy(null);
 
       let item;
       let fromNewSystem = false;
@@ -98,7 +99,6 @@ const CaseStudyDetail = () => {
       }
 
       if (!item) {
-        alert("Case study not found!");
         return;
       }
 
@@ -129,7 +129,20 @@ const CaseStudyDetail = () => {
 }, [idOrSlug]);
 
   useEffect(() => {
-    if (!caseStudy || typeof document === "undefined") return;
+    if (loading || typeof document === "undefined") return;
+
+    const robotsMeta = document.head.querySelector('meta[name="robots"]');
+    if (!caseStudy) {
+      document.title = "Case study not found | ExpressEarth";
+      if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
+      const staleCanonical = document.head.querySelector('link[rel="canonical"]');
+      if (staleCanonical) staleCanonical.remove();
+      return;
+    }
+
+    if (robotsMeta) {
+      robotsMeta.setAttribute("content", "index, follow, max-image-preview:large");
+    }
 
     const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
     const rawDescription = caseStudy.short_description || caseStudy.description || caseStudy.comment || caseStudy.content || "";
@@ -163,7 +176,7 @@ const CaseStudyDetail = () => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", canonicalUrl);
-  }, [caseStudy, idOrSlug]);
+  }, [caseStudy, idOrSlug, loading]);
 
   /* ✅ FIXED DELETE */
   const handleDelete = async () => {
@@ -199,8 +212,22 @@ const CaseStudyDetail = () => {
     }
   };
 
-  if (loading || !caseStudy) {
+  if (loading) {
     return <CaseStudyDetailSkeleton />;
+  }
+
+  if (!caseStudy) {
+    return (
+      <div className="case-study-detail-container">
+        <div className="case-study-detail-content">
+          <h1>Case study not found</h1>
+          <p>The requested case study could not be found.</p>
+          <Link to="/case-studies">Browse case studies</Link>
+          {" · "}
+          <Link to="/contact">Discuss a corporate programme</Link>
+        </div>
+      </div>
+    );
   }
 
   const destinationName =

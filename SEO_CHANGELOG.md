@@ -40,3 +40,21 @@
 - A parse-only JavaScript syntax check passed for scripts/generate-sitemap.js. JSX compilation, the full production build and application tests remain unverified because dependencies/source could not be cloned into this environment.
 - Review found the current public/index.html loads gtag.js using a GTM- container ID and calls gtag('config', 'GTM-...'). Google's current guidance distinguishes a Google tag ID (for example G-... / GT-...) from a Tag Manager container ID (GTM-...). Do not change this blindly: the owner/developer must confirm whether the intended setup is GA4 gtag.js, Google Tag Manager, or both, and provide the GA4 Measurement ID plus GTM container access/configuration as applicable. Verify with Tag Assistant after correction.
 - Changes remain in the development repository only. Production rendering, form submissions, analytics events and Search Console indexing must be checked after the developer deploys the changes.
+
+
+## 2026-11-02 — Crawl fallback and enquiry form accessibility
+
+- Added an explicit not-found route with useful links to the commercial MICE services hub and contact page. Unknown client-side routes now receive a `noindex, follow` robots directive and have any stale canonical link removed; recognized routes restore the normal index directive and route-specific canonical.
+- Made route slug-to-title decoding tolerant of malformed percent-encoding so an unusual URL cannot throw during metadata generation.
+- Added not-found handling to dynamic blog, case-study and destination pages: unavailable content is now marked `noindex, follow`, stale canonicals are removed, and the case-study detail route displays a helpful not-found message instead of an indefinite loading skeleton. Detail state is cleared when a route parameter changes to prevent stale content from appearing under a new URL.
+- Replaced generic contact-page superlatives with a clear corporate enquiry brief and guidance on the details that help qualify an enquiry.
+- Added native required semantics, browser autofill hints, and error-to-field ARIA associations for the name, email and phone fields; added a polite success announcement and an alert role for form errors.
+- Improved the requirements prompt so prospective clients can include destination, budget range, dates and production/travel needs without changing the backend payload.
+- Corrected the contact submit button's invalid double-hash background colour, set a darker green, and added an accessible loading announcement.
+- Replaced the stale Create React App placeholder test with a focused not-found navigation test.
+
+### Validation and deployment
+
+- Checked that each intended source replacement matched exactly once before preparing the commit.
+- Automated Jest/build execution is not available in this run because the repository is accessible through GitHub's file API but no local checkout/dependency installation is available here; no build or test pass is claimed.
+- No production deployment, redirects, DNS or hosting changes were made.

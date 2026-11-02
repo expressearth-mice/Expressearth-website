@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom"; // Import useLocation
+import { Routes, Route, Link, useLocation } from "react-router-dom"; // Import useLocation
 import { ToastContainer } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -58,6 +58,24 @@ import International from "./components/International";
 import Domestic from "./components/Domestic";
 
 const AdminComponent = () => <div>Admin-only Section</div>;
+
+export const NotFound = () => (
+  <main className="container py-5 text-center">
+    <h1>Page not found</h1>
+    <p>
+      We couldn’t find the page you requested. Explore our corporate MICE
+      services or contact the ExpressEarth team about an upcoming programme.
+    </p>
+    <div className="d-flex flex-wrap justify-content-center gap-3">
+      <Link className="btn btn-primary" to="/mice-services">
+        Explore MICE services
+      </Link>
+      <Link className="btn btn-outline-secondary" to="/contact">
+        Contact ExpressEarth
+      </Link>
+    </div>
+  </main>
+);
 
 // const ScrollToTop = () => {
 //   const { pathname } = useLocation();
@@ -209,11 +227,19 @@ function App() {
       },
     };
 
-    const slugToWords = (slug) => decodeURIComponent(slug || "")
-      .replace(/[-_]+/g, " ")
-      .replace(/\s+/g, " ")
-      .trim()
-      .replace(/\b\w/g, (character) => character.toUpperCase());
+    const slugToWords = (slug) => {
+      let decodedSlug = slug || "";
+      try {
+        decodedSlug = decodeURIComponent(decodedSlug);
+      } catch {
+        // Keep the original path segment if it contains malformed encoding.
+      }
+      return decodedSlug
+        .replace(/[-_]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\b\w/g, (character) => character.toUpperCase());
+    };
 
     let metadata = pageSeo[pathname];
     if (!metadata && pathname.startsWith("/blogs/")) {
@@ -253,10 +279,7 @@ function App() {
       };
     }
 
-    if (!metadata || typeof document === "undefined") return;
-
-    const canonicalUrl = "https://www.expressearth.com" + pathname;
-    document.title = metadata.title;
+    if (typeof document === "undefined") return;
 
     const setMeta = (selector, attributes, content) => {
       let element = document.head.querySelector(selector);
@@ -267,6 +290,18 @@ function App() {
       }
       element.setAttribute("content", content);
     };
+
+    if (!metadata) {
+      document.title = "Page not found | ExpressEarth";
+      setMeta('meta[name="robots"]', { name: "robots" }, "noindex, follow");
+      const staleCanonical = document.head.querySelector('link[rel="canonical"]');
+      if (staleCanonical) staleCanonical.remove();
+      return;
+    }
+
+    setMeta('meta[name="robots"]', { name: "robots" }, "index, follow, max-image-preview:large");
+    const canonicalUrl = "https://www.expressearth.com" + pathname;
+    document.title = metadata.title;
 
     setMeta('meta[name="description"]', { name: "description" }, metadata.description);
     setMeta('meta[property="og:title"]', { property: "og:title" }, metadata.title);
@@ -405,6 +440,7 @@ function App() {
         {role.is_admin && (
           <Route path="/admin-only-section" element={<AdminComponent />} />
         )}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {/* Show Footer only on public routes */}

@@ -179,16 +179,11 @@ const ContactForm = () => {
       <div className="contact-header-section">
         <h2>Contact us</h2>
         <p>
-          Let’s Plan Your Next Unforgettable Corporate Event
-          <br />
-          <br />
-          Looking to elevate your next meeting, incentive trip, or corporate
-          event? Our expert MICE consultants are here to bring your vision to
-          life with tailor-made solutions, luxury experiences, and seamless
-          execution—anywhere in the world.
-          <br />
-          Whether you're seeking advice, requesting a proposal, or just
-          exploring options, we're happy to connect.
+          Share a few details about your organisation and programme. ExpressEarth
+          supports corporate MICE enquiries for incentive travel, dealer and
+          distributor meets, conferences, offsites, product launches and other
+          business events. Include your preferred destination, dates and
+          approximate group size so our team can understand the brief.
         </p>
       </div>
 
@@ -201,11 +196,12 @@ const ContactForm = () => {
               {submitted && (
                 <Alert
                   variant="success"
+                  role="status"
+                  aria-live="polite"
                   className="d-flex justify-content-between align-items-center"
                 >
                   <span>
-                    Thank you for reaching out! Our team will connect with you
-                    shortly.
+                    Thank you. Your enquiry has been submitted successfully.
                   </span>
                   <Button
                     variant="link"
@@ -218,7 +214,7 @@ const ContactForm = () => {
               )}
 
               {errorMessage && (
-                <Alert variant="danger">
+                <Alert variant="danger" role="alert">
                   <strong>Error: </strong> {errorMessage}
                 </Alert>
               )}
@@ -234,11 +230,15 @@ const ContactForm = () => {
                       <Form.Control
                         type="text"
                         name="full_name"
+                        autoComplete="name"
+                        required
+                        aria-invalid={Boolean(errors.full_name)}
+                        aria-describedby={errors.full_name ? "full_name-error" : undefined}
                         value={formData.full_name}
                         onChange={handleChange}
                       />
                       {errors.full_name && (
-                        <small className="text-danger">
+                        <small id="full_name-error" className="text-danger">
                           {errors.full_name}
                         </small>
                       )}
@@ -253,6 +253,7 @@ const ContactForm = () => {
                       <Form.Control
                         type="text"
                         name="company_name"
+                        autoComplete="organization"
                         value={formData.company_name}
                         onChange={handleChange}
                       />
@@ -270,11 +271,15 @@ const ContactForm = () => {
                       <Form.Control
                         type="email"
                         name="email"
+                        autoComplete="email"
+                        required
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? "email-error" : undefined}
                         value={formData.email}
                         onChange={handleChange}
                       />
                       {errors.email && (
-                        <small className="text-danger">{errors.email}</small>
+                        <small id="email-error" className="text-danger">{errors.email}</small>
                       )}
                     </Form.Group>
                   </Col>
@@ -287,11 +292,15 @@ const ContactForm = () => {
                       <Form.Control
                         type="tel"
                         name="phone"
+                        autoComplete="tel"
+                        required
+                        aria-invalid={Boolean(errors.phone)}
+                        aria-describedby={errors.phone ? "phone-error" : undefined}
                         value={formData.phone}
                         onChange={handleChange}
                       />
                       {errors.phone && (
-                        <small className="text-danger">{errors.phone}</small>
+                        <small id="phone-error" className="text-danger">{errors.phone}</small>
                       )}
                     </Form.Group>
                   </Col>
@@ -374,6 +383,7 @@ const ContactForm = () => {
                     as="textarea"
                     rows={4}
                     name="requirements"
+                    placeholder="Share your preferred destination, budget range, event dates and any travel or production requirements."
                     value={formData.requirements}
                     onChange={handleChange}
                   />
@@ -386,23 +396,29 @@ const ContactForm = () => {
                     onChange={handleCaptchaChange} // Handle CAPTCHA response
                   />
                   {errors.captcha && (
-                    <small className="text-danger">{errors.captcha}</small>
+                    <small id="captcha-error" className="text-danger" role="alert">
+                      {errors.captcha}
+                    </small>
                   )}
                 </Form.Group>
 
                 <div className="text-center">
                   <Button
                     style={{
-                      backgroundColor: "##56ce27",
-                      borderColor: "#56ce27",
+                      backgroundColor: "#146c43",
+                      borderColor: "#146c43",
                     }}
                     type="submit"
                     disabled={loading}
+                    aria-busy={loading}
                   >
                     {loading ? (
-                      <Spinner as="span" animation="border" size="sm" />
+                      <>
+                        <Spinner as="span" animation="border" size="sm" aria-hidden="true" />
+                        <span className="visually-hidden">Sending enquiry...</span>
+                      </>
                     ) : (
-                      "Submit"
+                      "Send enquiry"
                     )}
                   </Button>
                 </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "./DealerMeet.css";
 import dealerImg from "../assests/DE_2.jpeg";
 import dealerImg2 from "../assests/DE_1.png";
@@ -41,12 +42,12 @@ const faqs = [
   {
     question: "What exactly does ExpressEarth handle in a dealer meet?",
     answer:
-      "ExpressEarth takes care of everything from planning and venue selection to production, logistics, and final execution, ensuring a smooth and impactful experience.",
+      "Depending on the brief, the agreed scope can include venue sourcing, agenda coordination, stage and AV, delegate travel, accommodation, hospitality and on-site event management.",
   },
   {
     question: "Why should we choose ExpressEarth instead of managing it in-house?",
     answer:
-      "An event partner can give your internal team one point of coordination for venue, production, travel, hospitality and on-site logistics.",
+      "An event partner can coordinate venue, production, travel, hospitality and on-site logistics against an agreed plan, giving your internal team a clear point of contact.",
   },
   {
     question: "Does ExpressEarth manage dealer meets end-to-end?",
@@ -56,7 +57,7 @@ const faqs = [
   {
     question: "Can ExpressEarth customize the dealer meet as per our business goals?",
     answer:
-      "Absolutely. ExpressEarth designs every event based on your objectives—whether it’s dealer engagement, product launches, or recognition and reward programs.",
+      "The format can be planned around your objectives, dealer audience, product or business updates, recognition requirements, dates and budget.",
   },
   {
     question: "Can ExpressEarth organize dealer meets outside India as well?",
@@ -265,13 +266,12 @@ function DealerMeet() {
       <section className="dealer-section">
         <div className="dealer-left">
           <div className="dealer-content">
-            <h1>Dealer Meet Organisers in India</h1>
+            <h1>Dealer Meet Management in Delhi NCR &amp; India</h1>
 
             <p className="dealer-sub">
-              Dealer Meets | Channel Partner Events | Product Launches
+              Dealer and distributor conferences | Channel partner events
               <br />
-              Dealer Engagement | Recognition Nights | End-to-End Event
-              Management
+              Product launches | Dealer engagement | Recognition programmes
             </p>
 
             <div className="line"></div>
@@ -367,16 +367,18 @@ function DealerMeet() {
           </h2>
 
           <p>
-            At ExpressEarth, we specialize in curating high-impact dealer meet
-            organizer solutions for brands that want more than just an event;
-            they want a powerful platform to connect, motivate, reward, and
-            energize their dealer networks.
+            ExpressEarth plans dealer meets and distributor conferences for
+            businesses in Delhi NCR and across India. Programmes can bring
+            channel partners together for business updates, product launches,
+            training, recognition and relationship-building. The format and
+            production plan depend on your audience, objectives, location and
+            event dates.
           </p>
 
           <p>
-            From concept to execution, our team designs experiences that
-            showcase your brand, strengthen loyalty, and deliver business
-            outcomes.
+            Depending on the agreed scope, coordination can include venue
+            sourcing, stage and AV, branding, agenda flow, delegate travel,
+            accommodation, hospitality and on-site event operations.
           </p>
 
           <h3>Let’s Plan Your Dealer Meet</h3>
@@ -410,15 +412,16 @@ function DealerMeet() {
           </h2>
 
           <p>
-            As one of India’s premium corporate event organizers, we bring the
-            expertise, precision, and creativity needed to execute extraordinary
-            dealer meets across India and global destinations.
+            We coordinate dealer meets in India and can discuss international
+            destinations where they fit the brief, group size, travel
+            requirements and budget.
           </p>
 
           <p>
-            Whether it’s a product launch, a leadership address, an annual
-            celebration, or a recognition event, we ensure flawless corporate
-            event management at every step.
+            A programme may include a product launch, leadership address,
+            annual business update, dealer awards or recognition event. The
+            run-of-show and delivery responsibilities are agreed during
+            planning.
           </p>
 
           <button className="discuss-btn" onClick={handleOpenPopup}>
@@ -474,7 +477,7 @@ function DealerMeet() {
             </h2>
 
             <p className="dealer-why-sub">
-              Your Brand. Our Expertise. Zero Compromise.
+              Planning, production and delegate coordination for your dealer network.
             </p>
 
             <div className="dealer-why-image">
@@ -482,20 +485,20 @@ function DealerMeet() {
             </div>
 
             <h3 className="dealer-why-left-heading">
-              Experienced Dealer Meet Organizers
+              Dealer meet planning and coordination
             </h3>
 
             <p className="dealer-why-left-text">
-              We handle everything, from invitations to final execution.
+              The agreed scope can include invitations, registrations, venue, production, travel and on-site coordination.
             </p>
           </div>
 
           <div className="dealer-why-right">
             <div className="dealer-why-item">
-              <h3>Premium Corporate Event Management Services</h3>
+              <h3>Coordination across event workstreams</h3>
               <p>
-                The same precision trusted by large enterprises, global brands,
-                and business leaders.
+                Bring venue, agenda, branding, production, hospitality and
+                delegate logistics into one agreed event plan.
               </p>
             </div>
 
@@ -508,15 +511,19 @@ function DealerMeet() {
             </div>
 
             <div className="dealer-why-item">
-              <h3>Seamless Execution Anywhere</h3>
+              <h3>India and international destination planning</h3>
               <p>
-                From metro cities to international hubs, we operate with
-                absolute reliability.
+                Destination feasibility is assessed against dates, group size,
+                travel needs and the programme budget.
               </p>
             </div>
           </div>
         </div>
       </section>
+
+      <nav className="dealer-related-services" aria-label="Related corporate event services">
+        <p>Planning a broader channel programme? Explore our <Link to="/meetings-and-conferences">conference management</Link>, <Link to="/corporate-events">corporate event management</Link> and <Link to="/incentive-travel">incentive travel</Link> services.</p>
+      </nav>
 
       <section className="dealer-faq-section">
         <div className="dealer-faq-inner">
@@ -612,11 +619,11 @@ function DealerMeet() {
         <div className="dealer-cta-overlay"></div>
 
         <div className="dealer-cta-content">
-          <h2>Ready To Elevate Your Next Dealer Meet?</h2>
+          <h2>Planning Your Next Dealer Meet or Distributor Conference?</h2>
 
           <p>
-            Let’s turn your dealer engagement strategy into an unforgettable
-            experience.
+            Share your objectives, expected attendance, preferred location and
+            dates to discuss a suitable dealer meet format and scope.
           </p>
 
           <form className="dealer-cta-form" onSubmit={handleEmailSubmit}>

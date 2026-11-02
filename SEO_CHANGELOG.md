@@ -28,6 +28,7 @@
 - Added crawlable internal links from the dealer meet page to conference management, corporate events and incentive travel.
 - Updated the corporate offsite page H1 for Delhi NCR intent and added a visible FAQ explaining the confirmed ₹7,000 starting package: 1 night / 2 days, 40–100 people, twin-share stay, all meals, round-trip transportation, taxes extra. The page lists Mussoorie, Jim Corbett, Jaipur, Pushkar, Nainital, Dharamshala, Shimla, Kasauli, Kufri and Manali.
 - Updated the offsite route's meta description to match the confirmed offer and its qualifications.
+- Updated the sitemap generator to follow same-origin paginated API responses, while detecting loops and refusing pagination links to a different host; failed retrieval still preserves the existing sitemap.
 - Fixed the homepage "Home Page Loaded" analytics effect so it fires once on mount rather than after every render.
 - Re-fetched each changed source file after its commit and checked the intended copy, links, package details and effect dependency.
 

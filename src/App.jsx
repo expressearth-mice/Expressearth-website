@@ -121,7 +121,7 @@ function App() {
       },
       "/corporateoffsites": {
         title: "Corporate Offsite Management Company in Delhi NCR | ExpressEarth",
-        description: "Organise corporate offsites from Delhi NCR with ExpressEarth. We coordinate destinations, hotels, team-building activities, group transport and on-ground support across India and abroad.",
+        description: "Explore 1-night, 2-day corporate offsite packages from ₹7,000 per person for groups of 40–100, including twin-share stay, all meals and round-trip transport. Taxes extra; final pricing depends on destination and dates.",
       },
       "/incentive-travel": {
         title: "Incentive Tour Organisers in Delhi NCR & India | ExpressEarth",

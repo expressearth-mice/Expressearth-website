@@ -41,6 +41,10 @@ const DestinationDetails = () => {
         const detailResponse = await axiosInstance.get(`/api/destinations/${slug}/`);
         found = detailResponse.data || null;
       } catch {
+        // Fall back to the list endpoint when the detail endpoint cannot resolve this slug.
+      }
+
+      if (!found) {
         try {
           const response = await axiosInstance.get("/api/destinations/");
           const items = Array.isArray(response.data)
@@ -73,7 +77,6 @@ const DestinationDetails = () => {
       cancelled = true;
     };
   }, [slug, decodedName]);
-
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
@@ -89,7 +92,7 @@ const DestinationDetails = () => {
   }, []);
 
 
-remove duplicate destination list fetch  useEffect(() => {
+  useEffect(() => {
     if (loading || typeof document === "undefined") return;
 
     const robotsMeta = document.head.querySelector('meta[name="robots"]');

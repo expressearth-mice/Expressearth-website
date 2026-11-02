@@ -58,3 +58,5 @@
 - Checked that each intended source replacement matched exactly once before preparing the commit.
 - Automated Jest/build execution is not available in this run because the repository is accessible through GitHub's file API but no local checkout/dependency installation is available here; no build or test pass is claimed.
 - No production deployment, redirects, DNS or hosting changes were made.
+
+- Consolidated destination detail and list fallback into one cancellable request flow, matching either the API slug or destination name. This removes the duplicate list request/race that could overwrite a successfully loaded destination with an empty fallback and keeps route changes from applying stale responses.

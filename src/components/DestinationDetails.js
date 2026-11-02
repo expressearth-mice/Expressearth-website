@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../api/axios";
 
@@ -18,35 +17,62 @@ const hardcodedDestinations = [
 ];
 
 const DestinationDetails = () => {
-  const { name } = useParams();
+  const { name: slug } = useParams();
   const decodedName = (() => {
     try {
-      return decodeURIComponent(name || "");
+      return decodeURIComponent(slug || "");
     } catch {
-      return name || "";
+      return slug || "";
     }
   })();
   const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
   const [recentPosts, setRecentPosts] = useState([]);
 
-  const { name: slug } = useParams(); // now 'slug' is the URL param
-
   useEffect(() => {
-    setLoading(true);
-    setDestination(null);
-    axiosInstance
-      .get(`/api/destinations/${slug}/`)
-      .then((response) => {
-        setDestination(response.data);
+    let cancelled = false;
+
+    const fetchDestination = async () => {
+      setLoading(true);
+      setDestination(null);
+
+      let found = null;
+      try {
+        const detailResponse = await axiosInstance.get(`/api/destinations/${slug}/`);
+        found = detailResponse.data || null;
+      } catch {
+        try {
+          const response = await axiosInstance.get("/api/destinations/");
+          const items = Array.isArray(response.data)
+            ? response.data
+            : response.data?.results ?? [];
+          found = items.find((item) =>
+            [item.slug, item.name].some(
+              (value) => String(value || "").toLowerCase() === decodedName.toLowerCase()
+            )
+          ) || null;
+        } catch (error) {
+          console.error("Error fetching destination:", error);
+        }
+      }
+
+      if (!found) {
+        found = hardcodedDestinations.find(
+          (item) => item.name.toLowerCase() === decodedName.toLowerCase()
+        ) || null;
+      }
+
+      if (!cancelled) {
+        setDestination(found);
         setLoading(false);
-      })
-      .catch(() => {
-        const fallback = hardcodedDestinations.find((d) => d.name.toLowerCase() === decodedName.toLowerCase());
-        setDestination(fallback || null);
-        setLoading(false);
-      });
-  }, [slug]);
+      }
+    };
+
+    fetchDestination();
+    return () => {
+      cancelled = true;
+    };
+  }, [slug, decodedName]);
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
@@ -63,30 +89,7 @@ const DestinationDetails = () => {
   }, []);
 
 
-  useEffect(() => {
-    // Fetch destinations from the backend
-    const fetchDestination = async () => {
-      try {
-        const response = await axiosInstance.get("/api/destinations/");
-        const found = response.data.find((d) => d.name.toLowerCase() === decodedName.toLowerCase());
-        if (found) {
-          setDestination(found);
-        } else {
-          const fallback = hardcodedDestinations.find((d) => d.name.toLowerCase() === decodedName.toLowerCase());
-          setDestination(fallback || null);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching destination:", error);
-        setDestination(hardcodedDestinations.find((d) => d.name.toLowerCase() === decodedName.toLowerCase()) || null);
-        setLoading(false);
-      }
-    };
-
-    fetchDestination();
-  }, [decodedName]); // Refetch whenever the destination name changes
-
-  useEffect(() => {
+remove duplicate destination list fetch  useEffect(() => {
     if (loading || typeof document === "undefined") return;
 
     const robotsMeta = document.head.querySelector('meta[name="robots"]');

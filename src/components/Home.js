@@ -62,7 +62,7 @@ const Home = () => {
         event_label: "Home Page Loaded",
       });
     }
-  });
+  }, []);
 
   const [showPopup, setShowPopup] = useState(false);
   const [showIcon, setShowIcon] = useState(false);

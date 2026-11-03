@@ -1,9 +1,9 @@
 # ExpressEarth Organic Growth Project — Delhi NCR
 
 **Project duration:** 90 days  
-**Phase 1:** Days 1–30 — testing, instrumentation and baseline validation  
-**Phase 2:** Days 31–60 — build and optimise validated acquisition paths  
-**Phase 3:** Days 61–90 — scale the pages and channels that produce qualified opportunities
+**Phase 1:** 3–9 November 2026 — seven-day website, content and conversion build sprint  
+**Phase 2:** 10 November–9 December 2026 — publish, test and optimise acquisition paths  
+**Phase 3:** 10 December 2026–31 January 2027 — scale pages and channels producing qualified opportunities
 
 ## Outcome
 
@@ -24,9 +24,59 @@ Count only a unique, human, corporate opportunity that:
 **A2:** upcoming project confirmed and relevant business contact identified.  
 Only A1 + A2 count toward the 50/day outcome. Downloads, generic contact forms, vendors, job seekers, duplicates and unverified form events do not count.
 
-## Phase 1 — Days 1–30: test and establish the baseline
+## Phase 1 — 3–9 November 2026: build and launch the core acquisition system
 
-No volume claims and no broad content production before tracking and conversion paths are validated.
+This is an execution sprint, not a planning-only or testing-only period. Workstreams run in parallel. Publish verified work as it clears review; never fabricate client results, project metrics, destination facts or testimonials. Where client permission or missing source material blocks publication, prepare the page and mark the exact evidence required.
+
+### Seven-day deliverables
+- Website SEO/AEO/GEO: route-by-route titles, descriptions, headings, internal links, crawlability, canonicals, schema and useful answer-first content on priority pages.
+- Priority service pages: MICE management, corporate events, corporate offsites, incentive travel, dealer/distributor meets, meetings & conferences, exhibition management and group travel. Improve existing routes first; avoid duplicate thin URLs.
+- Industry landing pages: pharma, automotive & auto ancillary, FMCG, manufacturing, IT/technology and BFSI. Each page must explain relevant event use cases, buyer concerns, delivery scope, proof and a clear enquiry CTA; use substantiated project proof only.
+- Case studies/project showcase: prepare evidence-led stories from approved ExpressEarth work, including the 5,000-person corporate foundation day, 450-person Bali incentive programme and Singapore pavilion booth only after validating client naming, dates, scope, images and publish permission. Until then, anonymise and clearly mark unverified fields internally.
+- Knowledge Centre: establish taxonomy and publish useful buyer resources (brief templates, budgets, checklists, risk plans, event timelines and procurement guides), not generic keyword articles.
+- Destination intelligence: create structured destination briefs for priority MICE destinations with seasonality, group suitability, flight/visa considerations, venue capacity, Indian/Jain meal considerations where verified, indicative planning ranges and source/date stamps. Do not publish changing visa/flight facts without current verification.
+- LinkedIn: prepare company and founder updates, case-study snippets and a one-week posting calendar; prepare personalised outreach sequences by buyer role and industry. Outreach is outbound and must be attributed separately from organic inbound.
+- Google Business Profile: conversion audit and updates—primary/secondary categories, services, service areas, description, contact/website links with UTMs, photos, project updates/posts, FAQs and review response workflow. Do not create fake reviews or keyword-stuffed business names.
+- Sales-ready opportunities: build an evidence-backed NCR opportunity queue with company, project signal, source URL/date, NCR connection, event type/date, relevant role/contact evidence, qualification status and next action. A generic company list does not count.
+- Measurement: verify forms, calls, WhatsApp, GA4/Search Console attribution and EmpFly handoff. CRM reconciliation remains pending until authorised EmpFly access/export is available.
+
+### Daily sprint sequence
+| Date | Primary build focus | Exit output |
+|---|---|---|
+| 3 Nov | Repository/site audit, priority page inventory, evidence/media inventory, GBP and analytics baseline | Page map, issue backlog, proof register, conversion audit |
+| 4 Nov | Technical SEO + priority service page upgrades | Metadata/content/schema changes ready for review; priority page copy |
+| 5 Nov | Industry landing pages + internal linking | Six industry page drafts/builds with distinct buyer intent |
+| 6 Nov | Case studies + project showcase | Three evidence-led case study drafts and showcase structure |
+| 7 Nov | Knowledge Centre + destination intelligence | Knowledge taxonomy, first resource drafts, destination brief templates and initial briefs |
+| 8 Nov | LinkedIn publishing + outreach + GBP conversion assets | Seven-day content pack, role-based outreach sequences, GBP update pack |
+| 9 Nov | Sales opportunity queue + QA + measurement | Qualified opportunity register, form/CTA QA, Phase 1 release checklist |
+
+### Phase 1 completion standard
+- Deliverables are implemented in the working branch or are complete, publication-ready drafts with blockers explicitly identified.
+- No fabricated case-study metrics, client approvals, testimonials, rankings or leads.
+- Each landing page has a clear audience, search intent, unique value, evidence and conversion action.
+- Organic, referral, direct and outbound (Apollo/Smartlead/LinkedIn outreach) sources remain distinct.
+- Website behaviour changes remain in a non-production branch until developer review and deployment.
+
+## Phase 2 — 10 November–9 December 2026: publish, test and optimise
+
+- Validate Search Console, GA4, GBP and form/CRM attribution; reconcile unique leads with EmpFly when access is available.
+- Publish and improve priority service, industry, case-study and knowledge pages after evidence/client approval.
+- Expand NCR pages only where there is unique local relevance and useful original information.
+- Run conversion tests and improve the pages generating qualified enquiries.
+- Use LinkedIn and partner channels to distribute content; report outbound separately.
+
+## Phase 3 — 10 December 2026–31 January 2027: scale what converts
+
+- Expand only keyword clusters and landing-page patterns that have shown qualified demand.
+- Repurpose approved project evidence into LinkedIn and YouTube content; attribute assisted conversions separately.
+- Develop relevant referral relationships with NCR hotels, venues, DMCs and corporate service partners; label referrals separately from search.
+- Review lead quality and pipeline outcomes by original source, service, location and landing page.
+- Stop or revise content that attracts irrelevant traffic or no meaningful buyer engagement.
+
+## Previous 30-day baseline protocol (runs alongside Phase 1)
+
+Use the measurement, technical SEO, NCR search-demand and conversion checks below as a continuous validation track; they are not a reason to postpone the seven-day build sprint.
 
 ### Workstreams
 1. **Measurement integrity**

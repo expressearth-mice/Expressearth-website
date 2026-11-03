@@ -108,3 +108,22 @@ Do not combine organic, paid, Apollo/Smartlead outbound, direct, referral or unk
 - The existing sitemap, robots file and metadata are not proof that Google has indexed or correctly rendered those URLs.
 
 These are repository observations, not claims about the live production site. All changes must be reviewed and tested on a non-production branch before deployment.
+## Initial measurement snapshot — 6 October to 2 November 2026
+
+Connected Search Console domain property (sc-domain:expressearth.com):
+- 35 clicks and 148 impressions in the query-level extract returned for this period.
+- The 35 clicks were on the brand queries `express earth` (17) and `expressearth` (18). The highest non-brand NCR MICE terms in the extract included `mice companies in gurgaon` (8 impressions), `mice company in gurugram` (7), and `mice company in gurgaon` (2), all with zero clicks.
+- This indicates that non-brand search visibility is still very small in this extract. Treat this as a connector-returned query snapshot, not a complete Search Console export.
+- Search Console rows included several URL variants: http, apex HTTPS, www HTTPS, plus dev and B2C subdomains. Validate canonical host, redirects, property scope and environment leakage before changing URLs.
+
+Connected GA4 property 503963716:
+- 590 sessions in the returned report; 89 were classified as Organic Search.
+- The form key-event metric returned 49 event counts across all channels; 18 were attached to Organic Search rows. These are event counts, not unique people, unique form submissions, CRM leads or sales-ready opportunities.
+- GA4 city rows labelled Delhi, New Delhi, Gurugram, Gurgaon/Noida/Faridabad and nearby NCR cities summed to 90 sessions and 15 form key-event counts. This is directional only: GA4 city is an IP-derived location signal, not proof of a company's buying-team location, and the event counts are not qualified leads.
+- The GA4 report includes sessions from numerous non-NCR and international cities, so channel and geography filtering must be applied before using the data to judge the NCR organic programme.
+
+Live fetch/render check:
+- The public homepage fetch returned the Create React App JavaScript fallback text (`You need to enable JavaScript to run this app`) to the inspection crawler. This does not prove Google cannot render the site, but it makes rendered-HTML testing a Phase 1 priority, particularly for non-Google AI crawlers.
+- Live robots.txt and sitemap.xml could not be retrieved by the inspection interface in this check. Validate them with a direct technical crawl and Search Console.
+
+**Interpretation:** current available data does not establish any volume of A1/A2 opportunities. The first 30 days must reconcile analytics events with EmpFly records and validate organic traffic, NCR relevance and page rendering before growth targets are forecast.

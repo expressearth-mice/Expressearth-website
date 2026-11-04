@@ -3,6 +3,7 @@ import "./CaseStudyList.css";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { case_study_url } from "../api/urls";
+import { normalizeCollectionResponse } from "../api/collectionData";
 import Skeleton from "./Skeleton";
 
 const CASE_STUDY_SKELETON_COUNT = 4;
@@ -66,10 +67,12 @@ const CaseStudyList = () => {
         ]);
 
         const oldStudies =
-          oldRes.status === "fulfilled" ? oldRes.value.data || [] : [];
+          oldRes.status === "fulfilled"
+            ? normalizeCollectionResponse(oldRes.value.data)
+            : [];
         const newRaw =
           newRes.status === "fulfilled"
-            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            ? normalizeCollectionResponse(newRes.value.data)
             : [];
 
         const newStudies = newRaw.map((item) => ({

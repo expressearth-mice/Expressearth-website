@@ -5,6 +5,7 @@ import axiosInstance from "../api/axios";
 import { case_study_url } from "../api/urls";
 import { normalizeCollectionResponse } from "../api/collectionData";
 import Skeleton from "./Skeleton";
+import { filterPublicCaseStudies } from "../utils/caseStudyVisibility";
 
 const CASE_STUDY_SKELETON_COUNT = 4;
 
@@ -85,7 +86,7 @@ const CaseStudyList = () => {
           author_quote: item.author_quote || "",
         }));
 
-        setCaseStudies([...newStudies, ...[...oldStudies].reverse()]);
+        setCaseStudies(filterPublicCaseStudies([...newStudies, ...[...oldStudies].reverse()]));
         setLoading(false);
       } catch (err) {
         console.error("Error fetching case studies:", err);

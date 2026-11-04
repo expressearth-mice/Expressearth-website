@@ -46,7 +46,12 @@ const Home = () => {
     const fetchRecentPosts = async () => {
       try {
         const response = await axiosInstance.get("/api/posts/");
-        const sorted = response.data.sort(
+        const posts = Array.isArray(response.data)
+          ? response.data
+          : Array.isArray(response.data?.results)
+            ? response.data.results
+            : [];
+        const sorted = [...posts].sort(
           (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
         );
         setRecentPosts(sorted.slice(0, 4));

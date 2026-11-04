@@ -196,3 +196,6 @@
 - Added focused tests for the Meta Pixel helper allowlist and PII exclusion. These tests are committed but still require execution in the repository's Jest environment.
 - Validation for this batch: changed source files were re-fetched after each commit and compared with the intended content; targeted source assertions and standalone runtime checks were run. Full Jest/build/browser submission and GTM/Tag Assistant verification remain pending.
 - No backend, EmpFly, Indo Exhibits, production configuration, DNS, hosting or redirect changes were made. No outbound campaigns were sent.
+
+
+- Privacy hardening follow-up: narrowed Meta Pixel event payloads further to fixed generic categories and an explicit allowlist of form-location labels. Caller-supplied category/type strings are no longer copied into pixel events, preventing an unexpected personal name or company value from being used as an event label.

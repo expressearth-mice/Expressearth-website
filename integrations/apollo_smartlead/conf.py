@@ -26,7 +26,12 @@ def integer(name: str, default: int) -> int:
         return default
 
 
-def leadgen_campaign_approver_user_id() -> str:\n    """Django user PK allowed to approve campaign sends; empty means nobody."""\n    return env("LEADGEN_CAMPAIGN_APPROVER_USER_ID")\n\n\n## ===== Apollo ===== ##
+def leadgen_campaign_approver_user_id() -> str:
+    """Django user PK allowed to approve campaign sends; empty means nobody."""
+    return env("LEADGEN_CAMPAIGN_APPROVER_USER_ID")
+
+
+## ===== Apollo ===== ##
 
 def apollo_api_key() -> str:
     return env("APOLLO_API_KEY")

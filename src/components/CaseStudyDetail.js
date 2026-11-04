@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import { case_study_detail_url, delete_case_study_url } from "../api/urls";
 import { normalizeCollectionResponse } from "../api/collectionData";
 import Skeleton from "./Skeleton";
+import { isIndexableCaseStudySlug, isPlaceholderCaseStudySlug } from "../utils/caseStudyVisibility";
 
 const getImageList = (item) => {
   if (!item) return [];
@@ -124,8 +125,16 @@ const CaseStudyDetail = () => {
     }
   };
 
-  fetchCaseStudy();
-  fetchDestinations();
+  if (isPlaceholderCaseStudySlug(idOrSlug)) {
+    // Known placeholder records are not public content; avoid unnecessary API requests.
+    setCaseStudy(null);
+    setCaseStudyId(null);
+    setIsNewSystem(false);
+    setLoading(false);
+  } else {
+    fetchCaseStudy();
+    fetchDestinations();
+  }
 
 }, [idOrSlug]);
 
@@ -141,11 +150,20 @@ const CaseStudyDetail = () => {
       return;
     }
 
+    const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
+
+    if (!isIndexableCaseStudySlug(caseStudy.slug)) {
+      // Keep legacy ID-based pages accessible, but do not index them without a descriptive public slug.
+      document.title = titleText + " | ExpressEarth Case Study";
+      if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
+      const staleCanonical = document.head.querySelector('link[rel="canonical"]');
+      if (staleCanonical) staleCanonical.remove();
+      return;
+    }
+
     if (robotsMeta) {
       robotsMeta.setAttribute("content", "index, follow, max-image-preview:large");
     }
-
-    const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
     const rawDescription = caseStudy.short_description || caseStudy.description || caseStudy.comment || caseStudy.content || "";
     const descriptionText = String(rawDescription)
       .replace(/<[^>]*>/g, " ")

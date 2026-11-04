@@ -10,6 +10,7 @@ import CM_4 from "../assests/CM_4.jpg";
 import CM_5 from "../assests/CM_5.jpg";
 import CM_6 from "../assests/CM_6.png";
 import PopupForm from "./popupForm";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
   {
@@ -89,6 +90,9 @@ const faqs = [
       "Delegate support can include registration, travel, accommodation, transfers and event-day coordination, depending on the agreed scope.",
   },
 ];
+
+const serviceDescription =
+  "ExpressEarth plans corporate conferences, leadership meets, annual sales conferences and seminars in Delhi NCR and across India. Depending on the brief, support can include venue sourcing, stage and AV coordination, registration, speaker and agenda logistics, accommodation, group transfers and on-site event management.";
 
 const ConferenceManagement = () => {
   const formRef = useRef(null);
@@ -248,6 +252,12 @@ const ConferenceManagement = () => {
 
   return (
     <>
+      <ServiceStructuredData
+        name="Corporate Conference Management"
+        serviceType="Corporate conferences, leadership summits and annual sales meets"
+        description={serviceDescription}
+        url="https://www.expressearth.com/conferencemanagement"
+      />
       {showPopup && <PopupForm onClose={handleClosePopup} />}
 
       <section className="cm-hero">
@@ -359,15 +369,7 @@ const ConferenceManagement = () => {
             Services
           </h2>
 
-          <p>
-            ExpressEarth plans corporate conferences, leadership meets, annual
-            sales conferences and seminars in Delhi NCR and across India.
-            Depending on the brief, support can include venue sourcing, stage
-            and AV coordination, registration, speaker and agenda logistics,
-            accommodation, group transfers and on-site event management. The
-            proposed scope is shaped around your audience, programme, location
-            and dates.
-          </p>
+          <p>{serviceDescription} The proposed scope is shaped around your audience, programme, location and dates.</p>
 
           <button className="cm-curated-btn" onClick={handleOpenPopup}>
             Plan Your Corporate Conference

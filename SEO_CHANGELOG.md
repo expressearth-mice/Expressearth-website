@@ -199,3 +199,12 @@
 
 
 - Privacy hardening follow-up: narrowed Meta Pixel event payloads further to fixed generic categories and an explicit allowlist of form-location labels. Caller-supplied category/type strings are no longer copied into pixel events, preventing an unexpected personal name or company value from being used as an event label.
+
+
+## 2026-11-04 — latest 28-day acquisition snapshot (data through 3 November)
+
+- Search Console returned 102 query rows: 39 clicks and 161 impressions. The two explicit ExpressEarth brand queries (`express earth` and `expressearth`) accounted for 39 clicks and 81 impressions. Other returned queries accounted for 80 impressions and no clicks; this query-row view does not include all anonymised search terms.
+- Non-brand MICE query samples remain small: `mice company in gurugram` (9 impressions; weighted average position 68.2), `mice companies in gurgaon` (8; 76.0), `mice agency for corporate events` (3; 65.7), `mice company in gurgaon` (2; 93.5), `corporate incentive travel companies` (2; 52.5) and `mice services for corporates` (2; 79.5). All returned zero clicks in this snapshot.
+- GA4 reports 596 sessions, including 99 Organic Search sessions and 77 Organic Search active users. The existing lead-form conversion event recorded 63 event counts: 21 Organic Search, 39 Direct and 3 Unassigned. These are events, not unique enquiries or qualified opportunities.
+- Google Business Profile reports 167 impressions, 10 website clicks, 1 call click and 37 direction requests.
+- GA4 records 70 events across 38 rows on the unmatched path `/ZGVzdGluYX`. No matching public React route or internal base64 route construction was found in the inspected source files; treat this as an unexplained measurement/traffic anomaly, not a lead, until developer tracing identifies its source.

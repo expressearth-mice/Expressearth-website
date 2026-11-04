@@ -153,3 +153,21 @@
 - Fresh last-28-day measurement snapshot (4 November 2026): Search Console returned 42 query aggregates; express earth had 20 clicks / 47 impressions and expressearth 19 / 34. Non-brand MICE queries remain low-volume: mice company in gurugram 9 impressions, mice companies in gurgaon 8, mice company in gurgaon 2, all with zero clicks. GA4 reported 99 Organic Search sessions and 21 ads_conversion_Submit_lead_form_1 event counts from Organic Search (63 event counts across all channels). Google Business Profile reported 167 impressions, 10 website clicks, 1 call click and 37 direction requests. GA4 events are not unique enquiries or CRM-qualified opportunities.
 - Validation: re-fetched and compared every changed file after writing; added three focused destination-metadata Jest tests. The full Jest suite, JSX compilation and React build were not run because no local checkout/dependency installation is available and the repository has no Actions workflow runs to use as an alternative.
 - No production deployment, DNS/hosting change, redirect, PR merge, campaign send, or EmpFly/Indo Exhibits code change was made.
+
+
+## 2026-11-04 — Commercial enquiry payload and attribution integrity
+
+- Added a shared `generate_lead` event helper for confirmed form submissions. It records service type, form location, page path and a referrer path with query strings/fragments removed; it does not send names, email addresses or phone numbers.
+- Standardised the main contact page to push the `generate_lead` event only after the Contact API returns an explicit success response.
+- Hardened International Group Travel primary and FAQ forms: both now check the API success payload before displaying confirmation or clearing fields; FAQ free text is mapped to `requirements` and the event type uses the supported `Other` value.
+- Hardened Incentive Travel primary and FAQ forms in the same way. Replaced the FAQ form's fabricated phone value with a required user-entered phone field, mapped the question to `requirements` and used the supported `Incentive Trip` event type.
+- Repaired Recognition & Rewards form payload mapping to the Contact API fields (`full_name`, `company_name`, `email`, `phone`, `event_type`, `requirements`). Replaced its fabricated FAQ phone value with a required user-entered phone field.
+- Removed pre-request pixel lead events from the updated Incentive Travel and Recognition & Rewards forms; the new PII-free `generate_lead` event is emitted only after the API confirms success. Removed raw error-response logging from the updated forms.
+- Added focused tests for lead-event parameters, referrer sanitisation, PII exclusion and the no-gtag fallback.
+
+### Validation and remaining measurement checks
+
+- Re-fetched each modified source file after its commit and verified the intended API mappings, response checks, real phone inputs, event wiring and removal of placeholder phone values.
+- The Contact API model in the separate ExpressEarth backend was inspected read-only to confirm the existing field names, required phone field and allowed event-type values; no backend files were changed.
+- The new Jest tests and full React production build still need to be executed in a checkout with dependencies. GTM/GA4 receipt of `generate_lead` must be verified with Tag Assistant and an appropriate GTM event trigger/tag; no production tag or configuration was changed.
+- No deployment, merge, DNS/hosting change, outbound campaign, or EmpFly/Indo Exhibits modification was made.

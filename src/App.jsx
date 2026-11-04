@@ -49,7 +49,9 @@ import CaseStudyDetail from "./components/CaseStudyDetail";
 import TermsAndConditions from "./components/TermsAndConditions";
 import Marquee from "./components/ui/marquee";
 import CorporateOffsitesPage from "./components/CorporateOffsitesPage";
+import CorporateOffsitePackagesPage from "./components/CorporateOffsitePackagesPage";
 import DealerMeet from "./components/DealerMeet";
+import DealerMeetManagementPage from "./components/DealerMeetManagementPage";
 import InternationalGroupTravel from "./components/InternationalGroupTravel";
 import R_R_Planning from "./components/R_R_Planning";
 import ConferenceManagement from "./components/ConferenceManagement";
@@ -389,7 +391,9 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/dealermeet" element={<DealerMeet />} />
+        <Route path="/dealer-meet-management" element={<DealerMeetManagementPage />} />
         <Route path="/corporateoffsites" element={<CorporateOffsitesPage />} />
+        <Route path="/corporate-offsite-packages" element={<CorporateOffsitePackagesPage />} />
         <Route
           path="/internationalgrouptravel"
           element={<InternationalGroupTravel />}

@@ -60,3 +60,30 @@
 - No production deployment, redirects, DNS or hosting changes were made.
 
 - Consolidated destination detail and list fallback into one cancellable request flow, matching either the API slug or destination name. This removes the duplicate list request/race that could overwrite a successfully loaded destination with an empty fallback and keeps route changes from applying stale responses.
+
+## 2026-11-04
+
+- Corrected the Google Tag Manager installation: the existing `GTM-WMJCBMGG` container ID now loads through the Tag Manager container bootstrap and noscript iframe rather than being passed to the `gtag.js` URL as if it were a Google tag ID. Retained a small `gtag` data-layer bridge for existing frontend event calls. Container tags, consent configuration and GA4 event receipt still require Tag Assistant verification.
+- Expanded the homepage Organization JSON-LD with the public phone, email, Gurugram address, contact point, service area and social profile URLs already displayed in the site's footer. The JSON-LD block parses successfully. The owner should confirm these public contact/profile details remain current before production release.
+- Added a reusable Schema.org `Service` component and applied it to the MICE services hub, meetings and conferences, conference management, incentive travel, corporate events, dealer meets, corporate offsites, exhibitions, destination management and international group travel pages. These are machine-readable service descriptions, not a promise of Google rich-result eligibility.
+- Registered the existing Meetings & Conferences, Exhibitions & Trade Shows and Destination Management components as public routes. This resolves internal service links that previously pointed to the not-found route; the routes were already represented in route metadata and the sitemap's static route list.
+- Reworked the homepage around verifiable service scope: removed unverified country/hotel/client/event counters, unsupported group-size/destination counts, named testimonial attributions and the placeholder Fortune 500 quote. Replaced these with corporate MICE programme links, planning capabilities and a published-case-studies pathway.
+- Replaced the homepage's repeated generic hero copy and "free consultation" CTA with corporate programme language and a request to discuss the brief. Updated the FAQ answers to explain services, lead-time considerations, customisation and the information needed for an enquiry.
+- Improved homepage accessibility and loading behaviour: FAQ questions are real buttons with expanded state and persistent answer targets; the floating enquiry control is keyboard-operable; WhatsApp has an accessible name; the first hero image is prioritised, later slides and card imagery are lazy-loaded, and the decorative video requests metadata rather than full preload.
+- Made homepage blog loading tolerate both array and paginated API responses instead of assuming `response.data` is always an array.
+- Reworked corporate event, incentive travel, international group travel, exhibition and destination management copy to describe concrete programme scope and planning dependencies rather than unsupported superlatives, luxury positioning or repetitive keyword lists. Added related-service links and service structured data.
+- Improved the conference management page with matching service schema and aligned its visible description with the structured data.
+- Replaced hard-coded placeholder phone numbers in dealer-meet, corporate-offsite and international-group-travel FAQ submissions with a required real phone field. Dealer-meet and corporate-offsite newsletter forms now use the existing `/api/subscribe/` endpoint instead of creating contact records with a fabricated number.
+- Improved footer conversion and navigation: phone/email are clickable, priority MICE service links are exposed, the corporate-offsite link points to the offsite page, social links have accessible labels, partner-logo alt text is descriptive, and the copyright year updates automatically.
+- Hardened dynamic sitemap URL construction by normalising/encoding individual blog, case-study and category path segments and skipping malformed values containing path separators.
+
+### Validation and deployment
+
+- Re-fetched every changed file after its repository update and checked the resulting contents.
+- Parsed the homepage Organization JSON-LD with `JSON.parse`; it is valid.
+- Parsed `scripts/generate-sitemap.js` with the JavaScript parser; syntax passed.
+- Compared internal links in the changed public components against registered React routes; no missing internal targets were found.
+- Checked the changed FAQ/contact forms for the known placeholder phone number; it is no longer present in the updated forms.
+- A full React production build and Jest suite could not be run because this environment cannot resolve `github.com` for a local checkout. The repository has no GitHub Actions workflow runs to use as an alternative. JSX compilation and live API submission remain unverified.
+- No production deployment, DNS/hosting change or redirect was made.
+- The SPA still needs a developer-led pre-rendering/server-rendering evaluation for commercial landing pages so crawlers that do not execute JavaScript can receive complete page content. Search Console/GA4 access, Tag Assistant validation, and owner confirmation of the public contact details remain required for production measurement. Genuine approved event assets and verified project facts are still needed before adding new case-study proof.

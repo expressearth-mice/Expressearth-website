@@ -185,3 +185,14 @@
 - GA4 also recorded 17 `page_view` and 17 `session_start` events for the unmatched path `/ZGVzdGluYX` under Direct. No corresponding public React route exists; treat this as a route/measurement anomaly, not a lead. Developer/analytics tracing is required to identify its source.
 - The Search Console sitemap connector returned rows with a null sitemap path and zero submission/error fields; this does not verify whether the sitemap is submitted or processed. Use Search Console's Sitemaps and URL Inspection views for confirmation.
 - The new `generate_lead` event exists only in the development branch until the code is released and the corresponding GTM event trigger/GA4 tag is verified with Tag Assistant.
+
+
+## 2026-11-04 — privacy-safe conversion attribution across remaining MICE forms
+
+- Audited the shared Meta Pixel contact/form helpers and found that they forwarded names, email addresses, phone numbers, company names and free-text form data as event parameters. Reworked both helpers to send only generic event labels, service/form categories and form location; added strict label allowlisting. Existing event names are preserved.
+- Added privacy-safe GA4/GTM `generate_lead` events after explicit API success on dealer-meet primary and FAQ forms, conference-management primary and FAQ forms, and corporate-offsite primary and FAQ forms. Events include service type, form location, page path and a referrer path without query strings/fragments; no form PII is sent.
+- Added the same confirmed-lead event to the shared popup enquiry form and removed its unused Axios import. The popup is attributed separately as `popup_mice_enquiry`; the page path identifies the page where it was opened.
+- Reduced the dealer-meet newsletter pixel payload to non-identifying form context. Newsletter subscriptions are not counted as MICE leads.
+- Added focused tests for the Meta Pixel helper allowlist and PII exclusion. These tests are committed but still require execution in the repository's Jest environment.
+- Validation for this batch: changed source files were re-fetched after each commit and compared with the intended content; targeted source assertions and standalone runtime checks were run. Full Jest/build/browser submission and GTM/Tag Assistant verification remain pending.
+- No backend, EmpFly, Indo Exhibits, production configuration, DNS, hosting or redirect changes were made. No outbound campaigns were sent.

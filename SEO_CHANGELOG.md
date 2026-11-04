@@ -232,3 +232,15 @@
 - Source assertions confirmed the Rewards & Recognition route, local coverage content, brief prompt, responsive styles and removal of the duplicate footer link.
 - Focused Jest tests were added but not run. Full JSX compilation and the React production build remain unverified because this runtime has no local checkout/dependency installation; no GitHub Actions checks are configured.
 - No production deployment, merge, DNS/hosting change, redirect, outbound campaign, or EmpFly/Indo Exhibits code change was made.
+
+
+## 2026-11-05 — commercial enquiry form submission safeguards
+
+- Added independent pending states and duplicate-submit guards to the primary and FAQ contact forms on Conference Management, Dealer Meet and Corporate Offsites. Submit buttons are disabled and show a submitting label while the API request is pending; the form exposes `aria-busy` during submission.
+- Added browser autofill hints and explicit accessible names to primary name, work email, phone and company fields. Phone inputs now use `type="tel"` and a telephone input mode. Company name becomes required only when the visitor selects the Company/Corporate option, supporting more useful business enquiries without requiring it for individual enquiries.
+- Added name/email autofill hints to the FAQ forms. Existing API payloads, endpoints, success validation and post-success lead-event parameters are unchanged.
+- Removed raw API error-response logging from these six contact handlers. The visitor still receives a generic retry message, while submitted details and backend response bodies are no longer written to the browser console by these handlers.
+- Fresh connected acquisition snapshot (last-28-day cached extracts; forced refresh is unavailable on the current Windsor trial plan): GA4 reported 99 Organic Search sessions and 68 Organic Search active users; 63 existing lead-form conversion event counts across all channels. Search Console returned 42 query strings; the two ExpressEarth brand queries produced 42 clicks (22 + 20) from 574 impressions, while priority non-brand MICE samples remained low-volume with zero clicks: “mice company in gurugram” (9 impressions), “mice companies in gurgaon” (8), “mice agency for corporate events” (3). Google Business Profile reported 169 impressions, 10 website clicks, 1 call click and 37 direction requests. Event counts and profile actions are not unique or qualified enquiries.
+- GA4 continues to show Direct traffic landing on `/ZGVzdGluYX` (66 event counts in the current event/landing-page extract); no matching public route has been found. This remains an unexplained analytics/traffic anomaly, not a lead.
+- Validation: changed files were re-fetched after commit and checked for submission guards, disabled states, autofill/telephone semantics, conditional company fields and removal of raw error logging. Full Jest/React build and browser/API integration tests remain unavailable in this environment; see run report.
+- No API payload contract, backend code, EmpFly, Indo Exhibits, production tracking configuration, DNS, hosting, redirects or deployment were changed. No outbound campaigns were sent.

@@ -117,6 +117,7 @@ const ConferenceManagement = () => {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -216,6 +217,7 @@ const ConferenceManagement = () => {
       trackFormSubmit({
         name: "ConferenceManagement FAQ Inquiry",
         email: faqForm.email,
+        phone: faqForm.phone,
         message: faqForm.message,
         type: "ConferenceManagement_FAQ",
       });
@@ -224,7 +226,7 @@ const ConferenceManagement = () => {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "Conference Management FAQ Question",
         type: "Individual",
@@ -235,6 +237,7 @@ const ConferenceManagement = () => {
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
     } catch (error) {
@@ -600,6 +603,18 @@ const ConferenceManagement = () => {
                     type="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="cm-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>

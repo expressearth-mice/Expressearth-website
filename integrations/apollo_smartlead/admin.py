@@ -28,7 +28,7 @@ from .models import (
     SuppressionEntry,
     WebhookEvent,
 )
-from .permissions import is_leadgen_admin, is_leadgen_manager
+from .permissions import is_campaign_approver, is_leadgen_admin, is_leadgen_manager
 from .services import campaign_manager, contact_enrichment, crm_sync
 from .services.contact_enrichment import CreditLimitReached
 from .services.lead_qualification import approval_blockers, rescore

@@ -12,27 +12,27 @@ import ServiceStructuredData from "./ServiceStructuredData";
 const services = [
   {
     title: "Team Offsites",
-    text: "Give your teams a much-needed reset with engaging team offsites crafted for bonding, collaboration, and fun.",
+    text: "Plan team offsites around group objectives, travel dates, destination and preferred activities.",
     btn: "Share Your Offsite Brief",
   },
   {
     title: "Team Building Activities",
-    text: "We offer curated indoor & outdoor team building activities, team bonding activities, and teamwork games, all tailored to strengthen team dynamics.",
+    text: "Coordinate indoor and outdoor team activities based on venue, group size, participant profile and programme schedule.",
     btn: "Talk to an Activity Specialist",
   },
   {
     title: "Leadership Retreats",
-    text: "Exclusive corporate retreat programs designed for strategy, innovation, and high-impact decision-making in premium settings.",
+    text: "Plan leadership retreats around strategy sessions, leadership discussions, team activities and venue requirements.",
     btn: "Plan a Leadership Retreat",
   },
   {
     title: "Corporate Retreat Destinations",
-    text: "Handpicked global & domestic retreats; hills, beaches, wellness stays, heritage resorts, vineyards, and more.",
+    text: "Compare hill, beach, wellness and heritage settings in India and overseas, subject to availability and group requirements.",
     btn: "Browse Retreat Options",
   },
   {
     title: "Engagement & Productivity Sessions",
-    text: "Structured sessions for communication, collaboration, leadership, and team success; run by expert facilitators.",
+    text: "Plan structured communication, collaboration and leadership sessions with facilitators and activities agreed in the event brief.",
     btn: "Request a Session Plan",
   },
 ];
@@ -473,26 +473,26 @@ function CorporateOffsitesPage() {
               <div className="whyItem">
                 <div className="whyItemTitle">End-to-End Planning</div>
                 <div className="whyItemText">
-                  From travel to stay, activities to sessions, everything is
-                  managed with precision.
+                  The agreed scope can include travel, accommodation, activities, venue
+                  arrangements and event-day coordination.
                 </div>
               </div>
             </div>
 
             <div className="whyRight">
               <div className="whyBullet">
-                <div className="whyBulletTitle">Premium Experience Design</div>
+                <div className="whyBulletTitle">Programme and Activity Planning</div>
                 <div className="whyBulletText">
-                  We craft thoughtful, well-balanced corporate off-sites with
-                  the right mix of fun, learning, and relaxation.
+                  Shape the agenda, venue and activities around the objectives,
+                  dates and group profile shared in the brief.
                 </div>
               </div>
 
               <div className="whyBullet">
                 <div className="whyBulletTitle">Tailor-Made for Your Goals</div>
                 <div className="whyBulletText">
-                  Each corporate offsite is customized to boost synergy,
-                  motivation, and team alignment.
+                  Confirm the programme format, destination, group size and budget
+                  before finalising the activity and travel plan.
                 </div>
               </div>
 
@@ -501,8 +501,8 @@ function CorporateOffsitesPage() {
                   Expert Team Building & Team Bonding Activities
                 </div>
                 <div className="whyBulletText">
-                  Professional guidance ensures meaningful engagement, not just
-                  another outing.
+                  Coordinate team activities and group sessions around the event
+                  schedule, location and participant profile.
                 </div>
               </div>
             </div>

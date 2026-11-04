@@ -109,7 +109,7 @@ const MeetingsAndConferences = () => {
             Corporate Meetings &amp; Business Gatherings in Delhi NCR
           </h1>
           <p className="hero-subtitle">
-            Corporate meetings | Conferences &amp; summits | Seminars | AGMs
+            Leadership meetings | Board meetings | Seminars | Workshops | AGMs
           </p>
           <Link to="/contact" className="hero-button">
             Discuss Your Conference Brief

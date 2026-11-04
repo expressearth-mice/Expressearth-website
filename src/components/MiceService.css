@@ -132,6 +132,38 @@
   text-decoration: none;
 }
 
+.mice-services-local {
+  max-width: 1000px;
+  margin: 56px auto 0;
+  padding: 32px;
+  background: #fff;
+  border: 1px solid #e4e9ef;
+  border-radius: 12px;
+}
+
+.mice-services-local-heading {
+  color: #0a3d62;
+  font-size: 28px;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 18px;
+}
+
+.mice-services-local p {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #555;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.mice-services-local h3 {
+  color: #0a3d62;
+  font-size: 20px;
+  text-align: center;
+  margin: 24px 0 10px;
+}
+
 @media (max-width: 768px) {
   .mice-services-hero {
     padding: 90px 16px;
@@ -152,5 +184,14 @@
 
   .mice-services-contact-text {
     font-size: 1.25rem;
+  }
+
+  .mice-services-local {
+    margin-top: 40px;
+    padding: 24px 18px;
+  }
+
+  .mice-services-local-heading {
+    font-size: 24px;
   }
 }

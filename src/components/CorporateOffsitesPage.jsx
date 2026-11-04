@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axiosInstance from "../api/axios";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
 
 import second from "../assests/Co_second.png";
 
@@ -151,6 +152,10 @@ function CorporateOffsitesPage() {
         return;
       }
 
+      trackConfirmedLead({
+        serviceType: "corporate_offsite",
+        formLocation: "primary",
+      });
       alert("Form Submitted Successfully");
 
       setForm({
@@ -212,6 +217,10 @@ function CorporateOffsitesPage() {
         return;
       }
 
+      trackConfirmedLead({
+        serviceType: "corporate_offsite",
+        formLocation: "faq_question",
+      });
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",

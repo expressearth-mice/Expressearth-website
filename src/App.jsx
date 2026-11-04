@@ -124,8 +124,8 @@ function App() {
         description: "Explore career opportunities at ExpressEarth across corporate event planning, MICE operations, incentive travel, sales and event management.",
       },
       "/mice-services": {
-        title: "MICE Agency & Corporate Event Management in Delhi NCR | ExpressEarth",
-        description: "ExpressEarth is a MICE agency for corporate meetings, conferences, incentive tours, dealer meets, offsites and events in Delhi NCR and across India, with international group travel planning.",
+        title: "MICE Agency in Gurugram & Delhi NCR | ExpressEarth",
+        description: "Based in Gurugram, ExpressEarth plans corporate MICE programmes across Delhi NCR and India, including conferences, incentive travel, dealer meets, offsites and business events.",
       },
       "/dealermeet": {
         title: "Dealer Meet Management Company in Delhi NCR & India | ExpressEarth",

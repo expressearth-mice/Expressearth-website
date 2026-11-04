@@ -75,6 +75,7 @@ describe("confirmed lead tracking", () => {
       "/contact?email=private@example.com",
       "/profiles/person%40example.com",
       "/contact/9876543210",
+      "/profiles/user9876543210",
       "https://www.expressearth.com/contact",
     ];
 

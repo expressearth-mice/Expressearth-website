@@ -62,9 +62,10 @@ const hasSensitivePathSegment = (segment) => {
   const decoded = decodePathSegment(segment);
   const numericRuns =
     decoded.match(/(?:^|[^A-Za-z])[+]?[0-9][0-9(). -]*[0-9](?:$|[^A-Za-z])/g) || [];
-  const containsPhone = numericRuns.some(
-    (run) => (run.match(/[0-9]/g) || []).length >= 9,
-  );
+  const containsLongDigitRun = /[0-9]{9,}/.test(decoded);
+  const containsPhone =
+    containsLongDigitRun ||
+    numericRuns.some((run) => (run.match(/[0-9]/g) || []).length >= 9);
   const containsControlCharacter = Array.from(decoded).some((character) => {
     const code = character.charCodeAt(0);
     return code <= 31 || code === 127;

@@ -152,16 +152,27 @@ async function main() {
 
   const seenCaseStudySlugs = new Set();
   const placeholderCaseStudySlugs = new Set(["abc", "abc-1", "abc-2", "abcd"]);
-  for (const caseStudy of [...newCaseStudies, ...oldCaseStudies]) {
-    // Only publish descriptive, human-readable case-study slugs. Placeholder
-    // records and ID-only records should not become indexable sitemap URLs.
+  const caseStudyRecords = [...newCaseStudies, ...oldCaseStudies];
+  const availableCaseStudySlugs = new Set(
+    caseStudyRecords
+      .map((item) => String(item?.slug || "").trim().toLowerCase())
+      .filter(Boolean),
+  );
+
+  for (const caseStudy of caseStudyRecords) {
+    // Exclude known placeholders and ID-only records without suppressing
+    // legitimate short descriptive slugs.
     const rawSlug = String(caseStudy?.slug || "").trim().toLowerCase();
     const slug = encodePathSegment(rawSlug);
+    const baseSlug = rawSlug.replace(/-\d+$/, "");
+    const isNumberedDuplicate =
+      baseSlug !== rawSlug && availableCaseStudySlugs.has(baseSlug);
+
     if (
       !slug ||
-      rawSlug.length < 20 ||
+      !/[a-z]/.test(rawSlug) ||
       placeholderCaseStudySlugs.has(rawSlug) ||
-      /-\\d+$/.test(rawSlug) ||
+      isNumberedDuplicate ||
       seenCaseStudySlugs.has(slug)
     ) continue;
     seenCaseStudySlugs.add(slug);

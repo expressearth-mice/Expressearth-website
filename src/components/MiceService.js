@@ -146,13 +146,45 @@ const MiceServices = () => {
           </p>
         </section>
 
+        <section className="mice-services-faq" aria-labelledby="mice-services-faq-heading">
+          <h2 id="mice-services-faq-heading">Corporate MICE planning: common questions</h2>
+          <div className="mice-services-faq-list">
+            <details className="mice-services-faq-item">
+              <summary>What does a corporate MICE agency coordinate?</summary>
+              <p>
+                Depending on the brief, ExpressEarth can coordinate venue sourcing, group travel,
+                accommodation, event production and on-ground logistics for meetings, incentive
+                trips, conferences and corporate events.
+              </p>
+            </details>
+            <details className="mice-services-faq-item">
+              <summary>Which corporate programmes can ExpressEarth plan?</summary>
+              <p>
+                Service scopes include <Link to="/meetings-and-conferences">meetings and conferences</Link>,
+                <Link to="/incentive-travel"> incentive travel</Link>,
+                <Link to="/dealermeet"> dealer and distributor meets</Link>,
+                <Link to="/corporateoffsites"> corporate offsites</Link> and
+                <Link to="/corporate-events"> corporate events</Link>.
+              </p>
+            </details>
+            <details className="mice-services-faq-item">
+              <summary>Can ExpressEarth support corporate teams outside Gurugram?</summary>
+              <p>
+                ExpressEarth is based in Gurugram and supports organisations across Delhi NCR and
+                India. Programmes may be hosted in NCR or at domestic and international destinations,
+                with the scope planned around the brief and destination requirements.
+              </p>
+            </details>
+          </div>
+        </section>
+
         <div className="mice-services-contact">
           <p className="mice-services-contact-text">
             Planning a corporate programme in Delhi NCR or elsewhere in India? Share your brief, dates, destination and expected group size with ExpressEarth.
           </p>
 
           <Link to="/contact" className="mice-services-contact-link custom-button-link">
-            Contact Our Experts
+            Share Your Corporate MICE Brief
           </Link>
         </div>
       </section>

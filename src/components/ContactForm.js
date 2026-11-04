@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 import "./ContactForm.css";
 import axiosInstance from "../api/axios";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
 
 const ContactForm = () => {
   const navigate = useNavigate();
@@ -102,47 +103,40 @@ const ContactForm = () => {
         formattedFormData
       );
 
-      if (response && response.data) {
-        const successValue = response.data.success;
-        const requestSucceeded =
-          successValue === true ||
-          (typeof successValue === "string" &&
-            successValue.trim() !== "" &&
-            successValue.trim().toLowerCase() !== "false");
-
-        if (requestSucceeded) {
-          setSubmitted(true);
-          setFormData({
-            full_name: "",
-            company_name: "",
-            email: "",
-            phone: "",
-            event_type: "",
-            country: "",
-            attendees: "",
-            event_date: "",
-            requirements: "",
+      if (isSuccessfulContactResponse(response)) {
+        setSubmitted(true);
+        setFormData({
+          full_name: "",
+          company_name: "",
+          email: "",
+          phone: "",
+          event_type: "",
+          country: "",
+          attendees: "",
+          event_date: "",
+          requirements: "",
+        });
+        setErrors({});
+        if (window.gtag) {
+          window.gtag("event", "form_submit", {
+            event_category: "Contact Form",
+            event_label: "Contact Form Submitted",
           });
-          setErrors({});
-          if (window.gtag) {
-            window.gtag("event", "form_submit", {
-              event_category: "Contact Form",
-              event_label: "Contact Form Submitted",
-            });
-          }
-          setCaptchaValue(null); // Reset CAPTCHA
-          setErrorMessage(""); // Clear any previous error message
-        } else {
-          setErrorMessage(
-            response.data.error || "Failed to send message. Please try again."
-          );
         }
+        setCaptchaValue(null); // Reset CAPTCHA
+        setErrorMessage("");
+      } else {
+        setErrorMessage(
+          response?.data?.error || "Failed to send message. Please try again."
+        );
       }
     } catch (error) {
-      console.error("Error:", error.response ? error.response.data : error);
       const backendErrors = error.response?.data;
       if (backendErrors?.event_date) {
-        setErrorMessage(`Event Date: ${backendErrors.event_date.join(", ")}`);
+        const eventDateError = Array.isArray(backendErrors.event_date)
+          ? backendErrors.event_date.join(", ")
+          : String(backendErrors.event_date);
+        setErrorMessage(`Event Date: ${eventDateError}`);
       } else {
         setErrorMessage("Something went wrong. Please try again.");
       }
@@ -177,7 +171,7 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="contact-header-section">
-        <h2>Contact us</h2>
+        <h1>Contact ExpressEarth for Corporate MICE Enquiries</h1>
         <p>
           Share a few details about your organisation and programme. ExpressEarth
           supports corporate MICE enquiries for incentive travel, dealer and

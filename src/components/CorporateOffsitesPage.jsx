@@ -91,6 +91,7 @@ function CorporateOffsitesPage() {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -167,17 +168,9 @@ function CorporateOffsitesPage() {
     e.preventDefault();
 
     try {
-      const payload = {
-        full_name: newsletterEmail,
-        company_name: null,
+      await axiosInstance.post("/api/subscribe/", {
         email: newsletterEmail,
-        phone: "1234567890",
-        event_date: null,
-        event_type: "Other",
-        type: "Individual",
-      };
-
-      await axiosInstance.post("/api/contact/", payload);
+      });
 
       alert("Subscribed Successfully");
       setNewsletterEmail("");
@@ -202,7 +195,7 @@ function CorporateOffsitesPage() {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "Corporate Offsite FAQ Question",
         type: "Individual",
@@ -214,6 +207,7 @@ function CorporateOffsitesPage() {
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
     } catch (error) {
@@ -579,6 +573,18 @@ function CorporateOffsitesPage() {
                     type="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="offsiteFaqField">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>

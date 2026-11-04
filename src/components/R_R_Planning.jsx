@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../api/axios";
 import "./R_R_Planning.css";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import { trackConfirmedLead } from "../utils/leadTracking";
@@ -134,7 +134,7 @@ const R_R_Planning = () => {
         event_type: "Other",
       };
 
-      const response = await axios.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
       if (!isSuccessfulContactResponse(response)) {
         alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
         return;
@@ -176,7 +176,7 @@ const R_R_Planning = () => {
         requirements: faqForm.message,
       };
 
-      const response = await axios.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
       if (!isSuccessfulContactResponse(response)) {
         alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
         return;

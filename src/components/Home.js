@@ -128,102 +128,112 @@ const Home = () => {
                 src="/Images/HOME/Banner image/A.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate event and MICE services by ExpressEarth"
+                fetchPriority="high"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h1 className="hero-title-box">
                   Corporate Event Management &amp; MICE Company in Delhi NCR
                 </h1>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 2 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\B.avif"
+                src="/Images/HOME/Banner image/B.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate conferences and incentive travel experiences"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 3 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\C.avif"
+                src="/Images/HOME/Banner image/C.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate group travel and offsite experiences"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 4 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\D.avif"
+                src="/Images/HOME/Banner image/D.avif"
                 className="d-block w-100 carousel-image"
                 alt="Business events and employee engagement programmes"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 5 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\E.avif"
+                src="/Images/HOME/Banner image/E.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate event production and group experiences"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
@@ -331,7 +341,7 @@ const Home = () => {
                 className="destination-card-link"
               >
                 <div className="destination-card">
-                  <img src={dest.img} alt={dest.name} />
+                  <img src={dest.img} alt={dest.name} loading="lazy" decoding="async" />
                   <h3>{dest.name}</h3>
                 </div>
               </Link>
@@ -353,8 +363,9 @@ const Home = () => {
             autoPlay
             muted
             loop
-            preload="auto"
+            preload="metadata"
             playsInline
+            aria-hidden="true"
           >
             <source src="/Images/home-web.mp4" type="video/mp4" />
             Your browser does not support the video tag.
@@ -442,7 +453,7 @@ const Home = () => {
                 className="blog-card"
                 aria-hidden={index >= recentPosts.length}
               >
-                <img src={post.image} alt={post.title} />
+                <img src={post.image} alt={post.title} loading="lazy" decoding="async" />
                 <div className="card-body">
                   <h5>
                     <Link

@@ -291,3 +291,27 @@
 - Re-fetched Home.js, Home.css, Home.test.js and this changelog after committing. Source assertions confirmed the new section is placed between the homepage hero and destinations, the four links use the existing programmeLinks entries, the contact/MICE CTAs point to registered routes, and the responsive/focus/reduced-motion CSS is present.
 - CSS brace counts are balanced. The focused Jest test was added but not run; JSX compilation, the full React build and browser verification remain outstanding because no local dependency-backed checkout is available and the repository has no configured GitHub Actions status checks.
 - No case-study claims, client proof, testimonials, credentials, results or new office claims were added. No production deployment, merge, DNS/hosting change, redirect, outbound campaign, or EmpFly/Indo Exhibits modification was made.
+
+## 2026-11-05 — Exclude placeholder case studies from public discovery
+
+- Added a shared case-study visibility helper with the known placeholder slugs `abc`, `abc-1`, `abc-2` and `abcd` already identified in the separate sitemap-quality PR #4.
+- The public case-study listing now omits those placeholder records. Direct requests for the known placeholder slugs show the existing not-found state without requesting the case-study or destination APIs.
+- Case-study detail records without a descriptive public slug (including ID-only records) remain accessible for legacy compatibility, but receive `noindex, follow` and have any stale canonical removed. Descriptive slugs retain index/follow and their self-referencing canonical.
+- Added focused unit tests for placeholder matching, descriptive-slug indexability, legacy ID-only compatibility and public-list filtering. This work does not modify the sitemap generator, avoiding overlap with PR #4.
+
+### Measurement used (connected 28-day extracts, 7 October–3 November 2026)
+
+- Search Console returned 361 daily query/page rows: 42 clicks and 690 impressions. Explicit brand queries accounted for 42 clicks / 614 impressions; returned non-brand queries accounted for 76 impressions and zero clicks. The connector's branded flag misclassifies these brand variants because it checks for the domain string, so the query text was classified explicitly.
+- Priority non-brand samples included “mice company in gurugram” (9 impressions; average position 68.2), “mice companies in gurgaon” (8; 76.0), “mice agency for corporate events” (3; 65.7), and “corporate incentive travel companies” (2; 52.5), all with zero clicks in this extract.
+- GA4 reported 101 Organic Search sessions. Organic landing-page sessions were concentrated on / (72), /contact (9) and /about (5). The existing `ads_conversion_Submit_lead_form_1` event recorded 64 counts (63 on /contact and 1 on /contact/); these are event counts, not unique enquiries or qualified opportunities.
+- GA4 recorded one observed session on `/case-studies/abc-1` (one each for first_visit, session_start, page_view and scroll). This is a route-traffic signal, not evidence that the visit came from search.
+- Google Business Profile recorded 169 impressions, 10 website clicks, 1 call click and 40 direction requests. These are profile interactions, not confirmed corporate enquiries.
+- The Search Console sitemap connector returned a null path and zero submission/download/error fields; sitemap processing remains unverified and must be checked in the Search Console UI. Query and analytics extracts are connector-cached; forced refresh is unavailable on the connected trial plan.
+
+### Validation and safety
+
+- Re-fetched both modified React components and the two new utility files after their commits; source assertions confirmed the list filter, placeholder route guard, noindex/canonical removal for non-descriptive slugs, and preservation of indexable metadata for descriptive slugs.
+- Added `caseStudyVisibility.test.js`; the Jest suite, JSX compilation, full React build and browser/API tests have not been run. No GitHub Actions workflow runs or commit status checks are configured.
+- Google Search Central's robots meta documentation confirms that `noindex` prevents a page from appearing in Search and that crawlers must be able to access the page to read the directive: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag
+- No client proof, testimonials, event results, credentials or permissions were invented. No sitemap script, hosting, DNS, redirects, production deployment, merge, outbound campaign, EmpFly or Indo Exhibits code was changed.
+

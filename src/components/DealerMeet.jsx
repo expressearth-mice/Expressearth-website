@@ -9,6 +9,7 @@ import bg from "../assests/dealerbg.png";
 import axiosInstance from "../api/axios";
 import PopupForm from "./popupForm";
 import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
   {
@@ -260,6 +261,12 @@ function DealerMeet() {
 
   return (
     <>
+      <ServiceStructuredData
+        name="Dealer and Distributor Meet Management"
+        serviceType="Corporate dealer meets, distributor conferences and channel partner events"
+        description="ExpressEarth plans dealer meets and distributor conferences for businesses in Delhi NCR and across India. Programmes can include business updates, product launches, training, recognition and relationship-building, with venue, stage and AV, branding, agenda, delegate travel, accommodation, hospitality and on-site operations coordinated according to the agreed scope."
+        url="https://www.expressearth.com/dealermeet"
+      />
       {/* -------- SECTION 1 -------- */}
 
       {showPopup && <PopupForm onClose={handleClosePopup} />}

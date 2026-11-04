@@ -24,6 +24,43 @@ describe("confirmed lead tracking", () => {
     expect(params).not.toHaveProperty("name");
   });
 
+  test("maps the contact form's visible event choices to controlled service types", () => {
+    const cases = [
+      ["Conference", "conference_management"],
+      ["Incentive Trip", "incentive_travel"],
+      ["Corporate Meeting", "corporate_meeting"],
+      ["Exhibition", "exhibitions"],
+      ["Product Launch", "corporate_events"],
+      ["Other", "corporate_mice"],
+    ];
+
+    cases.forEach(([input, expected]) => {
+      expect(
+        buildConfirmedLeadEventParams({ serviceType: input }).service_type,
+      ).toBe(expected);
+    });
+  });
+
+  test("replaces unrecognised service and form labels with safe defaults", () => {
+    const params = buildConfirmedLeadEventParams({
+      serviceType: "person@example.com",
+      formLocation: "person@example.com",
+    });
+
+    expect(params.service_type).toBe("corporate_mice");
+    expect(params.form_location).toBe("primary");
+    expect(JSON.stringify(params)).not.toContain("person@example.com");
+  });
+
+  test("keeps the contact page as a valid form location", () => {
+    const params = buildConfirmedLeadEventParams({
+      serviceType: "corporate_mice",
+      formLocation: "contact_page",
+    });
+
+    expect(params.form_location).toBe("contact_page");
+  });
+
   test("omits an invalid referrer", () => {
     const params = buildConfirmedLeadEventParams({
       serviceType: "incentive_travel",
@@ -31,6 +68,32 @@ describe("confirmed lead tracking", () => {
     });
 
     expect(params).not.toHaveProperty("page_referrer");
+  });
+
+  test("does not send query strings, fragments, email addresses or phone numbers in page paths", () => {
+    const unsafePaths = [
+      "/contact?email=private@example.com",
+      "/profiles/person%40example.com",
+      "/contact/9876543210",
+      "https://www.expressearth.com/contact",
+    ];
+
+    unsafePaths.forEach((pagePath) => {
+      expect(
+        buildConfirmedLeadEventParams({ pagePath }).page_path,
+      ).toBe("/");
+    });
+  });
+
+  test("redacts personal-looking referrer paths while retaining the referrer origin", () => {
+    const params = buildConfirmedLeadEventParams({
+      serviceType: "dealer_meet",
+      referrer: "https://www.expressearth.com/contact/person%40example.com?token=private",
+    });
+
+    expect(params.page_referrer).toBe("https://www.expressearth.com/");
+    expect(JSON.stringify(params)).not.toContain("person@example.com");
+    expect(JSON.stringify(params)).not.toContain("private");
   });
 
   test("pushes the recommended generate_lead event without contact details", () => {

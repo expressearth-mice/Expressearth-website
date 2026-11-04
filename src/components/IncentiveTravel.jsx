@@ -93,7 +93,7 @@ const IncentiveTravel = () => {
           },
           {
             icon: <FaCarSide style={{ color: "#1c65a5" }} />,
-            title: "Luxury Ground Transportation",
+            title: "Ground Transportation Coordination",
             desc: "Plan airport transfers and local group transport according to the itinerary, vehicle requirements and destination.",
             link: "/contact",
             linkText: "Travel in Style",

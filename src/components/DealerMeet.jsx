@@ -74,6 +74,8 @@ function DealerMeet() {
   const inputRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFaqSubmitting, setIsFaqSubmitting] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -105,6 +107,8 @@ function DealerMeet() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const payload = {
@@ -137,12 +141,10 @@ function DealerMeet() {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(
-        "DealerMeet submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting form");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -174,6 +176,8 @@ function DealerMeet() {
 
   const handleFaqSubmit = async (e) => {
     e.preventDefault();
+    if (isFaqSubmitting) return;
+    setIsFaqSubmitting(true);
 
     try {
       const payload = {
@@ -204,12 +208,10 @@ function DealerMeet() {
         phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "DealerMeet FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting your question");
+    } finally {
+      setIsFaqSubmitting(false);
     }
   };
 
@@ -289,13 +291,15 @@ function DealerMeet() {
         </div>
 
         <div className="dealer-right" ref={formRef}>
-          <form className="form-card" onSubmit={handleSubmit}>
+          <form className="form-card" onSubmit={handleSubmit} aria-busy={isSubmitting}>
             <h2>Get in Touch</h2>
 
             <input
               ref={inputRef}
               type="text"
               name="name"
+              autoComplete="name"
+              aria-label="Full name"
               placeholder="Full Name"
               value={formData.name}
               onChange={handleChange}
@@ -305,6 +309,8 @@ function DealerMeet() {
             <input
               type="email"
               name="email"
+              autoComplete="email"
+              aria-label="Work email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
@@ -312,8 +318,11 @@ function DealerMeet() {
             />
 
             <input
-              type="text"
+              type="tel"
               name="phone"
+              inputMode="tel"
+              autoComplete="tel"
+              aria-label="Phone number"
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
@@ -347,13 +356,16 @@ function DealerMeet() {
             <input
               type="text"
               name="company"
+              autoComplete="organization"
+              aria-label="Company name"
               placeholder="Company Name"
+              required={formData.type === "Company"}
               value={formData.company}
               onChange={handleChange}
             />
 
-            <button type="submit" className="submit-btn">
-              Submit
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
@@ -573,11 +585,12 @@ function DealerMeet() {
             <div className="dealer-faq-form-wrap">
               <h3 className="dealer-faq-form-title">Ask a different question</h3>
 
-              <form className="dealer-faq-form" onSubmit={handleFaqSubmit}>
+              <form className="dealer-faq-form" onSubmit={handleFaqSubmit} aria-busy={isFaqSubmitting}>
                 <label className="dealer-faq-field">
                   <span>Name</span>
                   <input
                     type="text"
+                    autoComplete="name"
                     value={faqForm.name}
                     onChange={handleFaqFormChange("name")}
                     required
@@ -588,6 +601,7 @@ function DealerMeet() {
                   <span>Email Address</span>
                   <input
                     type="email"
+                    autoComplete="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
                     required
@@ -616,8 +630,8 @@ function DealerMeet() {
                   />
                 </label>
 
-                <button type="submit" className="dealer-faq-submit">
-                  Submit
+                <button type="submit" className="dealer-faq-submit" disabled={isFaqSubmitting}>
+                  {isFaqSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

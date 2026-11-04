@@ -41,7 +41,7 @@ describe("confirmed lead tracking", () => {
     });
   });
 
-  test("replaces unrecognised service and form labels with safe defaults", () => {
+  test("replaces unrecognised and inherited service labels with safe defaults", () => {
     const params = buildConfirmedLeadEventParams({
       serviceType: "person@example.com",
       formLocation: "person@example.com",
@@ -50,6 +50,12 @@ describe("confirmed lead tracking", () => {
     expect(params.service_type).toBe("corporate_mice");
     expect(params.form_location).toBe("primary");
     expect(JSON.stringify(params)).not.toContain("person@example.com");
+
+    ["constructor", "toString", "__proto__"].forEach((serviceType) => {
+      expect(
+        buildConfirmedLeadEventParams({ serviceType }).service_type,
+      ).toBe("corporate_mice");
+    });
   });
 
   test("keeps the contact page as a valid form location", () => {

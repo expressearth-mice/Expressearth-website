@@ -1,30 +1,122 @@
-import React from 'react';
-import { Briefcase, Globe, Mic, PieChart, Users, Phone, Building, Settings, ShieldCheck } from 'lucide-react';
-import { motion } from 'framer-motion';
-import './MeetingsAndConferences.css';
-import { Link } from 'react-router-dom';
-import HorizontalSlider from './ui/HorizontalSlider';
+import React from "react";
+import {
+  Briefcase,
+  Globe,
+  Mic,
+  PieChart,
+  Users,
+  Phone,
+  Building,
+  Settings,
+  ShieldCheck,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import "./MeetingsAndConferences.css";
+import { Link } from "react-router-dom";
+import HorizontalSlider from "./ui/HorizontalSlider";
+import ServiceStructuredData from "./ServiceStructuredData";
+
+const serviceDescription =
+  "ExpressEarth helps organisations plan corporate meetings, conferences and business gatherings in Delhi NCR and across India. Depending on the brief, coordination can include venue sourcing, agenda and speaker coordination, delegate registration, branding, AV, accommodation, transfers and on-site logistics.";
+
+const offerings = [
+  {
+    icon: <Briefcase />,
+    title: "Corporate Meetings",
+    description:
+      "Plan board meetings, leadership sessions and hybrid meetings with venue, agenda, hospitality and technology coordination.",
+  },
+  {
+    icon: <Globe />,
+    title: "Conferences & Summits",
+    description:
+      "Coordinate venue options, speaker schedules, delegate registration, branding, AV and travel logistics for business conferences and summits.",
+  },
+  {
+    icon: <Mic />,
+    title: "Seminars & Forums",
+    description:
+      "Organise seminars, panel discussions and forums with room layouts, presentation technology, attendee flow and event-day coordination.",
+  },
+  {
+    icon: <Users />,
+    title: "Workshops & Training",
+    description:
+      "Arrange training and workshop venues, breakout spaces, materials, participant logistics and session support.",
+  },
+  {
+    icon: <PieChart />,
+    title: "Annual General Meetings",
+    description:
+      "Coordinate meeting spaces, registration, presentation technology, attendee communication and event logistics. Regulatory and corporate-secretarial advice remains with the client's appointed advisers.",
+  },
+];
+
+const planningCapabilities = [
+  {
+    icon: <Building />,
+    title: "Venue and room planning",
+    description:
+      "Shortlist venue options and plan room layouts around the agenda, audience and technical requirements.",
+  },
+  {
+    icon: <Settings />,
+    title: "Production and AV",
+    description:
+      "Coordinate stage, sound, screens, lighting, presentation systems and event branding where required.",
+  },
+  {
+    icon: <Globe />,
+    title: "Delegate logistics",
+    description:
+      "Plan registration, accommodation, transfers, hospitality and attendee communication according to the brief.",
+  },
+  {
+    icon: <ShieldCheck />,
+    title: "Event-day coordination",
+    description:
+      "Agree the run of show, supplier responsibilities, operating contacts and escalation process before the event.",
+  },
+];
+
+const relatedServices = [
+  { label: "Dealer & distributor meets", to: "/dealermeet" },
+  { label: "Corporate events", to: "/corporate-events" },
+  { label: "Corporate offsites", to: "/corporateoffsites" },
+  { label: "Incentive travel", to: "/incentive-travel" },
+];
 
 const MeetingsAndConferences = () => {
   return (
     <div className="meetings-container">
-      {/* Hero Section */}
-      <div className="hero-section">
+      <ServiceStructuredData
+        name="Corporate Meetings and Conference Management"
+        serviceType="Corporate meetings, conferences, summits and seminars"
+        description={serviceDescription}
+        url="https://www.expressearth.com/meetings-and-conferences"
+      />
+
+      <section className="hero-section">
         <img
           src="https://img.freepik.com/premium-photo/banner-conference-hall-seminar-room-with-attendee-background_157125-12992.jpg"
-          alt="Conference"
+          alt="Conference hall prepared for a corporate meeting"
           className="hero-image"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="hero-content">
-          <h1 className="hero-title">Meetings & Conferences</h1>
-          <p className="hero-subtitle">Corporate Meetings | Conferences and Summits | Seminars & Forums</p>
+          <h1 className="hero-title">
+            Corporate Meetings &amp; Conference Management in Delhi NCR
+          </h1>
+          <p className="hero-subtitle">
+            Corporate meetings | Conferences &amp; summits | Seminars | AGMs
+          </p>
           <Link to="/contact" className="hero-button">
-            Plan Your Event
+            Discuss Your Conference Brief
           </Link>
         </div>
-      </div>
+      </section>
 
-      {/* Intro Section */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -34,120 +126,97 @@ const MeetingsAndConferences = () => {
         <div className="intro-left">
           <img
             src="https://images.stockcake.com/public/2/c/d/2cdf01bf-4db2-404f-ab01-8230afde4e47_medium/international-business-handshake-stockcake.jpg"
-            alt="Business Handshake"
+            alt="Business representatives meeting"
             className="intro-image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
         <div className="intro-right">
-          <p>
-            Elevate Every Gathering with ExpressEarth. We transform corporate gatherings into high-impact experiences. Whether it's a strategic board meeting, dynamic seminar, or an international business conference, we deliver seamless planning and world-class execution tailored to your goals.
+          <p>{serviceDescription}</p>
+          <p className="intro-highlight">
+            <ShieldCheck size={16} />
+            Planning scope is agreed around the audience, programme format,
+            location, dates and budget.
           </p>
-          <p className="intro-highlight"><ShieldCheck size={16} /> Trusted by leading corporations worldwide for luxury MICE solutions.</p>
         </div>
       </motion.section>
 
-      {/* Services Section - Updated Design */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="offer-section timeline-section"
       >
-        <h2 className="offer-title">What We Offer</h2>
-        <HorizontalSlider className="meetings-cards-row" itemCount={5}>
-          {[
-            {
-              icon: <Briefcase />,
-              title: 'Corporate Meetings',
-              desc: 'From executive boardrooms to hybrid setups, our meeting planners ensure flawless execution — agenda flow, hospitality, technology, and more.',
-            },
-            {
-              icon: <Globe />,
-              title: 'Conferences & Summits',
-              desc: 'We handle venue selection, speaker coordination, delegate management, branding, and AV setups across global destinations.',
-            },
-            {
-              icon: <Mic />,
-              title: 'Seminars & Forums',
-              desc: 'Tailored seminar planning with modern tech, breakout sessions, and engaging thematic elements.',
-            },
-            {
-              icon: <Users />,
-              title: 'Workshops & Training',
-              desc: 'We create immersive, goal-driven environments for corporate learning and team development.',
-            },
-            {
-              icon: <PieChart />,
-              title: 'Annual General Meetings (AGMs)',
-              desc: 'Full-service AGM planning including compliance, logistics, technology, and shareholder engagement.',
-            },
-          ].map((item, idx) => (
-            <div key={idx} className="meetings-card">
+        <h2 className="offer-title">Meetings and Conference Formats</h2>
+        <HorizontalSlider className="meetings-cards-row" itemCount={offerings.length}>
+          {offerings.map((item) => (
+            <div key={item.title} className="meetings-card">
               <div className="meetings-card-icon">{item.icon}</div>
               <div className="meetings-card-content">
                 <h3 className="meetings-card-title">{item.title}</h3>
-                <p className="meetings-card-desc">{item.desc}</p>
+                <p className="meetings-card-desc">{item.description}</p>
               </div>
             </div>
           ))}
         </HorizontalSlider>
       </motion.section>
 
-      {/* Why Choose Us Section */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="testimonial-section"
       >
-        <h2 className="testimonial-title">Why Choose ExpressEarth</h2>
+        <h2 className="testimonial-title">Planning and Delivery Scope</h2>
         <div className="testimonial-grid">
-          {[
-            {
-              icon: <Building />,
-              text: ' Luxury Approach to MICE, Premium venues, personalized experiences, and attention to detail that reflect your brand prestige',
-            },
-            {
-              icon: <Settings />,
-              text: 'End-to-End Execution, Venue sourcing, travel management, production, staffing, all managed by our in-house team.',
-            },
-            {
-              icon: <Globe />,
-              text: ' Global Expertise, Seamless event execution in top MICE destinations across the globe.',
-            },
-            {
-              icon: <ShieldCheck />,
-              text: 'Tailored for Impact, We listen, strategize, and deliver exactly what your event needs, nothing generic, always extraordinary.',
-            },
-          ].map((item, idx) => (
-            <div key={idx} className="testimonial-item">
+          {planningCapabilities.map((item) => (
+            <div key={item.title} className="testimonial-item">
               <div className="testimonial-icon">{item.icon}</div>
-              <h3 className="testimonial-heading">{item.text.split(',')[0].trim()}</h3>
-              <p className="testimonial-quote">{item.text.split(',').slice(1).join(',').trim()}</p>
+              <h3 className="testimonial-heading">{item.title}</h3>
+              <p className="testimonial-quote">{item.description}</p>
             </div>
           ))}
         </div>
       </motion.section>
 
+      <section className="related-services container py-5">
+        <h2>Related Corporate Programme Services</h2>
+        <p>
+          If your programme also includes channel partners, employee
+          celebrations, team retreats or reward travel, explore these related
+          ExpressEarth services.
+        </p>
+        <div className="d-flex flex-wrap gap-3">
+          {relatedServices.map((service) => (
+            <Link
+              key={service.to}
+              to={service.to}
+              className="btn btn-outline-primary"
+            >
+              {service.label}
+            </Link>
+          ))}
+        </div>
+      </section>
 
-      {/* Contact Section */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="contact-section"
       >
-        <h2 className="contact-title">Let’s Talk</h2>
+        <h2 className="contact-title">Plan Your Next Meeting or Conference</h2>
         <p className="contact-description">
-        Connect with our Meetings & Conferences team today
-        Let’s design a gathering that’s productive, polished, and unforgettable.
+          Share your event format, expected delegate count, destination, dates
+          and production requirements so the team can review the brief.
         </p>
       </motion.section>
 
       <div className="contact-btn-container">
         <Link to="/contact" className="contact-btn">
-          <Phone size={16} style={{ marginRight: '8px' }} />
-          Get in Touch
+          <Phone size={16} style={{ marginRight: "8px" }} />
+          Share Your Event Brief
         </Link>
       </div>
     </div>

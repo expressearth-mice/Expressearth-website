@@ -19,7 +19,7 @@ jest.mock("./ui/HorizontalSlider", () => {
 
 describe("Home priority MICE navigation", () => {
   beforeEach(() => {
-    axiosInstance.get.mockResolvedValue({ data: [] });
+    axiosInstance.get.mockReturnValue(new Promise(() => {}));
   });
 
   afterEach(() => {

@@ -95,6 +95,7 @@ const InternationalGroupTravel = () => {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -191,7 +192,7 @@ const InternationalGroupTravel = () => {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "International Group Travel FAQ Question",
         type: "Individual",
@@ -203,6 +204,7 @@ const InternationalGroupTravel = () => {
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
     } catch (error) {
@@ -560,6 +562,18 @@ const InternationalGroupTravel = () => {
                     type="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="travel-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>

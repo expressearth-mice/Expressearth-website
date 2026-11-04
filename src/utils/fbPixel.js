@@ -85,20 +85,29 @@ export const trackSearch = (searchData) => {
   });
 };
 
-export const trackFormSubmit = (formData) => {
+const safeEventLabel = (value, fallback) => {
+  const label = String(value ?? "").trim();
+  return /^[a-zA-Z0-9_-]{1,64}$/.test(label) ? label : fallback;
+};
+
+// Only send non-identifying event context to advertising platforms.
+// Never forward names, email addresses, phone numbers, company names or form text.
+export const trackFormSubmit = (formData = {}) => {
   fbPixelEvent("Submit", {
-    content_name: formData.name || "Form Submission",
-    content_category: formData.category || "form",
-    ...formData,
+    content_name: "Form Submission",
+    content_category: safeEventLabel(formData.category || formData.type, "form"),
+    form_location: safeEventLabel(formData.form_location, "primary"),
   });
 };
 
-export const trackContact = (contactData) => {
+export const trackContact = (contactData = {}) => {
   fbPixelEvent("Contact", {
-    content_name: contactData.name || "",
-    phone_number: contactData.phone || "",
-    email: contactData.email || "",
-    ...contactData,
+    content_name: "Corporate MICE enquiry",
+    content_category: safeEventLabel(
+      contactData.service_type || contactData.type,
+      "corporate_mice",
+    ),
+    form_location: safeEventLabel(contactData.form_location, "primary"),
   });
 };
 

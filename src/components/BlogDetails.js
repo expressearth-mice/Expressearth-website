@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { blog_url, blog_detail_url } from "../api/urls";
+import { normalizeCollectionResponse } from "../api/collectionData";
 import "./BlogDetails.css";
 import Skeleton from "./Skeleton";
 
@@ -83,11 +84,11 @@ const BlogDetails = () => {
 
         const oldPosts =
           oldRes.status === "fulfilled"
-            ? oldRes.value.data?.results || oldRes.value.data || []
+            ? normalizeCollectionResponse(oldRes.value.data)
             : [];
         const newPostsRaw =
           newRes.status === "fulfilled"
-            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            ? normalizeCollectionResponse(newRes.value.data)
             : [];
 
         const newPosts = newPostsRaw.map((post) => ({

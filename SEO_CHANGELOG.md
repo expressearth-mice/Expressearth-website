@@ -208,3 +208,27 @@
 - GA4 reports 596 sessions, including 99 Organic Search sessions and 77 Organic Search active users. The existing lead-form conversion event recorded 63 event counts: 21 Organic Search, 39 Direct and 3 Unassigned. These are events, not unique enquiries or qualified opportunities.
 - Google Business Profile reports 167 impressions, 10 website clicks, 1 call click and 37 direction requests.
 - GA4 records 70 events across 38 rows on the unmatched path `/ZGVzdGluYX`. No matching public React route or internal base64 route construction was found in the inspected source files; treat this as an unexplained measurement/traffic anomaly, not a lead, until developer tracing identifies its source.
+
+
+## 2026-11-05 — Local MICE discovery and service navigation
+
+- Added a Rewards & Recognition card to the main MICE services hub, linking to the existing /r&rplanning route; expanded the hub's Service description to include recognition programmes.
+- Added a concise Gurugram/Delhi NCR service-area explanation to the MICE hub, naming Gurugram, Delhi, Noida, Faridabad and Ghaziabad as corporate-team locations (not additional office claims). Added an answer-first prompt listing the details that make a corporate MICE brief actionable: objective, programme type, attendee count, dates, origin cities, destination, budget and required delivery scope.
+- Added responsive styling for the local coverage section.
+- Replaced the duplicate Corporate Offsites item in the footer service navigation with a Rewards & Recognition link.
+- Added focused MICE hub tests for the Rewards & Recognition route, NCR context and brief-qualification prompt.
+
+### Fresh acquisition evidence (28-day extract through 3 November 2026)
+
+- GA4 session-level report: 101 Organic Search sessions and 86 Organic Search active users. Organic landing pages included / (72 sessions), /contact (9), /about (5) and /corporate-events (1). The MICE services hub and the other dedicated MICE service pages were not among the leading organic landing pages in this extract.
+- GA4's existing ads_conversion_Submit_lead_form_1 event recorded 63 counts (62 on /contact, 1 on /contact/). These are event counts, not unique enquiries or qualified opportunities.
+- Search Console page rows showed /mice-services on the apex host (8 impressions) and www host (4 impressions), with zero clicks on both. Returned non-brand query rows included 'mice agency for corporate events' (3 impressions across two host variants; average positions in the mid-60s), 'mice services for corporates' (2 impressions; average position 79.5), 'mice agency' (1; position 65) and 'mice company in delhi' (1; position 83). These are small samples, not demand forecasts.
+- Google Business Profile: 167 impressions, 10 website clicks, 1 call click and 37 direction requests.
+- The Search Console sitemap connector still returns a null sitemap path and no usable submission/download status; sitemap processing remains unverified and must be checked in the Search Console UI.
+
+### Validation and limitations
+
+- Re-fetched and reviewed src/components/MiceService.js, src/components/MiceService.css, src/components/Footer.js, the new src/components/MiceService.test.js and this changelog after their commits.
+- Source assertions confirmed the Rewards & Recognition route, local coverage content, brief prompt, responsive styles and removal of the duplicate footer link.
+- Focused Jest tests were added but not run. Full JSX compilation and the React production build remain unverified because this runtime has no local checkout/dependency installation; no GitHub Actions checks are configured.
+- No production deployment, merge, DNS/hosting change, redirect, outbound campaign, or EmpFly/Indo Exhibits code change was made.

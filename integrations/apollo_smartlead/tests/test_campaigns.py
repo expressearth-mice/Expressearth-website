@@ -244,3 +244,30 @@ class EnrollmentTests(TestCase):
         self.assertTrue(hook["event_type_map"]["EMAIL_REPLY"])
         self.assertEqual(api.called("POST", "campaigns/555/email-accounts")[0]["json"],
                          {"email_account_ids": [1]})
+
+
+@mock.patch.dict(os.environ, {**KEYS, **GATES_OPEN})
+class CEOApprovalTests(TestCase):
+    def setUp(self):
+        self.manager = make_user("manager")
+        self.ceo = make_user("ceo")
+        self.campaign = make_campaign(ready=True)
+
+    def test_manager_cannot_approve_even_if_sender_is_verified(self):
+        with mock.patch.dict(os.environ, {"LEADGEN_CAMPAIGN_APPROVER_USER_ID": str(self.ceo.pk)}):
+            with self.assertRaises(GateClosed) as ctx:
+                campaign_manager.approve_for_sending(self.campaign, user=self.manager)
+        self.assertIn("Only the configured ExpressEarth CEO", ctx.exception.blockers[0])
+        self.assertFalse(self.campaign.approved_for_sending)
+
+    def test_only_configured_ceo_can_approve(self):
+        with mock.patch.dict(os.environ, {"LEADGEN_CAMPAIGN_APPROVER_USER_ID": str(self.ceo.pk)}):
+            campaign_manager.approve_for_sending(self.campaign, user=self.ceo)
+        self.campaign.refresh_from_db()
+        self.assertTrue(self.campaign.approved_for_sending)
+        self.assertEqual(self.campaign.approved_by, self.ceo)
+
+    def test_unset_approver_fails_closed(self):
+        with mock.patch.dict(os.environ, {"LEADGEN_CAMPAIGN_APPROVER_USER_ID": ""}):
+            with self.assertRaises(GateClosed):
+                campaign_manager.approve_for_sending(self.campaign, user=self.ceo)

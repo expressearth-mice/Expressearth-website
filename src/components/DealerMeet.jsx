@@ -90,6 +90,7 @@ function DealerMeet() {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -152,17 +153,9 @@ function DealerMeet() {
         type: "DealerMeet_Email",
       });
 
-      const payload = {
-        full_name: subscribeEmail,
-        company_name: null,
+      await axiosInstance.post("/api/subscribe/", {
         email: subscribeEmail,
-        phone: "1234567890",
-        event_date: null,
-        event_type: "Other",
-        type: "Individual",
-      };
-
-      await axiosInstance.post("/api/contact/", payload);
+      });
 
       alert("Subscribed Successfully");
 
@@ -187,6 +180,7 @@ function DealerMeet() {
       trackFormSubmit({
         name: "DealerMeet FAQ Inquiry",
         email: faqForm.email,
+        phone: faqForm.phone,
         message: faqForm.message,
         type: "DealerMeet_FAQ",
       });
@@ -195,7 +189,7 @@ function DealerMeet() {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "Dealer Meet FAQ Question",
         type: "Individual",
@@ -207,6 +201,7 @@ function DealerMeet() {
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
     } catch (error) {
@@ -595,6 +590,18 @@ function DealerMeet() {
                     type="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="dealer-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>

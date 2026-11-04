@@ -268,3 +268,26 @@
 - Evidence informing this update: the latest connected 28-day Search Console extract has 12 impressions and zero clicks across apex/www /mice-services page rows; non-brand queries include “mice company in gurugram” (9 impressions; avg position 68.2), “mice companies in gurgaon” (8; 76.0) and “mice agency for corporate events” (3; 65.7), all with zero clicks. GA4 reports 101 Organic Search sessions, with 75 organic sessions landing on the homepage and 9 on /contact; the MICE hub is not among the top organic landing pages in this extract. These are small-sample observations, not a forecast or evidence that the new content has improved rankings.
 - Validation: source-level assertions checked the FAQ heading and answers, five internal route links, contact CTA destination, accessible native details/summary structure and responsive/focus styles. Changed files were re-fetched after commit. Focused Jest tests were added but not run; the full React build remains unavailable in this environment.
 - No structured-data claims, client proof, testimonials, event results, credentials, new locations or additional office claims were introduced. No production deployment, merge, DNS/hosting change, redirect, outbound campaign, or EmpFly/Indo Exhibits modification was made.
+
+
+## 2026-11-05 — homepage-to-MICE service discovery
+
+- Added a visible, crawlable priority-service navigation block immediately below the homepage hero. It links directly to the existing Meetings & Conferences, Incentive Travel, Dealer & Distributor Meets and Corporate Offsites routes, plus the MICE services hub and contact page.
+- Added concise local context stating the Gurugram base and Delhi NCR/India programme coverage. The block reuses the existing programme-link data so the labels and destinations remain aligned with the lower homepage MICE carousel.
+- Added responsive four-column/two-column/single-column layouts, visible keyboard focus styles and reduced-motion handling for hover transitions.
+- Added a focused Home component test covering the four priority service routes and the two next-step links.
+
+### Measurement used (connected 28-day extracts, 7 October–3 November 2026)
+
+- GA4 returned 67 landing-page/channel rows. Organic Search active users were concentrated on the homepage (54), then /contact (7), /about (5), (not set) (4) and /careers (2). The MICE hub did not appear among the returned Organic Search landing-page rows. These are active-user counts by landing-page/channel, not sessions or enquiries.
+- Search Console returned 94 query/page rows with 45 clicks and 736 impressions. The explicit brand queries “express earth” and “expressearth” accounted for all 45 clicks (612 impressions); the other returned query rows accounted for 124 impressions and zero clicks. Anonymised queries may not appear in query-level rows.
+- Priority non-brand query samples remain low: “mice company in gurugram” (10 impressions; average position 68.8), “mice companies in gurgaon” (8; 76.0), “mice agency for corporate events” (4; 65.5), “mice services for corporates” (4; 77.5), and “incentive travel company india” (4; 68.25), all with zero clicks in this extract.
+- Search Console page rows show /mice-services on the www host (10 impressions) and apex host (9 impressions), both with zero clicks. Host consolidation remains a separate hosting task; no redirect or hosting change was made.
+- Google Business Profile recorded 10 website clicks and 40 direction requests in the 28-day extract. These are profile interactions, not verified corporate enquiries. The two returned posts remained LIVE (27 October and 2 November).
+- Forced Windsor refresh is unavailable on the connected trial plan; these figures are the latest available cached connector extracts, not a forced live refresh.
+
+### Validation and safety
+
+- Re-fetched Home.js, Home.css, Home.test.js and this changelog after committing. Source assertions confirmed the new section is placed between the homepage hero and destinations, the four links use the existing programmeLinks entries, the contact/MICE CTAs point to registered routes, and the responsive/focus/reduced-motion CSS is present.
+- CSS brace counts are balanced. The focused Jest test was added but not run; JSX compilation, the full React build and browser verification remain outstanding because no local dependency-backed checkout is available and the repository has no configured GitHub Actions status checks.
+- No case-study claims, client proof, testimonials, credentials, results or new office claims were added. No production deployment, merge, DNS/hosting change, redirect, outbound campaign, or EmpFly/Indo Exhibits modification was made.

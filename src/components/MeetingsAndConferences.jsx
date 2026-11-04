@@ -106,7 +106,7 @@ const MeetingsAndConferences = () => {
         />
         <div className="hero-content">
           <h1 className="hero-title">
-            Corporate Meetings &amp; Conference Management in Delhi NCR
+            Corporate Meetings &amp; Business Gatherings in Delhi NCR
           </h1>
           <p className="hero-subtitle">
             Corporate meetings | Conferences &amp; summits | Seminars | AGMs

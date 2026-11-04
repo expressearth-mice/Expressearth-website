@@ -367,32 +367,26 @@ const Home = () => {
           <h2 className="travel-heading">Plan. Execute. Inspire.</h2>
 
           <p className="travel-subtext">
-            <span className="travel-subtext-initial">At ExpressEarth</span>, we don’t just organize events — we
-            craft immersive corporate experiences. With over a decade of
-            expertise in the MICE industry, we specialize in curating high-end
-            conferences, incentive retreats, and global business summits. Our
-            focus is on <em>flawless execution</em> with a touch of luxury,
-            ensuring every moment leaves a lasting impression.
+            <span className="travel-subtext-initial">At ExpressEarth</span>, we plan corporate meetings and conferences,
+            incentive travel, dealer and distributor programmes, offsites and
+            business events. Depending on the brief, coordination can include
+            destination selection, accommodation, transfers, event production
+            and on-ground logistics.
           </p>
 
           <div className="travel-subheading-box">
             <h6 className="travel-tagline">
-              From Vision to Reality – We Make It Happen.
+              A clear brief helps shape the right programme.
             </h6>
-            <h5 className="travel-impact"> Our Global Impact</h5>
+            <h5 className="travel-impact">Programme Planning Scope</h5>
           </div>
 
-          <div
-            className="travel-stats-grid"
-            ref={travelStatsRef}
-          >
-            {travelStats.map((stat, index) => (
-              <div key={stat.label} className="travel-stat-item">
-                <i className={`${stat.icon} fa-2x travel-icon`}></i>
-                <p className="travel-stat-number">
-                  {stat.formatValue(animatedTravelStats[index])}
-                </p>
-                <p className="travel-stat-label">{stat.label}</p>
+          <div className="travel-stats-grid">
+            {programmeCapabilities.map((capability) => (
+              <div key={capability.title} className="travel-stat-item">
+                <i className={`${capability.icon} fa-2x travel-icon`} aria-hidden="true"></i>
+                <p className="travel-stat-number">{capability.title}</p>
+                <p className="travel-capability-description">{capability.description}</p>
               </div>
             ))}
           </div>
@@ -400,151 +394,39 @@ const Home = () => {
       </section>
 
       <section className="mice-section home-mice-section">
-        <h2 className="c">Mice By Destination</h2>
+        <h2 className="c">Corporate MICE Services</h2>
         <h5 className="section-subheading">
-          Explore the world's finest destinations, designed for unforgettable
-          corporate experiences.
+          Explore the programme types ExpressEarth can plan for corporate teams,
+          channel partners and business audiences.
         </h5>
 
-        {/* Horizontal scroll wrapper */}
         <HorizontalSlider
           className="scroll-container mice-scroll-container"
           shellClassName="mice-scroll-shell"
           arrowClassName="mice-scroll-arrow"
-          itemCount={miceDestinations.length}
-          leftAriaLabel="Scroll destination cards left"
-          rightAriaLabel="Scroll destination cards right"
+          itemCount={programmeLinks.length}
+          leftAriaLabel="Scroll corporate MICE services left"
+          rightAriaLabel="Scroll corporate MICE services right"
         >
-          {miceDestinations.map((item, index) => (
-            <div key={index} className="mice-scroll-item">
+          {programmeLinks.map((item) => (
+            <div key={item.slug} className="mice-scroll-item">
               <Link to={item.slug} className="mice-link">
                 <div className="mice-card mice-card-panel">
-                  <i className={`fa ${item.icon} fa-2x mice-card-icon`}></i>
-                  <h6 className="mice-card-title">{item.label}</h6>
-                  <p className="mice-card-meta">
-                    {item.destinations} Destinations
-                  </p>
+                  <i className={`fa ${item.icon} fa-2x mice-card-icon`} aria-hidden="true"></i>
+                  <h3 className="mice-card-title">{item.label}</h3>
+                  <p className="mice-card-meta">{item.description}</p>
                 </div>
               </Link>
             </div>
           ))}
         </HorizontalSlider>
 
-        <div className="subtext subtext-block">
-          <h6 className="subtext-note">
-            Where business meets luxury, tailor your next event with
-            ExpressEarth!
-          </h6>
-        </div>
-
-        <h2 className="section-heading section-heading-spacing">Mice By Group Size</h2>
-        <h5 className="section-subheading">
-          Seamless event planning for every group, from intimate gatherings to
-          grand corporate affairs.
-        </h5>
-
-        <HorizontalSlider
-          className="scroll-container mice-scroll-container"
-          shellClassName="mice-scroll-shell"
-          arrowClassName="mice-scroll-arrow"
-          itemCount={5}
-          leftAriaLabel="Scroll group size cards left"
-          rightAriaLabel="Scroll group size cards right"
-        >
-          {[
-            {
-
-              text: "Large Corporate Groups – 500+ Participants | 20+ Destinations",
-
-            },
-            {
-
-              text: "Small Business Teams – 50–200 Participants | 15+ Destinations",
-
-            },
-            {
-
-              text: "Executive Retreats & Couples – 2–50 Participants | 12+ Destinations",
-
-            },
-            {
-
-              text: "Incentive & Special Interest Groups – Customizable | 18+ Destinations",
-
-            },
-            {
-
-              text: "Global Conferences – 1000+ Participants | 10+ Destinations",
-
-            },
-          ].map((item, index) => (
-            <div key={index} className="mice-scroll-item">
-              <div className="mice-card mice-card-panel">
-                <h6 className="mice-card-title">
-                  {splitMiceCardText(item.text).title}
-                </h6>
-                <p className="mice-card-meta">
-                  {splitMiceCardText(item.text).details}
-                </p>
-              </div>
-            </div>
-          ))}
-        </HorizontalSlider>
-
-        <div className="subtext subtext-block">
-          <h6 className="subtext-note">
-            Whatever the size, we craft experiences that leave a lasting impact!
-          </h6>
-        </div>
-      </section>
-      {/* Testimonials */}
-      <section className="testimonials">
-        <div className="testimonial-title" >
-          <h3>Client Experiences That Speak For Themselves</h3>
-          <h6>
-            Hear from our satisfied groups who have experienced seamless
-            planning, exceptional service, and unforgettable journeys with us.
-          </h6>
-        </div>
-        <div className="testimonial-grid">
-          {[
-            {
-              quote:
-                "Our corporate retreat in Dubai was flawlessly executed! From the luxurious stay to the well-organized activities, ExpressEarth made everything effortless.",
-              name: "Atiksh Singh",
-              designation: "Business Director",
-              img: "https://media.licdn.com/dms/image/v2/D5603AQFCo_9GZYA7MA/profile-displayphoto-shrink_200_200/B56ZbrouZbGsAY-/0/1747710044720?e=2147483647&v=beta&t=vKycTUn1chOaICigDy2lY6I_0jnDCgAVwFrRfHMgD-o",
-            },
-            {
-              quote:
-                "ExpressEarth transformed our event into an unforgettable journey. Highly professional and truly luxurious experience!",
-              name: "Sana Khan",
-              designation: "HR Head",
-              img: "/Images/client2.jpg",
-            },
-          ].map((testimonial, index) => (
-            <div key={index} className="testimonial-card">
-              <img
-                src={testimonial.img}
-                alt={testimonial.name}
-                className="client-image"
-              />
-              <p>"{testimonial.quote}"</p>
-              <span>
-                <strong>{testimonial.name}</strong>
-              </span>
-              <p className="designation">{testimonial.designation}</p>
-            </div>
-          ))}
-        </div>
-        <div className="testimonial-cta">
-          <p>What’s your story? Let us craft your perfect travel experience!</p>
-          <Link to="/contact" className="custom-button-link">
-            Contact Us
+        <div className="view-all">
+          <Link to="/mice-services" className="custom-button-link">
+            Explore All MICE Services
           </Link>
         </div>
       </section>
-
       {/*Recent blog*/}
       <section className="blogs-updates blogs-updates-section">
         <h2 className="blogs-title">Latest News & Blogs</h2>

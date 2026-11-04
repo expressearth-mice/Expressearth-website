@@ -293,7 +293,12 @@ function App() {
       return;
     }
 
-    setMeta('meta[name="robots"]', { name: "robots" }, "index, follow, max-image-preview:large");
+    const isDevelopmentHost = window.location.hostname.toLowerCase() === "dev.expressearth.com";
+    setMeta(
+      'meta[name="robots"]',
+      { name: "robots" },
+      isDevelopmentHost ? "noindex, follow" : "index, follow, max-image-preview:large"
+    );
     const canonicalUrl = "https://www.expressearth.com" + pathname;
     document.title = metadata.title;
 

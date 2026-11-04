@@ -141,3 +141,15 @@
 - Ran six direct behaviour assertions against the validator logic (boolean true, string true, boolean false, string false, missing success and null response); all passed. The Jest test file is added but the repository Jest suite has not been run.
 - A local GitHub connectivity check failed because this environment could not resolve github.com; therefore no local React build, JSX compilation or Jest run was possible. The repository has no Actions workflow run available as an alternative.
 - No production deployment, DNS/hosting change, redirect, campaign send, merge or EmpFly/Indo Exhibits change was made.
+
+
+## 2026-11-04 — Destination discovery and enquiry conversion
+
+- Destination detail pages now replace generic slug-based metadata with a destination-specific corporate group travel title and description after the destination record loads. The page updates canonical, robots, Open Graph and Twitter title/description/URL metadata together; missing destinations receive noindex metadata and have stale canonicals removed.
+- Changed the destination name to the page's primary H1, made the optional location link conditional, and added a useful not-found state with browse/contact links.
+- Added a visible corporate group programme enquiry section to destination pages, with links to incentive travel, destination management and international group travel. The copy asks for dates, group size and programme type without promising availability.
+- Added a small pure metadata helper and focused Jest tests for destination-specific titles/descriptions.
+- The main contact page now uses the shared contact-response validator, shows an error if the API returns an empty or unsuccessful response instead of silently ending, handles event-date errors whether returned as a string or array, and no longer logs response payloads that may contain submitted personal information. Promoted the contact page heading to H1 and updated its existing heading style.
+- Fresh last-28-day measurement snapshot (4 November 2026): Search Console returned 42 query aggregates; express earth had 20 clicks / 47 impressions and expressearth 19 / 34. Non-brand MICE queries remain low-volume: mice company in gurugram 9 impressions, mice companies in gurgaon 8, mice company in gurgaon 2, all with zero clicks. GA4 reported 99 Organic Search sessions and 21 ads_conversion_Submit_lead_form_1 event counts from Organic Search (63 event counts across all channels). Google Business Profile reported 167 impressions, 10 website clicks, 1 call click and 37 direction requests. GA4 events are not unique enquiries or CRM-qualified opportunities.
+- Validation: re-fetched and compared every changed file after writing; added three focused destination-metadata Jest tests. The full Jest suite, JSX compilation and React build were not run because no local checkout/dependency installation is available and the repository has no Actions workflow runs to use as an alternative.
+- No production deployment, DNS/hosting change, redirect, PR merge, campaign send, or EmpFly/Indo Exhibits code change was made.

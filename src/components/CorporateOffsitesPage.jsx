@@ -7,6 +7,7 @@ import "./CorporateOffsitesPage.css";
 import BgImage from "../assests/Co_Team_Bg.jpg";
 
 import PopupForm from "./popupForm";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
   {
@@ -243,6 +244,12 @@ function CorporateOffsitesPage() {
 
   return (
     <div className="offsitePage">
+      <ServiceStructuredData
+        name="Corporate Offsite and Team Retreat Planning"
+        serviceType="Corporate offsites, team retreats and leadership retreats"
+        description="ExpressEarth plans corporate offsites and team retreats for organisations in Delhi NCR and across India. Selected 1-night, 2-day packages for groups of 40–100 start at ₹7,000 per person, including twin-share accommodation, all meals and round-trip transportation; taxes extra. Final pricing depends on destination, dates, availability and confirmed inclusions."
+        url="https://www.expressearth.com/corporateoffsites"
+      />
       {showPopup && <PopupForm onClose={handleClosePopup} />}
 
       {/* HERO */}

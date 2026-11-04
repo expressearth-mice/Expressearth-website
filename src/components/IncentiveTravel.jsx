@@ -3,10 +3,20 @@ import { FaMedal, FaChartLine, FaUsers, FaUmbrellaBeach, FaGift, FaCarSide, FaGe
 import "./IncentiveTravel.css"; // (make sure you import your CSS!)
 import { Link } from 'react-router-dom';
 import HorizontalSlider from "./ui/HorizontalSlider";
+import ServiceStructuredData from "./ServiceStructuredData";
+
+const serviceDescription =
+  "ExpressEarth plans corporate incentive travel programmes for employees and channel partners. Planning can include destination selection, flights, accommodation, transfers, activities, group coordination and on-ground support. Programme design is shaped around recognition objectives, group size, travel dates and budget.";
 
 const IncentiveTravel = () => {
   return (
     <div className="incentive-travel-container">
+      <ServiceStructuredData
+        name="Corporate Incentive Travel and Reward Programmes"
+        serviceType="Corporate incentive travel and employee reward trips"
+        description={serviceDescription}
+        url="https://www.expressearth.com/incentive-travel"
+      />
 
       {/* Hero Section */}
       <section
@@ -16,17 +26,14 @@ const IncentiveTravel = () => {
         }}
       >
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="hero-title">Luxury Incentive Programs for Top Performers
-            <br />Reward the Best. Inspire the Rest.</h1>
-          <a href="/contact" className="primary-button">Let’s Create Your Next Dream Incentive Trip </a>
+          <h1 className="hero-title">Corporate Incentive Travel &amp; Reward Programmes in Delhi NCR</h1>
+          <Link to="/contact" className="primary-button">Discuss Your Incentive Travel Brief</Link>
         </div>
       </section>
 
       <section className="para-section">
         <div className="para">
-          <p className="hero-subtitle">
-            At ExpressEarth, we design incentive travel programs that go far beyond a getaway — they’re powerful tools to recognize, motivate, and retain your top talent. Every journey is curated with sophistication, purpose, and unforgettable moments, delivering the kind of reward that speaks volumes.
-          </p>
+          <p className="hero-subtitle">{serviceDescription}</p>
 
           <p className="hero-quote">
              -When performance meets passion, the destination becomes the motivation.
@@ -40,7 +47,7 @@ const IncentiveTravel = () => {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="section-title"><FaGlobeAmericas className="inline mr-2" />Your Performance. Our Inspiration.</h2>
           <p className="section-description">
-            Our team specializes in developing high-end corporate reward travel programs that align with your brand values and performance goals. Whether it's a tropical escape, a snow-covered adventure, or a cultural deep dive — we turn achievements into experiences of a lifetime.
+            We help companies plan reward trips around recognition objectives, group profile, destination, dates and budget. Options can include beach, city, mountain and cultural itineraries, subject to availability and travel requirements.
           </p>
           <Link to="/contact" className="primary-button performance-btn">Let’s Talk Goals</Link>
         </div>
@@ -59,35 +66,35 @@ const IncentiveTravel = () => {
           {
             icon: <FaChartLine style={{ color: "#56CE27" }} />,
             title: "Sales Incentive Travel Packages",
-            desc: "Boost productivity with travel goals that excite. Our sales incentive travel packages are designed to engage your teams and drive results.",
+            desc: "Coordinate sales incentive trips with destination research, accommodation, group travel, activities and on-ground logistics.",
             link: "/contact",
             linkText: "Inspire Peak Sales Performance",
           },
           {
             icon: <FaUsers className="text-purple-500" />,
             title: "Team Incentive Tours",
-            desc: "Reinforce collaboration and unity with personalized team incentive tours that mix business with leisure in premium settings.",
+            desc: "Bring colleagues together through shared itineraries, group activities and destination experiences planned around the programme brief.",
             link: "/destinations",
             linkText: "Explore Tour Options",
           },
           {
             icon: <FaUmbrellaBeach className="text-pink-500" />,
             title: "Corporate Retreat Destinations",
-            desc: "Handpicked retreat locations — vineyards in Tuscany, beach resorts in Bali, and more.",
+            desc: "Compare domestic and international locations based on season, access, group size, accommodation and programme objectives.",
             link: "/destinations",
             linkText: "Discover Your Next Retreat",
           },
           {
             icon: <FaGift className="text-red-400" />,
             title: "Corporate Reward Travel Programs",
-            desc: "Tailor-made reward travel programs that combine luxury, logistics, and emotion — all handled by our dedicated incentive specialists.",
+            desc: "Coordinate reward travel components, including itinerary planning, participant communication and destination logistics.",
             link: "/contact",
             linkText: "Let’s Build Something Special",
           },
           {
             icon: <FaCarSide style={{ color: "#1c65a5" }} />,
             title: "Luxury Ground Transportation",
-            desc: "We believe the journey should be just as impressive as the destination. That’s why we provide top-tier ground transportation options.",
+            desc: "Plan airport transfers and local group transport according to the itinerary, vehicle requirements and destination.",
             link: "/contact",
             linkText: "Travel in Style",
           },
@@ -111,12 +118,12 @@ const IncentiveTravel = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="section-title"><FaGem style={{ color: "#1c65a5" }} className="mr-2" />Why Choose ExpressEarth?</h2>
           <ul className="benefits-list">
-            <li><span className="benefit-highlight">Curated Luxury Experiences</span> — Each itinerary is handcrafted with premium experiences, five-star stays, and personalized touches.</li>
-            <li><span className="benefit-highlight">Seamless Global Execution</span> — From flights to final-night galas, we manage every detail, anywhere in the world.</li>
-            <li><span className="benefit-highlight">Custom Branding & Engagement</span> — Your brand identity is infused into every aspect of the journey, making each moment uniquely yours.</li>
-            <li><span className="benefit-highlight">ROI-Driven Programs</span> — Our incentive travel programs are designed to boost retention, morale, and measurable performance.</li>
+            <li><span className="benefit-highlight">Programme design</span> — Align destination, itinerary and activities with recognition objectives and budget.</li>
+            <li><span className="benefit-highlight">Group logistics</span> — Coordinate flights, accommodation, transfers, activities and participant movement.</li>
+            <li><span className="benefit-highlight">Branding &amp; engagement</span> — Include approved company branding and group activities where required.</li>
+            <li><span className="benefit-highlight">Travel coordination</span> — Plan participant communication, travel documents and on-ground support, subject to destination requirements.</li>
           </ul>
-          <a href="/contact" className="primary-button mt-8">Let’s Make It Count</a>
+          <Link to="/contact" className="primary-button mt-8">Let’s Make It Count</Link>
           
         </div>
       </section>
@@ -126,7 +133,7 @@ const IncentiveTravel = () => {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="section-title text-white"><FaBullseye className="inline mr-2" />Ready to Motivate with Meaning?</h2>
           <p className="section-description text-white">Let’s turn your recognition goals into extraordinary journeys.</p>
-          <a href="/contact" className="secondary-button">Speak to our Incentive Travel Experts today </a>
+          <Link to="/contact" className="secondary-button">Share Your Incentive Travel Brief</Link>
         </div>
       </section>
 

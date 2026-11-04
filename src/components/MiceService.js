@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { FaRegCalendar, FaPlane, FaBullhorn, FaBuilding, FaMapMarkedAlt, FaGift } from 'react-icons/fa';
 import './MiceService.css';
+import ServiceStructuredData from './ServiceStructuredData';
 
 const services = [
   {
@@ -66,6 +67,8 @@ const services = [
   }
 ];
 
+const serviceDescription = "ExpressEarth plans corporate MICE programmes across India and international destinations, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. Planning can include venue sourcing, group travel, accommodation, event production and on-ground logistics around the programme brief.";
+
 const MiceServices = () => {
   const heroImage = '/Images/Expressearth%20website%20images/Our-Services/services.png';
 
@@ -75,6 +78,12 @@ const MiceServices = () => {
 
   return (
     <div className="mice-services-page">
+      <ServiceStructuredData
+        name="Corporate MICE Services"
+        serviceType="Corporate MICE and event management"
+        description={serviceDescription}
+        url="https://www.expressearth.com/mice-services"
+      />
       <section
         className="mice-services-hero"
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -87,8 +96,7 @@ const MiceServices = () => {
 
       <section className="mice-services-section">
         <p className="mice-services-intro">
-          ExpressEarth plans corporate MICE programmes across India and international destinations, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. Our team can coordinate venue sourcing, group travel, accommodation, event production and on-ground logistics around your programme requirements.
-          Explore the services below, then contact us to discuss your event type, destination, group size and dates.
+          {serviceDescription} Explore the services below, then contact us with your programme type, destination, group size and dates.
         </p>
         <h2 className="mice-services-heading">
           OUR KEY SERVICES

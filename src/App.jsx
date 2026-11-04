@@ -352,6 +352,18 @@ function App() {
         <Route path="/incentive-travel" element={<IncentiveTravel />} />
         <Route path="/corporate-events" element={<CorporateEvents />} />
         <Route
+          path="/meetings-and-conferences"
+          element={<MeetingsAndConferences />}
+        />
+        <Route
+          path="/exhibitions-and-trade-shows"
+          element={<ExhibitionPage />}
+        />
+        <Route
+          path="/destination-management"
+          element={<DestinationManagement />}
+        />
+        <Route
           path="/exhibitions-and-trade-shows"
           element={<ExhibitionPage />}
         />

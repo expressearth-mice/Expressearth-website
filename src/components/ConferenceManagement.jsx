@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import "./ConferenceManagement.css";
-import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { trackConfirmedLead } from "../utils/leadTracking";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import CM_1 from "../assests/CM_1.png";
 import CM_2 from "../assests/CM_2.png";
@@ -149,12 +149,9 @@ const ConferenceManagement = () => {
         return;
       }
 
-      trackContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        type: "ConferenceManagement",
+      trackConfirmedLead({
+        serviceType: "conference_management",
+        formLocation: "primary",
       });
 
       alert("Form Submitted Successfully");
@@ -236,12 +233,9 @@ const ConferenceManagement = () => {
         return;
       }
 
-      trackFormSubmit({
-        name: "ConferenceManagement FAQ Inquiry",
-        email: faqForm.email,
-        phone: faqForm.phone,
-        message: faqForm.message,
-        type: "ConferenceManagement_FAQ",
+      trackConfirmedLead({
+        serviceType: "conference_management",
+        formLocation: "faq_question",
       });
 
       alert("Your question has been submitted successfully");

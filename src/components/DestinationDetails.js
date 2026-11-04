@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../api/axios";
+import { normalizeCollectionResponse } from "../api/collectionData";
 
 const hardcodedDestinations = [
   {
@@ -81,7 +82,7 @@ const DestinationDetails = () => {
     const fetchRecentPosts = async () => {
       try {
         const response = await axiosInstance.get("/api/posts/");
-        const sorted = response.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        const sorted = [...normalizeCollectionResponse(response.data)].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
         setRecentPosts(sorted.slice(0, 4));
       } catch (error) {
         console.error("Failed to fetch recent posts:", error);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { normalizeCollectionResponse } from "../api/collectionData";
+import { buildDestinationSeoMetadata } from "../utils/destinationSeo";
 
 const hardcodedDestinations = [
   {
@@ -96,22 +97,69 @@ const DestinationDetails = () => {
   useEffect(() => {
     if (loading || typeof document === "undefined") return;
 
-    const robotsMeta = document.head.querySelector('meta[name="robots"]');
+    const setMeta = (selector, attributes, content) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+
     if (!destination) {
-      document.title = "Destination not found | ExpressEarth";
-      if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
+      const notFoundTitle = "Destination not found | ExpressEarth";
+      const notFoundDescription = "The requested destination page is unavailable. Browse corporate group destinations or contact ExpressEarth about an upcoming programme.";
+      document.title = notFoundTitle;
+      setMeta('meta[name="robots"]', { name: "robots" }, "noindex, follow");
+      setMeta('meta[property="og:title"]', { property: "og:title" }, notFoundTitle);
+      setMeta('meta[property="og:description"]', { property: "og:description" }, notFoundDescription);
+      setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, notFoundTitle);
+      setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, notFoundDescription);
       const staleCanonical = document.head.querySelector('link[rel="canonical"]');
       if (staleCanonical) staleCanonical.remove();
       return;
     }
 
-    if (robotsMeta) {
-      robotsMeta.setAttribute("content", "index, follow, max-image-preview:large");
+    const metadata = buildDestinationSeoMetadata(destination.name || decodedName);
+    if (!metadata) return;
+
+    const canonicalPath =
+      typeof window !== "undefined"
+        ? window.location.pathname.replace(/\/+$/, "") || "/"
+        : "/destinations/" + encodeURIComponent(decodedName);
+    const canonicalUrl = "https://www.expressearth.com" + canonicalPath;
+
+    document.title = metadata.title;
+    setMeta('meta[name="robots"]', { name: "robots" }, "index, follow, max-image-preview:large");
+    setMeta('meta[name="description"]', { name: "description" }, metadata.description);
+    setMeta('meta[property="og:title"]', { property: "og:title" }, metadata.title);
+    setMeta('meta[property="og:description"]', { property: "og:description" }, metadata.description);
+    setMeta('meta[property="og:url"]', { property: "og:url" }, canonicalUrl);
+    setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, metadata.title);
+    setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, metadata.description);
+
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
     }
-  }, [destination, loading]);
+    canonical.setAttribute("href", canonicalUrl);
+  }, [destination, decodedName, loading]);
 
   if (loading) return <h2 style={{ textAlign: "center", marginTop: "50px" }}>Loading...</h2>;
-  if (!destination) return <h2 style={{ textAlign: "center", marginTop: "50px" }}>Destination Not Found</h2>;
+  if (!destination) {
+    return (
+      <main className="container py-5 text-center">
+        <h1>Destination not found</h1>
+        <p>The requested destination could not be found. You can browse other corporate group destinations or discuss a programme with ExpressEarth.</p>
+        <Link to="/destinations">Browse destinations</Link>
+        {" · "}
+        <Link to="/contact">Discuss a corporate group programme</Link>
+      </main>
+    );
+  }
 
 
 
@@ -173,18 +221,41 @@ const DestinationDetails = () => {
             }}
           />
           <div>
-            <h2 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>{destination.name}</h2>
-            <p style={{ marginTop: "10px" }}>
-              <Link to={destination.location} style={{ color: "#007bff", textDecoration: "none" }}>
-                {destination.location}
-              </Link>
-            </p>
+            <h1 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>{destination.name}</h1>
+            {destination.location && (
+              <p style={{ marginTop: "10px" }}>
+                <Link to={destination.location} style={{ color: "#007bff", textDecoration: "none" }}>
+                  {destination.location}
+                </Link>
+              </p>
+            )}
             <p style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "#333", textAlign: "justify" }}>
               {destination.description}
             </p>
           </div>
         </div>
       </div>
+
+      <section className="container py-4 mb-4" aria-labelledby="destination-enquiry-heading">
+        <div style={{ backgroundColor: "#eef4f8", borderRadius: "12px", padding: "28px" }}>
+          <h2 id="destination-enquiry-heading" style={{ marginBottom: "12px" }}>
+            Planning a corporate group programme in {destination.name}?
+          </h2>
+          <p>
+            Share your preferred dates, approximate group size and programme type.
+            ExpressEarth can discuss accommodation, transfers, activities and local
+            coordination around your brief.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px" }}>
+            <Link to="/contact" className="custom-button-link">
+              Discuss this destination
+            </Link>
+            <Link to="/incentive-travel">Corporate incentive travel</Link>
+            <Link to="/destination-management">Destination management</Link>
+            <Link to="/internationalgrouptravel">International group travel</Link>
+          </div>
+        </div>
+      </section>
 
       {/* Recent Blogs Section */}
       <section className="blogs-updates mt-5 mb-5">

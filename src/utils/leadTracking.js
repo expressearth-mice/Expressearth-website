@@ -60,29 +60,37 @@ const decodePathSegment = (value) => {
 
 const hasSensitivePathSegment = (segment) => {
   const decoded = decodePathSegment(segment);
-  const digitCount = (decoded.match(/\\d/g) || []).length;
-  const containsEmail = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i.test(decoded);
-  const containsPhone =
-    digitCount >= 9 &&
-    /(?:^|[^a-z])\\+?\\d[\\d().\\s-]*\\d(?:$|[^a-z])/i.test(decoded);
-
-  return (
-    containsEmail ||
-    containsPhone ||
-    /[\\u0000-\\u001f\\u007f]/.test(decoded)
+  const numericRuns =
+    decoded.match(/(?:^|[^A-Za-z])[+]?[0-9][0-9(). -]*[0-9](?:$|[^A-Za-z])/g) || [];
+  const containsPhone = numericRuns.some(
+    (run) => (run.match(/[0-9]/g) || []).length >= 9,
   );
+  const containsControlCharacter = Array.from(decoded).some((character) => {
+    const code = character.charCodeAt(0);
+    return code <= 31 || code === 127;
+  });
+
+  return decoded.includes("@") || containsPhone || containsControlCharacter;
 };
 
 const safePagePath = (value) => {
   if (typeof value !== "string") return "/";
 
   const path = value.trim();
+  const containsControlCharacter = Array.from(path).some((character) => {
+    const code = character.charCodeAt(0);
+    return code <= 31 || code === 127;
+  });
+
   if (
     !path ||
     !path.startsWith("/") ||
     path.startsWith("//") ||
     path.length > 240 ||
-    /[?#\\\\\\u0000-\\u001f\\u007f]/.test(path)
+    path.includes("?") ||
+    path.includes("#") ||
+    path.includes("\\") ||
+    containsControlCharacter
   ) {
     return "/";
   }
@@ -96,7 +104,7 @@ const safeReferrerPath = (value) => {
   try {
     const url = new URL(value);
     if (url.protocol !== "http:" && url.protocol !== "https:") return "";
-    return `${url.origin}${safePagePath(url.pathname)}`;
+    return url.origin + safePagePath(url.pathname);
   } catch {
     return "";
   }

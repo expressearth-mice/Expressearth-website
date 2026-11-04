@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './popupForm.css';
 import axiosInstance from '../api/axios';
-import { trackContact } from '../utils/fbPixel';
+import { trackConfirmedLead } from '../utils/leadTracking';
 import { isSuccessfulContactResponse } from '../utils/contactResponse';
 
 const PopupForm = ({ onClose }) => {
@@ -78,12 +77,9 @@ const PopupForm = ({ onClose }) => {
       );
 
       if (isSuccessfulContactResponse(response)) {
-        trackContact({
-          name: formData.full_name,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company_name,
-          type: "PopupForm",
+        trackConfirmedLead({
+          serviceType: "popup_mice_enquiry",
+          formLocation: "popup",
         });
         setSubmitted(true);
         setFormData({

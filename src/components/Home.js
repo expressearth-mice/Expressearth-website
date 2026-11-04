@@ -102,13 +102,15 @@ const Home = () => {
 
       {/* 👇 Floating Icon */}
       {showIcon && (
-        <div
+        <button
+          type="button"
           className="floating-icon"
           onClick={handleOpenPopup}
+          aria-label="Open the ExpressEarth enquiry form"
           title="Get in Touch"
         >
           📋
-        </div>
+        </button>
       )}
 
       <section className="image-hero-wrapper">
@@ -466,81 +468,22 @@ const Home = () => {
       </section>
 
       <section className="case-study-section">
-        {/* Top curved SVG */}
-        <div className="case-study-wave case-study-wave-top">
-          <svg
-            className="case-study-wave-svg"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            viewBox="0 0 1200 120"
-          >
-            <path d="M1200 0L0 0 0 120 1200 0z" fill="#0162b5"></path>
-          </svg>
-        </div>
-
         <div className="case-study-content">
           <div className="case-study-content-inner">
-            <h2 className="case-study-kicker">
-              Real Success Stories
-            </h2>
+            <h2 className="case-study-kicker">Project Examples</h2>
             <p className="case-study-title">
-              Transforming Corporate Travel & Events
+              Explore ExpressEarth's published case studies
             </p>
-            <h3 className="case-study-quote">
-              “ExpressEarth MICE delivered a seamless and personalized corporate
-              travel experience. Their expertise in handling large-scale events,
-              attention to detail, and customized solutions truly set them
-              apart.”
-            </h3>
           </div>
           <p className="case-study-description">
-            That’s what a senior manager from a{" "}
-            <span className="case-study-company">[Fortune 500 Company]</span> had to say
-            about their experience with ExpressEarth MICE. From end-to-end event
-            planning to flawless execution, we ensure every journey is a
-            success.
+            Review published project pages for programme context, group travel
+            and event planning examples. If you have a similar requirement,
+            share your event type, destination, group size, dates and budget.
           </p>
-
-          <p className="case-study-description case-study-description-secondary">
-            Discover how our innovative solutions and industry expertise create
-            unforgettable corporate experiences.
-          </p>
-          <Link to="/case-studies">
-            <button className="custom-button-link">Read Full Case Study</button>
+          <Link to="/case-studies" className="custom-button-link">
+            Browse Case Studies
           </Link>
         </div>
-
-        {/* Bottom curved SVG */}
-        {/* Top rotated curved SVG (180°) */}
-        <div className="case-study-wave case-study-wave-bottom">
-          <svg
-            className="case-study-wave-svg"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            viewBox="0 0 1200 120"
-          >
-            <path d="M1200 0L0 120 0 0 1200 0z" fill="#0162b5" />
-          </svg>
-        </div>
-      </section>
-
-      <section className="achievements-section">
-        <h2 className="achievements-title">
-          Excellence Recognized, Trust Earned
-        </h2>
-        <p className="achievements-text">
-          Discover the awards, accreditations, and industry recognition that
-          make{" "}
-          <span className="achievements-brand">ExpressEarth MICE</span>{" "}
-          a trusted name in corporate travel and event management. With 9 years
-          of excellence, we continue to set new benchmarks in delivering
-          unforgettable experiences.
-        </p>
-        <Link to="/achievements">
-          <button className="custom-button-link">
-            Explore Our Achievements
-          </button>
-        </Link>
       </section>
 
       {/* FAQs Section */}
@@ -550,45 +493,42 @@ const Home = () => {
         <section className="faq-section">
           {[
             {
-              question:
-                "What MICE services does ExpressEarth offer for corporate events?",
-              answer:
-                " ExpressEarth specializes in end-to-end MICE services, including corporate meetings, incentive travel, international conferences, trade exhibitions, and luxury corporate retreats. We create tailor-made solutions to deliver high-impact business experiences globally.",
+              question: "What MICE services does ExpressEarth offer for corporate programmes?",
+              answer: "ExpressEarth plans corporate meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. The agreed scope can include venue sourcing, group travel, accommodation, event production and on-ground logistics.",
             },
             {
-              question:
-                "Can ExpressEarth manage international corporate travel and large group logistics?",
-              answer:
-                "With a strong global network, we handle international corporate travel, visa assistance, luxury hotel bookings, on-ground logistics, and event execution for groups of all sizes—from executive teams to large delegations of 1000+ participants.",
+              question: "Can ExpressEarth coordinate international corporate group travel?",
+              answer: "Planning can include destination research, accommodation, transfers, visa assistance where required, activities and group logistics. Feasibility depends on destination, travel dates, group size and entry requirements.",
             },
             {
-              question:
-                " How early should I start planning a corporate event with ExpressEarth?",
-              answer:
-                " For a smooth experience, we recommend initiating planning 3–6 months in advance, especially for large-scale or international MICE events. However, our experienced team can also manage last-minute MICE travel and event planning with efficiency.",
+              question: "How early should we start planning a corporate MICE programme?",
+              answer: "For larger or international programmes, begin planning several months ahead where possible. Lead time depends on destination, venue availability, group size, visa requirements and production scope.",
             },
             {
-              question:
-                "Are your MICE event packages customizable for our business goals and budget?",
-              answer:
-                " Absolutely. Our custom MICE packages are tailored to your corporate objectives, budget, and brand identity. Whether you're planning a luxury incentive trip or a strategic offsite, we ensure a personalized and memorable experience.",
+              question: "Can the programme be customised to our objectives and budget?",
+              answer: "Yes. The programme scope can be shaped around your objectives, audience, group size, destination, dates, budget and required travel or production services.",
             },
             {
-              question:
-                "How do I start planning a MICE event with ExpressEarth?",
-              answer:
-                "Getting started is easy—simply fill out the Plan Your Perfect MICE Event form on our website or contact us directly. Our experts will schedule a free MICE consultation and guide you through destination selection, logistics, and event design.",
+              question: "What information should we share to start an enquiry?",
+              answer: "Use the contact page to share your company name, programme type, destination, expected group size, dates, budget range and services required. The team can review the brief and discuss next steps.",
             },
-          ].map((faq, index) => (
+          ]          ].map((faq, index) => (
             <div key={index} className="faq-item">
-              <h4
-                onClick={() => toggleFAQ(index)}
-                className="faq-question-row"
-              >
-                {faq.question}
-                <span>{activeFAQ === index ? "⌃" : "⌄"}</span>
+              <h4>
+                <button
+                  type="button"
+                  className="faq-question-row"
+                  aria-expanded={activeFAQ === index}
+                  aria-controls={`home-faq-answer-${index}`}
+                  onClick={() => toggleFAQ(index)}
+                >
+                  <span>{faq.question}</span>
+                  <span aria-hidden="true">{activeFAQ === index ? "⌃" : "⌄"}</span>
+                </button>
               </h4>
-              {activeFAQ === index && <p>{faq.answer}</p>}
+              {activeFAQ === index && (
+                <p id={`home-faq-answer-${index}`}>{faq.answer}</p>
+              )}
             </div>
           ))}
         </section>
@@ -596,10 +536,11 @@ const Home = () => {
       <a
         href="https://wa.me/9266056660"
         className="whatsapp-float"
+        aria-label="Chat with ExpressEarth on WhatsApp"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <i className="fab fa-whatsapp"></i>
+        <i className="fab fa-whatsapp" aria-hidden="true"></i>
       </a>
     </div>
   );

@@ -173,3 +173,15 @@
 - No deployment, merge, DNS/hosting change, outbound campaign, or EmpFly/Indo Exhibits modification was made.
 
 - Follow-up fix: both Recognition & Rewards forms now use the shared `axiosInstance` configured from `REACT_APP_API_URL` (defaulting to `https://api.expressearth.com`). The previous raw Axios relative URL could resolve against the frontend host instead of the configured API host.
+
+
+## 2026-11-04 — Latest acquisition evidence refresh
+
+- Search Console returned 42 distinct query strings across 102 daily query rows for the last 28 days. ExpressEarth brand variants accounted for 39 clicks from 85 impressions; the remaining non-brand queries accounted for 0 clicks from 76 impressions. These are low-volume query samples, not a demand estimate.
+- Priority non-brand MICE queries included `mice company in gurugram` (9 impressions; average position 68.2), `mice companies in gurgaon` (8; 76.0), `mice agency for corporate events` (3; 65.7), and `mice company in gurgaon` (2; 93.5); each had zero clicks in this extract.
+- Search Console page URLs remain split across hosts: `www.expressearth.com` recorded 57 clicks / 473 impressions, while `expressearth.com` recorded 19 clicks / 716 impressions. The B2C subdomain recorded 10 impressions and the development host 3, both with zero clicks. This reinforces the hosting-level canonical consolidation dependency; no redirects or hosting changes were made.
+- GA4 recorded 597 sessions, including 99 Organic Search sessions. The existing `ads_conversion_Submit_lead_form_1` event recorded 63 counts: 21 from Organic Search, 39 Direct and 3 Unassigned. These are event counts, not unique people, confirmed submissions or qualified CRM opportunities.
+- Google Business Profile recorded 167 impressions, 10 website clicks, 1 call click and 37 direction requests over the same period.
+- GA4 also recorded 17 `page_view` and 17 `session_start` events for the unmatched path `/ZGVzdGluYX` under Direct. No corresponding public React route exists; treat this as a route/measurement anomaly, not a lead. Developer/analytics tracing is required to identify its source.
+- The Search Console sitemap connector returned rows with a null sitemap path and zero submission/error fields; this does not verify whether the sitemap is submitted or processed. Use Search Console's Sitemaps and URL Inspection views for confirmation.
+- The new `generate_lead` event exists only in the development branch until the code is released and the corresponding GTM event trigger/GA4 tag is verified with Tag Assistant.

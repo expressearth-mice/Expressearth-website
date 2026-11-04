@@ -104,3 +104,20 @@
 - Ran a standalone Node syntax check and five behavior assertions against the collection normalizer; all passed. The repository Jest suite and React build remain unrun.
 - Focused unit tests were added but the Jest suite and React production build have not been run in this environment; the repository is available through GitHub's file API but no local checkout with installed dependencies is available.
 - No production deployment, DNS/hosting changes or redirects were made.
+
+## 2026-11-04 — Search performance review and development-host crawl guard
+
+- Added an early `public/index.html` check that sets `noindex, follow` on `dev.expressearth.com` before the React application hydrates. The existing route-aware metadata check remains in place as a second layer.
+- Reviewed the latest 28-day Search Console query and page extracts. The visible query rows show clicks concentrated on the brand variants `express earth` and `expressearth`; the returned non-brand MICE queries (including `mice companies in gurgaon`, `mice company in gurugram` and `mice agency for corporate events`) have impressions but no clicks in this extract. The connector's branded/non-branded flag classifies these brand variants as non-branded because it checks for the domain string; future reporting must classify known ExpressEarth brand variants separately.
+- Search Console's domain-property page rows still contain host variants, including `http://expressearth.com/`, `https://expressearth.com/about`, and a `dev.expressearth.com` destination URL, alongside the preferred `https://www.expressearth.com/` URLs. A live fetch of the apex HTTP and HTTPS URLs remained on the apex host rather than resolving to the www host. The code's sitemap and route metadata prefer HTTPS + www, but host-level consolidation still needs hosting configuration. No redirects were created, in line with the owner's instruction.
+- The development-host noindex script is an incremental client-side safeguard only. A developer should also configure an `X-Robots-Tag: noindex` response header for the dev host so crawlers that do not execute JavaScript cannot index the development copy.
+- GA4's latest 28-day extract reports 99 Organic Search sessions and 21 key-event counts by session channel. The specific `ads_conversion_Submit_lead_form_1` event appears 63 times (62 on `/contact`, one on `/contact/`). These are event counts, not verified unique form submissions, people or A1/A2 CRM opportunities.
+- Google Business Profile currently has two LIVE posts in the reviewed period: the general MICE post (27 October) and the corporate-offsite post (2 November), each linking to its relevant service page. No additional post was published in this run.
+- The GBP service list includes several consumer-travel labels (for example family trips, honeymoons, cruises and destination weddings) alongside corporate MICE services. Do not remove them without the owner's confirmation that those services are no longer offered under this profile.
+- The Search Console connector returned no usable sitemap-status record in this pull. Sitemap submission/processing therefore remains unverified and should be checked in the Search Console UI.
+
+### Measurement and implementation limits
+
+- The 28-day Search Console, GA4 and GBP extracts are directional snapshots; query/page totals may differ because of Search Console anonymisation, aggregation and differing dimensions.
+- Google recommends crawlable `<a href>` links, meaningful HTTP status codes for missing pages and consistent canonical signals. See [crawlable link guidance](https://developers.google.com/search/docs/crawling-indexing/links-crawlable), [crawling error guidance](https://developers.google.com/search/docs/crawling-indexing/troubleshoot-crawling-errors) and [canonical guidance](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls).
+- No production deployment, redirect, DNS or hosting change was made.

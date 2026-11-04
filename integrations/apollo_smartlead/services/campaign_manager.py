@@ -16,7 +16,8 @@ from django.utils import timezone
 from .. import conf
 from ..clients import SmartleadClient
 from ..clients.smartlead import ADD_LEADS_BATCH
-from ..permissions import is_campaign_approver\nfrom ..models import (
+from ..permissions import is_campaign_approver
+from ..models import (
     ACTIVE_OUTREACH,
     Campaign,
     CampaignEnrollment,

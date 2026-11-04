@@ -54,7 +54,7 @@ describe("Home priority MICE navigation", () => {
     expectedLinks.forEach(([label, href]) => {
       expect(
         within(navigation).getByRole("link", {
-          name: new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+          name: new RegExp(label, "i"),
         }),
       ).toHaveAttribute("href", href);
     });

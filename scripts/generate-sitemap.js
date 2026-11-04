@@ -151,9 +151,19 @@ async function main() {
   }
 
   const seenCaseStudySlugs = new Set();
+  const placeholderCaseStudySlugs = new Set(["abc", "abc-1", "abc-2", "abcd"]);
   for (const caseStudy of [...newCaseStudies, ...oldCaseStudies]) {
-    const slug = encodePathSegment(caseStudy?.slug || caseStudy?.id);
-    if (!slug || seenCaseStudySlugs.has(slug)) continue;
+    // Only publish descriptive, human-readable case-study slugs. Placeholder
+    // records and ID-only records should not become indexable sitemap URLs.
+    const rawSlug = String(caseStudy?.slug || "").trim().toLowerCase();
+    const slug = encodePathSegment(rawSlug);
+    if (
+      !slug ||
+      rawSlug.length < 20 ||
+      placeholderCaseStudySlugs.has(rawSlug) ||
+      /-\\d+$/.test(rawSlug) ||
+      seenCaseStudySlugs.has(slug)
+    ) continue;
     seenCaseStudySlugs.add(slug);
     entries.push(
       urlEntry({

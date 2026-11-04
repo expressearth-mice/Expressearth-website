@@ -1,0 +1,8 @@
+# The app itself only needs Django, DRF and requests -- all already in the
+# ExpressEarth backend at these versions. The rest is for the local devserver.
+Django==5.2
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.0
+requests==2.32.3
+python-dotenv==1.1.0
+psycopg2-binary==2.9.10

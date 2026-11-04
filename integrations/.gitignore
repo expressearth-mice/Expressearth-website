@@ -1,0 +1,5 @@
+# Local secrets and dev artefacts -- never commit these.
+.env
+devserver/db.sqlite3
+__pycache__/
+*.pyc

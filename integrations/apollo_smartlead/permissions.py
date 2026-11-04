@@ -4,7 +4,9 @@
 is deliberately *not* used here. Groups are created by
 ``manage.py leadgen_setup_roles``.
 """
-from rest_framework.permissions import BasePermission\n\nfrom . import conf
+from rest_framework.permissions import BasePermission
+
+from . import conf
 
 ADMIN_GROUP = "Leadgen Admin"
 MANAGER_GROUP = "Leadgen Manager"
@@ -15,7 +17,13 @@ def _in_group(user, *names):
     return user.groups.filter(name__in=names).exists()
 
 
-def is_campaign_approver(user):\n    """Only the explicitly configured CEO account may approve campaign sends. Fail closed."""\n    approver_id = conf.leadgen_campaign_approver_user_id()\n    return bool(approver_id and user and user.is_authenticated and str(user.pk) == approver_id)\n\n\ndef is_leadgen_admin(user):
+def is_campaign_approver(user):
+    """Only the explicitly configured CEO account may approve campaign sends. Fail closed."""
+    approver_id = conf.leadgen_campaign_approver_user_id()
+    return bool(approver_id and user and user.is_authenticated and str(user.pk) == approver_id)
+
+
+def is_leadgen_admin(user):
     """Verifies sender domains, approves campaigns for sending, lifts suppressions."""
     return bool(user and user.is_authenticated
                 and (user.is_superuser or _in_group(user, ADMIN_GROUP)))
@@ -33,7 +41,12 @@ def is_leadgen_member(user):
                                             and _in_group(user, EXECUTIVE_GROUP))
 
 
-class IsCampaignApprover(BasePermission):\n    def has_permission(self, request, view):\n        return is_campaign_approver(request.user)\n\n\nclass IsLeadgenAdmin(BasePermission):
+class IsCampaignApprover(BasePermission):
+    def has_permission(self, request, view):
+        return is_campaign_approver(request.user)
+
+
+class IsLeadgenAdmin(BasePermission):
     def has_permission(self, request, view):
         return is_leadgen_admin(request.user)
 

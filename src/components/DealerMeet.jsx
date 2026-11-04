@@ -9,6 +9,7 @@ import bg from "../assests/dealerbg.png";
 import axiosInstance from "../api/axios";
 import PopupForm from "./popupForm";
 import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
@@ -115,6 +116,12 @@ function DealerMeet() {
         type: formData.type,
       };
 
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
+
       trackContact({
         name: formData.name,
         email: formData.email,
@@ -122,8 +129,6 @@ function DealerMeet() {
         company: formData.company,
         type: "DealerMeet",
       });
-
-      await axiosInstance.post("/api/contact/", payload);
 
       alert("Form Submitted Successfully");
 
@@ -147,14 +152,14 @@ function DealerMeet() {
     e.preventDefault();
 
     try {
+      await axiosInstance.post("/api/subscribe/", {
+        email: subscribeEmail,
+      });
+
       trackFormSubmit({
         name: "Newsletter Subscription",
         email: subscribeEmail,
         type: "DealerMeet_Email",
-      });
-
-      await axiosInstance.post("/api/subscribe/", {
-        email: subscribeEmail,
       });
 
       alert("Subscribed Successfully");
@@ -177,14 +182,6 @@ function DealerMeet() {
     e.preventDefault();
 
     try {
-      trackFormSubmit({
-        name: "DealerMeet FAQ Inquiry",
-        email: faqForm.email,
-        phone: faqForm.phone,
-        message: faqForm.message,
-        type: "DealerMeet_FAQ",
-      });
-
       const payload = {
         full_name: faqForm.name,
         company_name: null,
@@ -195,7 +192,19 @@ function DealerMeet() {
         type: "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
+
+      trackFormSubmit({
+        name: "DealerMeet FAQ Inquiry",
+        email: faqForm.email,
+        phone: faqForm.phone,
+        message: faqForm.message,
+        type: "DealerMeet_FAQ",
+      });
 
       alert("Your question has been submitted successfully");
       setFaqForm({

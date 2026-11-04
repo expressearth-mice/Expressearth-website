@@ -4,6 +4,7 @@ import "./CaseStudyDetails.css";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { case_study_detail_url, delete_case_study_url } from "../api/urls";
+import { normalizeCollectionResponse } from "../api/collectionData";
 import Skeleton from "./Skeleton";
 
 const getImageList = (item) => {
@@ -75,7 +76,7 @@ const CaseStudyDetail = () => {
         // ❌ Backend filter broken → fetch all
         try {
           const res = await axiosInstance.get(`/api/case-studies/`);
-          item = (res.data || []).find((cs) => cs.slug === idOrSlug);
+          item = normalizeCollectionResponse(res.data).find((cs) => String(cs.slug || "") === String(idOrSlug));
         } catch (err) {
           item = null;
         }
@@ -117,7 +118,7 @@ const CaseStudyDetail = () => {
   const fetchDestinations = async () => {
     try {
       const res = await axiosInstance.get("/api/destinations/");
-      setDestinations(res.data.slice(0, 5));
+      setDestinations(normalizeCollectionResponse(res.data).slice(0, 5));
     } catch (err) {
       console.error("Error fetching destinations:", err);
     }

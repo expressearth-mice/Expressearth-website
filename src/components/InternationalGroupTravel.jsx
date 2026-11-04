@@ -35,7 +35,7 @@ const internationalServices = [
     img: IT_3,
     title: "Multi-City Corporate Group Itineraries",
     text: "Build multi-city itineraries with balanced travel time, accommodation, transfers and group activities based on the confirmed brief.",
-    btn: "Explore World Tours",
+    btn: "Discuss Multi-City Travel",
   },
   {
     img: IT_4,

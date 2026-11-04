@@ -67,7 +67,7 @@ const services = [
   }
 ];
 
-const serviceDescription = "ExpressEarth plans corporate MICE programmes across India and international destinations, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. Planning can include venue sourcing, group travel, accommodation, event production and on-ground logistics around the programme brief.";
+const serviceDescription = "Based in Gurugram (Gurgaon), ExpressEarth plans corporate MICE programmes for organisations across Delhi NCR and India, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. The agreed scope can include venue sourcing, group travel, accommodation, event production and on-ground logistics.";
 
 const MiceServices = () => {
   const heroImage = '/Images/Expressearth%20website%20images/Our-Services/services.png';
@@ -89,7 +89,7 @@ const MiceServices = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <h1 className="mice-services-hero-title">
-          Corporate MICE Services<br />Meetings, Incentive Travel, Conferences &amp; Events
+          Corporate MICE Agency in Gurugram<br />Meetings, Incentive Travel, Conferences &amp; Events across Delhi NCR and India
         </h1>
       </section>
 
@@ -123,7 +123,7 @@ const MiceServices = () => {
 
         <div className="mice-services-contact">
           <p className="mice-services-contact-text">
-            Looking for a tailor-made event solution? Get in touch with our experts today!
+            Planning a corporate programme in Delhi NCR or elsewhere in India? Share your brief, dates, destination and expected group size with ExpressEarth.
           </p>
 
           <Link to="/contact" className="mice-services-contact-link custom-button-link">

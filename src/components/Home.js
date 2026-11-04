@@ -272,7 +272,7 @@ const Home = () => {
           {/* Banner Section */}
           <section className="hero-banner">
             <h2 className="main-heading">We Create Experiences</h2>
-            <p className="tag-subtext">Where Business Meets Luxury Travel</p>
+            <p className="tag-subtext">Corporate Events and Group Travel</p>
           </section>
         </div>
       </section>

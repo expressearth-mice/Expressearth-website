@@ -12,7 +12,7 @@ from . import conf
 from .clients import ApolloClient, IntegrationNotConfigured, ProviderAPIError
 from .models import ApiCallLog, Campaign, ProspectCompany, ProspectContact, SuppressionEntry
 from .permissions import (
-    IsLeadgenAdmin,
+    IsCampaignApprover,\n    IsLeadgenAdmin,
     IsLeadgenManager,
     IsLeadgenMember,
     is_leadgen_admin,

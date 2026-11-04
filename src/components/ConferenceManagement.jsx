@@ -101,6 +101,8 @@ const ConferenceManagement = () => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFaqSubmitting, setIsFaqSubmitting] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -131,6 +133,8 @@ const ConferenceManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const payload = {
@@ -163,12 +167,10 @@ const ConferenceManagement = () => {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(
-        "ConferenceManagement submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting form");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -215,6 +217,8 @@ const ConferenceManagement = () => {
 
   const handleFaqSubmit = async (e) => {
     e.preventDefault();
+    if (isFaqSubmitting) return;
+    setIsFaqSubmitting(true);
 
     try {
       const payload = {
@@ -245,12 +249,10 @@ const ConferenceManagement = () => {
         phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "ConferenceManagement FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting your question");
+    } finally {
+      setIsFaqSubmitting(false);
     }
   };
 
@@ -270,13 +272,15 @@ const ConferenceManagement = () => {
 
       <section className="cm-hero">
         <div className="cm-form-wrapper" ref={formRef}>
-          <form className="cm-form-card" onSubmit={handleSubmit}>
+          <form className="cm-form-card" onSubmit={handleSubmit} aria-busy={isSubmitting}>
             <h2>Get in Touch</h2>
 
             <input
               ref={inputRef}
               type="text"
               name="name"
+              autoComplete="name"
+              aria-label="Full name"
               placeholder="Full Name"
               value={formData.name}
               onChange={handleChange}
@@ -286,6 +290,8 @@ const ConferenceManagement = () => {
             <input
               type="email"
               name="email"
+              autoComplete="email"
+              aria-label="Work email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
@@ -293,8 +299,11 @@ const ConferenceManagement = () => {
             />
 
             <input
-              type="text"
+              type="tel"
               name="phone"
+              inputMode="tel"
+              autoComplete="tel"
+              aria-label="Phone number"
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
@@ -328,13 +337,16 @@ const ConferenceManagement = () => {
             <input
               type="text"
               name="company"
+              autoComplete="organization"
+              aria-label="Company name"
               placeholder="Company Name"
+              required={formData.type === "Company"}
               value={formData.company}
               onChange={handleChange}
             />
 
-            <button type="submit" className="cm-submit-btn">
-              Submit
+            <button type="submit" className="cm-submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
@@ -591,11 +603,12 @@ const ConferenceManagement = () => {
             <div className="cm-faq-form-wrap">
               <h3 className="cm-faq-form-title">Ask a different question</h3>
 
-              <form className="cm-faq-form" onSubmit={handleFaqSubmit}>
+              <form className="cm-faq-form" onSubmit={handleFaqSubmit} aria-busy={isFaqSubmitting}>
                 <label className="cm-faq-field">
                   <span>Name</span>
                   <input
                     type="text"
+                    autoComplete="name"
                     value={faqForm.name}
                     onChange={handleFaqFormChange("name")}
                     required
@@ -606,6 +619,7 @@ const ConferenceManagement = () => {
                   <span>Email Address</span>
                   <input
                     type="email"
+                    autoComplete="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
                     required
@@ -634,8 +648,8 @@ const ConferenceManagement = () => {
                   />
                 </label>
 
-                <button type="submit" className="cm-faq-submit">
-                  Submit
+                <button type="submit" className="cm-faq-submit" disabled={isFaqSubmitting}>
+                  {isFaqSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

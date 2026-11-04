@@ -49,4 +49,29 @@ describe("MICE services hub discovery", () => {
       }),
     ).toBeInTheDocument();
   });
+
+
+  test("answers common corporate MICE questions with links to relevant services", () => {
+    render(
+      <MemoryRouter>
+        <MiceServices />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: /corporate mice planning: common questions/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/venue sourcing, group travel, accommodation, event production and on-ground logistics/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /meetings and conferences/i }),
+    ).toHaveAttribute("href", "/meetings-and-conferences");
+    expect(
+      screen.getByRole("link", { name: /share your corporate mice brief/i }),
+    ).toHaveAttribute("href", "/contact");
+  });
 });

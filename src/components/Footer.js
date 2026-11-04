@@ -165,7 +165,7 @@ const Footer = () => {
               <li><Link to="/corporateoffsites" style={linkStyle} onClick={handleClick}><i className="fas fa-umbrella-beach"></i> Corporate Offsites</Link></li>
               <li><Link to="/destination-management" style={linkStyle} onClick={handleClick}><i className="fas fa-location"></i> Destination Management</Link></li>
               <li><Link to="/dealermeet" style={linkStyle} onClick={handleClick}><i className="fas fa-handshake"></i> Dealer &amp; Distributor Meets</Link></li>
-              <li><Link to="/corporateoffsites" style={linkStyle} onClick={handleClick}><i className="fas fa-mountain"></i> Corporate Offsites</Link></li>
+              <li><Link to="/r&rplanning" style={linkStyle} onClick={handleClick}><i className="fas fa-trophy"></i> Rewards &amp; Recognition</Link></li>
               <li><Link to="/conferencemanagement" style={linkStyle} onClick={handleClick}><i className="fas fa-calendar-check"></i> Conference Management</Link></li>
               <li><Link to="/internationalgrouptravel" style={linkStyle} onClick={handleClick}><i className="fas fa-plane"></i> International Group Travel</Link></li>
               <li><Link to="/Gifting" style={linkStyle} onClick={handleClick}><i className="fas fa-gift"></i> Corporate Gifting</Link></li>

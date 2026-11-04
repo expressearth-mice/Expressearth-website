@@ -62,7 +62,7 @@ const faqs = [
       "Yes. The itinerary can be shaped around group size, origin, travel dates, destination, budget, travel pace and programme objectives.",
   },
   {
-    question: "Do you offer multi-country or world tour packages?",
+    question: "Can you plan multi-country corporate group itineraries?",
     answer:
       "Multi-country itineraries can be considered when travel time, transit arrangements, entry requirements, dates and budget make the route practical.",
   },

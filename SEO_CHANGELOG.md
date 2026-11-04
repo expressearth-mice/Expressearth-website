@@ -121,3 +121,23 @@
 - The 28-day Search Console, GA4 and GBP extracts are directional snapshots; query/page totals may differ because of Search Console anonymisation, aggregation and differing dimensions.
 - Google recommends crawlable `<a href>` links, meaningful HTTP status codes for missing pages and consistent canonical signals. See [crawlable link guidance](https://developers.google.com/search/docs/crawling-indexing/links-crawlable), [crawling error guidance](https://developers.google.com/search/docs/crawling-indexing/troubleshoot-crawling-errors) and [canonical guidance](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls).
 - No production deployment, redirect, DNS or hosting change was made.
+
+## 2026-11-04 — Enquiry confirmation integrity and Gurugram MICE relevance
+
+- Added a shared contact-response validator matching the existing main contact form's success semantics: only boolean true or a non-empty success string other than 'false' is treated as a confirmed API submission.
+- Applied the validator to the dealer-meet, conference-management and corporate-offsite primary/FAQ contact forms. Success messages and form resets now wait for the API's explicit success response rather than treating every HTTP 2xx response as a saved enquiry.
+- Moved Meta Pixel Contact/Submit events on dealer-meet, conference-management and the shared popup form to after confirmed contact API success. The dealer-meet newsletter Submit event now fires after the subscription request resolves.
+- Removed the shared popup form's console log of the full submission payload so names, email addresses, phone numbers and company names are not printed to the browser console during normal submission.
+- Added focused Jest cases for boolean/string success, false responses, missing success flags and null responses.
+- Used the latest 28-day Search Console extract (361 query/page/date rows) to refine the MICE hub's local intent. Site-level non-brand query rows include 'mice company in gurugram' (9 impressions, average position 68.2), 'mice companies in gurgaon' (8 impressions, position 76.0), 'mice company in gurgaon' (2 impressions, position 93.5), and 'mice agency for corporate events' (3 impressions, position 65.7); all had zero clicks in this extract. These are small samples and not a forecast.
+- The MICE hub itself appeared under both apex and www URLs: 8 impressions at average position 47.5 on the apex URL and 4 impressions at position 32.3 on the www URL, with zero clicks for both. This continues to support the separately documented host-canonicalisation blocker; no redirect or hosting change was made.
+- Updated the MICE hub title, H1, visible introduction and enquiry prompt to state its Gurugram base and Delhi NCR/India programme coverage, without claiming additional offices or credentials.
+- Fresh GA4 aggregate for the last 28 days reports 99 Organic Search sessions and 68 active users. The ads_conversion_Submit_lead_form_1 event recorded 21 Organic Search events and 63 events across all channels. These remain event counts, not unique people, confirmed submissions or CRM-qualified opportunities; Tag Assistant and CRM reconciliation are still required.
+- No GTM/GA4 configuration was changed. The existing Tag Manager setup still requires owner/developer verification with Tag Assistant before conversion attribution can be treated as reliable.
+
+### Validation and release safety
+
+- Re-fetched and verified all changed source files after their updates, including the shared validator, its test, the three commercial service pages, shared popup form, route metadata and MICE service hub.
+- Ran six direct behaviour assertions against the validator logic (boolean true, string true, boolean false, string false, missing success and null response); all passed. The Jest test file is added but the repository Jest suite has not been run.
+- A local GitHub connectivity check failed because this environment could not resolve github.com; therefore no local React build, JSX compilation or Jest run was possible. The repository has no Actions workflow run available as an alternative.
+- No production deployment, DNS/hosting change, redirect, campaign send, merge or EmpFly/Indo Exhibits change was made.

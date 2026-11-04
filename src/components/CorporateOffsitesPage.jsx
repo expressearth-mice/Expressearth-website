@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axiosInstance from "../api/axios";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
 
 import second from "../assests/Co_second.png";
 
@@ -144,7 +145,11 @@ function CorporateOffsitesPage() {
         type: form.companyType === "corporate" ? "Company" : "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
 
       alert("Form Submitted Successfully");
 
@@ -201,7 +206,11 @@ function CorporateOffsitesPage() {
         type: "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
 
       alert("Your question has been submitted successfully");
       setFaqForm({

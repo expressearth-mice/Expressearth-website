@@ -276,6 +276,52 @@ const Home = () => {
           </section>
         </div>
       </section>
+
+      <section
+        className="home-priority-services"
+        aria-labelledby="home-priority-services-title"
+      >
+        <div className="home-priority-services-inner">
+          <div className="home-priority-services-copy">
+            <h2 id="home-priority-services-title">
+              Corporate MICE programmes for Delhi NCR teams
+            </h2>
+            <p>
+              Based in Gurugram, ExpressEarth plans corporate programmes across
+              Delhi NCR and India. Choose a programme type or share your brief
+              with the team.
+            </p>
+          </div>
+
+          <nav aria-label="Priority corporate MICE services">
+            <div className="home-priority-services-grid">
+              {programmeLinks.slice(0, 4).map((item) => (
+                <Link
+                  key={item.slug}
+                  to={item.slug}
+                  className="home-priority-service-link"
+                >
+                  <span className="home-priority-service-link-title">
+                    {item.label}
+                  </span>
+                  <span className="home-priority-service-link-description">
+                    {item.description}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          <div className="home-priority-services-actions">
+            <Link to="/contact" className="custom-button-link">
+              Share Your Corporate Brief
+            </Link>
+            <Link to="/mice-services" className="home-priority-services-all">
+              View All MICE Services
+            </Link>
+          </div>
+        </div>
+      </section>
       {/* Destinations */}
       <section
         className="destinations"

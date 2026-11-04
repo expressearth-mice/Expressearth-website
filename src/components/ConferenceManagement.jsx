@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import "./ConferenceManagement.css";
 import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import CM_1 from "../assests/CM_1.png";
 import CM_2 from "../assests/CM_2.png";
 import CM_3 from "../assests/CM_3.png";
@@ -132,14 +133,6 @@ const ConferenceManagement = () => {
     e.preventDefault();
 
     try {
-      trackContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        type: "ConferenceManagement",
-      });
-
       const payload = {
         full_name: formData.name,
         company_name: formData.type === "Company" ? formData.company : null,
@@ -150,7 +143,20 @@ const ConferenceManagement = () => {
         type: formData.type,
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
+
+      trackContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        type: "ConferenceManagement",
+      });
+
       alert("Form Submitted Successfully");
 
       setFormData({
@@ -214,14 +220,6 @@ const ConferenceManagement = () => {
     e.preventDefault();
 
     try {
-      trackFormSubmit({
-        name: "ConferenceManagement FAQ Inquiry",
-        email: faqForm.email,
-        phone: faqForm.phone,
-        message: faqForm.message,
-        type: "ConferenceManagement_FAQ",
-      });
-
       const payload = {
         full_name: faqForm.name,
         company_name: null,
@@ -232,7 +230,20 @@ const ConferenceManagement = () => {
         type: "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
+
+      trackFormSubmit({
+        name: "ConferenceManagement FAQ Inquiry",
+        email: faqForm.email,
+        phone: faqForm.phone,
+        message: faqForm.message,
+        type: "ConferenceManagement_FAQ",
+      });
+
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",

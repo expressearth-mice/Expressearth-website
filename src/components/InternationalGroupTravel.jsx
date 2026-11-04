@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axiosInstance from "../api/axios";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
 import "./InternationalGroupTravel.css";
 import IT_1 from "../assests/IT_Travel.jpg";
 import IT_2 from "../assests/IT_Hand.webp";
@@ -121,11 +123,18 @@ const InternationalGroupTravel = () => {
         phone: formData.phone,
         event_date: null,
         event_type: "Other",
-        type: formData.type,
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "international_group_travel",
+        formLocation: "primary",
+      });
       alert("Form Submitted Successfully");
 
       setFormData({
@@ -135,12 +144,8 @@ const InternationalGroupTravel = () => {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(
-        "InternationalGroupTravel submit error:",
-        error.response?.data || error.message || error,
-      );
-      alert("Error submitting form");
+    } catch {
+      alert("Error submitting form. Please try again.");
     }
   };
 
@@ -198,12 +203,20 @@ const InternationalGroupTravel = () => {
         email: faqForm.email,
         phone: faqForm.phone,
         event_date: null,
-        event_type: faqForm.message || "International Group Travel FAQ Question",
-        type: "Individual",
+        event_type: "Other",
+        requirements: faqForm.message,
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "international_group_travel",
+        formLocation: "faq_question",
+      });
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",
@@ -211,12 +224,8 @@ const InternationalGroupTravel = () => {
         phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "InternationalGroupTravel FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
-      alert("Error submitting your question");
+    } catch {
+      alert("Error submitting your question. Please try again.");
     }
   };
 

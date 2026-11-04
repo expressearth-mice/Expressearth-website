@@ -542,9 +542,12 @@ const Home = () => {
                   <span aria-hidden="true">{activeFAQ === index ? "⌃" : "⌄"}</span>
                 </button>
               </h4>
-              {activeFAQ === index && (
-                <p id={`home-faq-answer-${index}`}>{faq.answer}</p>
-              )}
+              <div
+                id={`home-faq-answer-${index}`}
+                hidden={activeFAQ !== index}
+              >
+                <p>{faq.answer}</p>
+              </div>
             </div>
           ))}
         </section>

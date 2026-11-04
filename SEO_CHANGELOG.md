@@ -171,3 +171,5 @@
 - The Contact API model in the separate ExpressEarth backend was inspected read-only to confirm the existing field names, required phone field and allowed event-type values; no backend files were changed.
 - The new Jest tests and full React production build still need to be executed in a checkout with dependencies. GTM/GA4 receipt of `generate_lead` must be verified with Tag Assistant and an appropriate GTM event trigger/tag; no production tag or configuration was changed.
 - No deployment, merge, DNS/hosting change, outbound campaign, or EmpFly/Indo Exhibits modification was made.
+
+- Follow-up fix: both Recognition & Rewards forms now use the shared `axiosInstance` configured from `REACT_APP_API_URL` (defaulting to `https://api.expressearth.com`). The previous raw Axios relative URL could resolve against the frontend host instead of the configured API host.

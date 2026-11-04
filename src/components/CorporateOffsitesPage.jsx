@@ -75,6 +75,8 @@ const faqs = [
 function CorporateOffsitesPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFaqSubmitting, setIsFaqSubmitting] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -133,6 +135,8 @@ function CorporateOffsitesPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const payload = {
@@ -165,12 +169,10 @@ function CorporateOffsitesPage() {
         companyType: "corporate",
         companyName: "",
       });
-    } catch (error) {
-      console.log(
-        "CorporateOffsitesPage submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting form");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -199,6 +201,8 @@ function CorporateOffsitesPage() {
 
   const handleFaqSubmit = async (e) => {
     e.preventDefault();
+    if (isFaqSubmitting) return;
+    setIsFaqSubmitting(true);
 
     try {
       const payload = {
@@ -228,12 +232,10 @@ function CorporateOffsitesPage() {
         phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "CorporateOffsitesPage FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting your question");
+    } finally {
+      setIsFaqSubmitting(false);
     }
   };
 
@@ -302,7 +304,7 @@ function CorporateOffsitesPage() {
             <div className="formCard" ref={formRef}>
               <div className="formTitle">Get in Touch</div>
 
-              <form onSubmit={handleSubmit} className="formGrid">
+              <form onSubmit={handleSubmit} className="formGrid" aria-busy={isSubmitting}>
                 <div className="field">
                   <input
                     ref={firstInputRef}
@@ -310,6 +312,8 @@ function CorporateOffsitesPage() {
                     onChange={onChange("fullName")}
                     placeholder="Full Name"
                     type="text"
+                    autoComplete="name"
+                    aria-label="Full name"
                     required
                   />
                 </div>
@@ -320,6 +324,8 @@ function CorporateOffsitesPage() {
                     onChange={onChange("email")}
                     placeholder="Email"
                     type="email"
+                    autoComplete="email"
+                    aria-label="Work email"
                     required
                   />
                 </div>
@@ -330,6 +336,9 @@ function CorporateOffsitesPage() {
                     onChange={onChange("phone")}
                     placeholder="Phone number"
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    aria-label="Phone number"
                     required
                   />
                 </div>
@@ -366,11 +375,14 @@ function CorporateOffsitesPage() {
                     onChange={onChange("companyName")}
                     placeholder="Company Name"
                     type="text"
+                    autoComplete="organization"
+                    aria-label="Company name"
+                    required={form.companyType === "corporate"}
                   />
                 </div>
 
-                <button className="btnPrimary" type="submit">
-                  Submit
+                <button className="btnPrimary" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>
@@ -574,11 +586,12 @@ function CorporateOffsitesPage() {
             <div className="offsiteFaqFormWrap">
               <h3 className="offsiteFaqFormTitle">Ask a different question</h3>
 
-              <form className="offsiteFaqForm" onSubmit={handleFaqSubmit}>
+              <form className="offsiteFaqForm" onSubmit={handleFaqSubmit} aria-busy={isFaqSubmitting}>
                 <label className="offsiteFaqField">
                   <span>Name</span>
                   <input
                     type="text"
+                    autoComplete="name"
                     value={faqForm.name}
                     onChange={handleFaqFormChange("name")}
                     required
@@ -589,6 +602,7 @@ function CorporateOffsitesPage() {
                   <span>Email Address</span>
                   <input
                     type="email"
+                    autoComplete="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
                     required
@@ -617,8 +631,8 @@ function CorporateOffsitesPage() {
                   />
                 </label>
 
-                <button type="submit" className="offsiteFaqSubmit">
-                  Submit
+                <button type="submit" className="offsiteFaqSubmit" disabled={isFaqSubmitting}>
+                  {isFaqSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

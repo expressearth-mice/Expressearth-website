@@ -144,8 +144,8 @@ function App() {
         description: "Design employee reward trips and sales incentive travel with ExpressEarth. We coordinate destinations, group logistics, stays and experiences for corporate teams.",
       },
       "/meetings-and-conferences": {
-        title: "Corporate Conference & Meeting Organisers in Delhi NCR | ExpressEarth",
-        description: "Corporate conference organisers for Delhi NCR and India. Plan leadership summits, seminars, annual conferences and business meetings with venue sourcing, AV, registration and delegate logistics.",
+        title: "Corporate Meetings & Business Gatherings in Delhi NCR | ExpressEarth",
+        description: "Plan leadership meetings, board meetings, seminars, workshops, AGMs and business gatherings in Delhi NCR and across India. ExpressEarth coordinates venues, agendas, AV, registration and delegate logistics.",
       },
       "/conferencemanagement": {
         title: "Conference Management Company in Delhi NCR & India | ExpressEarth",

@@ -100,6 +100,7 @@
 
 ### Validation and deployment
 
-- Each changed source file and the changelog will be re-fetched after the updates to verify the committed content.
+- Re-fetched every changed source file and the changelog after the updates and verified the expected imports, normalizer calls, metadata handling, empty states and test cases.
+- Ran a standalone Node syntax check and five behavior assertions against the collection normalizer; all passed. The repository Jest suite and React build remain unrun.
 - Focused unit tests were added but the Jest suite and React production build have not been run in this environment; the repository is available through GitHub's file API but no local checkout with installed dependencies is available.
 - No production deployment, DNS/hosting changes or redirects were made.

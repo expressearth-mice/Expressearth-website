@@ -334,6 +334,13 @@ html {
   font-weight: 700;
 }
 
+.travel-capability-description {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
 @keyframes travelIconFloat {
   0%,
   100% {
@@ -734,6 +741,8 @@ html {
   color: white;
   font-size: 24px;
   padding: 14px 16px;
+  border: 0;
+  line-height: 1;
   border-radius: 50%;
   cursor: pointer;
   z-index: 9999;
@@ -1317,6 +1326,19 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.faq-question-row:focus-visible,
+.mice-link:focus-visible .mice-card-panel {
+  outline: 2px solid var(--home-cta-color);
+  outline-offset: 4px;
 }
 
 .faq-question-row span {

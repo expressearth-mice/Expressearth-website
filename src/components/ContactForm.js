@@ -16,6 +16,7 @@ import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 import "./ContactForm.css";
 import axiosInstance from "../api/axios";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
 
 const ContactForm = () => {
   const navigate = useNavigate();
@@ -117,12 +118,10 @@ const ContactForm = () => {
           requirements: "",
         });
         setErrors({});
-        if (window.gtag) {
-          window.gtag("event", "form_submit", {
-            event_category: "Contact Form",
-            event_label: "Contact Form Submitted",
-          });
-        }
+        trackConfirmedLead({
+          serviceType: formData.event_type || "corporate_mice",
+          formLocation: "contact_page",
+        });
         setCaptchaValue(null); // Reset CAPTCHA
         setErrorMessage("");
       } else {

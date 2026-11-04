@@ -8,7 +8,8 @@ import IT_6 from "../assests/IT_Team(1).jpg";
 import bg from "../assests/dealerbg.png";
 import axiosInstance from "../api/axios";
 import PopupForm from "./popupForm";
-import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { trackFormSubmit } from "../utils/fbPixel";
+import { trackConfirmedLead } from "../utils/leadTracking";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import ServiceStructuredData from "./ServiceStructuredData";
 
@@ -122,12 +123,9 @@ function DealerMeet() {
         return;
       }
 
-      trackContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        type: "DealerMeet",
+      trackConfirmedLead({
+        serviceType: "dealer_meet",
+        formLocation: "primary",
       });
 
       alert("Form Submitted Successfully");
@@ -156,11 +154,7 @@ function DealerMeet() {
         email: subscribeEmail,
       });
 
-      trackFormSubmit({
-        name: "Newsletter Subscription",
-        email: subscribeEmail,
-        type: "DealerMeet_Email",
-      });
+      trackFormSubmit({ type: "DealerMeet_Email", form_location: "newsletter" });
 
       alert("Subscribed Successfully");
 
@@ -198,12 +192,9 @@ function DealerMeet() {
         return;
       }
 
-      trackFormSubmit({
-        name: "DealerMeet FAQ Inquiry",
-        email: faqForm.email,
-        phone: faqForm.phone,
-        message: faqForm.message,
-        type: "DealerMeet_FAQ",
+      trackConfirmedLead({
+        serviceType: "dealer_meet",
+        formLocation: "faq_question",
       });
 
       alert("Your question has been submitted successfully");

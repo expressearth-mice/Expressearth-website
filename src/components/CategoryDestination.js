@@ -11,7 +11,10 @@ const CategoryDestinations = () => {
 
   const categoryName = (() => {
     try {
-      return decodeURIComponent(slug).replace(/[-_]+/g, " ").trim();
+      return decodeURIComponent(slug)
+        .replace(/[-_]+/g, " ")
+        .trim()
+        .replace(/\b\w/g, (character) => character.toUpperCase());
     } catch {
       return String(slug).replace(/[-_]+/g, " ").trim();
     }

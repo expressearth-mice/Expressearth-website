@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { Link, useLocation } from "react-router-dom";
 import PopupForm from "./popupForm";
@@ -7,51 +7,12 @@ import IntegrationTools from "./ui/IntegrationTools";
 import HorizontalSlider from "./ui/HorizontalSlider";
 //import homeVideo from "/assets/home.mp4";
 
-const travelStats = [
-  {
-    icon: "fas fa-globe",
-    label: "Countries Network",
-    target: 30,
-    step: 1,
-    interval: 45,
-    formatValue: (value) => `${value}+`,
-  },
-  {
-    icon: "fas fa-hotel",
-    label: "Hotel Partners",
-    target: 500,
-    step: 10,
-    interval: 55,
-    formatValue: (value) => `${value}+`,
-  },
-  {
-    icon: "fas fa-smile-beam",
-    label: "Satisfied Clients",
-    target: 100000,
-    step: 2500,
-    interval: 80,
-    formatValue: (value) => {
-      if (value >= 100000) {
-        return "1 Lakh+";
-      }
-
-      if (value >= 1000) {
-        return `${Math.round(value / 1000)}K+`;
-      }
-
-      return `${value}+`;
-    },
-  },
-  {
-    icon: "fas fa-briefcase",
-    label: "Successful Events",
-    target: 1000,
-    step: 25,
-    interval: 70,
-    formatValue: (value) => `${value}+`,
-  },
+const programmeCapabilities = [
+  { icon: "fas fa-calendar-check", title: "Programme planning", description: "Define the objective, audience, format, destination, dates and budget before supplier planning." },
+  { icon: "fas fa-hotel", title: "Travel and accommodation", description: "Coordinate group travel, stays, transfers and destination arrangements around the itinerary." },
+  { icon: "fas fa-volume-up", title: "Event production", description: "Plan stage, AV, branding, technical requirements and the event run of show where required." },
+  { icon: "fas fa-clipboard-check", title: "On-ground logistics", description: "Coordinate registration, hospitality, delegate movement and event-day operations according to the agreed scope." },
 ];
-
 const Home = () => {
   const location = useLocation();
 
@@ -68,52 +29,17 @@ const Home = () => {
   const [showIcon, setShowIcon] = useState(false);
   const [recentPosts, setRecentPosts] = useState([]);
   const [activeFAQ, setActiveFAQ] = useState(null);
-  const [hasStartedTravelStats, setHasStartedTravelStats] = useState(false);
-  const [animatedTravelStats, setAnimatedTravelStats] = useState(
-    travelStats.map(() => 0)
-  );
-  const travelStatsRef = useRef(null);
   const toggleFAQ = (index) => {
-    setActiveFAQ(activeFAQ === index ? null : index);
+    setActiveFAQ((currentFAQ) => (currentFAQ === index ? null : index));
   };
 
-  const miceDestinations = [
-    {
-      icon: "fa-building",
-      label: "Luxury Conferences",
-      destinations: "20+",
-      slug: "/meetings-and-conferences",
-    },
-    {
-      icon: "fa-plane-departure",
-      label: "Incentive Travel",
-      destinations: "15+",
-      slug: "/incentive-travel",
-    },
-    {
-      icon: "fa-umbrella-beach",
-      label: "Corporate Retreats",
-      destinations: "12+",
-      slug: "/incentive-travel",
-    },
-    {
-      icon: "fa-people-arrows",
-      label: "Business Networking",
-      destinations: "18+",
-      slug: "/meetings-and-conferences",
-    },
-    {
-      icon: "fa-store",
-      label: "Exhibitions & Trade Shows",
-      destinations: "10+",
-      slug: "/exhibitions-and-trade-shows"
-    },
-    {
-      icon: "fa-map-marker-alt",
-      label: "Destination Meetings",
-      destinations: "25+",
-      slug: "/destination-management",
-    },
+  const programmeLinks = [
+    { icon: "fa-building", label: "Meetings & Conferences", description: "Leadership meetings, conferences, seminars and delegate logistics.", slug: "/meetings-and-conferences" },
+    { icon: "fa-plane-departure", label: "Incentive Travel", description: "Reward trips for employees and channel partners, planned around the programme brief.", slug: "/incentive-travel" },
+    { icon: "fa-handshake", label: "Dealer & Distributor Meets", description: "Channel partner conferences, business updates, product launches and recognition events.", slug: "/dealermeet" },
+    { icon: "fa-mountain", label: "Corporate Offsites", description: "Team retreats, leadership sessions and corporate offsite packages.", slug: "/corporateoffsites" },
+    { icon: "fa-bullhorn", label: "Corporate Events", description: "Product launches, annual days, family days and award ceremonies.", slug: "/corporate-events" },
+    { icon: "fa-store", label: "Exhibitions & Trade Shows", description: "Exhibition participation, booth logistics and business event support.", slug: "/exhibitions-and-trade-shows" },
   ];
 
   useEffect(() => {
@@ -131,27 +57,6 @@ const Home = () => {
 
     fetchRecentPosts();
   }, []);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasStartedTravelStats) {
-          setHasStartedTravelStats(true);
-
-          // stop observing after first trigger
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.3,
-      }
-    );
-
-    if (travelStatsRef.current) {
-      observer.observe(travelStatsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasStartedTravelStats]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -179,39 +84,6 @@ const Home = () => {
     }
   }, [location]);
 
-  useEffect(() => {
-    if (!hasStartedTravelStats) {
-      return undefined;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setAnimatedTravelStats((prev) => {
-        const next = prev.map((value, index) => {
-          const stat = travelStats[index];
-
-          if (value >= stat.target) {
-            return stat.target;
-          }
-
-          return Math.min(value + stat.step, stat.target);
-        });
-
-        const allComplete = next.every(
-          (value, index) => value >= travelStats[index].target
-        );
-
-        if (allComplete) {
-          window.clearInterval(intervalId);
-        }
-
-        return next;
-      });
-    }, 60);
-
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  }, [hasStartedTravelStats]);
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -223,15 +95,6 @@ const Home = () => {
     setShowIcon(false); // Hide icon when popup is open
   };
 
-
-  const splitMiceCardText = (text) => {
-    const parts = text.split(/\s+[–-]\s+/u);
-
-    return {
-      title: parts[0] || text,
-      details: parts.slice(1).join(" - "),
-    };
-  };
 
   return (
     <div className="home-container">

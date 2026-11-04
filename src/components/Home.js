@@ -523,7 +523,7 @@ const Home = () => {
               question: "What information should we share to start an enquiry?",
               answer: "Use the contact page to share your company name, programme type, destination, expected group size, dates, budget range and services required. The team can review the brief and discuss next steps.",
             },
-          ]          ].map((faq, index) => (
+          ].map((faq, index) => (
             <div key={index} className="faq-item">
               <h4>
                 <button

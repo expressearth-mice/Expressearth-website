@@ -101,15 +101,13 @@ Everything that writes to Smartlead or the CRM is **off by default**.
 The result is stored per mailbox on the campaign and shown in the admin. A failed check revokes
 approval.
 
-Some changes also need a fresh approval:
-
-- changing sequences or mailboxes;
-- a change in the set of sender domains.
+Every material configuration change (sequences, settings, schedule, or sender mailboxes) revokes approval and sender verification. The campaign must be re-verified and approved again.
 
 ## Configuration
 
 | Variable | Secret? | Purpose |
 |---|---|---|
+| `LEADGEN_CAMPAIGN_APPROVER_USER_ID` | no | Exact Django user PK allowed to approve campaign sends. Empty/unset fails closed: nobody can approve. |
 | `APOLLO_API_KEY` | yes | Apollo API key. People search needs a master key; `leadgen_check` tells you. |
 | `APOLLO_WEBHOOK_SECRET` | yes | Random token in the Apollo phone-webhook URL. If unset, phones are not requested. |
 | `APOLLO_DAILY_CREDIT_LIMIT` | no | Enrichment refuses to start past this many credits per UTC day. Default `100`. |
@@ -186,7 +184,7 @@ is idempotent.
 
 | Group | Can |
 |---|---|
-| `Leadgen Admin` (or superuser) | everything below, plus: verify sender mailboxes, approve campaigns for sending, lift suppressions, see API logs |
+| `Leadgen Admin` (or superuser) | everything below, plus: verify sender mailboxes, lift suppressions, see API logs. Campaign approval is separately restricted to the exact `LEADGEN_CAMPAIGN_APPROVER_USER_ID`. |
 | `Leadgen Manager` | search, enrich, approve/reject, assign, sync campaigns, configure, enroll, start (gated) / pause, register webhooks, manual CRM sync |
 | `Leadgen Executive` | see **only** their assigned leads and set the next follow-up date |
 
@@ -247,7 +245,7 @@ The base path is `/api/integrations/`. Auth is the backend's JWT
 | `POST campaigns/` | manager | `{name, sequences[], settings{}, schedule{}, email_account_ids[]}`. Gated; ExpressEarth mailboxes only |
 | `GET/PATCH campaigns/<id>/` | manager | PATCH takes the config fields. Gated, resets approval |
 | `POST campaigns/<id>/verify-sender/` | admin | No body. Returns the campaign with `sender_report` and `verification_blockers` |
-| `POST campaigns/<id>/approve/` | admin | Requires verified sender mailboxes |
+| `POST campaigns/<id>/approve/` | configured CEO account only | Requires verified sender mailboxes and exact user-PK match |
 | `POST campaigns/<id>/register-webhook/` | manager | Gated. For campaigns made in the Smartlead UI |
 | `POST campaigns/<id>/status/` | manager | `{status: START\|PAUSED\|STOPPED}`. START is gated |
 | `POST campaigns/<id>/enroll/` | manager | `{contact_ids[]}` → `{enrolled[], skipped{}}`. Gated |
@@ -326,7 +324,8 @@ screens and endpoints that answer "not configured".
 3. **After deploy**, run once (for example as one-off Cloud Run Jobs):
    - `leadgen_setup_roles`, then add users to the groups;
    - `leadgen_check`.
-4. **Turn features on gradually**:
+4. Set `LEADGEN_CAMPAIGN_APPROVER_USER_ID` to the CEO's Django user PK. Do not set it to a group or shared account.
+5. **Turn features on gradually**:
    1. Apollo search and enrichment (keys only).
    2. Sync campaigns.
    3. `SMARTLEAD_WRITE_ENABLED=1`.

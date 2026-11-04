@@ -87,3 +87,19 @@
 - A full React production build and Jest suite could not be run because this environment cannot resolve `github.com` for a local checkout. The repository has no GitHub Actions workflow runs to use as an alternative. JSX compilation and live API submission remain unverified.
 - No production deployment, DNS/hosting change or redirect was made.
 - The SPA still needs a developer-led pre-rendering/server-rendering evaluation for commercial landing pages so crawlers that do not execute JavaScript can receive complete page content. Search Console/GA4 access, Tag Assistant validation, and owner confirmation of the public contact details remain required for production measurement. Genuine approved event assets and verified project facts are still needed before adding new case-study proof.
+
+## 2026-11-04 — Dynamic content reliability and category indexing
+
+- Added a shared API collection normalizer for both plain-array and paginated `{ results: [] }` responses.
+- Applied it to blog and case-study listings, recent-post panels, legacy case-study slug lookup, and destination listings. This prevents paginated responses from being treated as arrays or causing `.map()`, `.find()`, `.slice()` or `.sort()` failures.
+- Added focused unit tests for plain arrays, paginated responses, and unsupported payloads.
+- Reworked destination-category pages to cancel stale requests on navigation, clear previous category results while loading, and handle API errors and empty categories without leaving misleading indexable thin pages.
+- Added category-specific title, description, Open Graph/Twitter metadata and canonical URLs for populated categories; empty or failed category results receive `noindex, follow` and have stale canonicals removed.
+- Promoted the category heading to an H1, added a concise programme-oriented introduction and contact/browse paths for empty states, and lazy-loaded category destination images.
+- Scoped the category page styles to its own component rather than applying generic heading/card styles globally.
+
+### Validation and deployment
+
+- Each changed source file and the changelog will be re-fetched after the updates to verify the committed content.
+- Focused unit tests were added but the Jest suite and React production build have not been run in this environment; the repository is available through GitHub's file API but no local checkout with installed dependencies is available.
+- No production deployment, DNS/hosting changes or redirects were made.

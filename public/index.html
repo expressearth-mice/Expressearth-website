@@ -7,6 +7,15 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="Looking for an event management or MICE company in Delhi, Gurugram or India? ExpressEarth plans corporate events, product launches, annual days, family days, conferences, offsites and incentive group tours." />
     <meta name="robots" content="index, follow, max-image-preview:large" />
+    <script>
+      // Apply the development-host noindex directive before the React app hydrates.
+      if (window.location.hostname.toLowerCase() === "dev.expressearth.com") {
+        var developmentRobotsMeta = document.querySelector('meta[name="robots"]');
+        if (developmentRobotsMeta) {
+          developmentRobotsMeta.setAttribute("content", "noindex, follow");
+        }
+      }
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

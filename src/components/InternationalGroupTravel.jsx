@@ -10,36 +10,37 @@ import IT_6 from "../assests/IT_Team(1).jpg";
 import IT_7 from "../assests/IT_Team(2).jpg";
 import IT_8 from "../assests/IT_Team(3).jpg";
 import PopupForm from "./popupForm";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const internationalServices = [
   {
     img: IT_3,
     title: "End-to-End International Group Travel Planning",
-    text: " We manage complete international tour packages, including flights, visas, premium hotels, transfers, curated experiences, and travel assistance, delivered seamlessly for groups of all sizes.",
+    text: "Coordinate corporate group itineraries with destination research, flight and visa planning where required, accommodation, transfers, activities and on-ground support.",
     btn: "START PLANNING",
   },
   {
     img: IT_4,
-    title: "Luxury International Holiday Packages",
-    text: "Our international holiday packages are designed for comfort, exclusivity, and smooth experiences, ensuring your group travels stress-free while enjoying the finest global destinations.",
+    title: "Corporate Incentive & Reward Travel",
+    text: "Plan employee and channel partner reward trips around group size, travel dates, budget, destination access and recognition objectives.",
     btn: "VIEW DESTINATIONS",
   },
   {
     img: IT_5,
-    title: "Group Tour Packages International",
-    text: "From leadership groups to corporate delegations, our group tour packages focus on refined travel, balanced itineraries, and memorable shared experiences.",
+    title: "Business Delegations & Meetings Abroad",
+    text: "Coordinate accommodation, transfers and local logistics for corporate delegations attending meetings, conferences or trade events.",
     btn: "REQUEST A PLAN",
   },
   {
     img: IT_3,
-    title: " Foreign Tour Packages & World Tour Packages",
-    text: "We curate premium foreign tour packages and exclusive world tour packages, combining multiple destinations into a cohesive, well-paced international journey.",
+    title: "Multi-City Corporate Group Itineraries",
+    text: "Build multi-city itineraries with balanced travel time, accommodation, transfers and group activities based on the confirmed brief.",
     btn: "Explore World Tours",
   },
   {
     img: IT_4,
-    title: "International Holiday & Travel Packages",
-    text: "Our international holiday packages and travel packages are tailored for groups seeking refined leisure with professional planning standards.",
+    title: "Group Travel Coordination",
+    text: "Plan participant communication, document collection, group movement and destination support in line with the agreed programme.",
     btn: "Talk to an Expert",
   },
 ];
@@ -48,29 +49,32 @@ const faqs = [
   {
     question: "What is included in an international group tour package?",
     answer:
-      "An international group tour package includes flights, visas, accommodation, transfers, curated experiences, and complete travel management. As a MICE expert in India, ExpressEarth ensures a seamless and well-coordinated journey.",
+      "Depending on the brief, the agreed scope can include flights, visa assistance where required, accommodation, transfers, activities and on-ground coordination. Specific inclusions are confirmed in the proposal.",
   },
   {
     question: "Does ExpressEarth handle everything for international travel?",
     answer:
-      "Yes, ExpressEarth is an end-to-end service provider, managing everything from itinerary planning and bookings to on-ground coordination, so your group can travel stress-free.",
+      "The agreed scope can cover destination research, itinerary planning, accommodation, transfers, activities and on-ground coordination. Responsibilities and inclusions are confirmed in the proposal.",
   },
   {
     question: "Can international travel packages be customized for our group?",
     answer:
-      "Absolutely. Every international trip is tailored based on your group size, preferences, pace, and travel goals, ensuring a personalized and well-balanced experience.",
+      "Yes. The itinerary can be shaped around group size, origin, travel dates, destination, budget, travel pace and programme objectives.",
   },
   {
     question: "Do you offer multi-country or world tour packages?",
     answer:
-      "Yes, ExpressEarth curates foreign tour packages and world tour packages, combining multiple destinations into a seamless, well-planned global journey.",
+      "Multi-country itineraries can be considered when travel time, transit arrangements, entry requirements, dates and budget make the route practical.",
   },
   {
     question: "Which destinations do you cover for international group travel?",
     answer:
-      "We organize travel across Asia, Europe, the Middle East, and beyond, backed by our expertise as a MICE expert, delivering consistent quality across global destinations.",
+      "Destination options can be discussed across Asia, Europe and the Middle East. Feasibility depends on dates, group size, entry requirements, availability and budget.",
   },
 ];
+
+const serviceDescription =
+  "ExpressEarth plans international group travel for corporate teams and business delegations. Planning can include destination research, flights, accommodation, transfers, activities, visa assistance where required and on-ground coordination. The programme is shaped around group size, origin, travel dates, destination access and budget.";
 
 const InternationalGroupTravel = () => {
   const formRef = useRef(null);
@@ -222,18 +226,22 @@ const InternationalGroupTravel = () => {
 
   return (
     <>
+      <ServiceStructuredData
+        name="Corporate International Group Travel Management"
+        serviceType="International corporate group travel, incentive trips and business delegations"
+        description={serviceDescription}
+        url="https://www.expressearth.com/internationalgrouptravel"
+      />
       {showPopup && <PopupForm onClose={handleClosePopup} />}
       {/* HERO SECTION */}
 
       <section className="travel-section">
         <div className="travel-left">
           <div className="travel-content">
-            <h1>International Group Traveler</h1>
+            <h1>Corporate International Group Travel Management in Delhi NCR</h1>
 
             <p className="travel-sub">
-              International Group Tour Packages | International Tour Packages
-              International Holiday Packages | Corporate Group Travel Foreign
-              Tour Packages | World Tour Packages
+              Corporate incentive trips | Business delegations | Group travel programmes
             </p>
 
             <div className="travel-line"></div>
@@ -243,7 +251,7 @@ const InternationalGroupTravel = () => {
             </p>
 
             <button className="travel-btn" onClick={handleOpenPopup}>
-              PLAN MY INTERNATIONAL GROUP TRAVEL
+              Discuss Your Group Travel Brief
             </button>
           </div>
         </div>
@@ -333,18 +341,13 @@ const InternationalGroupTravel = () => {
             {/* LEFT TEXT */}
 
             <div className="group-travel-text">
-              <p>
-                At ExpressEarth, we design premium international group tour
-                packages that combine comfort, seamless planning, and meaningful
-                experiences. Our international holiday packages and
-                international trip packages are crafted for corporates and
-                professional groups seeking refined global travel.
-              </p>
+              <p>{serviceDescription}</p>
 
               <p>
-                From single-destination journeys to complete world tour
-                packages, every itinerary reflects precision, exclusivity, and
-                global standards.
+                Itinerary options are reviewed against group size, origin,
+                travel dates, destination access, budget and programme
+                objectives. Flight, visa and other inclusions are confirmed
+                in the proposal.
               </p>
 
               <h3 className="travel-highlight">
@@ -378,20 +381,20 @@ const InternationalGroupTravel = () => {
           {/* RIGHT CONTENT */}
 
           <div className="partner-content">
-            <h2>Your Trusted Partner for International Group Tour Packages </h2>
+            <h2>International Group Travel Planning for Corporate Teams</h2>
 
             <p>
-              As a premium corporate travel and MICE company, ExpressEarth
-              delivers managed international group tour packages across top
-              global destinations. Our experience spans Asia, Europe, the Middle
-              East, and beyond; executed with precision, discretion, and
-              attention to detail.
+              We coordinate international travel arrangements for corporate
+              groups, incentive trips and business delegations. Destination
+              options are assessed against group size, dates, travel
+              requirements and budget.
             </p>
 
             <p>
-              From foreign travel packages to high-end world tour packages, we
-              handle everything from itinerary design and accommodation to
-              logistics, experiences, and on-ground coordination.
+              The agreed scope can include itinerary design, hotel
+              coordination, transfers, activities, participant communication
+              and destination support. Visa and entry requirements remain
+              subject to the relevant authorities and traveller eligibility.
             </p>
 
             <button className="partner-btn" onClick={handleOpenPopup}>
@@ -449,42 +452,37 @@ const InternationalGroupTravel = () => {
 
           <div className="why-international-left">
             <h2>
-              Why Choose ExpressEarth for
+              International Group Travel Planning Scope
               <br />
-              International Group Travel
             </h2>
 
-            <h4>Your Global Vision. Our Expertise. Seamless Execution.</h4>
+            <h4>Destination, itinerary and group logistics shaped around your brief.</h4>
 
             <div className="why-item">
-              <h5>Experts in International Group Tour Packages</h5>
+              <h5>Corporate Group Programme Planning</h5>
               <p>
-                We specialize in managing complex international group tour
-                packages with ease and precision.
+                Shape the itinerary around group size, origin, travel dates, budget and programme objectives.
               </p>
             </div>
 
             <div className="why-item">
-              <h5>Premium International Travel Experiences</h5>
+              <h5>Travel and Accommodation Coordination</h5>
               <p>
-                From best international holiday packages to curated global
-                journeys, quality is never compromised.
+                Coordinate flight options, accommodation requirements, transfers and group movement based on the confirmed brief.
               </p>
             </div>
 
             <div className="why-item">
-              <h5>Tailored International Trip Packages</h5>
+              <h5>Itinerary Planning</h5>
               <p>
-                Every international trip package is customized to match your
-                group’s objectives, pace, and expectations.
+                Balance sightseeing, group activities, business sessions and free time according to the programme format.
               </p>
             </div>
 
             <div className="why-item">
-              <h5>Global Reach. Trusted Execution</h5>
+              <h5>Destination and Entry Checks</h5>
               <p>
-                Whether it’s a single destination or a complete world tour
-                travel package, we deliver with consistency worldwide.
+                Review travel documentation and destination entry requirements as part of planning; approvals remain with the relevant authorities.
               </p>
             </div>
           </div>
@@ -602,15 +600,14 @@ const InternationalGroupTravel = () => {
       <section className="group-travel-cta">
         <div className="cta-overlay">
           <div className="cta-content">
-            <h2>Ready to Travel the World as a Group?</h2>
+            <h2>Planning an International Corporate Group Trip?</h2>
 
             <p>
-              Let ExpressEarth transform your next international journey into a
-              seamless, memorable, and expertly managed experience.
+              Share the origin, destination, group size, dates and budget range to discuss feasibility and the proposed scope.
             </p>
 
             <button className="cta-btn" onClick={handleOpenPopup}>
-              Speak to Our International Group Travel Specialists Today
+              Share Your International Group Travel Brief
             </button>
           </div>
         </div>

@@ -32,10 +32,14 @@ const safeServiceType = (value) => {
   if (typeof value !== "string") return "corporate_mice";
 
   const normalized = value.trim().toLowerCase();
-  return (
-    SERVICE_TYPE_ALIASES[normalized] ||
-    (SAFE_SERVICE_TYPES.has(normalized) ? normalized : "corporate_mice")
-  );
+  const alias = Object.prototype.hasOwnProperty.call(
+    SERVICE_TYPE_ALIASES,
+    normalized,
+  )
+    ? SERVICE_TYPE_ALIASES[normalized]
+    : null;
+
+  return alias || (SAFE_SERVICE_TYPES.has(normalized) ? normalized : "corporate_mice");
 };
 
 const safeFormLocation = (value) =>

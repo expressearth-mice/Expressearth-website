@@ -27,7 +27,7 @@ const IncentiveTravel = () => {
       >
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="hero-title">Corporate Incentive Travel &amp; Reward Programmes in Delhi NCR</h1>
-          <Link to="/contact" className="primary-button">Discuss Your Incentive Travel Brief</Link>
+          <Link to="/contact?service=incentive_travel" className="primary-button">Discuss Your Incentive Travel Brief</Link>
         </div>
       </section>
 
@@ -49,7 +49,7 @@ const IncentiveTravel = () => {
           <p className="section-description">
             We help companies plan reward trips around recognition objectives, group profile, destination, dates and budget. Options can include beach, city, mountain and cultural itineraries, subject to availability and travel requirements.
           </p>
-          <Link to="/contact" className="primary-button performance-btn">Let’s Talk Goals</Link>
+          <Link to="/contact?service=incentive_travel" className="primary-button performance-btn">Let’s Talk Goals</Link>
         </div>
       </section>
 
@@ -123,7 +123,7 @@ const IncentiveTravel = () => {
             <li><span className="benefit-highlight">Branding &amp; engagement</span> — Include approved company branding and group activities where required.</li>
             <li><span className="benefit-highlight">Travel coordination</span> — Plan participant communication, travel documents and on-ground support, subject to destination requirements.</li>
           </ul>
-          <Link to="/contact" className="primary-button mt-8">Let’s Make It Count</Link>
+          <Link to="/contact?service=incentive_travel" className="primary-button mt-8">Let’s Make It Count</Link>
           
         </div>
       </section>
@@ -133,7 +133,7 @@ const IncentiveTravel = () => {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="section-title text-white"><FaBullseye className="inline mr-2" />Ready to Motivate with Meaning?</h2>
           <p className="section-description text-white">Let’s turn your recognition goals into extraordinary journeys.</p>
-          <Link to="/contact" className="secondary-button">Share Your Incentive Travel Brief</Link>
+          <Link to="/contact?service=incentive_travel" className="secondary-button">Share Your Incentive Travel Brief</Link>
         </div>
       </section>
 

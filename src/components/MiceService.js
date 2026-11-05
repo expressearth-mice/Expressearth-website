@@ -249,7 +249,7 @@ const MiceServices = () => {
             Planning a corporate programme in Delhi NCR or elsewhere in India? Share your brief, dates, destination and expected group size with ExpressEarth.
           </p>
 
-          <Link to="/contact" className="mice-services-contact-link custom-button-link">
+          <Link to="/contact?service=corporate_mice" className="mice-services-contact-link custom-button-link">
             Share Your Corporate MICE Brief
           </Link>
         </div>

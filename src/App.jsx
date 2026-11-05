@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 import { AuthContext } from "./context/AuthContext";
+import { isExpressEarthProductionHost } from "./utils/seoHostPolicy";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -293,11 +294,11 @@ function App() {
       return;
     }
 
-    const isDevelopmentHost = window.location.hostname.toLowerCase() === "dev.expressearth.com";
+    const isProductionHost = isExpressEarthProductionHost(window.location.hostname);
     setMeta(
       'meta[name="robots"]',
       { name: "robots" },
-      isDevelopmentHost ? "noindex, follow" : "index, follow, max-image-preview:large"
+      isProductionHost ? "index, follow, max-image-preview:large" : "noindex, follow"
     );
     const canonicalUrl = "https://www.expressearth.com" + pathname;
     document.title = metadata.title;
@@ -356,18 +357,6 @@ function App() {
         />
         <Route path="/incentive-travel" element={<IncentiveTravel />} />
         <Route path="/corporate-events" element={<CorporateEvents />} />
-        <Route
-          path="/meetings-and-conferences"
-          element={<MeetingsAndConferences />}
-        />
-        <Route
-          path="/exhibitions-and-trade-shows"
-          element={<ExhibitionPage />}
-        />
-        <Route
-          path="/destination-management"
-          element={<DestinationManagement />}
-        />
         <Route
           path="/exhibitions-and-trade-shows"
           element={<ExhibitionPage />}

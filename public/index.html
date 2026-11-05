@@ -9,7 +9,9 @@
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <script>
       // Apply the development-host noindex directive before the React app hydrates.
-      if (window.location.hostname.toLowerCase() === "dev.expressearth.com") {
+      var currentHost = window.location.hostname.toLowerCase();
+      var productionHosts = ["expressearth.com", "www.expressearth.com"];
+      if (!productionHosts.includes(currentHost)) {
         var developmentRobotsMeta = document.querySelector('meta[name="robots"]');
         if (developmentRobotsMeta) {
           developmentRobotsMeta.setAttribute("content", "noindex, follow");

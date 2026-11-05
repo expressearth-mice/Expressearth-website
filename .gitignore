@@ -30,3 +30,8 @@ public/Videos/
 *.key
 *.p12
 *.pfx
+Config
+Config.*
+config.local.*
+credentials*.json
+*service-account*.json

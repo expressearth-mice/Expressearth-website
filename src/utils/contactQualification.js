@@ -28,3 +28,29 @@ export const buildContactRequirements = ({
 
   return sections.join("\n\n");
 };
+
+const CONTACT_FORM_PREFILLS = Object.freeze({
+  corporate_mice: { event_type: "Other", programme_detail: "Not sure yet" },
+  incentive_travel: { event_type: "Incentive Trip", programme_detail: "Incentive Travel" },
+  dealer_meet: { event_type: "Other", programme_detail: "Dealer & Distributor Meet" },
+  corporate_offsite: { event_type: "Other", programme_detail: "Corporate Offsite" },
+  conference_management: { event_type: "Conference", programme_detail: "Conference Management" },
+  corporate_events: { event_type: "Product Launch", programme_detail: "Corporate Event / Product Launch" },
+  recognition_rewards: { event_type: "Other", programme_detail: "Rewards & Recognition" },
+  exhibitions: { event_type: "Exhibition", programme_detail: "Exhibition / Trade Show" },
+  international_group_travel: { event_type: "Other", programme_detail: "International Group Travel" },
+  destination_management: { event_type: "Other", programme_detail: "Destination Management" },
+});
+
+export const getContactFormPrefill = (search = "") => {
+  if (typeof search !== "string") return {};
+
+  const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  const service = (params.get("service") || "").trim().toLowerCase();
+
+  if (!Object.prototype.hasOwnProperty.call(CONTACT_FORM_PREFILLS, service)) {
+    return {};
+  }
+
+  return { ...CONTACT_FORM_PREFILLS[service] };
+};

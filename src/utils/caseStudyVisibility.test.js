@@ -1,6 +1,7 @@
 import {
   filterPublicCaseStudies,
   isIndexableCaseStudySlug,
+  isNumberedDuplicateCaseStudySlug,
   isPlaceholderCaseStudySlug,
 } from "./caseStudyVisibility";
 
@@ -23,15 +24,26 @@ describe("case study public visibility", () => {
     },
   );
 
-  test("filters known placeholders but preserves valid and legacy ID-based entries", () => {
+  test("matches the sitemap rule for numbered duplicate slugs", () => {
+    const availableSlugs = ["dealer-meet-programme", "dealer-meet-programme-2"];
+    expect(isNumberedDuplicateCaseStudySlug("dealer-meet-programme-2", availableSlugs)).toBe(true);
+    expect(isIndexableCaseStudySlug("dealer-meet-programme-2", availableSlugs)).toBe(false);
+    expect(isNumberedDuplicateCaseStudySlug("dealer-meet-programme-2025", ["dealer-meet-programme-2025"])).toBe(false);
+    expect(isIndexableCaseStudySlug("dealer-meet-programme-2025", ["dealer-meet-programme-2025"])).toBe(true);
+  });
+
+  test("filters placeholders, numbered duplicates and exact duplicates while preserving legacy ID-based entries", () => {
     const records = [
       { id: 1, slug: "dealer-meet-programme" },
-      { id: 2, slug: "abc-1" },
-      { id: 3, slug: "ABC" },
-      { id: 4 },
+      { id: 2, slug: "dealer-meet-programme-2" },
+      { id: 3, slug: "dealer-meet-programme" },
+      { id: 4, slug: "abc-1" },
+      { id: 5, slug: "ABC" },
+      { id: 6 },
+      { id: 7, slug: "conference-2025" },
     ];
 
-    expect(filterPublicCaseStudies(records)).toEqual([records[0], records[3]]);
+    expect(filterPublicCaseStudies(records)).toEqual([records[0], records[5], records[6]]);
   });
 
   test("returns an empty list for unsupported collection payloads", () => {

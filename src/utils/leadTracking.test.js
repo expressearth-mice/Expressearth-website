@@ -233,6 +233,47 @@ describe("confirmed lead tracking", () => {
     }
   });
 
+  test("uses only an allowlisted current service route when a form does not pass an explicit source", () => {
+    const originalPath = window.location.pathname;
+    const originalGtag = window.gtag;
+    window.gtag = jest.fn();
+
+    try {
+      window.history.pushState({}, "", "/incentivetravel");
+      trackConfirmedLead({
+        serviceType: "incentive_travel",
+        formLocation: "popup",
+      });
+
+      expect(window.gtag).toHaveBeenLastCalledWith(
+        "event",
+        "generate_lead",
+        expect.objectContaining({
+          page_path: "/incentivetravel",
+          service_source_page: "/incentivetravel",
+        }),
+      );
+
+      window.history.pushState({}, "", "/contact");
+      window.gtag.mockClear();
+      trackConfirmedLead({
+        serviceType: "incentive_travel",
+        formLocation: "popup",
+      });
+
+      const contactPageParams = window.gtag.mock.calls[0][2];
+      expect(contactPageParams.page_path).toBe("/contact");
+      expect(contactPageParams).not.toHaveProperty("service_source_page");
+    } finally {
+      window.history.pushState({}, "", originalPath);
+      if (originalGtag === undefined) {
+        delete window.gtag;
+      } else {
+        window.gtag = originalGtag;
+      }
+    }
+  });
+
   test("does not throw or claim tracking when gtag is unavailable", () => {
     const originalGtag = window.gtag;
     delete window.gtag;

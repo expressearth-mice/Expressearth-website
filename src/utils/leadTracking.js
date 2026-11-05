@@ -48,6 +48,7 @@ const SAFE_SERVICE_SOURCE_PAGES = new Set([
   "/dealermeet",
   "/corporateoffsites",
   "/conferencemanagement",
+  "/incentivetravel",
 ]);
 
 const safeServiceType = (value) => {
@@ -170,11 +171,12 @@ export const trackConfirmedLead = ({
     return false;
   }
 
+  const currentPagePath = window.location?.pathname || "/";
   const params = buildConfirmedLeadEventParams({
     serviceType,
     formLocation,
-    serviceSourcePage,
-    pagePath: window.location?.pathname || "/",
+    serviceSourcePage: serviceSourcePage || currentPagePath,
+    pagePath: currentPagePath,
     referrer: typeof document === "undefined" ? "" : document.referrer,
   });
 

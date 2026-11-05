@@ -577,3 +577,12 @@
 - Forced refresh was rejected because the connected Windsor.ai subscription is Trial; cached data was used. No ranking or lead lift is claimed.
 - Re-fetched and reviewed all six changed files after commit. Focused source assertions and isolated runtime checks are recorded in the PR update. Full Jest/JSX/production-build verification remains blocked by the absence of a dependency-backed local checkout and CI runs.
 - No merge, deployment, DNS/hosting or production configuration change, outbound campaign, backend/CRM schema change, EmpFly change or Indo Exhibits change occurred.
+
+
+## 2026-11-05 — Capture service origin for visitor-initiated page forms
+
+- The confirmed-lead tracker now uses the current pathname as a candidate service origin when a page-specific form or popup does not explicitly pass one. The value is still accepted only when it exactly matches the fixed allowlist; arbitrary paths, query strings and personal-looking URLs are not sent.
+- Added the existing legacy incentive form route `/incentivetravel` to the allowlist. Its inline and popup enquiries can now be attributed to that route without changing the form components or Contact API.
+- The contact-page flow continues to use its explicit source-page mapping from the originating service CTA. Direct contact-page submissions do not acquire `/contact` as a service source.
+- Added a regression test covering the allowlisted legacy incentive route and the non-service contact-page fallback.
+- This improves source attribution coverage; it does not change the success condition, create a lead on failed submission, or prove that GA4/GTM receives the event. Tag Assistant verification remains an owner/developer dependency.

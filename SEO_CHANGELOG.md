@@ -421,3 +421,26 @@
 - Source assertions verified the initial enquiry launcher, removal of the five-second auto-open timer, all six priority links, responsive 3/2/1-column breakpoints, and regression-test coverage.
 - The focused Jest test and full React production build were not run because no dependency-backed checkout is available in this execution. The repository reports no configured GitHub status checks/workflow runs.
 - No route, API payload, sitemap generator, analytics configuration, hosting/DNS, production configuration, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign was performed.
+
+
+## 2026-11-05 — Corporate enquiry brief qualification
+
+- The main Contact page now asks for a company/organisation and a programme type before accepting a corporate MICE enquiry. Both fields show inline, accessible validation messages; the existing event-type options and Contact API payload remain unchanged.
+- Kept expected group size and preferred destination optional to avoid forcing visitors to guess details they may not yet have. The field labels now make those details clearer for the sales team.
+- Extracted the two-field validation into `src/utils/corporateEnquiryValidation.js` and added focused tests for blank, whitespace, valid and non-string values.
+- This is client-side qualification only. It does not change backend validation, CRM stages, event taxonomy or the definition of an A1/A2 opportunity.
+
+### Connected acquisition evidence reviewed (cached 28-day extracts, 8 October–4 November 2026)
+
+- GA4 property `expressearth.com`: 599 sessions, 101 Organic Search sessions and 79 Organic Search active users. Organic landing-page sessions were homepage 72, `/contact` 9, (not set) 6, `/about` 5, Switzerland destination 3, careers 2, corporate events 1, destinations 1, Maldives destination 1 and unsubscribe 1. The MICE hub had 17 Direct landing sessions and did not appear in the returned Organic Search landing-page rows.
+- Existing `ads_conversion_Submit_lead_form_1` event: 64 counts (21 Organic Search, 40 Direct, 3 Unassigned). These are event counts, not unique submissions or qualified CRM opportunities.
+- Search Console returned 107 query/date rows, 41 clicks and 173 impressions. The explicit brand queries `express earth` (23 clicks / 54 impressions) and `expressearth` (18 / 33) accounted for the returned query clicks; the connector's branded flag labels these as non-branded, so brand terms were classified manually.
+- Priority non-brand samples remained low-volume with zero clicks: `mice company in gurugram` (10 impressions; average position 68.8), `mice companies in gurgaon` (8; 76.0), `mice agency for corporate events` (4; 65.5), `mice services for corporates` (4; 77.5), and `incentive travel company india` (4; 68.3).
+- Google Business Profile returned 169 impressions, 10 website clicks, 1 call click and 40 direction requests. Its service list still includes several consumer-travel categories alongside corporate MICE services; this needs an owner decision before any profile cleanup.
+
+### Validation and limitations
+
+- Re-fetched the Contact form, validation helper, test file and changelog after committing; verified required fields, accessible error associations, unchanged API field names and unchanged event-type options.
+- Added five focused Jest cases. The Jest runner, JSX compilation and full React production build were not run because this execution has no dependency-backed checkout; the GitHub commit status and workflow-run endpoints returned no checks.
+- Forced Windsor.ai refresh was rejected because the connected subscription is on the Trial plan. The GA4, Search Console and GBP figures above are cached connector extracts.
+- No backend/API, CRM, GTM configuration, GBP profile, production configuration, hosting/DNS, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign was performed.

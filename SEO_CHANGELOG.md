@@ -352,3 +352,15 @@
 - These changes do not create case-study claims, testimonials, client names or performance results. Existing API routes and public case-study slugs are unchanged.
 - Validation for this batch: changed files were re-fetched after commits; source-level checks verified abort signals on every case-study/detail destination request, cleanup paths, H1/CSS alignment, empty-state links and lazy image attributes. Focused Jest tests were added but require the developer's dependency-backed test/build run; no full React build or live API/browser test was available in this execution.
 - Measurement note: the connected 28-day Search Console/GA4/GBP extracts were read from cache on 5 November because the Windsor.ai trial plan rejects forced refresh. Metrics remain observational and GA4 form-event counts are not unique or qualified enquiries.
+
+## 2026-11-05 — Case-study page resilience, accessibility and loading
+
+- Added an effect-scoped AbortController to the case-study detail page. Route changes and unmounts now abort pending legacy/new detail, duplicate-index and destination requests; cancelled requests cannot overwrite current case-study content or SEO metadata.
+- Promoted the case-study title from H2 to H1 and updated the responsive typography selectors.
+- Added request cancellation to the case-study listing page so unmounted lists do not apply late API results.
+- Added an accessible empty/error state to the case-study listing with crawlable links to the contact page and MICE service hub. The copy distinguishes API/source failure from a successful response containing no public records.
+- Added lazy loading and asynchronous decoding to case-study listing images and below-the-fold gallery images.
+- Added focused component tests for the detail-page H1, request abortion on unmount, listing image loading, API failure fallback and contact/service links.
+- These changes do not create case-study claims, testimonials, client names or performance results. Existing API routes and public case-study slugs are unchanged.
+- Validation for this batch: source files, CSS and test files were re-fetched after commits; source assertions verified request signals/cleanup paths, H1/CSS alignment, fallback links and lazy image attributes. Focused Jest tests were added but require a dependency-backed test run; the full React build and live API/browser tests were unavailable in this execution.
+- Measurement note: connected 28-day Search Console/GA4/GBP extracts were read from cache on 5 November because the Windsor.ai trial plan rejects forced refresh. GA4 form-event counts remain event counts, not unique or qualified enquiries.

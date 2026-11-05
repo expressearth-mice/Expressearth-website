@@ -18,6 +18,7 @@ import axiosInstance from "../api/axios";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import { trackConfirmedLead } from "../utils/leadTracking";
 import { validateCorporateEnquiryBrief } from "../utils/corporateEnquiryValidation";
+import { buildContactRequirements } from "../utils/contactQualification";
 
 const ContactForm = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const ContactForm = () => {
     event_type: "",
     country: "",
     attendees: "",
+    project_stage: "",
     event_date: "",
     requirements: "",
   });
@@ -92,8 +94,13 @@ const ContactForm = () => {
     setErrorMessage("");
 
     try {
+      const { project_stage, ...contactFields } = formData;
       const formattedFormData = {
-        ...formData,
+        ...contactFields,
+        requirements: buildContactRequirements({
+          projectStage: project_stage,
+          requirements: formData.requirements,
+        }),
         event_date: formData.event_date
           ? new Date(formData.event_date).toISOString().split("T")[0]
           : null,
@@ -115,6 +122,7 @@ const ContactForm = () => {
           event_type: "",
           country: "",
           attendees: "",
+          project_stage: "",
           event_date: "",
           requirements: "",
         });
@@ -372,6 +380,31 @@ const ContactForm = () => {
                     <option value="100-300">100-300</option>
                     <option value="300+">300+</option>
                   </Form.Select>
+                </Form.Group>
+
+                <Form.Group controlId="project_stage" className="mb-3">
+                  <Form.Label>Current Planning Stage (optional)</Form.Label>
+                  <Form.Select
+                    name="project_stage"
+                    value={formData.project_stage}
+                    onChange={handleChange}
+                    aria-describedby="project_stage-help"
+                  >
+                    <option value="">Select planning stage</option>
+                    <option value="Active brief / RFQ">Active brief / RFQ</option>
+                    <option value="Programme planned; comparing partners">
+                      Programme planned; comparing partners
+                    </option>
+                    <option value="Upcoming programme; exploring options">
+                      Upcoming programme; exploring options
+                    </option>
+                    <option value="Early planning / gathering information">
+                      Early planning / gathering information
+                    </option>
+                  </Form.Select>
+                  <Form.Text id="project_stage-help" muted>
+                    Optional. This helps our team understand whether you have an active brief or are exploring a future programme.
+                  </Form.Text>
                 </Form.Group>
 
                 <Form.Group controlId="event_date" className="mb-3">

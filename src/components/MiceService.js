@@ -169,12 +169,19 @@ const MiceServices = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
-      <section
-        className="mice-services-hero"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+      <section className="mice-services-hero">
+        <img
+          className="mice-services-hero-image"
+          src={heroImage}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+        />
         <h1 className="mice-services-hero-title">
-          Corporate MICE Agency in Gurugram<br />Meetings, Incentive Travel, Conferences &amp; Events across Delhi NCR and India
+          Corporate MICE Company in Gurugram (Gurgaon)<br />
+          Meetings, Incentive Travel, Conferences &amp; Events across Delhi NCR and India
         </h1>
       </section>
 

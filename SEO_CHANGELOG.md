@@ -508,3 +508,15 @@
 - Re-fetched the MICE page, test and changelog before editing. The Jest suite, JSX compilation and React production build remain unrun: Node and npm are available in the shell, but a shallow GitHub clone failed because github.com did not resolve, leaving no local checkout or installed dependencies, and the current branch has no GitHub Actions status checks or workflow runs. No test/build pass is claimed.
 - No sitemap generator, DNS/hosting, analytics configuration, backend, CRM, EmpFly or Indo Exhibits files were changed. No merge, deployment or outbound campaign occurred.
 
+
+## 2026-11-05 — Align the MICE hub to observed Gurugram search language
+
+- Cached Search Console last-28-day query extract (8 October–4 November 2026): `mice company in gurugram` had 10 impressions (average position 68.8), `mice companies in gurgaon` had 8 (76.0), and `mice agency for corporate events` had 4 (65.5); all recorded zero clicks. The route title and H1 now use the more directly aligned phrase “MICE Company in Gurugram (Gurgaon)” without creating a thin city doorway page.
+- Replaced the MICE hub’s CSS background hero with a decorative image element using eager loading, high fetch priority and asynchronous decoding. Overlay layering is explicit. This makes the hero image’s loading priority visible to the browser; no field LCP measurement is available to quantify an impact.
+- Added a regression test for the local-intent H1 and hero image loading attributes.
+- Cached Search Console page rows: 80 clicks / 1,289 impressions across 41 returned rows; the MICE hub URL returned 1 click / 17 impressions at average position 25.8. Page rows still include apex/www and HTTP/HTTPS variants.
+- Cached GA4 last-28-day data: 101 Organic Search sessions. The existing `ads_conversion_Submit_lead_form_1` key event recorded 64 event counts (21 Organic Search, 40 Direct, 3 Unassigned); these are not unique submissions or qualified opportunities. No `generate_lead` rows appeared in this extract. Organic Search session-start pages were led by the homepage (76 sessions) and contact page (9); the MICE hub was not among the returned organic landing pages.
+- Cached Google Business Profile data: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. These are profile interactions, not verified corporate enquiries.
+- Forced refresh was rejected by the connected Windsor.ai Trial plan; the above is explicitly a cached extract. No fresh live refresh is claimed.
+- Re-fetched the modified source files after the commit and ran source-level assertions for the title/H1, decorative image attributes, CSS stacking and regression test. Jest, JSX compilation and the React production build were not run in this connector-only environment; no test/build pass is claimed.
+- No merge, deployment, DNS/hosting change, outbound campaign, backend/CRM, EmpFly or Indo Exhibits change occurred.

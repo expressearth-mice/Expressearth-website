@@ -14,6 +14,28 @@ describe("MICE services hub discovery", () => {
     window.scrollTo.mockRestore();
   });
 
+  test("uses the observed Gurugram MICE company phrasing and prioritises its decorative hero image", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <MiceServices />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: /corporate mice company in gurugram \(gurgaon\)/i,
+      }),
+    ).toBeInTheDocument();
+
+    const heroImage = container.querySelector(".mice-services-hero-image");
+    expect(heroImage).toHaveAttribute("src", "/Images/Expressearth%20website%20images/Our-Services/services.png");
+    expect(heroImage).toHaveAttribute("alt", "");
+    expect(heroImage).toHaveAttribute("loading", "eager");
+    expect(heroImage).toHaveAttribute("decoding", "async");
+    expect(heroImage).toHaveAttribute("fetchpriority", "high");
+  });
+
   test("links the service hub to the existing rewards and recognition page", () => {
     render(
       <MemoryRouter>

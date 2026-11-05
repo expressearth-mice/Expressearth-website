@@ -5,15 +5,23 @@
 }
 
 .mice-services-hero {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   color: #fff;
   padding: 110px 20px;
   text-align: center;
   position: relative;
-  z-index: 1;
+  isolation: isolate;
   overflow: hidden;
+}
+
+.mice-services-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .mice-services-hero::before {
@@ -21,10 +29,13 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  z-index: -1;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .mice-services-hero-title {
+  position: relative;
+  z-index: 2;
   font-size: 48px;
   margin: 0;
   background-color: rgba(19, 17, 17, 0.38);

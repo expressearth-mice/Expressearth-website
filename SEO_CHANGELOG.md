@@ -533,3 +533,15 @@
 - A forced refresh of Search Console, GA4 and GBP was rejected because the connected Windsor.ai subscription is Trial; cached extracts were used.
 - Re-fetched all six changed files after the proposed edit and checked the intended form state, optional selector, API-field stripping, requirements mapping, service-category aliases, regression coverage and changelog text. Jest, JSX compilation and the React production build were not run in this connector-only environment; no test/build pass is claimed.
 - No backend/API, CRM, GTM configuration, GBP profile, DNS/hosting, production configuration, sitemap, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign occurred.
+
+## 2026-11-05 — Service-aware corporate enquiry paths
+
+- MICE hub, incentive travel, meetings/conferences and corporate-events CTAs now carry an allowlisted `service` query value to the contact page.
+- The contact page preselects the matching existing API programme type and the optional specific-service value. Visitors can still change either field; unknown or personal-looking query values are ignored.
+- The UI-only query parameter is not added to the API schema or analytics payload. The existing Contact API request fields and confirmed-submission tracking remain unchanged.
+- Added regression cases for all supported service mappings and for unknown, inherited and personal-looking query values.
+- Cached acquisition evidence for 8 October–4 November 2026: GA4 returned 101 Organic Search sessions and 64 legacy lead-form key-event counts (21 Organic Search, 40 Direct, 3 Unassigned). These are event counts, not unique enquiries or qualified opportunities. No `generate_lead` events appeared in the cached extract.
+- Search Console returned 41 clicks across 43 visible query rows; the two explicit ExpressEarth brand variants accounted for all 41 clicks. The connector labels those variants as non-branded because its rule checks for the domain string, so brand classification was corrected manually. Priority non-brand MICE queries remained low-volume and clickless in this sample.
+- A forced refresh for Search Console, GA4 and Google Business Profile was rejected because the connected Windsor.ai subscription is Trial; cached extracts were used. GBP profile actions are not verified corporate leads.
+- Source files were re-fetched after the updates and reviewed. Jest, JSX compilation and the React production build were not run in this connector-only environment; no test/build pass is claimed.
+- No API/backend, CRM, GTM configuration, GBP profile, DNS/hosting, production configuration, sitemap, EmpFly or Indo Exhibits change was made. No merge, deployment or outbound campaign occurred.

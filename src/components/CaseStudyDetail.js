@@ -298,10 +298,17 @@ const CaseStudyDetail = () => {
 
   return (
     <div className="case-study-detail-container">
-      <div
-        className="case-study-detail-banner"
-        style={{ backgroundImage: `url(${caseStudy.image})` }}
-      />
+      <div className="case-study-detail-banner">
+        {typeof caseStudy.image === "string" && caseStudy.image.trim() ? (
+          <img
+            src={caseStudy.image}
+            alt={(caseStudy.name || "Corporate MICE") + " case study featured image"}
+            className="case-study-detail-banner-image"
+            loading="eager"
+            decoding="async"
+          />
+        ) : null}
+      </div>
 
       {canManageCaseStudies && (
         <div className="d-flex gap-2 justify-content-end px-4 pt-4">

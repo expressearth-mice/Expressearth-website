@@ -381,3 +381,19 @@
 - Search Console page rows include preferred www, apex HTTPS and apex HTTP URLs. The top page rows included the www homepage (52 clicks) and apex HTTP homepage (7 clicks); host consolidation remains a hosting-owner task.
 - Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests.
 - Windsor.ai `force_refresh=true` was rejected on the connected trial plan; these are cached connector extracts, not guaranteed live refreshes.
+
+
+## 2026-11-05 — Case-study featured image accessibility and discovery
+
+- Replaced the CSS-only featured-image background on case-study detail pages with a semantic image element. The image now has title-derived alternative text, eager loading and asynchronous decoding; responsive CSS reserves the existing desktop, tablet and mobile banner heights.
+- Kept below-the-fold case-study gallery images lazy-loaded. No case-study content, API response shape, URL, client claim, result or permission was changed.
+- Added a focused component regression test for the featured image source, accessible name, eager loading and decoding attributes.
+
+### Connected acquisition evidence reviewed for 8 October–4 November 2026
+
+- GA4 returned 101 Organic Search sessions. Organic landing pages: homepage 72 sessions, contact 9, about 5 and corporate events 1; the MICE service hub did not appear in the 10 returned organic landing-page rows. The MICE hub had 17 Direct sessions in the unfiltered landing-page report.
+- Search Console query rows returned 41 clicks, all from the visible ExpressEarth brand variants ("express earth" 23 clicks / 54 impressions; "expressearth" 18 / 33). Returned non-brand query rows had impressions but no clicks. Small MICE samples: "mice company in gurugram" 10 impressions (average position 68.8), "mice companies in gurgaon" 8 (76.0), and "mice agency for corporate events" 4 (65.5).
+- Search Console page rows showed one click / 9 impressions for the existing 5,000-person employee/family-day case-study URL (average position 1.44) and one click / 17 impressions for the MICE services hub (average position 25.76). These are observed page metrics, not proof that the code changes caused traffic.
+- Existing GA4 lead-form event: 64 counts (21 Organic Search, 40 Direct, 3 Unassigned). These are event counts, not unique submissions or A1/A2-qualified opportunities.
+- Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. Two local posts were returned as LIVE (27 October corporate MICE and 2 November corporate offsite).
+- Forced refresh was rejected by the connected Windsor.ai trial plan. GA4/GBP and the Search Console fresh-data option therefore remain connector-cached extracts; no live-refresh claim is made.

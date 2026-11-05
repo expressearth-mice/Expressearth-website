@@ -116,4 +116,33 @@ describe("CaseStudyDetail", () => {
     ).toHaveAttribute("href", "/mice-services");
   });
 
+  test("renders the featured case-study image as an eager, descriptive image", async () => {
+    axiosInstance.get.mockImplementation((url) => {
+      if (url === "/api/case-studies/") {
+        return Promise.resolve({
+          data: [
+            {
+              id: 12,
+              slug: "dealer-meet-programme",
+              name: "Dealer Meet Programme",
+              image: "https://example.com/dealer-meet.jpg",
+              comment: "Corporate dealer programme planning.",
+            },
+          ],
+        });
+      }
+      if (url === "/api/destinations/") return Promise.resolve({ data: [] });
+      return Promise.reject(new Error("unexpected request"));
+    });
+
+    renderDetail();
+
+    const image = await screen.findByRole("img", {
+      name: "Dealer Meet Programme case study featured image",
+    });
+    expect(image).toHaveAttribute("src", "https://example.com/dealer-meet.jpg");
+    expect(image).toHaveAttribute("loading", "eager");
+    expect(image).toHaveAttribute("decoding", "async");
+  });
+
 });

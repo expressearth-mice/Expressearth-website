@@ -4,9 +4,16 @@
   }
   
   .case-study-detail-banner {
-    background-size: cover;
-    background-position: center;
     min-height: 320px;
+    overflow: hidden;
+  }
+
+.case-study-detail-banner-image {
+    display: block;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    object-position: center;
   }
   
 .case-study-detail-content {
@@ -107,6 +114,10 @@
       min-height: 240px;
     }
 
+    .case-study-detail-banner-image {
+      height: 240px;
+    }
+
     .case-study-detail-content h1 {
       font-size: 34px;
     }
@@ -119,6 +130,10 @@
 
     .case-study-detail-banner {
       min-height: 200px;
+    }
+
+    .case-study-detail-banner-image {
+      height: 200px;
     }
 
     .case-study-detail-content {

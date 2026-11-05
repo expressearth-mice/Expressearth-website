@@ -339,3 +339,16 @@
 - Re-fetched the helper, focused test file, `CaseStudyDetail.js`, existing `CaseStudyList.js` and this changelog after edits. Twelve source-level assertions passed, covering sitemap-rule parity, list filtering/deduplication, detail-page duplicate lookup, noindex/canonical handling and test coverage.
 - Ran `node --check` on the standalone helper and Jest test source; both passed. Ran eight standalone Node runtime assertions for placeholder handling, base/numbered duplicate detection, legitimate numeric suffixes, indexability and list filtering; all passed. The Jest runner, JSX compilation and full React production build were not run because a dependency-backed repository checkout is unavailable.
 - No client names, case-study claims, testimonials, results, permissions or credentials were added. PR #4's sitemap generator, production configuration, hosting, DNS, redirects, EmpFly and Indo Exhibits were not changed. No merge, deployment or outbound campaign was performed.
+
+
+## 2026-11-05 — Case-study page resilience, accessibility and loading
+
+- Added an effect-scoped AbortController to the case-study detail page. Route changes and unmounts now abort pending detail, duplicate-index and destination requests; cancelled requests cannot overwrite the current case-study content, canonical or robots metadata.
+- Promoted the case-study title from H2 to H1 and updated its responsive typography selectors.
+- Added request cancellation to the case-study listing page so unmounted lists do not apply late API results.
+- Added an explicit empty/error state with crawlable links to the contact page and MICE service hub when no public case-study entries can be displayed. The copy distinguishes a source/API failure from a successful empty response.
+- Added lazy loading and asynchronous decoding to case-study listing images below the introductory content.
+- Added focused component tests for the detail-page H1, request abortion on unmount, listing image loading attributes, API failure fallback and contact/service links.
+- These changes do not create case-study claims, testimonials, client names or performance results. Existing API routes and public case-study slugs are unchanged.
+- Validation for this batch: changed files were re-fetched after commits; source-level checks verified abort signals on every case-study/detail destination request, cleanup paths, H1/CSS alignment, empty-state links and lazy image attributes. Focused Jest tests were added but require the developer's dependency-backed test/build run; no full React build or live API/browser test was available in this execution.
+- Measurement note: the connected 28-day Search Console/GA4/GBP extracts were read from cache on 5 November because the Windsor.ai trial plan rejects forced refresh. Metrics remain observational and GA4 form-event counts are not unique or qualified enquiries.

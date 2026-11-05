@@ -11,31 +11,37 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { Country } from "country-state-city";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 import "./ContactForm.css";
 import axiosInstance from "../api/axios";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import { trackConfirmedLead } from "../utils/leadTracking";
 import { validateCorporateEnquiryBrief } from "../utils/corporateEnquiryValidation";
-import { buildContactRequirements } from "../utils/contactQualification";
+import { buildContactRequirements, getContactFormPrefill } from "../utils/contactQualification";
+
+const createInitialFormData = (search = "") => ({
+  full_name: "",
+  company_name: "",
+  email: "",
+  phone: "",
+  event_type: "",
+  programme_detail: "",
+  country: "",
+  attendees: "",
+  project_stage: "",
+  event_date: "",
+  requirements: "",
+  ...getContactFormPrefill(search),
+});
 
 const ContactForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [formData, setFormData] = useState({
-    full_name: "",
-    company_name: "",
-    email: "",
-    phone: "",
-    event_type: "",
-    programme_detail: "",
-    country: "",
-    attendees: "",
-    project_stage: "",
-    event_date: "",
-    requirements: "",
-  });
+  const [formData, setFormData] = useState(() =>
+    createInitialFormData(location.search)
+  );
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -53,6 +59,17 @@ const ContactForm = () => {
     //   });
     // }
   }, []);
+
+  useEffect(() => {
+    const prefill = getContactFormPrefill(location.search);
+    if (Object.keys(prefill).length) {
+      setFormData((previous) => ({
+        ...previous,
+        event_type: previous.event_type || prefill.event_type,
+        programme_detail: previous.programme_detail || prefill.programme_detail,
+      }));
+    }
+  }, [location.search]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -116,19 +133,7 @@ const ContactForm = () => {
 
       if (isSuccessfulContactResponse(response)) {
         setSubmitted(true);
-        setFormData({
-          full_name: "",
-          company_name: "",
-          email: "",
-          phone: "",
-          event_type: "",
-          programme_detail: "",
-          country: "",
-          attendees: "",
-          project_stage: "",
-          event_date: "",
-          requirements: "",
-        });
+        setFormData(createInitialFormData(location.search));
         setErrors({});
         trackConfirmedLead({
           serviceType: programme_detail || formData.event_type || "corporate_mice",

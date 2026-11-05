@@ -54,3 +54,24 @@ export const getContactFormPrefill = (search = "") => {
 
   return { ...CONTACT_FORM_PREFILLS[service] };
 };
+
+
+const CONTACT_FORM_SOURCE_PAGES = Object.freeze({
+  corporate_mice: "/mice-services",
+  incentive_travel: "/incentive-travel",
+  conference_management: "/meetings-and-conferences",
+  corporate_events: "/corporate-events",
+});
+
+export const getContactFormSourcePage = (search = "") => {
+  if (typeof search !== "string") return "";
+
+  const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  const service = (params.get("service") || "").trim().toLowerCase();
+
+  if (!Object.prototype.hasOwnProperty.call(CONTACT_FORM_SOURCE_PAGES, service)) {
+    return "";
+  }
+
+  return CONTACT_FORM_SOURCE_PAGES[service];
+};

@@ -111,7 +111,7 @@ const MeetingsAndConferences = () => {
           <p className="hero-subtitle">
             Leadership meetings | Board meetings | Seminars | Workshops | AGMs
           </p>
-          <Link to="/contact" className="hero-button">
+          <Link to="/contact?service=conference_management" className="hero-button">
             Discuss Your Conference Brief
           </Link>
         </div>
@@ -214,7 +214,7 @@ const MeetingsAndConferences = () => {
       </motion.section>
 
       <div className="contact-btn-container">
-        <Link to="/contact" className="contact-btn">
+        <Link to="/contact?service=conference_management" className="contact-btn">
           <Phone size={16} style={{ marginRight: "8px" }} />
           Share Your Event Brief
         </Link>

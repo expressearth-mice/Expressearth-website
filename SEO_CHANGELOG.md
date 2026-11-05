@@ -397,3 +397,27 @@
 - Existing GA4 lead-form event: 64 counts (21 Organic Search, 40 Direct, 3 Unassigned). These are event counts, not unique submissions or A1/A2-qualified opportunities.
 - Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. Two local posts were returned as LIVE (27 October corporate MICE and 2 November corporate offsite).
 - Forced refresh was rejected by the connected Windsor.ai trial plan. GA4/GBP and the Search Console fresh-data option therefore remain connector-cached extracts; no live-refresh claim is made.
+
+
+## 2026-11-05 — Homepage MICE discovery and visitor-initiated enquiry
+
+- Expanded the homepage's priority corporate MICE navigation from four to all six existing commercial programme routes: meetings/conferences, incentive travel, dealer/distributor meets, corporate offsites, corporate events, and exhibitions/trade shows. Verified all six paths against the current React route table.
+- Changed the priority-link grid to three columns on desktop, two on tablet and one on mobile so all six services remain visible without a partial second row.
+- Removed the five-second automatic enquiry-modal timer. The existing floating enquiry launcher is now visible on initial page load; the popup opens only after a visitor activates it and the launcher returns when the popup is closed. This is a UX hypothesis intended to reduce interruption and keep enquiries visitor-initiated; no conversion lift is claimed.
+- Extended the existing homepage component tests to cover all six crawlable service links and the opt-in popup open/close flow.
+
+### Connected acquisition evidence (cached 8 October–4 November 2026)
+
+- GA4: 101 Organic Search sessions / 68 active users. Organic landing pages: homepage 72 sessions, contact 9, about 5, corporate events 1; the MICE services hub did not appear among the returned Organic Search landing pages. It recorded 17 Direct landing sessions in the same report.
+- Search Console query report: 42 query rows, 38 clicks and 156 impressions. Explicit brand queries `express earth` (20 clicks / 47 impressions) and `expressearth` (18 / 32) accounted for all returned query clicks. Returned non-brand queries had 77 impressions and zero clicks. MICE examples: `mice company in gurugram` (9 impressions; avg. position 68.2), `mice companies in gurgaon` (8; 76.0), and `mice agency for corporate events` (3; 65.7), all zero clicks.
+- Search Console page report: 37 page rows, 74 clicks and 1,167 impressions. The preferred www homepage had 52 clicks / 254 impressions; the apex HTTP homepage had 7 / 162. The apex HTTPS MICE hub had 1 click / 14 impressions (average position 30.3). These host variants remain a hosting-level canonicalisation issue, not something changed in this commit.
+- Existing GA4 `ads_conversion_Submit_lead_form_1` event: 64 counts (21 Organic Search, 40 Direct, 3 Unassigned). These are event counts, not unique submissions or A1/A2-qualified opportunities.
+- Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. These are profile interactions, not verified corporate enquiries.
+- Windsor.ai forced refresh was rejected because the connected account is on the Trial plan; GA4, Search Console and GBP figures are cached connector extracts. Search Console query and page reports use different dimensions and therefore have different totals.
+
+### Validation and safety
+
+- Re-fetched the modified homepage component, homepage CSS and homepage test after their commits; route table inspection confirmed all six linked paths exist.
+- Source assertions verified the initial enquiry launcher, removal of the five-second auto-open timer, all six priority links, responsive 3/2/1-column breakpoints, and regression-test coverage.
+- The focused Jest test and full React production build were not run because no dependency-backed checkout is available in this execution. The repository reports no configured GitHub status checks/workflow runs.
+- No route, API payload, sitemap generator, analytics configuration, hosting/DNS, production configuration, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign was performed.

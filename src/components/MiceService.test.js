@@ -74,4 +74,33 @@ describe("MICE services hub discovery", () => {
       screen.getByRole("link", { name: /share your corporate mice brief/i }),
     ).toHaveAttribute("href", "/contact");
   });
+
+  test("publishes FAQPage JSON-LD that mirrors the visible MICE questions", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <MiceServices />
+      </MemoryRouter>,
+    );
+
+    const faqScript = container.querySelector('script[type="application/ld+json"]');
+    expect(faqScript).toBeInTheDocument();
+
+    const schema = JSON.parse(faqScript.textContent);
+    expect(schema["@context"]).toBe("https://schema.org");
+    expect(schema["@type"]).toBe("FAQPage");
+
+    const visibleQuestions = Array.from(
+      container.querySelectorAll(".mice-services-faq-item summary"),
+    ).map((summary) => summary.textContent);
+
+    expect(schema.mainEntity.map((question) => question.name)).toEqual(visibleQuestions);
+    expect(schema.mainEntity).toHaveLength(5);
+    expect(schema.mainEntity[0].acceptedAnswer.text).toContain(
+      "Meetings, Incentives, Conferences and Exhibitions",
+    );
+    expect(
+      schema.mainEntity.every((question) => Boolean(question.acceptedAnswer?.text)),
+    ).toBe(true);
+  });
+
 });

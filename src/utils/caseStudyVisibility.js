@@ -17,7 +17,7 @@ export const isPlaceholderCaseStudySlug = (value) => {
 // the unsuffixed base slug also exists in the combined public case-study data.
 export const isNumberedDuplicateCaseStudySlug = (value, availableSlugs = []) => {
   const slug = String(value ?? "").trim().toLowerCase();
-  const baseSlug = slug.replace(/-\\d+$/, "");
+  const baseSlug = slug.replace(/-\d+$/, "");
   if (!slug || baseSlug === slug) return false;
   return normalizeSlugSet(availableSlugs).has(baseSlug);
 };

@@ -58,14 +58,21 @@ const CaseStudyListSkeleton = () => (
 const CaseStudyList = () => {
   const [caseStudies, setCaseStudies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
+    let cancelled = false;
+
     const fetchCaseStudies = async () => {
       try {
         const [oldRes, newRes] = await Promise.allSettled([
-          axiosInstance.get("/api/case-studies/"),
-          axiosInstance.get(case_study_url),
+          axiosInstance.get("/api/case-studies/", { signal: controller.signal }),
+          axiosInstance.get(case_study_url, { signal: controller.signal }),
         ]);
+
+        if (cancelled) return;
+        setLoadError(oldRes.status === "rejected" || newRes.status === "rejected");
 
         const oldStudies =
           oldRes.status === "fulfilled"
@@ -87,14 +94,21 @@ const CaseStudyList = () => {
         }));
 
         setCaseStudies(filterPublicCaseStudies([...newStudies, ...[...oldStudies].reverse()]));
-        setLoading(false);
       } catch (err) {
-        console.error("Error fetching case studies:", err);
-        setLoading(false);
+        if (!cancelled) {
+          setLoadError(true);
+          console.error("Error fetching case studies:", err);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     };
 
     fetchCaseStudies();
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
   }, []);
 
   if (loading) {
@@ -131,7 +145,24 @@ const CaseStudyList = () => {
           className="right-panel"
           style={{ display: "flex", flexDirection: "column", gap: "32px" }}
         >
-          {caseStudies.map((item) => {
+          {caseStudies.length === 0 ? (
+            <div className="case-study-empty-state" role="status" aria-live="polite">
+              <h2>
+                {loadError
+                  ? "Case studies are temporarily unavailable"
+                  : "No public case studies are available right now"}
+              </h2>
+              <p>
+                {loadError
+                  ? "The project library could not be reached. You can still discuss your upcoming corporate programme with our team."
+                  : "Published project details are not currently available here. Contact our team to discuss your corporate MICE requirements."}
+              </p>
+              <div className="case-study-empty-actions">
+                <Link to="/contact">Discuss a corporate programme</Link>
+                <Link to="/mice-services">Explore MICE services</Link>
+              </div>
+            </div>
+          ) : caseStudies.map((item) => {
             const cleanText =
               item.comment?.replace(/<[^>]+>/g, "").slice(0, 100) || "";
             const imageUrl = item.image || "/Images/placeholder.jpg";
@@ -146,8 +177,10 @@ const CaseStudyList = () => {
                 <div className="case-card">
                   <img
                     src={imageUrl}
-                    alt={item.name}
+                    alt={item.name || "ExpressEarth corporate MICE case study"}
                     className="case-card-img"
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       e.target.src = "/Images/placeholder.jpg";
                     }}

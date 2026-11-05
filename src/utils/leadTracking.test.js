@@ -88,6 +88,32 @@ describe("confirmed lead tracking", () => {
     expect(params.form_location).toBe("contact_page");
   });
 
+  test("records the originating service page separately from the contact submission page", () => {
+    const params = buildConfirmedLeadEventParams({
+      serviceType: "incentive_travel",
+      formLocation: "service_page",
+      pagePath: "/contact",
+      serviceSourcePage: "/incentive-travel",
+    });
+
+    expect(params).toMatchObject({
+      service_type: "incentive_travel",
+      form_location: "service_page",
+      page_path: "/contact",
+      service_source_page: "/incentive-travel",
+    });
+  });
+
+  test("omits unrecognised or personal-looking service source paths", () => {
+    const params = buildConfirmedLeadEventParams({
+      serviceType: "incentive_travel",
+      serviceSourcePage: "/contact?email=private@example.com",
+    });
+
+    expect(params).not.toHaveProperty("service_source_page");
+    expect(JSON.stringify(params)).not.toContain("private@example.com");
+  });
+
   test("omits an invalid referrer", () => {
     const params = buildConfirmedLeadEventParams({
       serviceType: "incentive_travel",

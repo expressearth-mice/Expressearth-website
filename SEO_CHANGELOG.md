@@ -550,3 +550,18 @@
 
 - Ran `node --check` on an isolated copy of the re-fetched `contactQualification.js` helper and 18 direct runtime assertions: all 10 allowlisted service mappings, 6 unknown/inherited/personal-looking/empty inputs, and 2 requirements-field checks passed.
 - The full Jest suite, JSX compilation and React production build remain unrun because the local checkout attempt failed on GitHub DNS resolution. No CI workflow or commit status checks are available.
+
+
+## 2026-11-05 — Preserve service-page origin in confirmed lead attribution
+
+- Updated the four service-aware contact routes (MICE hub, incentive travel, meetings/conferences and corporate events) so a confirmed enquiry records a fixed, allowlisted service_source_page event parameter. The form also distinguishes form_location=service_page from a direct contact_page submission; the actual submission page remains /contact.
+- The source-page value is selected from four fixed paths. Query strings, raw URLs, names, email addresses and phone numbers are not copied into the new parameter. The existing contact API payload is unchanged.
+- Corrected the four incentive-travel offer-card enquiry CTAs to retain service=incentive_travel; destination-discovery links remain pointed at the destinations hub and now use React Router links.
+- Added regression tests for source-page allowlisting, event attribution, incentive enquiry links and destination links.
+- Latest cached Search Console query extract retrieved 5 November 2026: 43 query rows, 41 clicks and 170 impressions. The visible express earth and expressearth queries account for all 41 clicks and 85 impressions; other returned queries account for 85 impressions and zero clicks. Examples: mice company in gurugram (10 impressions / average position 68.8); mice companies in gurgaon (8 / 76.0); mice agency for corporate events (4 / 65.5); incentive travel company india (4 / 68.25).
+- Latest cached Search Console page extract: MICE hub apex HTTPS 1 click / 16 impressions and www 0 / 15; incentive-travel HTTP www 0 / 6; meetings-and-conferences apex HTTPS 0 / 8; corporate-events apex HTTPS 0 / 12 and www 0 / 1; contact apex HTTPS 0 / 102 and www 0 / 16. Apex/www and HTTP/HTTPS URL variants remain visible.
+- Latest cached GA4 extract: 600 sessions, including 101 Organic Search. The legacy ads_conversion_Submit_lead_form_1 key event recorded 64 counts (21 Organic Search, 40 Direct, 3 Unassigned); these are event counts, not unique submissions or qualified opportunities. No generate_lead rows appeared. Organic landing sessions were homepage 72, contact 9, about 5 and corporate-events 1; the MICE hub, incentive-travel and meetings/conferences pages did not appear among returned Organic Search landing rows.
+- Latest cached Google Business Profile extract: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. These are profile interactions, not verified corporate enquiries.
+- A forced refresh was attempted for Search Console, GA4 and GBP but was rejected because the connected Windsor.ai subscription is Trial; cached extracts were used. Latest fetch timestamps: Search Console queries 09:54 UTC, Search Console pages 10:41 UTC, GA4 sessions 10:38 UTC, GA4 events 09:48 UTC, GA4 landing pages 09:48 UTC and GBP 10:38 UTC.
+- The modified source and test files were re-fetched after committing. Full Jest, JSX compilation and React production build remain dependent on a working local checkout and installed dependencies; no full build pass is claimed.
+- No API/backend, CRM schema, GTM configuration, GBP profile, DNS/hosting, production configuration, sitemap, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign occurred.

@@ -444,3 +444,28 @@
 - Added five focused Jest cases. The Jest runner, JSX compilation and full React production build were not run because this execution has no dependency-backed checkout; the GitHub commit status and workflow-run endpoints returned no checks.
 - Forced Windsor.ai refresh was rejected because the connected subscription is on the Trial plan. The GA4, Search Console and GBP figures above are cached connector extracts.
 - No backend/API, CRM, GTM configuration, GBP profile, production configuration, hosting/DNS, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign was performed.
+
+
+## 2026-11-05 — Capture optional corporate project planning stage
+
+- Added an optional “Current Planning Stage” selector to the main corporate contact form: active brief/RFQ, programme planned and comparing partners, upcoming programme exploring options, or early planning/gathering information.
+- Stored the selected value as a short “Planning stage: ...” note inside the existing requirements field. The UI-only project_stage property is removed before the Contact API request, so the existing API payload schema and backend remain unchanged.
+- Kept the field optional to avoid adding another required step. Existing free-text requirements are retained after the planning-stage note.
+- Added a pure buildContactRequirements helper and six focused regression tests covering existing notes, stage-only entries, empty values, non-string inputs and whitespace handling.
+- The selected planning stage is not sent to GA4 or Meta Pixel. It is included only in the existing first-party Contact API requirements field after the visitor submits the form.
+
+### Latest connected acquisition evidence (last 28 days; 8 October–4 November 2026)
+
+- GA4 (property account 503963716): 101 Organic Search sessions and 68 Organic Search active users. Organic landing pages: / 72 sessions, /contact 9, (not set) 6, /about 5, /destinations/switzerland 3, /careers 2, /corporate-events 1, /destinations 1, /destinations/Maldives 1 and /unsubscribe 1.
+- Existing GA4 ads_conversion_Submit_lead_form_1 event: 64 counts — Organic Search 20 on /contact, Organic Search 1 on /contact/, Direct 40 on /contact, and Unassigned 3 on /contact. These are event counts, not unique submissions, contacts, or A1/A2-qualified opportunities.
+- Search Console returned 42 query rows: 38 clicks / 156 impressions. Explicit ExpressEarth brand variants accounted for 38 clicks / 83 impressions; the other returned queries accounted for 0 clicks / 73 impressions. Priority examples: “mice company in gurugram” (9 impressions, avg. position 68.22), “mice companies in gurgaon” (8, 76.0), “mice agency for corporate events” (3, 65.67), and “corporate incentive travel companies” (2, 52.5), all with zero clicks in this extract.
+- Search Console page rows continue to include the preferred www host alongside apex HTTP/HTTPS URLs. Homepage rows include https://www.expressearth.com/ (52 clicks / 254 impressions) and http://expressearth.com/ (7 / 162); host consolidation remains a hosting dependency.
+- Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. These are profile interactions, not verified corporate leads.
+- A forced refresh was attempted for Search Console, GA4 and GBP. All three were rejected because the connected Windsor.ai account is on the Trial plan; cached last-28-day extracts were used.
+
+### Validation and safety
+
+- Re-fetched the updated ContactForm component and both new utility files after their commits. Verified the selector is optional, is reset after confirmed success, and is converted into the existing requirements field.
+- Verified project_stage is destructured out before the API request; no new backend field or endpoint is introduced.
+- Added six Jest tests. The full Jest suite, JSX compilation, React production build and live API/browser test were not run in this environment; the repository has no configured GitHub Actions status checks.
+- No backend, GTM, GA4, Meta Pixel, hosting, DNS, sitemap generator, EmpFly or Indo Exhibits changes were made. No campaign was sent and nothing was deployed or merged.

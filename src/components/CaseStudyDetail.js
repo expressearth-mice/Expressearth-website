@@ -82,7 +82,7 @@ const CaseStudyDetail = () => {
       } else {
         // ❌ Backend filter broken → fetch all
         try {
-          const res = await axiosInstance.get(`/api/case-studies/`);
+          const res = await axiosInstance.get(`/api/case-studies/`, { signal: controller.signal });
           oldCaseStudyRecords = normalizeCollectionResponse(res.data);
           item = oldCaseStudyRecords.find((cs) => String(cs.slug || "") === String(idOrSlug));
         } catch (err) {
@@ -352,6 +352,8 @@ const CaseStudyDetail = () => {
                 alt={`${caseStudy.name} ${index + 1}`}
                 src={img.image}
                 className="case-study-gallery-image"
+                loading="lazy"
+                decoding="async"
               />
             ))}
           </div>

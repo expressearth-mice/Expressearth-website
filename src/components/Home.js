@@ -26,7 +26,7 @@ const Home = () => {
   }, []);
 
   const [showPopup, setShowPopup] = useState(false);
-  const [showIcon, setShowIcon] = useState(false);
+  const [showIcon, setShowIcon] = useState(true); // Keep the enquiry form visitor-initiated.
   const [recentPosts, setRecentPosts] = useState([]);
   const [activeFAQ, setActiveFAQ] = useState(null);
   const toggleFAQ = (index) => {
@@ -61,13 +61,6 @@ const Home = () => {
     };
 
     fetchRecentPosts();
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 5000);
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -295,7 +288,7 @@ const Home = () => {
 
           <nav aria-label="Priority corporate MICE services">
             <div className="home-priority-services-grid">
-              {programmeLinks.slice(0, 4).map((item) => (
+              {programmeLinks.map((item) => (
                 <Link
                   key={item.slug}
                   to={item.slug}

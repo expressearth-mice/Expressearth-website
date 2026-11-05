@@ -1,10 +1,22 @@
 import React from "react";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import Home from "./Home";
 
-jest.mock("./popupForm", () => () => null);
+jest.mock("./popupForm", () => {
+  const React = require("react");
+  return ({ onClose }) =>
+    React.createElement(
+      "div",
+      { "data-testid": "popup-form" },
+      React.createElement(
+        "button",
+        { type: "button", onClick: onClose },
+        "Close mock popup",
+      ),
+    );
+});
 jest.mock("../api/axios", () => ({
   __esModule: true,
   default: { get: jest.fn() },
@@ -19,7 +31,7 @@ jest.mock("./ui/HorizontalSlider", () => {
 
 describe("Home priority MICE navigation", () => {
   beforeEach(() => {
-    axiosInstance.get.mockReturnValue(new Promise(() => {}));
+    axiosInstance.get.mockResolvedValue({ data: [] });
   });
 
   afterEach(() => {
@@ -49,6 +61,8 @@ describe("Home priority MICE navigation", () => {
       ["Incentive Travel", "/incentive-travel"],
       ["Dealer & Distributor Meets", "/dealermeet"],
       ["Corporate Offsites", "/corporateoffsites"],
+      ["Corporate Events", "/corporate-events"],
+      ["Exhibitions & Trade Shows", "/exhibitions-and-trade-shows"],
     ];
 
     expectedLinks.forEach(([label, href]) => {
@@ -66,4 +80,31 @@ describe("Home priority MICE navigation", () => {
       screen.getByRole("link", { name: /view all mice services/i }),
     ).toHaveAttribute("href", "/mice-services");
   });
+  test("keeps the enquiry popup opt-in and restores its launcher after closing", () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    expect(screen.queryByTestId("popup-form")).not.toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /open the expressearth enquiry form/i,
+      }),
+    );
+    expect(screen.getByTestId("popup-form")).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Close mock popup" }),
+    );
+    expect(screen.queryByTestId("popup-form")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: /open the expressearth enquiry form/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
 });

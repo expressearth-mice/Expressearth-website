@@ -192,3 +192,64 @@
   }
 }
   
+
+
+.case-study-empty-state {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px;
+  border: 1px solid #dbe3ec;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.case-study-empty-state h2 {
+  margin: 0 0 12px;
+  color: #0a3d62;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.case-study-empty-state p {
+  margin: 0 0 20px;
+  color: #444;
+  line-height: 1.7;
+}
+
+.case-study-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.case-study-empty-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #0a3d62;
+  border-radius: 6px;
+  color: #0a3d62;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.case-study-empty-actions a:focus-visible {
+  outline: 3px solid #046ab8;
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  .case-study-empty-state {
+    padding: 22px 18px;
+  }
+
+  .case-study-empty-state h2 {
+    font-size: 21px;
+  }
+
+  .case-study-empty-actions {
+    flex-direction: column;
+  }
+}

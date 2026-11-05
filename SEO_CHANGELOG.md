@@ -364,3 +364,20 @@
 - These changes do not create case-study claims, testimonials, client names or performance results. Existing API routes and public case-study slugs are unchanged.
 - Validation for this batch: source files, CSS and test files were re-fetched after commits; source assertions verified request signals/cleanup paths, H1/CSS alignment, fallback links and lazy image attributes. Focused Jest tests were added but require a dependency-backed test run; the full React build and live API/browser tests were unavailable in this execution.
 - Measurement note: connected 28-day Search Console/GA4/GBP extracts were read from cache on 5 November because the Windsor.ai trial plan rejects forced refresh. GA4 form-event counts remain event counts, not unique or qualified enquiries.
+
+## 2026-11-05 — Case-study detail enquiry path
+
+- Added a reusable, visible enquiry section at the end of each loaded case-study detail page. It asks visitors to share programme type, expected group size, preferred dates and destination without inventing project outcomes or client proof.
+- Added crawlable links from every public case-study detail page to the existing contact route and MICE service hub.
+- Styled the section for desktop/mobile, with 44px minimum action targets, visible keyboard focus and responsive stacked links.
+- Added a focused component test for the enquiry heading and both internal destinations.
+- This is a conversion-path change only: no API payloads, case-study records, client claims, public slugs, sitemap generator or production configuration changed.
+
+### Latest connected evidence (cached last-28-day extracts, 8 October–4 November 2026)
+
+- GA4: 603 sessions across returned daily channel rows; 101 Organic Search sessions. Organic landing-page sessions were concentrated on the homepage (72), contact (9), not set (6), about (5), Switzerland destination (3), careers (2), and corporate-events (1). The MICE hub did not appear in this particular 28-day landing-page extract.
+- Existing `ads_conversion_Submit_lead_form_1`: 64 event counts (21 Organic Search, 40 Direct, 3 Unassigned); 63 on `/contact`, one on `/contact/`. These are event counts, not unique submissions or qualified opportunities.
+- Search Console returned 99 query/date rows: 38 clicks and 156 impressions. The explicit brand variants `express earth` and `expressearth` accounted for all 38 returned clicks (83 impressions); other returned queries had 73 impressions and zero clicks. Priority samples: `mice company in gurugram` (9 impressions), `mice companies in gurgaon` (8), `mice agency for corporate events` (3), and `corporate incentive travel companies` (2), all with zero clicks in the extract.
+- Search Console page rows include preferred www, apex HTTPS and apex HTTP URLs. The top page rows included the www homepage (52 clicks) and apex HTTP homepage (7 clicks); host consolidation remains a hosting-owner task.
+- Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests.
+- Windsor.ai `force_refresh=true` was rejected on the connected trial plan; these are cached connector extracts, not guaranteed live refreshes.

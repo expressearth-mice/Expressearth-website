@@ -57,6 +57,9 @@ const CaseStudyDetail = () => {
   const canManageCaseStudies = role.is_admin || role.is_seo;
 
   useEffect(() => {
+  const controller = new AbortController();
+  let cancelled = false;
+
   const fetchCaseStudy = async () => {
     try {
       setLoading(true);
@@ -71,7 +74,7 @@ const CaseStudyDetail = () => {
       if (isNumeric) {
         // ✅ Fetch by ID
         try {
-          const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`);
+          const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`, { signal: controller.signal });
           item = res.data;
         } catch (err) {
           item = null;
@@ -90,7 +93,7 @@ const CaseStudyDetail = () => {
       if (!item) {
         // Fall back to the new case-study API
         try {
-          const res = await axiosInstance.get(case_study_detail_url(idOrSlug));
+          const res = await axiosInstance.get(case_study_detail_url(idOrSlug), { signal: controller.signal });
           const data = res.data;
           item = {
             ...data,
@@ -110,19 +113,21 @@ const CaseStudyDetail = () => {
         // the sitemap rule without adding requests to ordinary case-study views.
         const oldIndexRequest = oldCaseStudyRecords !== null
           ? Promise.resolve(oldCaseStudyRecords)
-          : axiosInstance.get("/api/case-studies/").then((res) => normalizeCollectionResponse(res.data));
-        const newIndexRequest = axiosInstance.get(case_study_url)
+          : axiosInstance.get("/api/case-studies/", { signal: controller.signal }).then((res) => normalizeCollectionResponse(res.data));
+        const newIndexRequest = axiosInstance.get(case_study_url, { signal: controller.signal })
           .then((res) => normalizeCollectionResponse(res.data));
         const [oldIndexResult, newIndexResult] = await Promise.allSettled([
           oldIndexRequest,
           newIndexRequest,
         ]);
+        if (cancelled) return;
         const oldIndex = oldIndexResult.status === "fulfilled" ? oldIndexResult.value : [];
         const newIndex = newIndexResult.status === "fulfilled" ? newIndexResult.value : [];
         availableSlugs = [...oldIndex, ...newIndex]
           .map((record) => String(record?.slug || "").trim().toLowerCase())
           .filter(Boolean);
       }
+      if (cancelled) return;
       setAvailableCaseStudySlugs(availableSlugs);
 
       if (!item) {
@@ -134,19 +139,21 @@ const CaseStudyDetail = () => {
       setIsNewSystem(fromNewSystem);
 
     } catch (error) {
-      console.error("Error fetching case study:", error);
-      alert("Unable to load case study.");
+      if (!cancelled) {
+        console.error("Error fetching case study:", error);
+        alert("Unable to load case study.");
+      }
     } finally {
-      setLoading(false);
+      if (!cancelled) setLoading(false);
     }
   };
 
   const fetchDestinations = async () => {
     try {
-      const res = await axiosInstance.get("/api/destinations/");
-      setDestinations(normalizeCollectionResponse(res.data).slice(0, 5));
+      const res = await axiosInstance.get("/api/destinations/", { signal: controller.signal });
+      if (!cancelled) setDestinations(normalizeCollectionResponse(res.data).slice(0, 5));
     } catch (err) {
-      console.error("Error fetching destinations:", err);
+      if (!cancelled) console.error("Error fetching destinations:", err);
     }
   };
 
@@ -156,12 +163,17 @@ const CaseStudyDetail = () => {
     setAvailableCaseStudySlugs([]);
     setCaseStudyId(null);
     setIsNewSystem(false);
+    setDestinations([]);
     setLoading(false);
   } else {
     fetchCaseStudy();
     fetchDestinations();
   }
 
+  return () => {
+    cancelled = true;
+    controller.abort();
+  };
 }, [idOrSlug]);
 
   useEffect(() => {
@@ -315,7 +327,7 @@ const CaseStudyDetail = () => {
       )}
 
       <div className="case-study-detail-content">
-        <h2>{caseStudy.name}</h2>
+        <h1>{caseStudy.name}</h1>
 
         {destinationName && (
           <p>

@@ -565,3 +565,15 @@
 - A forced refresh was attempted for Search Console, GA4 and GBP but was rejected because the connected Windsor.ai subscription is Trial; cached extracts were used. Latest fetch timestamps: Search Console queries 09:54 UTC, Search Console pages 10:41 UTC, GA4 sessions 10:38 UTC, GA4 events 09:48 UTC, GA4 landing pages 09:48 UTC and GBP 10:38 UTC.
 - The modified source and test files were re-fetched after committing. Full Jest, JSX compilation and React production build remain dependent on a working local checkout and installed dependencies; no full build pass is claimed.
 - No API/backend, CRM schema, GTM configuration, GBP profile, DNS/hosting, production configuration, sitemap, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign occurred.
+
+
+## 2026-11-05 — Attribute enquiries from dedicated service-page forms
+
+- Extended the fixed, privacy-safe `service_source_page` allowlist to the existing Dealer Meet (`/dealermeet`), Corporate Offsites (`/corporateoffsites`) and Conference Management (`/conferencemanagement`) pages.
+- On confirmed API success, both the primary enquiry form and the FAQ-question form on each page now pass the page's fixed path to `generate_lead`. The existing `form_location` values (`primary` and `faq_question`) and actual `page_path` remain unchanged, so page origin and form placement can be analysed separately.
+- No raw URL, query string, visitor input, contact detail, API field, backend schema or CRM field is added to analytics. Failed submissions do not trigger the confirmed-lead event.
+- Added regression tests for the three allowlisted page origins and for forwarding a fixed origin through the confirmed-event dispatcher.
+- Cached acquisition data read on 5 November 2026 (8 October–4 November reporting window): Search Console returned 43 query rows, 41 clicks and 170 impressions; the visible “express earth” and “expressearth” queries accounted for all 41 clicks and 85 impressions, while other returned queries had 85 impressions and zero clicks. GA4 reported 600 sessions, including 101 Organic Search sessions; the cached event extract showed legacy form-event counts but no `generate_lead` rows. Google Business Profile reported 170 impressions, 10 website clicks, 1 call click and 40 direction requests. These are traffic/event/profile measures, not unique or qualified enquiries.
+- Forced refresh was rejected because the connected Windsor.ai subscription is Trial; cached data was used. No ranking or lead lift is claimed.
+- Re-fetched and reviewed all six changed files after commit. Focused source assertions and isolated runtime checks are recorded in the PR update. Full Jest/JSX/production-build verification remains blocked by the absence of a dependency-backed local checkout and CI runs.
+- No merge, deployment, DNS/hosting or production configuration change, outbound campaign, backend/CRM schema change, EmpFly change or Indo Exhibits change occurred.

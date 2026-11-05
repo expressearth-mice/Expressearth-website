@@ -104,6 +104,29 @@ describe("confirmed lead tracking", () => {
     });
   });
 
+  test("records the originating page for dedicated dealer, offsite and conference forms", () => {
+    const cases = [
+      ["dealer_meet", "/dealermeet"],
+      ["corporate_offsite", "/corporateoffsites"],
+      ["conference_management", "/conferencemanagement"],
+    ];
+
+    cases.forEach(([serviceType, serviceSourcePage]) => {
+      const params = buildConfirmedLeadEventParams({
+        serviceType,
+        formLocation: "primary",
+        pagePath: serviceSourcePage,
+        serviceSourcePage,
+      });
+
+      expect(params).toMatchObject({
+        service_type: serviceType,
+        page_path: serviceSourcePage,
+        service_source_page: serviceSourcePage,
+      });
+    });
+  });
+
   test("omits unrecognised or personal-looking service source paths", () => {
     const params = buildConfirmedLeadEventParams({
       serviceType: "incentive_travel",
@@ -173,6 +196,34 @@ describe("confirmed lead tracking", () => {
       const params = window.gtag.mock.calls[0][2];
       expect(params).not.toHaveProperty("email");
       expect(params).not.toHaveProperty("phone");
+    } finally {
+      if (originalGtag === undefined) {
+        delete window.gtag;
+      } else {
+        window.gtag = originalGtag;
+      }
+    }
+  });
+
+  test("forwards a fixed service-page origin to the confirmed lead event", () => {
+    const originalGtag = window.gtag;
+    window.gtag = jest.fn();
+
+    try {
+      trackConfirmedLead({
+        serviceType: "dealer_meet",
+        formLocation: "primary",
+        serviceSourcePage: "/dealermeet",
+      });
+
+      expect(window.gtag).toHaveBeenCalledWith(
+        "event",
+        "generate_lead",
+        expect.objectContaining({
+          service_type: "dealer_meet",
+          service_source_page: "/dealermeet",
+        }),
+      );
     } finally {
       if (originalGtag === undefined) {
         delete window.gtag;

@@ -45,6 +45,9 @@ const SAFE_SERVICE_SOURCE_PAGES = new Set([
   "/incentive-travel",
   "/meetings-and-conferences",
   "/corporate-events",
+  "/dealermeet",
+  "/corporateoffsites",
+  "/conferencemanagement",
 ]);
 
 const safeServiceType = (value) => {

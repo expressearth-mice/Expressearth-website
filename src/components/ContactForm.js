@@ -17,6 +17,7 @@ import "./ContactForm.css";
 import axiosInstance from "../api/axios";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import { trackConfirmedLead } from "../utils/leadTracking";
+import { validateCorporateEnquiryBrief } from "../utils/corporateEnquiryValidation";
 
 const ContactForm = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const ContactForm = () => {
   };
 
   const validate = () => {
-    let newErrors = {};
+    let newErrors = validateCorporateEnquiryBrief(formData);
     if (!formData.full_name.trim())
       newErrors.full_name = "Please enter full name";
     if (!formData.email.trim()) {
@@ -212,7 +213,7 @@ const ContactForm = () => {
                 </Alert>
               )}
 
-              <Form onSubmit={handleSubmit}>
+              <Form noValidate onSubmit={handleSubmit}>
                 <Row>
                   <Col md={6}>
                     <Form.Group controlId="full_name" className="mb-3">
@@ -241,15 +242,23 @@ const ContactForm = () => {
                     <Form.Group controlId="company_name" className="mb-3">
                       <Form.Label>
                         <FaBuilding className="me-2" />
-                        Company Name
+                        Company / Organisation *
                       </Form.Label>
                       <Form.Control
                         type="text"
                         name="company_name"
                         autoComplete="organization"
+                        required
+                        aria-invalid={Boolean(errors.company_name)}
+                        aria-describedby={errors.company_name ? "company_name-error" : undefined}
                         value={formData.company_name}
                         onChange={handleChange}
                       />
+                      {errors.company_name && (
+                        <small id="company_name-error" className="text-danger">
+                          {errors.company_name}
+                        </small>
+                      )}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -302,10 +311,13 @@ const ContactForm = () => {
                 <Form.Group controlId="event_type" className="mb-3">
                   <Form.Label>
                     <FaListUl className="me-2" />
-                    Event Type
+                    Programme Type *
                   </Form.Label>
                   <Form.Select
                     name="event_type"
+                    required
+                    aria-invalid={Boolean(errors.event_type)}
+                    aria-describedby={errors.event_type ? "event_type-error" : undefined}
                     value={formData.event_type}
                     onChange={handleChange}
                   >
@@ -317,6 +329,11 @@ const ContactForm = () => {
                     <option value="Product Launch">Product Launch</option>
                     <option value="Other">Other</option>
                   </Form.Select>
+                  {errors.event_type && (
+                    <small id="event_type-error" className="text-danger">
+                      {errors.event_type}
+                    </small>
+                  )}
                 </Form.Group>
 
                 <Row>
@@ -324,7 +341,7 @@ const ContactForm = () => {
                     <Form.Group controlId="country" className="mb-3">
                       <Form.Label>
                         <FaMapMarkerAlt className="me-2" />
-                        Country
+                        Preferred Destination / Country
                       </Form.Label>
                       <Form.Select
                         name="country"
@@ -343,7 +360,7 @@ const ContactForm = () => {
                 </Row>
 
                 <Form.Group controlId="attendees" className="mb-3">
-                  <Form.Label>Number of Attendees</Form.Label>
+                  <Form.Label>Expected Group Size (optional)</Form.Label>
                   <Form.Select
                     name="attendees"
                     value={formData.attendees}

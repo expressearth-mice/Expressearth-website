@@ -545,3 +545,8 @@
 - A forced refresh for Search Console, GA4 and Google Business Profile was rejected because the connected Windsor.ai subscription is Trial; cached extracts were used. GBP profile actions are not verified corporate leads.
 - Source files were re-fetched after the updates and reviewed. Jest, JSX compilation and the React production build were not run in this connector-only environment; no test/build pass is claimed.
 - No API/backend, CRM, GTM configuration, GBP profile, DNS/hosting, production configuration, sitemap, EmpFly or Indo Exhibits change was made. No merge, deployment or outbound campaign occurred.
+
+### Follow-up validation — service-aware contact prefill
+
+- Ran `node --check` on an isolated copy of the re-fetched `contactQualification.js` helper and 18 direct runtime assertions: all 10 allowlisted service mappings, 6 unknown/inherited/personal-looking/empty inputs, and 2 requirements-field checks passed.
+- The full Jest suite, JSX compilation and React production build remain unrun because the local checkout attempt failed on GitHub DNS resolution. No CI workflow or commit status checks are available.

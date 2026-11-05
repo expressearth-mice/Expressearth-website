@@ -60,14 +60,14 @@ const IncentiveTravel = () => {
             icon: <FaMedal className="text-yellow-400" />,
             title: "Performance Reward Trips",
             desc: "Celebrate milestones and individual achievements with bespoke experiences — from private yacht charters to curated cultural immersions.",
-            link: "/contact",
+            link: "/contact?service=incentive_travel",
             linkText: "Ready to Reward Your Team?",
           },
           {
             icon: <FaChartLine style={{ color: "#56CE27" }} />,
             title: "Sales Incentive Travel Packages",
             desc: "Coordinate sales incentive trips with destination research, accommodation, group travel, activities and on-ground logistics.",
-            link: "/contact",
+            link: "/contact?service=incentive_travel",
             linkText: "Inspire Peak Sales Performance",
           },
           {
@@ -88,14 +88,14 @@ const IncentiveTravel = () => {
             icon: <FaGift className="text-red-400" />,
             title: "Corporate Reward Travel Programs",
             desc: "Coordinate reward travel components, including itinerary planning, participant communication and destination logistics.",
-            link: "/contact",
+            link: "/contact?service=incentive_travel",
             linkText: "Let’s Build Something Special",
           },
           {
             icon: <FaCarSide style={{ color: "#1c65a5" }} />,
             title: "Ground Transportation Coordination",
             desc: "Plan airport transfers and local group transport according to the itinerary, vehicle requirements and destination.",
-            link: "/contact",
+            link: "/contact?service=incentive_travel",
             linkText: "Travel in Style",
           },
         ].map((item, index) => (
@@ -105,9 +105,9 @@ const IncentiveTravel = () => {
               <h3>{item.title}</h3>
             </div>
             <p>{item.desc}</p>
-            <a href={item.link} className="link-button">
+            <Link to={item.link} className="link-button">
               {item.linkText}
-            </a>
+            </Link>
           </div>
         ))}
       </HorizontalSlider>

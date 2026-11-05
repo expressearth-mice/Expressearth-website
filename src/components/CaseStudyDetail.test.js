@@ -75,4 +75,45 @@ describe("CaseStudyDetail", () => {
 
     expect(signals.every((signal) => signal.aborted)).toBe(true);
   });
+
+  test("provides corporate enquiry links after a case study loads", async () => {
+    axiosInstance.get.mockImplementation((url) => {
+      if (url === "/api/case-studies/") {
+        return Promise.resolve({
+          data: [
+            {
+              id: 12,
+              slug: "dealer-meet-programme",
+              name: "Dealer Meet Programme",
+              comment: "Corporate dealer programme planning.",
+            },
+          ],
+        });
+      }
+      if (url === "/api/destinations/") return Promise.resolve({ data: [] });
+      return Promise.reject(new Error("unexpected request"));
+    });
+
+    renderDetail();
+
+    expect(
+      await screen.findByRole("heading", {
+        level: 1,
+        name: "Dealer Meet Programme",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: /planning a corporate mice programme/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /discuss your programme/i }),
+    ).toHaveAttribute("href", "/contact");
+    expect(
+      screen.getByRole("link", { name: /explore mice services/i }),
+    ).toHaveAttribute("href", "/mice-services");
+  });
+
 });

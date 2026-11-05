@@ -74,7 +74,7 @@ const CorporateEvents = () => {
       >
         <h1>Corporate Event Management in Delhi NCR</h1>
         <h4>Product Launches | Annual Days | Employee Family Days | Conferences</h4>
-        <Link to="/contact" className="cta-button">
+        <Link to="/contact?service=corporate_events" className="cta-button">
           Discuss Your Corporate Event
         </Link>
       </section>
@@ -102,7 +102,7 @@ const CorporateEvents = () => {
               {service.icon}
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              <Link to="/contact" className="cta-link">
+              <Link to="/contact?service=corporate_events" className="cta-link">
                 Discuss This Event Format
               </Link>
             </div>
@@ -117,7 +117,7 @@ const CorporateEvents = () => {
             <li key={item}>{item}</li>
           ))}
         </ul>
-        <Link to="/contact" className="cta-button">
+        <Link to="/contact?service=corporate_events" className="cta-button">
           Share Your Event Brief
         </Link>
       </section>
@@ -143,7 +143,7 @@ const CorporateEvents = () => {
           Share your event type, expected attendance, destination, dates and
           required services to discuss the next planning steps.
         </p>
-        <Link to="/contact" className="cta-button">
+        <Link to="/contact?service=corporate_events" className="cta-button">
           Contact ExpressEarth
         </Link>
       </section>

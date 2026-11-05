@@ -358,6 +358,17 @@ const CaseStudyDetail = () => {
             ))}
           </div>
         )}
+        <section className="case-study-detail-cta" aria-labelledby="case-study-detail-cta-title">
+          <h2 id="case-study-detail-cta-title">Planning a corporate MICE programme?</h2>
+          <p>
+            Share your programme type, expected group size, preferred dates and destination
+            with ExpressEarth. Explore the service options or send your brief to the team.
+          </p>
+          <div className="case-study-detail-cta-actions">
+            <Link to="/contact">Discuss your programme</Link>
+            <Link to="/mice-services">Explore MICE services</Link>
+          </div>
+        </section>
       </div>
     </div>
   );

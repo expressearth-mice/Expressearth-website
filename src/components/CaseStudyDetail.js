@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "./CaseStudyDetails.css";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
-import { case_study_detail_url, delete_case_study_url } from "../api/urls";
+import { case_study_detail_url, case_study_url, delete_case_study_url } from "../api/urls";
 import { normalizeCollectionResponse } from "../api/collectionData";
 import Skeleton from "./Skeleton";
 import { isIndexableCaseStudySlug, isPlaceholderCaseStudySlug } from "../utils/caseStudyVisibility";
@@ -52,6 +52,7 @@ const CaseStudyDetail = () => {
   const [isNewSystem, setIsNewSystem] = useState(false); // which API this item lives in
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [availableCaseStudySlugs, setAvailableCaseStudySlugs] = useState([]);
 
   const canManageCaseStudies = role.is_admin || role.is_seo;
 
@@ -60,9 +61,11 @@ const CaseStudyDetail = () => {
     try {
       setLoading(true);
       setCaseStudy(null);
+      setAvailableCaseStudySlugs([]);
 
       let item;
       let fromNewSystem = false;
+      let oldCaseStudyRecords = null;
       const isNumeric = !isNaN(idOrSlug);
 
       if (isNumeric) {
@@ -77,7 +80,8 @@ const CaseStudyDetail = () => {
         // ❌ Backend filter broken → fetch all
         try {
           const res = await axiosInstance.get(`/api/case-studies/`);
-          item = normalizeCollectionResponse(res.data).find((cs) => String(cs.slug || "") === String(idOrSlug));
+          oldCaseStudyRecords = normalizeCollectionResponse(res.data);
+          item = oldCaseStudyRecords.find((cs) => String(cs.slug || "") === String(idOrSlug));
         } catch (err) {
           item = null;
         }
@@ -99,6 +103,27 @@ const CaseStudyDetail = () => {
           item = null;
         }
       }
+
+      let availableSlugs = [];
+      if (item && /-\d+$/.test(String(item.slug || "").trim())) {
+        // Only numbered-suffix records need the extra index lookup. This mirrors
+        // the sitemap rule without adding requests to ordinary case-study views.
+        const oldIndexRequest = oldCaseStudyRecords !== null
+          ? Promise.resolve(oldCaseStudyRecords)
+          : axiosInstance.get("/api/case-studies/").then((res) => normalizeCollectionResponse(res.data));
+        const newIndexRequest = axiosInstance.get(case_study_url)
+          .then((res) => normalizeCollectionResponse(res.data));
+        const [oldIndexResult, newIndexResult] = await Promise.allSettled([
+          oldIndexRequest,
+          newIndexRequest,
+        ]);
+        const oldIndex = oldIndexResult.status === "fulfilled" ? oldIndexResult.value : [];
+        const newIndex = newIndexResult.status === "fulfilled" ? newIndexResult.value : [];
+        availableSlugs = [...oldIndex, ...newIndex]
+          .map((record) => String(record?.slug || "").trim().toLowerCase())
+          .filter(Boolean);
+      }
+      setAvailableCaseStudySlugs(availableSlugs);
 
       if (!item) {
         return;
@@ -128,6 +153,7 @@ const CaseStudyDetail = () => {
   if (isPlaceholderCaseStudySlug(idOrSlug)) {
     // Known placeholder records are not public content; avoid unnecessary API requests.
     setCaseStudy(null);
+    setAvailableCaseStudySlugs([]);
     setCaseStudyId(null);
     setIsNewSystem(false);
     setLoading(false);
@@ -152,8 +178,8 @@ const CaseStudyDetail = () => {
 
     const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
 
-    if (!isIndexableCaseStudySlug(caseStudy.slug)) {
-      // Keep legacy ID-based pages accessible, but do not index them without a descriptive public slug.
+    if (!isIndexableCaseStudySlug(caseStudy.slug, availableCaseStudySlugs)) {
+      // Keep legacy ID pages and numbered duplicate aliases accessible, but do not index them.
       document.title = titleText + " | ExpressEarth Case Study";
       if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
       const staleCanonical = document.head.querySelector('link[rel="canonical"]');
@@ -195,7 +221,7 @@ const CaseStudyDetail = () => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", canonicalUrl);
-  }, [caseStudy, idOrSlug, loading]);
+  }, [caseStudy, idOrSlug, loading, availableCaseStudySlugs]);
 
   /* ✅ FIXED DELETE */
   const handleDelete = async () => {

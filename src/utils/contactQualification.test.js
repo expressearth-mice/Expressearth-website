@@ -1,4 +1,4 @@
-import { buildContactRequirements } from "./contactQualification";
+import { buildContactRequirements, getContactFormPrefill } from "./contactQualification";
 
 describe("buildContactRequirements", () => {
   test("preserves existing requirements when no planning stage is selected", () => {

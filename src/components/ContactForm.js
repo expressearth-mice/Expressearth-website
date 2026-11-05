@@ -29,6 +29,7 @@ const ContactForm = () => {
     email: "",
     phone: "",
     event_type: "",
+    programme_detail: "",
     country: "",
     attendees: "",
     project_stage: "",
@@ -94,10 +95,11 @@ const ContactForm = () => {
     setErrorMessage("");
 
     try {
-      const { project_stage, ...contactFields } = formData;
+      const { project_stage, programme_detail, ...contactFields } = formData;
       const formattedFormData = {
         ...contactFields,
         requirements: buildContactRequirements({
+          programmeDetail: programme_detail,
           projectStage: project_stage,
           requirements: formData.requirements,
         }),
@@ -120,6 +122,7 @@ const ContactForm = () => {
           email: "",
           phone: "",
           event_type: "",
+          programme_detail: "",
           country: "",
           attendees: "",
           project_stage: "",
@@ -128,7 +131,7 @@ const ContactForm = () => {
         });
         setErrors({});
         trackConfirmedLead({
-          serviceType: formData.event_type || "corporate_mice",
+          serviceType: programme_detail || formData.event_type || "corporate_mice",
           formLocation: "contact_page",
         });
         setCaptchaValue(null); // Reset CAPTCHA
@@ -342,6 +345,31 @@ const ContactForm = () => {
                       {errors.event_type}
                     </small>
                   )}
+                </Form.Group>
+
+                <Form.Group controlId="programme_detail" className="mb-3">
+                  <Form.Label>Specific service (optional)</Form.Label>
+                  <Form.Select
+                    name="programme_detail"
+                    value={formData.programme_detail}
+                    onChange={handleChange}
+                    aria-describedby="programme_detail-help"
+                  >
+                    <option value="">Select if you know the specific service</option>
+                    <option value="Incentive Travel">Incentive Travel</option>
+                    <option value="Dealer &amp; Distributor Meet">Dealer &amp; Distributor Meet</option>
+                    <option value="Corporate Offsite">Corporate Offsite</option>
+                    <option value="Conference Management">Conference Management</option>
+                    <option value="Corporate Event / Product Launch">Corporate Event / Product Launch</option>
+                    <option value="Rewards &amp; Recognition">Rewards &amp; Recognition</option>
+                    <option value="Exhibition / Trade Show">Exhibition / Trade Show</option>
+                    <option value="International Group Travel">International Group Travel</option>
+                    <option value="Destination Management">Destination Management</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                  </Form.Select>
+                  <Form.Text id="programme_detail-help" muted>
+                    Optional. Choose a service if you know the specific programme you want to plan.
+                  </Form.Text>
                 </Form.Group>
 
                 <Row>

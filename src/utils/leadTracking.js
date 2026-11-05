@@ -9,12 +9,23 @@ const SAFE_SERVICE_TYPES = new Set([
   "corporate_offsite",
   "international_group_travel",
   "recognition_rewards",
+  "destination_management",
   "popup_mice_enquiry",
 ]);
 
 const SERVICE_TYPE_ALIASES = {
   conference: "conference_management",
   "incentive trip": "incentive_travel",
+  "incentive travel": "incentive_travel",
+  "dealer & distributor meet": "dealer_meet",
+  "corporate offsite": "corporate_offsite",
+  "conference management": "conference_management",
+  "corporate event / product launch": "corporate_events",
+  "rewards & recognition": "recognition_rewards",
+  "exhibition / trade show": "exhibitions",
+  "international group travel": "international_group_travel",
+  "destination management": "destination_management",
+  "not sure yet": "corporate_mice",
   "corporate meeting": "corporate_meeting",
   exhibition: "exhibitions",
   "product launch": "corporate_events",

@@ -7,6 +7,27 @@ describe("buildContactRequirements", () => {
     );
   });
 
+  test("adds an allowlisted programme detail to the existing requirements field", () => {
+    expect(
+      buildContactRequirements({
+        programmeDetail: "Dealer & Distributor Meet",
+        projectStage: "Active brief / RFQ",
+        requirements: "Around 150 delegates.",
+      })
+    ).toBe(
+      "Programme detail: Dealer & Distributor Meet\n\nPlanning stage: Active brief / RFQ\n\nAround 150 delegates."
+    );
+  });
+
+  test("ignores programme detail values outside the form's fixed service list", () => {
+    expect(
+      buildContactRequirements({
+        programmeDetail: "person@example.com",
+        requirements: "Need a conference.",
+      })
+    ).toBe("Need a conference.");
+  });
+
   test("adds the selected planning stage to the existing requirements field", () => {
     expect(
       buildContactRequirements({

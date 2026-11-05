@@ -520,3 +520,16 @@
 - Forced refresh was rejected by the connected Windsor.ai Trial plan; the above is explicitly a cached extract. No fresh live refresh is claimed.
 - Re-fetched the modified source files after the commit and ran source-level assertions for the title/H1, decorative image attributes, CSS stacking and regression test. Jest, JSX compilation and the React production build were not run in this connector-only environment; no test/build pass is claimed.
 - No merge, deployment, DNS/hosting change, outbound campaign, backend/CRM, EmpFly or Indo Exhibits change occurred.
+
+
+## 2026-11-05 — Capture specific corporate MICE programme intent
+
+- Added an optional “Specific service” selector to the main contact form so a corporate buyer can identify a dealer/distributor meet, offsite, conference management brief, corporate event/product launch, rewards and recognition programme, incentive trip, exhibition/trade show, international group trip or destination-management requirement.
+- The existing required API event_type values remain unchanged. The new UI-only selector is removed before the request and its allowlisted label is appended to the existing requirements text field as “Programme detail: …”; no backend field or endpoint was added.
+- Confirmed-submission GA4 tracking now prefers the selected service detail when present and maps it to a fixed, non-PII service_type value. The new selector remains optional to avoid adding a required form step.
+- Cached last-28-day acquisition extract (8 October–4 November 2026): Search Console returned 41 clicks / 170 impressions across 43 distinct queries. The visible ExpressEarth brand queries accounted for all 41 clicks (89 impressions); returned non-brand queries had 81 impressions and zero clicks. Priority examples: “mice company in gurugram” (10 impressions; average position 68.8), “mice companies in gurgaon” (8; 76.0), “mice agency for corporate events” (4; 65.5), “incentive travel company india” (4; 68.3), and “corporate incentive travel companies” (2; 52.5), all with zero clicks.
+- Cached GA4: 602 sessions, 102 Organic Search sessions, and 64 legacy ads_conversion_Submit_lead_form_1 event counts. No generate_lead rows appeared in this extract. Event counts are not unique submissions or qualified CRM opportunities. Organic landing sessions were led by / (73), /contact (9), /about (5) and /corporate-events (1); /mice-services did not appear in the returned Organic Search landing rows.
+- Cached Google Business Profile: 170 impressions, 10 website clicks, 1 call click and 40 direction requests. These are profile interactions, not verified corporate enquiries.
+- A forced refresh of Search Console, GA4 and GBP was rejected because the connected Windsor.ai subscription is Trial; cached extracts were used.
+- Re-fetched all six changed files after the proposed edit and checked the intended form state, optional selector, API-field stripping, requirements mapping, service-category aliases, regression coverage and changelog text. Jest, JSX compilation and the React production build were not run in this connector-only environment; no test/build pass is claimed.
+- No backend/API, CRM, GTM configuration, GBP profile, DNS/hosting, production configuration, sitemap, EmpFly or Indo Exhibits code was changed. No merge, deployment or outbound campaign occurred.

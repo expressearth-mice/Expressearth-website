@@ -41,6 +41,27 @@ describe("confirmed lead tracking", () => {
     });
   });
 
+  test("maps the optional contact-form service detail to a fixed GA4 service category", () => {
+    const cases = [
+      ["Incentive Travel", "incentive_travel"],
+      ["Dealer & Distributor Meet", "dealer_meet"],
+      ["Corporate Offsite", "corporate_offsite"],
+      ["Conference Management", "conference_management"],
+      ["Corporate Event / Product Launch", "corporate_events"],
+      ["Rewards & Recognition", "recognition_rewards"],
+      ["Exhibition / Trade Show", "exhibitions"],
+      ["International Group Travel", "international_group_travel"],
+      ["Destination Management", "destination_management"],
+      ["Not sure yet", "corporate_mice"],
+    ];
+
+    cases.forEach(([input, expected]) => {
+      expect(
+        buildConfirmedLeadEventParams({ serviceType: input }).service_type,
+      ).toBe(expected);
+    });
+  });
+
   test("replaces unrecognised and inherited service labels with safe defaults", () => {
     const params = buildConfirmedLeadEventParams({
       serviceType: "person@example.com",

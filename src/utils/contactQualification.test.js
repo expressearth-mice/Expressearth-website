@@ -1,4 +1,4 @@
-import { buildContactRequirements, getContactFormPrefill } from "./contactQualification";
+import { buildContactRequirements, getContactFormPrefill, getContactFormSourcePage } from "./contactQualification";
 
 describe("buildContactRequirements", () => {
   test("preserves existing requirements when no planning stage is selected", () => {
@@ -89,5 +89,33 @@ describe("getContactFormPrefill", () => {
     });
     expect(getContactFormPrefill("")).toEqual({});
     expect(getContactFormPrefill(null)).toEqual({});
+  });
+});
+
+
+describe("getContactFormSourcePage", () => {
+  test("returns fixed source paths for the four service-aware landing pages", () => {
+    const cases = [
+      ["corporate_mice", "/mice-services"],
+      ["incentive_travel", "/incentive-travel"],
+      ["conference_management", "/meetings-and-conferences"],
+      ["corporate_events", "/corporate-events"],
+    ];
+
+    cases.forEach(([service, expected]) => {
+      expect(getContactFormSourcePage(`?service=${service}`)).toBe(expected);
+    });
+  });
+
+  test("ignores unknown, inherited and personal-looking service values", () => {
+    ["unknown", "constructor", "toString", "person%40example.com"].forEach((service) => {
+      expect(getContactFormSourcePage(`?service=${service}`)).toBe("");
+    });
+    expect(getContactFormSourcePage("")).toBe("");
+    expect(getContactFormSourcePage(null)).toBe("");
+  });
+
+  test("returns only the fixed page path when unrelated query parameters are present", () => {
+    expect(getContactFormSourcePage("?service=incentive_travel&email=private%40example.com")).toBe("/incentive-travel");
   });
 });

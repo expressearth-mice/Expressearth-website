@@ -18,7 +18,7 @@ import axiosInstance from "../api/axios";
 import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import { trackConfirmedLead } from "../utils/leadTracking";
 import { validateCorporateEnquiryBrief } from "../utils/corporateEnquiryValidation";
-import { buildContactRequirements, getContactFormPrefill } from "../utils/contactQualification";
+import { buildContactRequirements, getContactFormPrefill, getContactFormSourcePage } from "../utils/contactQualification";
 
 const createInitialFormData = (search = "") => ({
   full_name: "",
@@ -135,9 +135,11 @@ const ContactForm = () => {
         setSubmitted(true);
         setFormData(createInitialFormData(location.search));
         setErrors({});
+        const serviceSourcePage = getContactFormSourcePage(location.search);
         trackConfirmedLead({
           serviceType: programme_detail || formData.event_type || "corporate_mice",
-          formLocation: "contact_page",
+          formLocation: serviceSourcePage ? "service_page" : "contact_page",
+          serviceSourcePage,
         });
         setCaptchaValue(null); // Reset CAPTCHA
         setErrorMessage("");

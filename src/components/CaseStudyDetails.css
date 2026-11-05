@@ -13,7 +13,7 @@
     padding: 20px;
   }
 
-.case-study-detail-content h2 {
+.case-study-detail-content h1 {
     margin-bottom: 20px;
     font-size: 42px;
     text-align: center;
@@ -107,7 +107,7 @@
       min-height: 240px;
     }
 
-    .case-study-detail-content h2 {
+    .case-study-detail-content h1 {
       font-size: 34px;
     }
   }
@@ -125,7 +125,7 @@
       padding: 18px 4px;
     }
 
-    .case-study-detail-content h2 {
+    .case-study-detail-content h1 {
       font-size: 28px;
       line-height: 1.2;
       margin-bottom: 16px;

@@ -337,5 +337,6 @@
 ### Validation and safety
 
 - Re-fetched the helper, focused test file, \`CaseStudyDetail.js\`, existing \`CaseStudyList.js\` and this changelog after edits; verified the helper is imported by the detail page and the list continues to use the shared filter.
-- Standalone helper runtime assertions and JavaScript syntax checks are to be recorded after the final re-fetch. The repository Jest suite and React build remain dependent on a local dependency-backed checkout or developer CI.
+- Re-fetched the helper, focused test file, `CaseStudyDetail.js`, existing `CaseStudyList.js` and this changelog after edits. Twelve source-level assertions passed, covering sitemap-rule parity, list filtering/deduplication, detail-page duplicate lookup, noindex/canonical handling and test coverage.
+- Ran `node --check` on the standalone helper and Jest test source; both passed. Ran eight standalone Node runtime assertions for placeholder handling, base/numbered duplicate detection, legitimate numeric suffixes, indexability and list filtering; all passed. The Jest runner, JSX compilation and full React production build were not run because a dependency-backed repository checkout is unavailable.
 - No client names, case-study claims, testimonials, results, permissions or credentials were added. PR #4's sitemap generator, production configuration, hosting, DNS, redirects, EmpFly and Indo Exhibits were not changed. No merge, deployment or outbound campaign was performed.

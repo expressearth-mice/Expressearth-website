@@ -62,3 +62,32 @@ describe("buildContactRequirements", () => {
     ).toBe("Planning stage: Early planning\n\nAnnual sales conference");
   });
 });
+
+describe("getContactFormPrefill", () => {
+  test("maps commercial service links to existing API programme types and optional service details", () => {
+    const cases = [
+      ["corporate_mice", { event_type: "Other", programme_detail: "Not sure yet" }],
+      ["incentive_travel", { event_type: "Incentive Trip", programme_detail: "Incentive Travel" }],
+      ["dealer_meet", { event_type: "Other", programme_detail: "Dealer & Distributor Meet" }],
+      ["corporate_offsite", { event_type: "Other", programme_detail: "Corporate Offsite" }],
+      ["conference_management", { event_type: "Conference", programme_detail: "Conference Management" }],
+      ["corporate_events", { event_type: "Product Launch", programme_detail: "Corporate Event / Product Launch" }],
+      ["recognition_rewards", { event_type: "Other", programme_detail: "Rewards & Recognition" }],
+      ["exhibitions", { event_type: "Exhibition", programme_detail: "Exhibition / Trade Show" }],
+      ["international_group_travel", { event_type: "Other", programme_detail: "International Group Travel" }],
+      ["destination_management", { event_type: "Other", programme_detail: "Destination Management" }],
+    ];
+
+    cases.forEach(([service, expected]) => {
+      expect(getContactFormPrefill(`?service=${service}`)).toEqual(expected);
+    });
+  });
+
+  test("ignores unknown, inherited and personal-looking service query values", () => {
+    ["unknown", "constructor", "toString", "person%40example.com"].forEach((service) => {
+      expect(getContactFormPrefill(`?service=${service}`)).toEqual({});
+    });
+    expect(getContactFormPrefill("")).toEqual({});
+    expect(getContactFormPrefill(null)).toEqual({});
+  });
+});

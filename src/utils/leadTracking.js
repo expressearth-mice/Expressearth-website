@@ -37,6 +37,14 @@ const SAFE_FORM_LOCATIONS = new Set([
   "faq_question",
   "popup",
   "contact_page",
+  "service_page",
+]);
+
+const SAFE_SERVICE_SOURCE_PAGES = new Set([
+  "/mice-services",
+  "/incentive-travel",
+  "/meetings-and-conferences",
+  "/corporate-events",
 ]);
 
 const safeServiceType = (value) => {
@@ -55,6 +63,9 @@ const safeServiceType = (value) => {
 
 const safeFormLocation = (value) =>
   SAFE_FORM_LOCATIONS.has(value) ? value : "primary";
+
+const safeServiceSourcePage = (value) =>
+  SAFE_SERVICE_SOURCE_PAGES.has(value) ? value : "";
 
 const decodePathSegment = (value) => {
   let decoded = value;
@@ -131,6 +142,7 @@ export const buildConfirmedLeadEventParams = ({
   formLocation = "primary",
   pagePath = "/",
   referrer = "",
+  serviceSourcePage = "",
 }) => {
   const params = {
     event_category: "lead_generation",
@@ -139,14 +151,17 @@ export const buildConfirmedLeadEventParams = ({
     page_path: safePagePath(pagePath),
   };
   const pageReferrer = safeReferrerPath(referrer);
+  const safeSourcePage = safeServiceSourcePage(serviceSourcePage);
 
   if (pageReferrer) params.page_referrer = pageReferrer;
+  if (safeSourcePage) params.service_source_page = safeSourcePage;
   return params;
 };
 
 export const trackConfirmedLead = ({
   serviceType,
   formLocation = "primary",
+  serviceSourcePage = "",
 } = {}) => {
   if (typeof window === "undefined" || typeof window.gtag !== "function") {
     return false;
@@ -155,6 +170,7 @@ export const trackConfirmedLead = ({
   const params = buildConfirmedLeadEventParams({
     serviceType,
     formLocation,
+    serviceSourcePage,
     pagePath: window.location?.pathname || "/",
     referrer: typeof document === "undefined" ? "" : document.referrer,
   });

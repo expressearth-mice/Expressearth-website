@@ -82,3 +82,5 @@
 - Expanded Organization structured data with verified public contact details and the stated Delhi NCR service cities, alongside India-wide coverage.
 - Explicitly allowed OAI-SearchBot in robots.txt while retaining the existing general crawler policy and admin-path exclusions.
 - Validation: source and asset paths checked against the repository tree; build and live crawler verification remain outstanding.
+
+- Follow-up QA validated the JSON-LD syntax and preserved all existing admin-path exclusions in both the general crawler group and the OAI-SearchBot group.

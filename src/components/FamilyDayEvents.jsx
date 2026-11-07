@@ -42,7 +42,7 @@ export default function FamilyDayEvents() {
             ExpressEarth coordinates the event format, venue, activities, production, hospitality
             and on-ground logistics around your organisation’s brief.
           </p>
-          <Link to="/contact?service=corporate_events" className="btn btn-primary btn-lg mt-2">Plan Your Company Family Day</Link>
+          <Link to="/contact?service=family_day_events" className="btn btn-primary btn-lg mt-2">Plan Your Company Family Day</Link>
         </div>
         <div className="col-lg-4">
           <div className="border rounded-3 p-4 h-100">
@@ -108,7 +108,7 @@ export default function FamilyDayEvents() {
           <Link to="/conferencemanagement">Conference management</Link>
           <Link to="/corporateoffsites">Corporate offsites</Link>
         </div>
-        <Link to="/contact?service=corporate_events" className="btn btn-primary mt-3">Contact ExpressEarth</Link>
+        <Link to="/contact?service=family_day_events" className="btn btn-primary mt-3">Contact ExpressEarth</Link>
       </section>
     </main>
   );

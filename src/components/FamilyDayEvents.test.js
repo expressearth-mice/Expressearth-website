@@ -9,7 +9,7 @@ describe("employee family day service page", () => {
   test("explains the service and provides a relevant enquiry path", () => {
     render(<MemoryRouter><FamilyDayEvents /></MemoryRouter>);
     expect(screen.getByRole("heading", { level: 1, name: /employee family day event management in delhi ncr/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /plan your company family day/i })).toHaveAttribute("href", "/contact?service=corporate_events");
+    expect(screen.getByRole("link", { name: /plan your company family day/i })).toHaveAttribute("href", "/contact?service=family_day_events");
     expect(screen.getByRole("heading", { name: /corporate family day formats/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /employee family day event faqs/i })).toBeInTheDocument();
   });

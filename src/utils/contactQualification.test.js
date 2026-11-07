@@ -72,6 +72,7 @@ describe("getContactFormPrefill", () => {
       ["corporate_offsite", { event_type: "Other", programme_detail: "Corporate Offsite" }],
       ["conference_management", { event_type: "Conference", programme_detail: "Conference Management" }],
       ["corporate_events", { event_type: "Product Launch", programme_detail: "Corporate Event / Product Launch" }],
+      ["family_day_events", { event_type: "Other", programme_detail: "Employee & Family Day" }],
       ["recognition_rewards", { event_type: "Other", programme_detail: "Rewards & Recognition" }],
       ["exhibitions", { event_type: "Exhibition", programme_detail: "Exhibition / Trade Show" }],
       ["international_group_travel", { event_type: "Other", programme_detail: "International Group Travel" }],
@@ -100,6 +101,7 @@ describe("getContactFormSourcePage", () => {
       ["incentive_travel", "/incentive-travel"],
       ["conference_management", "/meetings-and-conferences"],
       ["corporate_events", "/corporate-events"],
+      ["family_day_events", "/family-day-events"],
     ];
 
     cases.forEach(([service, expected]) => {

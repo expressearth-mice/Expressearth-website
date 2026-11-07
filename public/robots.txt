@@ -1,6 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+
+# Allow OpenAI search discovery; this is separate from model-training crawlers.
+User-agent: OAI-SearchBot
+Allow: /
 Disallow: /dashboard
 Disallow: /login
 Disallow: /create-post

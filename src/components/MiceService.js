@@ -24,6 +24,12 @@ const services = [
     link: "/corporate-events"
   },
   {
+    title: "Employee & Family Days",
+    description: "Plan company family days and employee celebrations with family-friendly activities, venue coordination, production and hospitality.",
+    icon: <FaBullhorn color="#046ab8" />,
+    link: "/family-day-events"
+  },
+  {
     title: "Rewards & Recognition",
     description: "Plan employee awards, recognition events and engagement programmes with event design, awards, production and on-ground coordination.",
     icon: <FaTrophy color="#046ab8" />,

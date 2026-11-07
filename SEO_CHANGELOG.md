@@ -614,4 +614,4 @@
 - Added an explicit “Employee & Family Day” service option and a fixed mapping to the existing “Other” event type plus the existing requirements field; no backend/API field was added.
 - Added the exact `/family-day-events` source path to the contact-prefill and confirmed-lead attribution allowlists so successful submissions can be attributed to the correct landing page without passing personal data or query strings.
 - Added regression assertions for family-day prefill, source-page attribution and the GA4 service category.
-- Runtime Jest and production build remain pending an executable dependency-backed environment.
+- Added an end-to-end React Testing Library regression test for the complete family-day journey: service CTA, contact-form prefill, simulated successful API response, and privacy-safe confirmed-lead event attribution. The test is authored but has not yet been executed; Jest and production build remain pending an executable dependency-backed environment.

@@ -19,5 +19,19 @@ Disallow: /blogs-new
 Disallow: /case-studies-new
 Disallow: /create-case-studies-new
 Disallow: /admin-only-section
+Disallow: /dashboard
+Disallow: /login
+Disallow: /create-post
+Disallow: /create-post-new
+Disallow: /edit-post/
+Disallow: /create-destinations
+Disallow: /create-gallery
+Disallow: /create-case-studies
+Disallow: /edit-case-study/
+Disallow: /create-category
+Disallow: /blogs-new
+Disallow: /case-studies-new
+Disallow: /create-case-studies-new
+Disallow: /admin-only-section
 
 Sitemap: https://www.expressearth.com/sitemap.xml

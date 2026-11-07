@@ -99,7 +99,7 @@ function Home() {
       <section className="ee-hero" aria-labelledby="ee-home-title">
         <img
           className="ee-hero-image"
-          src="/Images/HOME/Banner%20image/A.avif"
+          src="/Images/Expressearth%20website%20images/HOME/Banner%20image/A.avif"
           alt="Corporate event setting prepared for a business gathering"
           fetchPriority="high"
         />
@@ -161,7 +161,7 @@ function Home() {
         <div className="ee-band-inner">
           <div>
             <span className="ee-section-kicker ee-eyebrow-light">BUILT FOR CORPORATE TEAMS</span>
-            <h2>From a 40-person offsite to a multi-city corporate programme.</h2>
+            <h2>From a focused leadership offsite to a multi-city corporate programme.</h2>
           </div>
           <p>
             We work with briefs that involve leadership teams, sales organisations, dealer and

@@ -109,8 +109,8 @@ function App() {
     const pathname = (location.pathname || "/").replace(/\/+$/, "") || "/";
     const pageSeo = {
       "/": {
-        title: "Event Management & MICE Company in Delhi NCR, India | ExpressEarth",
-        description: "Looking for an event management or MICE company in Delhi, Gurugram or India? ExpressEarth plans corporate events, product launches, annual days, family days, conferences, offsites and incentive group tours.",
+        title: "Corporate MICE & Event Management Company in Delhi NCR | ExpressEarth",
+        description: "Plan corporate MICE in Delhi NCR with ExpressEarth, a Gurugram-based partner for incentive travel, dealer meets, conferences, offsites and exhibitions across India.",
       },
       "/about": {
         title: "About ExpressEarth | Corporate MICE & Event Experts",

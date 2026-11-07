@@ -596,3 +596,13 @@
 - Explicitly allowed OAI-SearchBot and repeated the existing admin/editor path exclusions within its crawler group; the general crawler policy remains unchanged.
 - Preserved the fuller Organization graph already present in this SEO branch, including the verified public business address, contact details and social profiles.
 - Validation: JSON-LD syntax and the robots group structure checked from the branch source. Live crawler access and a production build still require external verification.
+
+
+## 2026-11-07 — Dedicated employee family day search intent
+
+- Added a dedicated /family-day-events service page for employee and company family day planning in Delhi NCR, with visible service scope, venue and activity considerations, planning steps and five FAQs.
+- Added matching Service structured data and FAQPage JSON-LD generated from the same visible FAQ content.
+- Added the route to the React app with unique title/description metadata, the XML sitemap source, the MICE services hub, the corporate events related-services navigation and the static no-JavaScript service links.
+- Enquiry CTAs route to the existing corporate-events contact classification; no new backend field or CRM schema is introduced.
+- Content describes possible coordination scope and does not claim unverified event counts, venue capacity, client names, testimonials or delivery outcomes.
+- Added focused component tests for page headings, enquiry destination, service content and FAQ/schema parity. Full Jest and production build remain unrun until a dependency-backed checkout is available.

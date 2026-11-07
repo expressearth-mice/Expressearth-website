@@ -48,6 +48,7 @@ describe("confirmed lead tracking", () => {
       ["Corporate Offsite", "corporate_offsite"],
       ["Conference Management", "conference_management"],
       ["Corporate Event / Product Launch", "corporate_events"],
+      ["Employee & Family Day", "family_day_events"],
       ["Rewards & Recognition", "recognition_rewards"],
       ["Exhibition / Trade Show", "exhibitions"],
       ["International Group Travel", "international_group_travel"],
@@ -109,6 +110,7 @@ describe("confirmed lead tracking", () => {
       ["dealer_meet", "/dealermeet"],
       ["corporate_offsite", "/corporateoffsites"],
       ["conference_management", "/conferencemanagement"],
+      ["family_day_events", "/family-day-events"],
     ];
 
     cases.forEach(([serviceType, serviceSourcePage]) => {

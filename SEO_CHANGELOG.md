@@ -60,3 +60,14 @@
 - No production deployment, redirects, DNS or hosting changes were made.
 
 - Consolidated destination detail and list fallback into one cancellable request flow, matching either the API slug or destination name. This removes the duplicate list request/race that could overwrite a successfully loaded destination with an empty fallback and keeps route changes from applying stale responses.
+
+
+## 2026-11-07 — Corporate-first homepage refresh
+
+- Replaced the rotating, generic homepage hero and long mixed homepage layout with a focused corporate MICE acquisition page led by the Delhi NCR search intent.
+- Added six clear service pathways: MICE management, incentive travel, dealer/distributor meets, conferences, corporate offsites, and exhibitions/trade shows.
+- Added concise programme positioning, a four-step planning process, a Gurugram/Delhi NCR service-area section, six visible buyer FAQs, and enquiry/telephone/email calls to action.
+- Removed unverified homepage counters (including client, event and partner totals) rather than publishing claims without evidence.
+- Removed the automatic five-second enquiry popup; visitors can now choose when to start an enquiry.
+- Reused the existing homepage hero asset and existing routes; no backend, CRM, client data, or other business systems were changed.
+- Validation: source files were re-fetched from the feature branch after the edits. A dependency-backed JSX compile, Jest run, responsive browser review and production build have not yet been run in this environment. This change is a review PR only and has not been merged or deployed.

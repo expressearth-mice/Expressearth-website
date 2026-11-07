@@ -52,6 +52,7 @@ const relatedServices = [
   { label: "Dealer & distributor meets", to: "/dealermeet" },
   { label: "Meetings & conferences", to: "/meetings-and-conferences" },
   { label: "Corporate offsites", to: "/corporateoffsites" },
+  { label: "Employee & family days", to: "/family-day-events" },
   { label: "Incentive travel", to: "/incentive-travel" },
 ];
 

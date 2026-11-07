@@ -41,6 +41,7 @@ import MiceServices from "./components/MiceService";
 import MeetingsAndConferences from "./components/MeetingsAndConferences";
 import IncentiveTravel from "./components/IncentiveTravel";
 import CorporateEvents from "./components/CorporateEvents";
+import FamilyDayEvents from "./components/FamilyDayEvents";
 import ExhibitionPage from "./components/ExhibitionPage";
 import DestinationManagement from "./components/DestinationManagement";
 import AchievementPage from "./components/AchievementPage";
@@ -155,6 +156,10 @@ function App() {
       "/corporate-events": {
         title: "Corporate Event Management Company in Delhi NCR, India | ExpressEarth",
         description: "Event management for product launches, annual day celebrations, employee family days and corporate gatherings in Delhi NCR and across India, including production, venue and event logistics.",
+      },
+      "/family-day-events": {
+        title: "Employee Family Day Event Management in Delhi NCR | ExpressEarth",
+        description: "Plan company family days in Delhi NCR with ExpressEarth. Coordinate venues, family-friendly activities, stage and AV, hospitality, guest registration and event-day logistics.",
       },
       "/exhibitions-and-trade-shows": {
         title: "Exhibition and Trade Show Management | ExpressEarth",
@@ -357,6 +362,7 @@ function App() {
         />
         <Route path="/incentive-travel" element={<IncentiveTravel />} />
         <Route path="/corporate-events" element={<CorporateEvents />} />
+        <Route path="/family-day-events" element={<FamilyDayEvents />} />
         <Route
           path="/exhibitions-and-trade-shows"
           element={<ExhibitionPage />}

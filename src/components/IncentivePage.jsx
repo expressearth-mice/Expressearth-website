@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./IncentivePage.css";
 import axiosInstance from "../api/axios";
-import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
 
 import ig1 from "../assests/IP_5.jpg";
 import ig2 from "../assests/IP_6.jpg";
@@ -112,6 +113,7 @@ const IncentivePage = () => {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
   const [formData, setFormData] = useState({
@@ -202,26 +204,25 @@ const IncentivePage = () => {
     e.preventDefault();
 
     try {
-      trackContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        type: "IncentiveTravel",
-      });
-
       const payload = {
         full_name: formData.name,
         company_name: formData.type === "Company" ? formData.company : null,
         email: formData.email,
         phone: formData.phone,
         event_date: null,
-        event_type: "Other",
-        type: formData.type,
+        event_type: "Incentive Trip",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "incentive_travel",
+        formLocation: "primary",
+      });
       alert("Form Submitted Successfully");
 
       setFormData({
@@ -231,12 +232,8 @@ const IncentivePage = () => {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(
-        "IncentivePage submit error:",
-        error.response?.data || error.message || error,
-      );
-      alert("Error submitting form");
+    } catch {
+      alert("Error submitting form. Please try again.");
     }
   };
 
@@ -248,38 +245,36 @@ const IncentivePage = () => {
     e.preventDefault();
 
     try {
-      trackFormSubmit({
-        name: "IncentiveTravel FAQ Inquiry",
-        email: faqForm.email,
-        message: faqForm.message,
-        type: "IncentiveTravel_FAQ",
-      });
-
       const payload = {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
-        event_type: faqForm.message || "Incentive Travel FAQ Question",
-        type: "Individual",
+        event_type: "Incentive Trip",
+        requirements: faqForm.message,
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "incentive_travel",
+        formLocation: "faq_question",
+      });
       alert("Your question has been submitted successfully");
 
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "IncentivePage FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
-      alert("Error submitting your question");
+    } catch {
+      alert("Error submitting your question. Please try again.");
     }
   };
 
@@ -700,6 +695,18 @@ const IncentivePage = () => {
                     type="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="incentive-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>

@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import "./ConferenceManagement.css";
-import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { trackConfirmedLead } from "../utils/leadTracking";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
 import CM_1 from "../assests/CM_1.png";
 import CM_2 from "../assests/CM_2.png";
 import CM_3 from "../assests/CM_3.png";
@@ -10,6 +11,7 @@ import CM_4 from "../assests/CM_4.jpg";
 import CM_5 from "../assests/CM_5.jpg";
 import CM_6 from "../assests/CM_6.png";
 import PopupForm from "./popupForm";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
   {
@@ -90,12 +92,17 @@ const faqs = [
   },
 ];
 
+const serviceDescription =
+  "ExpressEarth plans corporate conferences, leadership meets, annual sales conferences and seminars in Delhi NCR and across India. Depending on the brief, support can include venue sourcing, stage and AV coordination, registration, speaker and agenda logistics, accommodation, group transfers and on-site event management.";
+
 const ConferenceManagement = () => {
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
   const [showPopup, setShowPopup] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFaqSubmitting, setIsFaqSubmitting] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -113,6 +120,7 @@ const ConferenceManagement = () => {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -125,16 +133,10 @@ const ConferenceManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
-      trackContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        type: "ConferenceManagement",
-      });
-
       const payload = {
         full_name: formData.name,
         company_name: formData.type === "Company" ? formData.company : null,
@@ -145,7 +147,18 @@ const ConferenceManagement = () => {
         type: formData.type,
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
+
+      trackConfirmedLead({
+        serviceType: "conference_management",
+        formLocation: "primary",
+        serviceSourcePage: "/conferencemanagement",
+      });
+
       alert("Form Submitted Successfully");
 
       setFormData({
@@ -155,12 +168,10 @@ const ConferenceManagement = () => {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(
-        "ConferenceManagement submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting form");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -207,38 +218,43 @@ const ConferenceManagement = () => {
 
   const handleFaqSubmit = async (e) => {
     e.preventDefault();
+    if (isFaqSubmitting) return;
+    setIsFaqSubmitting(true);
 
     try {
-      trackFormSubmit({
-        name: "ConferenceManagement FAQ Inquiry",
-        email: faqForm.email,
-        message: faqForm.message,
-        type: "ConferenceManagement_FAQ",
-      });
-
       const payload = {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "Conference Management FAQ Question",
         type: "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
+
+      trackConfirmedLead({
+        serviceType: "conference_management",
+        formLocation: "faq_question",
+        serviceSourcePage: "/conferencemanagement",
+      });
+
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "ConferenceManagement FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting your question");
+    } finally {
+      setIsFaqSubmitting(false);
     }
   };
 
@@ -248,17 +264,25 @@ const ConferenceManagement = () => {
 
   return (
     <>
+      <ServiceStructuredData
+        name="Corporate Conference Management"
+        serviceType="Corporate conferences, leadership summits and annual sales meets"
+        description={serviceDescription}
+        url="https://www.expressearth.com/conferencemanagement"
+      />
       {showPopup && <PopupForm onClose={handleClosePopup} />}
 
       <section className="cm-hero">
         <div className="cm-form-wrapper" ref={formRef}>
-          <form className="cm-form-card" onSubmit={handleSubmit}>
+          <form className="cm-form-card" onSubmit={handleSubmit} aria-busy={isSubmitting}>
             <h2>Get in Touch</h2>
 
             <input
               ref={inputRef}
               type="text"
               name="name"
+              autoComplete="name"
+              aria-label="Full name"
               placeholder="Full Name"
               value={formData.name}
               onChange={handleChange}
@@ -268,6 +292,8 @@ const ConferenceManagement = () => {
             <input
               type="email"
               name="email"
+              autoComplete="email"
+              aria-label="Work email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
@@ -275,8 +301,11 @@ const ConferenceManagement = () => {
             />
 
             <input
-              type="text"
+              type="tel"
               name="phone"
+              inputMode="tel"
+              autoComplete="tel"
+              aria-label="Phone number"
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
@@ -310,13 +339,16 @@ const ConferenceManagement = () => {
             <input
               type="text"
               name="company"
+              autoComplete="organization"
+              aria-label="Company name"
               placeholder="Company Name"
+              required={formData.type === "Company"}
               value={formData.company}
               onChange={handleChange}
             />
 
-            <button type="submit" className="cm-submit-btn">
-              Submit
+            <button type="submit" className="cm-submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
@@ -359,15 +391,7 @@ const ConferenceManagement = () => {
             Services
           </h2>
 
-          <p>
-            ExpressEarth plans corporate conferences, leadership meets, annual
-            sales conferences and seminars in Delhi NCR and across India.
-            Depending on the brief, support can include venue sourcing, stage
-            and AV coordination, registration, speaker and agenda logistics,
-            accommodation, group transfers and on-site event management. The
-            proposed scope is shaped around your audience, programme, location
-            and dates.
-          </p>
+          <p>{serviceDescription} The proposed scope is shaped around your audience, programme, location and dates.</p>
 
           <button className="cm-curated-btn" onClick={handleOpenPopup}>
             Plan Your Corporate Conference
@@ -581,11 +605,12 @@ const ConferenceManagement = () => {
             <div className="cm-faq-form-wrap">
               <h3 className="cm-faq-form-title">Ask a different question</h3>
 
-              <form className="cm-faq-form" onSubmit={handleFaqSubmit}>
+              <form className="cm-faq-form" onSubmit={handleFaqSubmit} aria-busy={isFaqSubmitting}>
                 <label className="cm-faq-field">
                   <span>Name</span>
                   <input
                     type="text"
+                    autoComplete="name"
                     value={faqForm.name}
                     onChange={handleFaqFormChange("name")}
                     required
@@ -596,8 +621,21 @@ const ConferenceManagement = () => {
                   <span>Email Address</span>
                   <input
                     type="email"
+                    autoComplete="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="cm-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>
@@ -612,8 +650,8 @@ const ConferenceManagement = () => {
                   />
                 </label>
 
-                <button type="submit" className="cm-faq-submit">
-                  Submit
+                <button type="submit" className="cm-faq-submit" disabled={isFaqSubmitting}>
+                  {isFaqSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

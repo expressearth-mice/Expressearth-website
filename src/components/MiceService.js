@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { FaRegCalendar, FaPlane, FaBullhorn, FaBuilding, FaMapMarkedAlt, FaGift } from 'react-icons/fa';
+import { FaRegCalendar, FaPlane, FaBullhorn, FaBuilding, FaMapMarkedAlt, FaGift, FaTrophy } from 'react-icons/fa';
 import './MiceService.css';
+import ServiceStructuredData from './ServiceStructuredData';
 
 const services = [
   {
@@ -21,6 +22,18 @@ const services = [
     description: "Coordinate product launches, annual days, award ceremonies and employee events with venue, production and on-site support.",
     icon: <FaBullhorn color="#046ab8" />,
     link: "/corporate-events"
+  },
+  {
+    title: "Employee & Family Days",
+    description: "Plan company family days and employee celebrations with family-friendly activities, venue coordination, production and hospitality.",
+    icon: <FaBullhorn color="#046ab8" />,
+    link: "/family-day-events"
+  },
+  {
+    title: "Rewards & Recognition",
+    description: "Plan employee awards, recognition events and engagement programmes with event design, awards, production and on-ground coordination.",
+    icon: <FaTrophy color="#046ab8" />,
+    link: "/r&rplanning"
   },
   {
     title: "Exhibitions & Trade Shows",
@@ -66,6 +79,83 @@ const services = [
   }
 ];
 
+const serviceDescription = "Based in Gurugram (Gurgaon), ExpressEarth plans corporate MICE programmes for organisations across Delhi NCR and India, including meetings and conferences, incentive travel, dealer and distributor meets, rewards and recognition programmes, corporate offsites, exhibitions and business events. The agreed scope can include venue sourcing, group travel, accommodation, event production and on-ground logistics.";
+
+
+const faqItems = [
+  {
+    question: "What does MICE stand for?",
+    answerText: "MICE stands for Meetings, Incentives, Conferences and Exhibitions. Corporate MICE programmes can include leadership meetings, incentive travel, conferences, dealer and distributor meets, exhibitions and business events.",
+    answer: (
+      <p>
+        MICE stands for <strong>Meetings, Incentives, Conferences and Exhibitions</strong>.
+        Corporate programmes can include leadership meetings, incentive travel, conferences,
+        dealer and distributor meets, exhibitions and business events.
+      </p>
+    ),
+  },
+  {
+    question: "What does a corporate MICE agency coordinate?",
+    answerText: "Depending on the brief, ExpressEarth can coordinate venue sourcing, group travel, accommodation, event production and on-ground logistics for meetings, incentive trips, conferences and corporate events.",
+    answer: (
+      <p>
+        Depending on the brief, ExpressEarth can coordinate venue sourcing, group travel,
+        accommodation, event production and on-ground logistics for meetings, incentive
+        trips, conferences and corporate events.
+      </p>
+    ),
+  },
+  {
+    question: "Which corporate programmes can ExpressEarth plan?",
+    answerText: "ExpressEarth plans meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, corporate events and exhibitions.",
+    answer: (
+      <p>
+        Service scopes include <Link to="/meetings-and-conferences">meetings and conferences</Link>,
+        <Link to="/incentive-travel"> incentive travel</Link>,
+        <Link to="/dealermeet"> dealer and distributor meets</Link>,
+        <Link to="/corporateoffsites"> corporate offsites</Link>,
+        <Link to="/corporate-events"> corporate events</Link> and
+        <Link to="/exhibitions-and-trade-shows"> exhibitions and trade shows</Link>.
+      </p>
+    ),
+  },
+  {
+    question: "Can ExpressEarth support corporate teams outside Gurugram?",
+    answerText: "ExpressEarth is based in Gurugram and supports organisations across Delhi NCR and India. Programmes may be hosted in NCR or at domestic and international destinations, with the scope planned around the brief and destination requirements.",
+    answer: (
+      <p>
+        ExpressEarth is based in Gurugram and supports organisations across Delhi NCR and
+        India. Programmes may be hosted in NCR or at domestic and international destinations,
+        with the scope planned around the brief and destination requirements.
+      </p>
+    ),
+  },
+  {
+    question: "What information should I share to get a corporate MICE proposal?",
+    answerText: "Share the programme objective, event type, expected attendee count, preferred dates, attendee origin cities, destination preference, budget range and whether you need venue, travel, accommodation, production or on-ground coordination.",
+    answer: (
+      <p>
+        Share the programme objective, event type, expected attendee count, preferred dates,
+        attendee origin cities, destination preference, budget range and whether you need
+        venue, travel, accommodation, production or on-ground coordination.
+      </p>
+    ),
+  },
+];
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map(({ question, answerText }) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: answerText,
+    },
+  })),
+};
+
 const MiceServices = () => {
   const heroImage = '/Images/Expressearth%20website%20images/Our-Services/services.png';
 
@@ -75,20 +165,36 @@ const MiceServices = () => {
 
   return (
     <div className="mice-services-page">
-      <section
-        className="mice-services-hero"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+      <ServiceStructuredData
+        name="Corporate MICE Services"
+        serviceType="Corporate MICE and event management"
+        description={serviceDescription}
+        url="https://www.expressearth.com/mice-services"
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+      />
+      <section className="mice-services-hero">
+        <img
+          className="mice-services-hero-image"
+          src={heroImage}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+        />
         <h1 className="mice-services-hero-title">
-          Corporate MICE Services<br />Meetings, Incentive Travel, Conferences &amp; Events
+          Corporate MICE Company in Gurugram (Gurgaon)<br />
+          Meetings, Incentive Travel, Conferences &amp; Events across Delhi NCR and India
         </h1>
       </section>
 
 
       <section className="mice-services-section">
         <p className="mice-services-intro">
-          ExpressEarth plans corporate MICE programmes across India and international destinations, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. Our team can coordinate venue sourcing, group travel, accommodation, event production and on-ground logistics around your programme requirements.
-          Explore the services below, then contact us to discuss your event type, destination, group size and dates.
+          {serviceDescription} Explore the services below, then contact us with your programme type, destination, group size and dates.
         </p>
         <h2 className="mice-services-heading">
           OUR KEY SERVICES
@@ -113,13 +219,44 @@ const MiceServices = () => {
           ))}
         </div>
 
+        <section className="mice-services-local" aria-labelledby="mice-services-local-heading">
+          <h2 id="mice-services-local-heading" className="mice-services-local-heading">
+            Gurugram-based corporate MICE planning across Delhi NCR
+          </h2>
+          <p>
+            ExpressEarth is based in Gurugram (Gurgaon) and supports organisations planning
+            corporate programmes for teams in Delhi, Noida, Faridabad and Ghaziabad as well
+            as Gurugram. A programme can be hosted in NCR or at a destination elsewhere in
+            India or overseas; the scope is shaped around attendee origin cities, dates,
+            group size and the business objective.
+          </p>
+          <h3>What should a corporate MICE brief include?</h3>
+          <p>
+            Share the programme objective, event type, expected attendee count, preferred
+            dates, attendee origin cities, destination preference, budget range and whether
+            you need venue, travel, accommodation, production or on-ground coordination.
+          </p>
+        </section>
+
+        <section className="mice-services-faq" aria-labelledby="mice-services-faq-heading">
+          <h2 id="mice-services-faq-heading">Corporate MICE planning: common questions</h2>
+          <div className="mice-services-faq-list">
+            {faqItems.map((faq) => (
+              <details key={faq.question} className="mice-services-faq-item">
+                <summary>{faq.question}</summary>
+                {faq.answer}
+              </details>
+            ))}
+          </div>
+        </section>
+
         <div className="mice-services-contact">
           <p className="mice-services-contact-text">
-            Looking for a tailor-made event solution? Get in touch with our experts today!
+            Planning a corporate programme in Delhi NCR or elsewhere in India? Share your brief, dates, destination and expected group size with ExpressEarth.
           </p>
 
-          <Link to="/contact" className="mice-services-contact-link custom-button-link">
-            Contact Our Experts
+          <Link to="/contact?service=corporate_mice" className="mice-services-contact-link custom-button-link">
+            Share Your Corporate MICE Brief
           </Link>
         </div>
       </section>

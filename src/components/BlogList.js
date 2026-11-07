@@ -3,6 +3,7 @@ import axiosInstance from "../api/axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { blog_url } from "../api/urls";
+import { normalizeCollectionResponse } from "../api/collectionData";
 import "./BlogList.css";
 import Skeleton from "./Skeleton";
 
@@ -77,10 +78,12 @@ function BlogList() {
         ]);
 
         const oldPosts =
-          oldRes.status === "fulfilled" ? oldRes.value.data || [] : [];
+          oldRes.status === "fulfilled"
+            ? normalizeCollectionResponse(oldRes.value.data)
+            : [];
         const newPostsRaw =
           newRes.status === "fulfilled"
-            ? newRes.value.data?.results ?? newRes.value.data ?? []
+            ? normalizeCollectionResponse(newRes.value.data)
             : [];
 
         const newPosts = newPostsRaw.map((post) => ({

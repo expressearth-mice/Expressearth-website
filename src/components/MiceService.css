@@ -5,15 +5,23 @@
 }
 
 .mice-services-hero {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   color: #fff;
   padding: 110px 20px;
   text-align: center;
   position: relative;
-  z-index: 1;
+  isolation: isolate;
   overflow: hidden;
+}
+
+.mice-services-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .mice-services-hero::before {
@@ -21,10 +29,13 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  z-index: -1;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .mice-services-hero-title {
+  position: relative;
+  z-index: 2;
   font-size: 48px;
   margin: 0;
   background-color: rgba(19, 17, 17, 0.38);
@@ -132,6 +143,38 @@
   text-decoration: none;
 }
 
+.mice-services-local {
+  max-width: 1000px;
+  margin: 56px auto 0;
+  padding: 32px;
+  background: #fff;
+  border: 1px solid #e4e9ef;
+  border-radius: 12px;
+}
+
+.mice-services-local-heading {
+  color: #0a3d62;
+  font-size: 28px;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 18px;
+}
+
+.mice-services-local p {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #555;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.mice-services-local h3 {
+  color: #0a3d62;
+  font-size: 20px;
+  text-align: center;
+  margin: 24px 0 10px;
+}
+
 @media (max-width: 768px) {
   .mice-services-hero {
     padding: 90px 16px;
@@ -152,5 +195,79 @@
 
   .mice-services-contact-text {
     font-size: 1.25rem;
+  }
+
+  .mice-services-local {
+    margin-top: 40px;
+    padding: 24px 18px;
+  }
+
+  .mice-services-local-heading {
+    font-size: 24px;
+  }
+}
+
+.mice-services-faq {
+  max-width: 1000px;
+  margin: 56px auto 0;
+}
+
+.mice-services-faq h2 {
+  color: #0a3d62;
+  font-size: 28px;
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 22px;
+}
+
+.mice-services-faq-list {
+  display: grid;
+  gap: 12px;
+}
+
+.mice-services-faq-item {
+  background: #fff;
+  border: 1px solid #e4e9ef;
+  border-radius: 10px;
+  padding: 18px 22px;
+}
+
+.mice-services-faq-item summary {
+  color: #0a3d62;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.mice-services-faq-item summary:focus-visible {
+  outline: 3px solid #046ab8;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.mice-services-faq-item p {
+  color: #555;
+  line-height: 1.7;
+  margin: 12px 0 0;
+}
+
+.mice-services-faq-item a {
+  color: #0a3d62;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .mice-services-faq {
+    margin-top: 40px;
+  }
+
+  .mice-services-faq h2 {
+    font-size: 24px;
+  }
+
+  .mice-services-faq-item {
+    padding: 16px 18px;
   }
 }

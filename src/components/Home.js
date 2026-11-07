@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { Link, useLocation } from "react-router-dom";
 import PopupForm from "./popupForm";
@@ -7,51 +7,12 @@ import IntegrationTools from "./ui/IntegrationTools";
 import HorizontalSlider from "./ui/HorizontalSlider";
 //import homeVideo from "/assets/home.mp4";
 
-const travelStats = [
-  {
-    icon: "fas fa-globe",
-    label: "Countries Network",
-    target: 30,
-    step: 1,
-    interval: 45,
-    formatValue: (value) => `${value}+`,
-  },
-  {
-    icon: "fas fa-hotel",
-    label: "Hotel Partners",
-    target: 500,
-    step: 10,
-    interval: 55,
-    formatValue: (value) => `${value}+`,
-  },
-  {
-    icon: "fas fa-smile-beam",
-    label: "Satisfied Clients",
-    target: 100000,
-    step: 2500,
-    interval: 80,
-    formatValue: (value) => {
-      if (value >= 100000) {
-        return "1 Lakh+";
-      }
-
-      if (value >= 1000) {
-        return `${Math.round(value / 1000)}K+`;
-      }
-
-      return `${value}+`;
-    },
-  },
-  {
-    icon: "fas fa-briefcase",
-    label: "Successful Events",
-    target: 1000,
-    step: 25,
-    interval: 70,
-    formatValue: (value) => `${value}+`,
-  },
+const programmeCapabilities = [
+  { icon: "fas fa-calendar-check", title: "Programme planning", description: "Define the objective, audience, format, destination, dates and budget before supplier planning." },
+  { icon: "fas fa-hotel", title: "Travel and accommodation", description: "Coordinate group travel, stays, transfers and destination arrangements around the itinerary." },
+  { icon: "fas fa-volume-up", title: "Event production", description: "Plan stage, AV, branding, technical requirements and the event run of show where required." },
+  { icon: "fas fa-clipboard-check", title: "On-ground logistics", description: "Coordinate registration, hospitality, delegate movement and event-day operations according to the agreed scope." },
 ];
-
 const Home = () => {
   const location = useLocation();
 
@@ -65,62 +26,32 @@ const Home = () => {
   }, []);
 
   const [showPopup, setShowPopup] = useState(false);
-  const [showIcon, setShowIcon] = useState(false);
+  const [showIcon, setShowIcon] = useState(true); // Keep the enquiry form visitor-initiated.
   const [recentPosts, setRecentPosts] = useState([]);
   const [activeFAQ, setActiveFAQ] = useState(null);
-  const [hasStartedTravelStats, setHasStartedTravelStats] = useState(false);
-  const [animatedTravelStats, setAnimatedTravelStats] = useState(
-    travelStats.map(() => 0)
-  );
-  const travelStatsRef = useRef(null);
   const toggleFAQ = (index) => {
-    setActiveFAQ(activeFAQ === index ? null : index);
+    setActiveFAQ((currentFAQ) => (currentFAQ === index ? null : index));
   };
 
-  const miceDestinations = [
-    {
-      icon: "fa-building",
-      label: "Luxury Conferences",
-      destinations: "20+",
-      slug: "/meetings-and-conferences",
-    },
-    {
-      icon: "fa-plane-departure",
-      label: "Incentive Travel",
-      destinations: "15+",
-      slug: "/incentive-travel",
-    },
-    {
-      icon: "fa-umbrella-beach",
-      label: "Corporate Retreats",
-      destinations: "12+",
-      slug: "/incentive-travel",
-    },
-    {
-      icon: "fa-people-arrows",
-      label: "Business Networking",
-      destinations: "18+",
-      slug: "/meetings-and-conferences",
-    },
-    {
-      icon: "fa-store",
-      label: "Exhibitions & Trade Shows",
-      destinations: "10+",
-      slug: "/exhibitions-and-trade-shows"
-    },
-    {
-      icon: "fa-map-marker-alt",
-      label: "Destination Meetings",
-      destinations: "25+",
-      slug: "/destination-management",
-    },
+  const programmeLinks = [
+    { icon: "fa-building", label: "Meetings & Conferences", description: "Leadership meetings, conferences, seminars and delegate logistics.", slug: "/meetings-and-conferences" },
+    { icon: "fa-plane-departure", label: "Incentive Travel", description: "Reward trips for employees and channel partners, planned around the programme brief.", slug: "/incentive-travel" },
+    { icon: "fa-handshake", label: "Dealer & Distributor Meets", description: "Channel partner conferences, business updates, product launches and recognition events.", slug: "/dealermeet" },
+    { icon: "fa-mountain", label: "Corporate Offsites", description: "Team retreats, leadership sessions and corporate offsite packages.", slug: "/corporateoffsites" },
+    { icon: "fa-bullhorn", label: "Corporate Events", description: "Product launches, annual days, family days and award ceremonies.", slug: "/corporate-events" },
+    { icon: "fa-store", label: "Exhibitions & Trade Shows", description: "Exhibition participation, booth logistics and business event support.", slug: "/exhibitions-and-trade-shows" },
   ];
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
         const response = await axiosInstance.get("/api/posts/");
-        const sorted = response.data.sort(
+        const posts = Array.isArray(response.data)
+          ? response.data
+          : Array.isArray(response.data?.results)
+            ? response.data.results
+            : [];
+        const sorted = [...posts].sort(
           (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
         );
         setRecentPosts(sorted.slice(0, 4));
@@ -130,34 +61,6 @@ const Home = () => {
     };
 
     fetchRecentPosts();
-  }, []);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasStartedTravelStats) {
-          setHasStartedTravelStats(true);
-
-          // stop observing after first trigger
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.3,
-      }
-    );
-
-    if (travelStatsRef.current) {
-      observer.observe(travelStatsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasStartedTravelStats]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 5000);
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -179,39 +82,6 @@ const Home = () => {
     }
   }, [location]);
 
-  useEffect(() => {
-    if (!hasStartedTravelStats) {
-      return undefined;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setAnimatedTravelStats((prev) => {
-        const next = prev.map((value, index) => {
-          const stat = travelStats[index];
-
-          if (value >= stat.target) {
-            return stat.target;
-          }
-
-          return Math.min(value + stat.step, stat.target);
-        });
-
-        const allComplete = next.every(
-          (value, index) => value >= travelStats[index].target
-        );
-
-        if (allComplete) {
-          window.clearInterval(intervalId);
-        }
-
-        return next;
-      });
-    }, 60);
-
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  }, [hasStartedTravelStats]);
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -224,28 +94,21 @@ const Home = () => {
   };
 
 
-  const splitMiceCardText = (text) => {
-    const parts = text.split(/\s+[–-]\s+/u);
-
-    return {
-      title: parts[0] || text,
-      details: parts.slice(1).join(" - "),
-    };
-  };
-
   return (
     <div className="home-container">
       {showPopup && <PopupForm onClose={handleClosePopup} />}
 
       {/* 👇 Floating Icon */}
       {showIcon && (
-        <div
+        <button
+          type="button"
           className="floating-icon"
           onClick={handleOpenPopup}
+          aria-label="Open the ExpressEarth enquiry form"
           title="Get in Touch"
         >
           📋
-        </div>
+        </button>
       )}
 
       <section className="image-hero-wrapper">
@@ -263,102 +126,112 @@ const Home = () => {
                 src="/Images/HOME/Banner image/A.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate event and MICE services by ExpressEarth"
+                fetchPriority="high"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h1 className="hero-title-box">
                   Corporate Event Management &amp; MICE Company in Delhi NCR
                 </h1>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 2 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\B.avif"
+                src="/Images/HOME/Banner image/B.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate conferences and incentive travel experiences"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 3 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\C.avif"
+                src="/Images/HOME/Banner image/C.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate group travel and offsite experiences"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 4 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\D.avif"
+                src="/Images/HOME/Banner image/D.avif"
                 className="d-block w-100 carousel-image"
                 alt="Business events and employee engagement programmes"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
             {/* Carousel Item 5 */}
             <div className="carousel-item">
               <img
-                src="\Images\HOME\Banner image\E.avif"
+                src="/Images/HOME/Banner image/E.avif"
                 className="d-block w-100 carousel-image"
                 alt="Corporate event production and group experiences"
+                loading="lazy"
+                decoding="async"
               />
               <div className="carousel-caption hero-overlay">
                 <h2 className="hero-title-box">
                   Corporate Events, Conferences &amp; Incentive Travel
                 </h2>
                 <p>
-                  From world-class conferences to luxury incentive travel,
-                  ExpressEarth delivers seamless, high-end event solutions
-                  tailored to your business needs.
+                  Plan corporate meetings, conferences, incentive trips, dealer meets,
+                  offsites and business events in Delhi NCR and across India.
+                  Share your group size, destination and dates to discuss scope.
                 </p>
                 <Link to="/contact" className="custom-button-link">
-                  Get a Free Consultation
+                  Discuss Your Corporate Programme
                 </Link>
               </div>
             </div>
@@ -392,8 +265,54 @@ const Home = () => {
           {/* Banner Section */}
           <section className="hero-banner">
             <h2 className="main-heading">We Create Experiences</h2>
-            <p className="tag-subtext">Where Business Meets Luxury Travel</p>
+            <p className="tag-subtext">Corporate Events and Group Travel</p>
           </section>
+        </div>
+      </section>
+
+      <section
+        className="home-priority-services"
+        aria-labelledby="home-priority-services-title"
+      >
+        <div className="home-priority-services-inner">
+          <div className="home-priority-services-copy">
+            <h2 id="home-priority-services-title">
+              Corporate MICE programmes for Delhi NCR teams
+            </h2>
+            <p>
+              Based in Gurugram, ExpressEarth plans corporate programmes across
+              Delhi NCR and India. Choose a programme type or share your brief
+              with the team.
+            </p>
+          </div>
+
+          <nav aria-label="Priority corporate MICE services">
+            <div className="home-priority-services-grid">
+              {programmeLinks.map((item) => (
+                <Link
+                  key={item.slug}
+                  to={item.slug}
+                  className="home-priority-service-link"
+                >
+                  <span className="home-priority-service-link-title">
+                    {item.label}
+                  </span>
+                  <span className="home-priority-service-link-description">
+                    {item.description}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          <div className="home-priority-services-actions">
+            <Link to="/contact" className="custom-button-link">
+              Share Your Corporate Brief
+            </Link>
+            <Link to="/mice-services" className="home-priority-services-all">
+              View All MICE Services
+            </Link>
+          </div>
         </div>
       </section>
       {/* Destinations */}
@@ -466,7 +385,7 @@ const Home = () => {
                 className="destination-card-link"
               >
                 <div className="destination-card">
-                  <img src={dest.img} alt={dest.name} />
+                  <img src={dest.img} alt={dest.name} loading="lazy" decoding="async" />
                   <h3>{dest.name}</h3>
                 </div>
               </Link>
@@ -488,8 +407,9 @@ const Home = () => {
             autoPlay
             muted
             loop
-            preload="auto"
+            preload="metadata"
             playsInline
+            aria-hidden="true"
           >
             <source src="/Images/home-web.mp4" type="video/mp4" />
             Your browser does not support the video tag.
@@ -504,32 +424,26 @@ const Home = () => {
           <h2 className="travel-heading">Plan. Execute. Inspire.</h2>
 
           <p className="travel-subtext">
-            <span className="travel-subtext-initial">At ExpressEarth</span>, we don’t just organize events — we
-            craft immersive corporate experiences. With over a decade of
-            expertise in the MICE industry, we specialize in curating high-end
-            conferences, incentive retreats, and global business summits. Our
-            focus is on <em>flawless execution</em> with a touch of luxury,
-            ensuring every moment leaves a lasting impression.
+            <span className="travel-subtext-initial">At ExpressEarth</span>, we plan corporate meetings and conferences,
+            incentive travel, dealer and distributor programmes, offsites and
+            business events. Depending on the brief, coordination can include
+            destination selection, accommodation, transfers, event production
+            and on-ground logistics.
           </p>
 
           <div className="travel-subheading-box">
             <h6 className="travel-tagline">
-              From Vision to Reality – We Make It Happen.
+              A clear brief helps shape the right programme.
             </h6>
-            <h5 className="travel-impact"> Our Global Impact</h5>
+            <h5 className="travel-impact">Programme Planning Scope</h5>
           </div>
 
-          <div
-            className="travel-stats-grid"
-            ref={travelStatsRef}
-          >
-            {travelStats.map((stat, index) => (
-              <div key={stat.label} className="travel-stat-item">
-                <i className={`${stat.icon} fa-2x travel-icon`}></i>
-                <p className="travel-stat-number">
-                  {stat.formatValue(animatedTravelStats[index])}
-                </p>
-                <p className="travel-stat-label">{stat.label}</p>
+          <div className="travel-stats-grid">
+            {programmeCapabilities.map((capability) => (
+              <div key={capability.title} className="travel-stat-item">
+                <i className={`${capability.icon} fa-2x travel-icon`} aria-hidden="true"></i>
+                <p className="travel-stat-number">{capability.title}</p>
+                <p className="travel-capability-description">{capability.description}</p>
               </div>
             ))}
           </div>
@@ -537,151 +451,39 @@ const Home = () => {
       </section>
 
       <section className="mice-section home-mice-section">
-        <h2 className="c">Mice By Destination</h2>
+        <h2 className="c">Corporate MICE Services</h2>
         <h5 className="section-subheading">
-          Explore the world's finest destinations, designed for unforgettable
-          corporate experiences.
+          Explore the programme types ExpressEarth can plan for corporate teams,
+          channel partners and business audiences.
         </h5>
 
-        {/* Horizontal scroll wrapper */}
         <HorizontalSlider
           className="scroll-container mice-scroll-container"
           shellClassName="mice-scroll-shell"
           arrowClassName="mice-scroll-arrow"
-          itemCount={miceDestinations.length}
-          leftAriaLabel="Scroll destination cards left"
-          rightAriaLabel="Scroll destination cards right"
+          itemCount={programmeLinks.length}
+          leftAriaLabel="Scroll corporate MICE services left"
+          rightAriaLabel="Scroll corporate MICE services right"
         >
-          {miceDestinations.map((item, index) => (
-            <div key={index} className="mice-scroll-item">
+          {programmeLinks.map((item) => (
+            <div key={item.slug} className="mice-scroll-item">
               <Link to={item.slug} className="mice-link">
                 <div className="mice-card mice-card-panel">
-                  <i className={`fa ${item.icon} fa-2x mice-card-icon`}></i>
-                  <h6 className="mice-card-title">{item.label}</h6>
-                  <p className="mice-card-meta">
-                    {item.destinations} Destinations
-                  </p>
+                  <i className={`fa ${item.icon} fa-2x mice-card-icon`} aria-hidden="true"></i>
+                  <h3 className="mice-card-title">{item.label}</h3>
+                  <p className="mice-card-meta">{item.description}</p>
                 </div>
               </Link>
             </div>
           ))}
         </HorizontalSlider>
 
-        <div className="subtext subtext-block">
-          <h6 className="subtext-note">
-            Where business meets luxury, tailor your next event with
-            ExpressEarth!
-          </h6>
-        </div>
-
-        <h2 className="section-heading section-heading-spacing">Mice By Group Size</h2>
-        <h5 className="section-subheading">
-          Seamless event planning for every group, from intimate gatherings to
-          grand corporate affairs.
-        </h5>
-
-        <HorizontalSlider
-          className="scroll-container mice-scroll-container"
-          shellClassName="mice-scroll-shell"
-          arrowClassName="mice-scroll-arrow"
-          itemCount={5}
-          leftAriaLabel="Scroll group size cards left"
-          rightAriaLabel="Scroll group size cards right"
-        >
-          {[
-            {
-
-              text: "Large Corporate Groups – 500+ Participants | 20+ Destinations",
-
-            },
-            {
-
-              text: "Small Business Teams – 50–200 Participants | 15+ Destinations",
-
-            },
-            {
-
-              text: "Executive Retreats & Couples – 2–50 Participants | 12+ Destinations",
-
-            },
-            {
-
-              text: "Incentive & Special Interest Groups – Customizable | 18+ Destinations",
-
-            },
-            {
-
-              text: "Global Conferences – 1000+ Participants | 10+ Destinations",
-
-            },
-          ].map((item, index) => (
-            <div key={index} className="mice-scroll-item">
-              <div className="mice-card mice-card-panel">
-                <h6 className="mice-card-title">
-                  {splitMiceCardText(item.text).title}
-                </h6>
-                <p className="mice-card-meta">
-                  {splitMiceCardText(item.text).details}
-                </p>
-              </div>
-            </div>
-          ))}
-        </HorizontalSlider>
-
-        <div className="subtext subtext-block">
-          <h6 className="subtext-note">
-            Whatever the size, we craft experiences that leave a lasting impact!
-          </h6>
-        </div>
-      </section>
-      {/* Testimonials */}
-      <section className="testimonials">
-        <div className="testimonial-title" >
-          <h3>Client Experiences That Speak For Themselves</h3>
-          <h6>
-            Hear from our satisfied groups who have experienced seamless
-            planning, exceptional service, and unforgettable journeys with us.
-          </h6>
-        </div>
-        <div className="testimonial-grid">
-          {[
-            {
-              quote:
-                "Our corporate retreat in Dubai was flawlessly executed! From the luxurious stay to the well-organized activities, ExpressEarth made everything effortless.",
-              name: "Atiksh Singh",
-              designation: "Business Director",
-              img: "https://media.licdn.com/dms/image/v2/D5603AQFCo_9GZYA7MA/profile-displayphoto-shrink_200_200/B56ZbrouZbGsAY-/0/1747710044720?e=2147483647&v=beta&t=vKycTUn1chOaICigDy2lY6I_0jnDCgAVwFrRfHMgD-o",
-            },
-            {
-              quote:
-                "ExpressEarth transformed our event into an unforgettable journey. Highly professional and truly luxurious experience!",
-              name: "Sana Khan",
-              designation: "HR Head",
-              img: "/Images/client2.jpg",
-            },
-          ].map((testimonial, index) => (
-            <div key={index} className="testimonial-card">
-              <img
-                src={testimonial.img}
-                alt={testimonial.name}
-                className="client-image"
-              />
-              <p>"{testimonial.quote}"</p>
-              <span>
-                <strong>{testimonial.name}</strong>
-              </span>
-              <p className="designation">{testimonial.designation}</p>
-            </div>
-          ))}
-        </div>
-        <div className="testimonial-cta">
-          <p>What’s your story? Let us craft your perfect travel experience!</p>
-          <Link to="/contact" className="custom-button-link">
-            Contact Us
+        <div className="view-all">
+          <Link to="/mice-services" className="custom-button-link">
+            Explore All MICE Services
           </Link>
         </div>
       </section>
-
       {/*Recent blog*/}
       <section className="blogs-updates blogs-updates-section">
         <h2 className="blogs-title">Latest News & Blogs</h2>
@@ -695,7 +497,7 @@ const Home = () => {
                 className="blog-card"
                 aria-hidden={index >= recentPosts.length}
               >
-                <img src={post.image} alt={post.title} />
+                <img src={post.image} alt={post.title} loading="lazy" decoding="async" />
                 <div className="card-body">
                   <h5>
                     <Link
@@ -721,81 +523,22 @@ const Home = () => {
       </section>
 
       <section className="case-study-section">
-        {/* Top curved SVG */}
-        <div className="case-study-wave case-study-wave-top">
-          <svg
-            className="case-study-wave-svg"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            viewBox="0 0 1200 120"
-          >
-            <path d="M1200 0L0 0 0 120 1200 0z" fill="#0162b5"></path>
-          </svg>
-        </div>
-
         <div className="case-study-content">
           <div className="case-study-content-inner">
-            <h2 className="case-study-kicker">
-              Real Success Stories
-            </h2>
+            <h2 className="case-study-kicker">Project Examples</h2>
             <p className="case-study-title">
-              Transforming Corporate Travel & Events
+              Explore ExpressEarth's published case studies
             </p>
-            <h3 className="case-study-quote">
-              “ExpressEarth MICE delivered a seamless and personalized corporate
-              travel experience. Their expertise in handling large-scale events,
-              attention to detail, and customized solutions truly set them
-              apart.”
-            </h3>
           </div>
           <p className="case-study-description">
-            That’s what a senior manager from a{" "}
-            <span className="case-study-company">[Fortune 500 Company]</span> had to say
-            about their experience with ExpressEarth MICE. From end-to-end event
-            planning to flawless execution, we ensure every journey is a
-            success.
+            Review published project pages for programme context, group travel
+            and event planning examples. If you have a similar requirement,
+            share your event type, destination, group size, dates and budget.
           </p>
-
-          <p className="case-study-description case-study-description-secondary">
-            Discover how our innovative solutions and industry expertise create
-            unforgettable corporate experiences.
-          </p>
-          <Link to="/case-studies">
-            <button className="custom-button-link">Read Full Case Study</button>
+          <Link to="/case-studies" className="custom-button-link">
+            Browse Case Studies
           </Link>
         </div>
-
-        {/* Bottom curved SVG */}
-        {/* Top rotated curved SVG (180°) */}
-        <div className="case-study-wave case-study-wave-bottom">
-          <svg
-            className="case-study-wave-svg"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            viewBox="0 0 1200 120"
-          >
-            <path d="M1200 0L0 120 0 0 1200 0z" fill="#0162b5" />
-          </svg>
-        </div>
-      </section>
-
-      <section className="achievements-section">
-        <h2 className="achievements-title">
-          Excellence Recognized, Trust Earned
-        </h2>
-        <p className="achievements-text">
-          Discover the awards, accreditations, and industry recognition that
-          make{" "}
-          <span className="achievements-brand">ExpressEarth MICE</span>{" "}
-          a trusted name in corporate travel and event management. With 9 years
-          of excellence, we continue to set new benchmarks in delivering
-          unforgettable experiences.
-        </p>
-        <Link to="/achievements">
-          <button className="custom-button-link">
-            Explore Our Achievements
-          </button>
-        </Link>
       </section>
 
       {/* FAQs Section */}
@@ -805,45 +548,45 @@ const Home = () => {
         <section className="faq-section">
           {[
             {
-              question:
-                "What MICE services does ExpressEarth offer for corporate events?",
-              answer:
-                " ExpressEarth specializes in end-to-end MICE services, including corporate meetings, incentive travel, international conferences, trade exhibitions, and luxury corporate retreats. We create tailor-made solutions to deliver high-impact business experiences globally.",
+              question: "What MICE services does ExpressEarth offer for corporate programmes?",
+              answer: "ExpressEarth plans corporate meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites, exhibitions and business events. The agreed scope can include venue sourcing, group travel, accommodation, event production and on-ground logistics.",
             },
             {
-              question:
-                "Can ExpressEarth manage international corporate travel and large group logistics?",
-              answer:
-                "With a strong global network, we handle international corporate travel, visa assistance, luxury hotel bookings, on-ground logistics, and event execution for groups of all sizes—from executive teams to large delegations of 1000+ participants.",
+              question: "Can ExpressEarth coordinate international corporate group travel?",
+              answer: "Planning can include destination research, accommodation, transfers, visa assistance where required, activities and group logistics. Feasibility depends on destination, travel dates, group size and entry requirements.",
             },
             {
-              question:
-                " How early should I start planning a corporate event with ExpressEarth?",
-              answer:
-                " For a smooth experience, we recommend initiating planning 3–6 months in advance, especially for large-scale or international MICE events. However, our experienced team can also manage last-minute MICE travel and event planning with efficiency.",
+              question: "How early should we start planning a corporate MICE programme?",
+              answer: "For larger or international programmes, begin planning several months ahead where possible. Lead time depends on destination, venue availability, group size, visa requirements and production scope.",
             },
             {
-              question:
-                "Are your MICE event packages customizable for our business goals and budget?",
-              answer:
-                " Absolutely. Our custom MICE packages are tailored to your corporate objectives, budget, and brand identity. Whether you're planning a luxury incentive trip or a strategic offsite, we ensure a personalized and memorable experience.",
+              question: "Can the programme be customised to our objectives and budget?",
+              answer: "Yes. The programme scope can be shaped around your objectives, audience, group size, destination, dates, budget and required travel or production services.",
             },
             {
-              question:
-                "How do I start planning a MICE event with ExpressEarth?",
-              answer:
-                "Getting started is easy—simply fill out the Plan Your Perfect MICE Event form on our website or contact us directly. Our experts will schedule a free MICE consultation and guide you through destination selection, logistics, and event design.",
+              question: "What information should we share to start an enquiry?",
+              answer: "Use the contact page to share your company name, programme type, destination, expected group size, dates, budget range and services required. The team can review the brief and discuss next steps.",
             },
           ].map((faq, index) => (
             <div key={index} className="faq-item">
-              <h4
-                onClick={() => toggleFAQ(index)}
-                className="faq-question-row"
-              >
-                {faq.question}
-                <span>{activeFAQ === index ? "⌃" : "⌄"}</span>
+              <h4>
+                <button
+                  type="button"
+                  className="faq-question-row"
+                  aria-expanded={activeFAQ === index}
+                  aria-controls={`home-faq-answer-${index}`}
+                  onClick={() => toggleFAQ(index)}
+                >
+                  <span>{faq.question}</span>
+                  <span aria-hidden="true">{activeFAQ === index ? "⌃" : "⌄"}</span>
+                </button>
               </h4>
-              {activeFAQ === index && <p>{faq.answer}</p>}
+              <div
+                id={`home-faq-answer-${index}`}
+                hidden={activeFAQ !== index}
+              >
+                <p>{faq.answer}</p>
+              </div>
             </div>
           ))}
         </section>
@@ -851,10 +594,11 @@ const Home = () => {
       <a
         href="https://wa.me/9266056660"
         className="whatsapp-float"
+        aria-label="Chat with ExpressEarth on WhatsApp"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <i className="fab fa-whatsapp"></i>
+        <i className="fab fa-whatsapp" aria-hidden="true"></i>
       </a>
     </div>
   );

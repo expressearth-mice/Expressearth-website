@@ -11,25 +11,37 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { Country } from "country-state-city";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
 import "./ContactForm.css";
 import axiosInstance from "../api/axios";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
+import { validateCorporateEnquiryBrief } from "../utils/corporateEnquiryValidation";
+import { buildContactRequirements, getContactFormPrefill, getContactFormSourcePage } from "../utils/contactQualification";
+
+const createInitialFormData = (search = "") => ({
+  full_name: "",
+  company_name: "",
+  email: "",
+  phone: "",
+  event_type: "",
+  programme_detail: "",
+  country: "",
+  attendees: "",
+  project_stage: "",
+  event_date: "",
+  requirements: "",
+  ...getContactFormPrefill(search),
+});
 
 const ContactForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [formData, setFormData] = useState({
-    full_name: "",
-    company_name: "",
-    email: "",
-    phone: "",
-    event_type: "",
-    country: "",
-    attendees: "",
-    event_date: "",
-    requirements: "",
-  });
+  const [formData, setFormData] = useState(() =>
+    createInitialFormData(location.search)
+  );
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -48,6 +60,17 @@ const ContactForm = () => {
     // }
   }, []);
 
+  useEffect(() => {
+    const prefill = getContactFormPrefill(location.search);
+    if (Object.keys(prefill).length) {
+      setFormData((previous) => ({
+        ...previous,
+        event_type: previous.event_type || prefill.event_type,
+        programme_detail: previous.programme_detail || prefill.programme_detail,
+      }));
+    }
+  }, [location.search]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -57,7 +80,7 @@ const ContactForm = () => {
   };
 
   const validate = () => {
-    let newErrors = {};
+    let newErrors = validateCorporateEnquiryBrief(formData);
     if (!formData.full_name.trim())
       newErrors.full_name = "Please enter full name";
     if (!formData.email.trim()) {
@@ -89,8 +112,14 @@ const ContactForm = () => {
     setErrorMessage("");
 
     try {
+      const { project_stage, programme_detail, ...contactFields } = formData;
       const formattedFormData = {
-        ...formData,
+        ...contactFields,
+        requirements: buildContactRequirements({
+          programmeDetail: programme_detail,
+          projectStage: project_stage,
+          requirements: formData.requirements,
+        }),
         event_date: formData.event_date
           ? new Date(formData.event_date).toISOString().split("T")[0]
           : null,
@@ -102,47 +131,30 @@ const ContactForm = () => {
         formattedFormData
       );
 
-      if (response && response.data) {
-        const successValue = response.data.success;
-        const requestSucceeded =
-          successValue === true ||
-          (typeof successValue === "string" &&
-            successValue.trim() !== "" &&
-            successValue.trim().toLowerCase() !== "false");
-
-        if (requestSucceeded) {
-          setSubmitted(true);
-          setFormData({
-            full_name: "",
-            company_name: "",
-            email: "",
-            phone: "",
-            event_type: "",
-            country: "",
-            attendees: "",
-            event_date: "",
-            requirements: "",
-          });
-          setErrors({});
-          if (window.gtag) {
-            window.gtag("event", "form_submit", {
-              event_category: "Contact Form",
-              event_label: "Contact Form Submitted",
-            });
-          }
-          setCaptchaValue(null); // Reset CAPTCHA
-          setErrorMessage(""); // Clear any previous error message
-        } else {
-          setErrorMessage(
-            response.data.error || "Failed to send message. Please try again."
-          );
-        }
+      if (isSuccessfulContactResponse(response)) {
+        setSubmitted(true);
+        setFormData(createInitialFormData(location.search));
+        setErrors({});
+        const serviceSourcePage = getContactFormSourcePage(location.search);
+        trackConfirmedLead({
+          serviceType: programme_detail || formData.event_type || "corporate_mice",
+          formLocation: serviceSourcePage ? "service_page" : "contact_page",
+          serviceSourcePage,
+        });
+        setCaptchaValue(null); // Reset CAPTCHA
+        setErrorMessage("");
+      } else {
+        setErrorMessage(
+          response?.data?.error || "Failed to send message. Please try again."
+        );
       }
     } catch (error) {
-      console.error("Error:", error.response ? error.response.data : error);
       const backendErrors = error.response?.data;
       if (backendErrors?.event_date) {
-        setErrorMessage(`Event Date: ${backendErrors.event_date.join(", ")}`);
+        const eventDateError = Array.isArray(backendErrors.event_date)
+          ? backendErrors.event_date.join(", ")
+          : String(backendErrors.event_date);
+        setErrorMessage(`Event Date: ${eventDateError}`);
       } else {
         setErrorMessage("Something went wrong. Please try again.");
       }
@@ -177,7 +189,7 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="contact-header-section">
-        <h2>Contact us</h2>
+        <h1>Contact ExpressEarth for Corporate MICE Enquiries</h1>
         <p>
           Share a few details about your organisation and programme. ExpressEarth
           supports corporate MICE enquiries for incentive travel, dealer and
@@ -219,7 +231,7 @@ const ContactForm = () => {
                 </Alert>
               )}
 
-              <Form onSubmit={handleSubmit}>
+              <Form noValidate onSubmit={handleSubmit}>
                 <Row>
                   <Col md={6}>
                     <Form.Group controlId="full_name" className="mb-3">
@@ -248,15 +260,23 @@ const ContactForm = () => {
                     <Form.Group controlId="company_name" className="mb-3">
                       <Form.Label>
                         <FaBuilding className="me-2" />
-                        Company Name
+                        Company / Organisation *
                       </Form.Label>
                       <Form.Control
                         type="text"
                         name="company_name"
                         autoComplete="organization"
+                        required
+                        aria-invalid={Boolean(errors.company_name)}
+                        aria-describedby={errors.company_name ? "company_name-error" : undefined}
                         value={formData.company_name}
                         onChange={handleChange}
                       />
+                      {errors.company_name && (
+                        <small id="company_name-error" className="text-danger">
+                          {errors.company_name}
+                        </small>
+                      )}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -309,10 +329,13 @@ const ContactForm = () => {
                 <Form.Group controlId="event_type" className="mb-3">
                   <Form.Label>
                     <FaListUl className="me-2" />
-                    Event Type
+                    Programme Type *
                   </Form.Label>
                   <Form.Select
                     name="event_type"
+                    required
+                    aria-invalid={Boolean(errors.event_type)}
+                    aria-describedby={errors.event_type ? "event_type-error" : undefined}
                     value={formData.event_type}
                     onChange={handleChange}
                   >
@@ -324,6 +347,37 @@ const ContactForm = () => {
                     <option value="Product Launch">Product Launch</option>
                     <option value="Other">Other</option>
                   </Form.Select>
+                  {errors.event_type && (
+                    <small id="event_type-error" className="text-danger">
+                      {errors.event_type}
+                    </small>
+                  )}
+                </Form.Group>
+
+                <Form.Group controlId="programme_detail" className="mb-3">
+                  <Form.Label>Specific service (optional)</Form.Label>
+                  <Form.Select
+                    name="programme_detail"
+                    value={formData.programme_detail}
+                    onChange={handleChange}
+                    aria-describedby="programme_detail-help"
+                  >
+                    <option value="">Select if you know the specific service</option>
+                    <option value="Incentive Travel">Incentive Travel</option>
+                    <option value="Dealer &amp; Distributor Meet">Dealer &amp; Distributor Meet</option>
+                    <option value="Corporate Offsite">Corporate Offsite</option>
+                    <option value="Conference Management">Conference Management</option>
+                    <option value="Corporate Event / Product Launch">Corporate Event / Product Launch</option>
+                    <option value="Employee &amp; Family Day">Employee &amp; Family Day</option>
+                    <option value="Rewards &amp; Recognition">Rewards &amp; Recognition</option>
+                    <option value="Exhibition / Trade Show">Exhibition / Trade Show</option>
+                    <option value="International Group Travel">International Group Travel</option>
+                    <option value="Destination Management">Destination Management</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                  </Form.Select>
+                  <Form.Text id="programme_detail-help" muted>
+                    Optional. Choose a service if you know the specific programme you want to plan.
+                  </Form.Text>
                 </Form.Group>
 
                 <Row>
@@ -331,7 +385,7 @@ const ContactForm = () => {
                     <Form.Group controlId="country" className="mb-3">
                       <Form.Label>
                         <FaMapMarkerAlt className="me-2" />
-                        Country
+                        Preferred Destination / Country
                       </Form.Label>
                       <Form.Select
                         name="country"
@@ -350,7 +404,7 @@ const ContactForm = () => {
                 </Row>
 
                 <Form.Group controlId="attendees" className="mb-3">
-                  <Form.Label>Number of Attendees</Form.Label>
+                  <Form.Label>Expected Group Size (optional)</Form.Label>
                   <Form.Select
                     name="attendees"
                     value={formData.attendees}
@@ -362,6 +416,31 @@ const ContactForm = () => {
                     <option value="100-300">100-300</option>
                     <option value="300+">300+</option>
                   </Form.Select>
+                </Form.Group>
+
+                <Form.Group controlId="project_stage" className="mb-3">
+                  <Form.Label>Current Planning Stage (optional)</Form.Label>
+                  <Form.Select
+                    name="project_stage"
+                    value={formData.project_stage}
+                    onChange={handleChange}
+                    aria-describedby="project_stage-help"
+                  >
+                    <option value="">Select planning stage</option>
+                    <option value="Active brief / RFQ">Active brief / RFQ</option>
+                    <option value="Programme planned; comparing partners">
+                      Programme planned; comparing partners
+                    </option>
+                    <option value="Upcoming programme; exploring options">
+                      Upcoming programme; exploring options
+                    </option>
+                    <option value="Early planning / gathering information">
+                      Early planning / gathering information
+                    </option>
+                  </Form.Select>
+                  <Form.Text id="project_stage-help" muted>
+                    Optional. This helps our team understand whether you have an active brief or are exploring a future programme.
+                  </Form.Text>
                 </Form.Group>
 
                 <Form.Group controlId="event_date" className="mb-3">

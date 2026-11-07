@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   { path: "/meetings-and-conferences", changefreq: "monthly", priority: "0.7" },
   { path: "/incentive-travel", changefreq: "monthly", priority: "0.7" },
   { path: "/corporate-events", changefreq: "monthly", priority: "0.7" },
+  { path: "/family-day-events", changefreq: "monthly", priority: "0.7" },
   { path: "/exhibitions-and-trade-shows", changefreq: "monthly", priority: "0.7" },
   { path: "/destination-management", changefreq: "monthly", priority: "0.7" },
   { path: "/international-destinations", changefreq: "monthly", priority: "0.7" },
@@ -87,6 +88,17 @@ function toDateOnly(value) {
     : null;
 }
 
+function encodePathSegment(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw || raw.includes("/") || raw.includes("\\")) return "";
+
+  try {
+    return encodeURIComponent(decodeURIComponent(raw));
+  } catch {
+    return encodeURIComponent(raw);
+  }
+}
+
 function xmlEscape(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -126,7 +138,7 @@ async function main() {
 
   const seenBlogSlugs = new Set();
   for (const post of [...newBlogs, ...oldPosts]) {
-    const slug = post?.slug || (post?.title ? encodeURIComponent(post.title) : "");
+    const slug = encodePathSegment(post?.slug || post?.title);
     if (!slug || seenBlogSlugs.has(slug)) continue;
     seenBlogSlugs.add(slug);
     entries.push(
@@ -141,9 +153,9 @@ async function main() {
 
   const seenCaseStudySlugs = new Set();
   for (const caseStudy of [...newCaseStudies, ...oldCaseStudies]) {
-    const slug = caseStudy?.slug || caseStudy?.id;
-    if (!slug || seenCaseStudySlugs.has(String(slug))) continue;
-    seenCaseStudySlugs.add(String(slug));
+    const slug = encodePathSegment(caseStudy?.slug || caseStudy?.id);
+    if (!slug || seenCaseStudySlugs.has(slug)) continue;
+    seenCaseStudySlugs.add(slug);
     entries.push(
       urlEntry({
         loc: `${SITE_URL}/case-studies/${slug}`,
@@ -157,14 +169,15 @@ async function main() {
   const seenCategorySlugs = new Set();
   for (const category of categories) {
     const categoryName = String(category?.name || "").trim();
-    const slug = category?.slug || categoryName.toLowerCase()
+    const rawSlug = category?.slug || categoryName.toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
+    const slug = encodePathSegment(rawSlug);
     if (!slug || seenCategorySlugs.has(slug)) continue;
     seenCategorySlugs.add(slug);
     entries.push(
       urlEntry({
-        loc: `${SITE_URL}/categories/${encodeURIComponent(slug)}`,
+        loc: `${SITE_URL}/categories/${slug}`,
         lastmod: toDateOnly(category.updated_at ?? category.created_at),
         changefreq: "monthly",
         priority: "0.5",

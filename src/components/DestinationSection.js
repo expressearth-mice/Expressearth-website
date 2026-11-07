@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import axiosInstance from "../api/axios";
+import { normalizeCollectionResponse } from "../api/collectionData";
 import "./DestinationSection.css";
 
 const hardcodedDestinations = [
@@ -59,7 +59,7 @@ const DestinationSection = () => {
     axiosInstance
       .get("/api/destinations/")
       .then((res) => {
-        setDestinations([...hardcodedDestinations, ...res.data]);
+        setDestinations([...hardcodedDestinations, ...normalizeCollectionResponse(res.data)]);
       })
       .catch((error) => {
         console.error("Error fetching destinations:", error);

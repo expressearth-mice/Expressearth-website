@@ -17,7 +17,7 @@ ENV REACT_APP_API_URL=$REACT_APP_API_URL
 COPY  . .
 
 RUN npm install -g serve
-RUN npm install
+RUN npm ci
 
 # Build the React app
 RUN npm run build

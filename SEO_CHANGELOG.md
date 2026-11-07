@@ -586,3 +586,13 @@
 - The contact-page flow continues to use its explicit source-page mapping from the originating service CTA. Direct contact-page submissions do not acquire `/contact` as a service source.
 - Added a regression test covering the allowlisted legacy incentive route and the non-service contact-page fallback.
 - This improves source attribution coverage; it does not change the success condition, create a lead on failed submission, or prove that GA4/GTM receives the event. Tag Assistant verification remains an owner/developer dependency.
+
+
+## 2026-11-07 — Delhi NCR corporate search snippet and AI discovery
+
+- Refined the initial HTML title and description around corporate MICE intent in Delhi NCR, matching the homepage's visible positioning and route-aware metadata.
+- Added a static homepage canonical to the initial HTML while preserving route-aware canonical updates in the React app.
+- Aligned Open Graph and X/Twitter title and description with the corporate MICE positioning.
+- Explicitly allowed OAI-SearchBot and repeated the existing admin/editor path exclusions within its crawler group; the general crawler policy remains unchanged.
+- Preserved the fuller Organization graph already present in this SEO branch, including the verified public business address, contact details and social profiles.
+- Validation: JSON-LD syntax and the robots group structure checked from the branch source. Live crawler access and a production build still require external verification.

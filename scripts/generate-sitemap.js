@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   { path: "/meetings-and-conferences", changefreq: "monthly", priority: "0.7" },
   { path: "/incentive-travel", changefreq: "monthly", priority: "0.7" },
   { path: "/corporate-events", changefreq: "monthly", priority: "0.7" },
+  { path: "/family-day-events", changefreq: "monthly", priority: "0.7" },
   { path: "/exhibitions-and-trade-shows", changefreq: "monthly", priority: "0.7" },
   { path: "/destination-management", changefreq: "monthly", priority: "0.7" },
   { path: "/international-destinations", changefreq: "monthly", priority: "0.7" },

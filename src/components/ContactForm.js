@@ -368,6 +368,7 @@ const ContactForm = () => {
                     <option value="Corporate Offsite">Corporate Offsite</option>
                     <option value="Conference Management">Conference Management</option>
                     <option value="Corporate Event / Product Launch">Corporate Event / Product Launch</option>
+                    <option value="Employee &amp; Family Day">Employee &amp; Family Day</option>
                     <option value="Rewards &amp; Recognition">Rewards &amp; Recognition</option>
                     <option value="Exhibition / Trade Show">Exhibition / Trade Show</option>
                     <option value="International Group Travel">International Group Travel</option>

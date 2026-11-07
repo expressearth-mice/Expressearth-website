@@ -71,3 +71,14 @@
 - Removed the automatic five-second enquiry popup; visitors can now choose when to start an enquiry.
 - Reused the existing homepage hero asset and existing routes; no backend, CRM, client data, or other business systems were changed.
 - Validation: source files were re-fetched from the feature branch after the edits. A dependency-backed JSX compile, Jest run, responsive browser review and production build have not yet been run in this environment. This change is a review PR only and has not been merged or deployed.
+
+
+## 2026-11-07 — Homepage asset, metadata and AI crawler refinements
+
+- Corrected the homepage hero image URL to the exact existing asset path in the repository.
+- Removed an unsupported group-size example from the homepage headline.
+- Aligned the homepage route title and description with the corporate MICE / Delhi NCR positioning.
+- Added a static homepage canonical link so the initial HTML has an explicit preferred homepage URL before React route metadata runs.
+- Expanded Organization structured data with verified public contact details and the stated Delhi NCR service cities, alongside India-wide coverage.
+- Explicitly allowed OAI-SearchBot in robots.txt while retaining the existing general crawler policy and admin-path exclusions.
+- Validation: source and asset paths checked against the repository tree; build and live crawler verification remain outstanding.

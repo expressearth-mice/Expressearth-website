@@ -606,3 +606,12 @@
 - Enquiry CTAs route to the existing corporate-events contact classification; no new backend field or CRM schema is introduced.
 - Content describes possible coordination scope and does not claim unverified event counts, venue capacity, client names, testimonials or delivery outcomes.
 - Added focused component tests for page headings, enquiry destination, service content and FAQ/schema parity. Full Jest and production build remain unrun until a dependency-backed checkout is available.
+
+
+### Follow-up — family day enquiry attribution
+
+- Routed family day CTAs through a dedicated `family_day_events` query value rather than reusing the generic corporate-events value.
+- Added an explicit “Employee & Family Day” service option and a fixed mapping to the existing “Other” event type plus the existing requirements field; no backend/API field was added.
+- Added the exact `/family-day-events` source path to the contact-prefill and confirmed-lead attribution allowlists so successful submissions can be attributed to the correct landing page without passing personal data or query strings.
+- Added regression assertions for family-day prefill, source-page attribution and the GA4 service category.
+- Runtime Jest and production build remain pending an executable dependency-backed environment.

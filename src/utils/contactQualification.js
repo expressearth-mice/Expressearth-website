@@ -4,6 +4,7 @@ const PROGRAMME_DETAILS = new Set([
   "Corporate Offsite",
   "Conference Management",
   "Corporate Event / Product Launch",
+  "Employee & Family Day",
   "Rewards & Recognition",
   "Exhibition / Trade Show",
   "International Group Travel",
@@ -36,6 +37,7 @@ const CONTACT_FORM_PREFILLS = Object.freeze({
   corporate_offsite: { event_type: "Other", programme_detail: "Corporate Offsite" },
   conference_management: { event_type: "Conference", programme_detail: "Conference Management" },
   corporate_events: { event_type: "Product Launch", programme_detail: "Corporate Event / Product Launch" },
+  family_day_events: { event_type: "Other", programme_detail: "Employee & Family Day" },
   recognition_rewards: { event_type: "Other", programme_detail: "Rewards & Recognition" },
   exhibitions: { event_type: "Exhibition", programme_detail: "Exhibition / Trade Show" },
   international_group_travel: { event_type: "Other", programme_detail: "International Group Travel" },
@@ -61,6 +63,7 @@ const CONTACT_FORM_SOURCE_PAGES = Object.freeze({
   incentive_travel: "/incentive-travel",
   conference_management: "/meetings-and-conferences",
   corporate_events: "/corporate-events",
+  family_day_events: "/family-day-events",
 });
 
 export const getContactFormSourcePage = (search = "") => {

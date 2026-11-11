@@ -615,3 +615,11 @@
 - Added the exact `/family-day-events` source path to the contact-prefill and confirmed-lead attribution allowlists so successful submissions can be attributed to the correct landing page without passing personal data or query strings.
 - Added regression assertions for family-day prefill, source-page attribution and the GA4 service category.
 - Added an end-to-end React Testing Library regression test for the complete family-day journey: service CTA, contact-form prefill, simulated successful API response, and privacy-safe confirmed-lead event attribution. The test is authored but has not yet been executed; Jest and production build remain pending an executable dependency-backed environment.
+
+## 2026-11-11 — Gallery image accessibility and performance foundations
+
+- Improved the public gallery image alternative text so empty CMS titles/descriptions no longer produce empty `alt` attributes; descriptive title/description content is used when available, with a truthful ExpressEarth portfolio fallback otherwise.
+- Added native lazy loading and asynchronous decoding to gallery thumbnails to reduce unnecessary initial image work on longer gallery pages.
+- Kept the existing gallery content sources and image URLs unchanged. No dates, client identities, project claims or image metadata were invented.
+- Source-level validation after the edit confirmed the fallback description, lazy-loading attribute and asynchronous decoding attribute. Full Jest, browser accessibility checks and production build remain pending an executable dependency-backed environment.
+- This is a development-branch change only; no merge or deployment was performed.

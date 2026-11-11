@@ -152,7 +152,12 @@ function Gallery() {
                   <img
                     src={item.img || item.image}
                     className="gallery-img"
-                    alt={item.title}
+                    alt={
+                      String(item.title || item.desc || item.description || "").trim() ||
+                      "ExpressEarth corporate MICE and event management portfolio photograph"
+                    }
+                    loading="lazy"
+                    decoding="async"
                   />
                   {/* <div className="image-overlay-text">
                     <h5>{item.title}</h5>
@@ -197,8 +202,9 @@ function Gallery() {
         <div className="image-modal" onClick={() => setSelectedImage(null)}>
           <img
             src={selectedImage}
-            alt="Full Preview"
+            alt="ExpressEarth corporate MICE and event management portfolio photograph"
             className="fullscreen-img"
+            decoding="async"
           />
         </div>
       )}

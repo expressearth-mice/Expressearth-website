@@ -152,9 +152,30 @@ async function main() {
   }
 
   const seenCaseStudySlugs = new Set();
-  for (const caseStudy of [...newCaseStudies, ...oldCaseStudies]) {
-    const slug = encodePathSegment(caseStudy?.slug || caseStudy?.id);
-    if (!slug || seenCaseStudySlugs.has(slug)) continue;
+  const placeholderCaseStudySlugs = new Set(["abc", "abc-1", "abc-2", "abcd"]);
+  const caseStudyRecords = [...newCaseStudies, ...oldCaseStudies];
+  const availableCaseStudySlugs = new Set(
+    caseStudyRecords
+      .map((item) => String(item?.slug || "").trim().toLowerCase())
+      .filter(Boolean),
+  );
+
+  for (const caseStudy of caseStudyRecords) {
+    // Exclude known placeholders and ID-only records without suppressing
+    // legitimate short descriptive slugs.
+    const rawSlug = String(caseStudy?.slug || "").trim().toLowerCase();
+    const slug = encodePathSegment(rawSlug);
+    const baseSlug = rawSlug.replace(/-\d+$/, "");
+    const isNumberedDuplicate =
+      baseSlug !== rawSlug && availableCaseStudySlugs.has(baseSlug);
+
+    if (
+      !slug ||
+      !/[a-z]/.test(rawSlug) ||
+      placeholderCaseStudySlugs.has(rawSlug) ||
+      isNumberedDuplicate ||
+      seenCaseStudySlugs.has(slug)
+    ) continue;
     seenCaseStudySlugs.add(slug);
     entries.push(
       urlEntry({

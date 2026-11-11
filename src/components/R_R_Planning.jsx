@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../api/axios";
 import "./R_R_Planning.css";
-import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
 import RR_3 from "../assests/RR_3.png";
 import RR_4 from "../assests/RR_4.jpg";
 import RR_6 from "../assests/RR_6.jpg";
@@ -109,6 +110,7 @@ const R_R_Planning = () => {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -123,16 +125,25 @@ const R_R_Planning = () => {
     e.preventDefault();
 
     try {
-      trackContact({
-        name: formData.name,
+      const payload = {
+        full_name: formData.name,
+        company_name: formData.type === "Company" ? formData.company : null,
         email: formData.email,
         phone: formData.phone,
-        company: formData.company,
-        type: "RecognitionRewards",
+        event_date: null,
+        event_type: "Other",
+      };
+
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
+
+      trackConfirmedLead({
+        serviceType: "recognition_rewards",
+        formLocation: "primary",
       });
-
-      await axios.post("/api/contact/", formData);
-
       alert("Form Submitted Successfully");
 
       setFormData({
@@ -142,9 +153,8 @@ const R_R_Planning = () => {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(error);
-      alert("Error submitting form");
+    } catch {
+      alert("Error submitting form. Please try again.");
     }
   };
 
@@ -156,31 +166,35 @@ const R_R_Planning = () => {
     e.preventDefault();
 
     try {
-      trackFormSubmit({
-        name: "RecognitionRewards FAQ Inquiry",
+      const payload = {
+        full_name: faqForm.name,
+        company_name: null,
         email: faqForm.email,
-        message: faqForm.message,
-        type: "RecognitionRewards_FAQ",
-      });
+        phone: faqForm.phone,
+        event_date: null,
+        event_type: "Other",
+        requirements: faqForm.message,
+      };
 
-      await axios.post("/api/contact/", {
-        name: faqForm.name,
-        email: faqForm.email,
-        phone: "1234567890",
-        type: "Individual",
-        company: "",
-        message: faqForm.message,
-      });
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "recognition_rewards",
+        formLocation: "faq_question",
+      });
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(error);
-      alert("Error submitting your question");
+    } catch {
+      alert("Error submitting your question. Please try again.");
     }
   };
 
@@ -540,6 +554,18 @@ const R_R_Planning = () => {
                     type="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="rr-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>

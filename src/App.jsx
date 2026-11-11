@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 import { AuthContext } from "./context/AuthContext";
+import { isExpressEarthProductionHost } from "./utils/seoHostPolicy";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -40,6 +41,7 @@ import MiceServices from "./components/MiceService";
 import MeetingsAndConferences from "./components/MeetingsAndConferences";
 import IncentiveTravel from "./components/IncentiveTravel";
 import CorporateEvents from "./components/CorporateEvents";
+import FamilyDayEvents from "./components/FamilyDayEvents";
 import ExhibitionPage from "./components/ExhibitionPage";
 import DestinationManagement from "./components/DestinationManagement";
 import AchievementPage from "./components/AchievementPage";
@@ -95,13 +97,7 @@ export const NotFound = () => (
 
 function App() {
   const { role, loading } = useContext(AuthContext);
-  const location = useLocation(); // Get current route path
-
-  useEffect(() => {
-    console.log("REACT_APP_API_URL:", process.env.REACT_APP_API_URL);
-  }, []);
-
-  // useEffect(() => {
+  const location = useLocation(); // Get current route path// useEffect(() => {
   //   if (window.gtag) {
   //     window.gtag('config', 'GTM-WMJCBMGG', {
   //       page_path: location.pathname + location.search,
@@ -114,8 +110,8 @@ function App() {
     const pathname = (location.pathname || "/").replace(/\/+$/, "") || "/";
     const pageSeo = {
       "/": {
-        title: "Event Management & MICE Company in Delhi NCR, India | ExpressEarth",
-        description: "Looking for an event management or MICE company in Delhi, Gurugram or India? ExpressEarth plans corporate events, product launches, annual days, family days, conferences, offsites and incentive group tours.",
+        title: "Corporate MICE & Event Management Company in Delhi NCR | ExpressEarth",
+        description: "Plan corporate MICE in Delhi NCR with ExpressEarth, a Gurugram-based partner for incentive travel, dealer meets, conferences, offsites and exhibitions across India.",
       },
       "/about": {
         title: "About ExpressEarth | Corporate MICE & Event Experts",
@@ -130,8 +126,8 @@ function App() {
         description: "Explore career opportunities at ExpressEarth across corporate event planning, MICE operations, incentive travel, sales and event management.",
       },
       "/mice-services": {
-        title: "MICE Agency & Corporate Event Management in Delhi NCR | ExpressEarth",
-        description: "ExpressEarth is a MICE agency for corporate meetings, conferences, incentive tours, dealer meets, offsites and events in Delhi NCR and across India, with international group travel planning.",
+        title: "MICE Company in Gurugram (Gurgaon) | ExpressEarth",
+        description: "Corporate MICE company based in Gurugram (Gurgaon), planning meetings, incentive travel, conferences, dealer meets and offsites across Delhi NCR and India.",
       },
       "/dealermeet": {
         title: "Dealer Meet Management Company in Delhi NCR & India | ExpressEarth",
@@ -150,8 +146,8 @@ function App() {
         description: "Design employee reward trips and sales incentive travel with ExpressEarth. We coordinate destinations, group logistics, stays and experiences for corporate teams.",
       },
       "/meetings-and-conferences": {
-        title: "Corporate Conference & Meeting Organisers in Delhi NCR | ExpressEarth",
-        description: "Corporate conference organisers for Delhi NCR and India. Plan leadership summits, seminars, annual conferences and business meetings with venue sourcing, AV, registration and delegate logistics.",
+        title: "Corporate Meetings & Business Gatherings in Delhi NCR | ExpressEarth",
+        description: "Plan leadership meetings, board meetings, seminars, workshops, AGMs and business gatherings in Delhi NCR and across India. ExpressEarth coordinates venues, agendas, AV, registration and delegate logistics.",
       },
       "/conferencemanagement": {
         title: "Conference Management Company in Delhi NCR & India | ExpressEarth",
@@ -160,6 +156,10 @@ function App() {
       "/corporate-events": {
         title: "Corporate Event Management Company in Delhi NCR, India | ExpressEarth",
         description: "Event management for product launches, annual day celebrations, employee family days and corporate gatherings in Delhi NCR and across India, including production, venue and event logistics.",
+      },
+      "/family-day-events": {
+        title: "Employee Family Day Event Management in Delhi NCR | ExpressEarth",
+        description: "Plan company family days in Delhi NCR with ExpressEarth. Coordinate venues, family-friendly activities, stage and AV, hospitality, guest registration and event-day logistics.",
       },
       "/exhibitions-and-trade-shows": {
         title: "Exhibition and Trade Show Management | ExpressEarth",
@@ -299,7 +299,12 @@ function App() {
       return;
     }
 
-    setMeta('meta[name="robots"]', { name: "robots" }, "index, follow, max-image-preview:large");
+    const isProductionHost = isExpressEarthProductionHost(window.location.hostname);
+    setMeta(
+      'meta[name="robots"]',
+      { name: "robots" },
+      isProductionHost ? "index, follow, max-image-preview:large" : "noindex, follow"
+    );
     const canonicalUrl = "https://www.expressearth.com" + pathname;
     document.title = metadata.title;
 
@@ -357,6 +362,7 @@ function App() {
         />
         <Route path="/incentive-travel" element={<IncentiveTravel />} />
         <Route path="/corporate-events" element={<CorporateEvents />} />
+        <Route path="/family-day-events" element={<FamilyDayEvents />} />
         <Route
           path="/exhibitions-and-trade-shows"
           element={<ExhibitionPage />}

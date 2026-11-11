@@ -3,8 +3,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "./CaseStudyDetails.css";
 import axiosInstance from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
-import { case_study_detail_url, delete_case_study_url } from "../api/urls";
+import { case_study_detail_url, case_study_url, delete_case_study_url } from "../api/urls";
+import { normalizeCollectionResponse } from "../api/collectionData";
 import Skeleton from "./Skeleton";
+import { isIndexableCaseStudySlug, isPlaceholderCaseStudySlug } from "../utils/caseStudyVisibility";
 
 const getImageList = (item) => {
   if (!item) return [];
@@ -50,23 +52,29 @@ const CaseStudyDetail = () => {
   const [isNewSystem, setIsNewSystem] = useState(false); // which API this item lives in
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [availableCaseStudySlugs, setAvailableCaseStudySlugs] = useState([]);
 
   const canManageCaseStudies = role.is_admin || role.is_seo;
 
   useEffect(() => {
+  const controller = new AbortController();
+  let cancelled = false;
+
   const fetchCaseStudy = async () => {
     try {
       setLoading(true);
       setCaseStudy(null);
+      setAvailableCaseStudySlugs([]);
 
       let item;
       let fromNewSystem = false;
+      let oldCaseStudyRecords = null;
       const isNumeric = !isNaN(idOrSlug);
 
       if (isNumeric) {
         // ✅ Fetch by ID
         try {
-          const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`);
+          const res = await axiosInstance.get(`/api/case-studies/${idOrSlug}/`, { signal: controller.signal });
           item = res.data;
         } catch (err) {
           item = null;
@@ -74,8 +82,9 @@ const CaseStudyDetail = () => {
       } else {
         // ❌ Backend filter broken → fetch all
         try {
-          const res = await axiosInstance.get(`/api/case-studies/`);
-          item = (res.data || []).find((cs) => cs.slug === idOrSlug);
+          const res = await axiosInstance.get(`/api/case-studies/`, { signal: controller.signal });
+          oldCaseStudyRecords = normalizeCollectionResponse(res.data);
+          item = oldCaseStudyRecords.find((cs) => String(cs.slug || "") === String(idOrSlug));
         } catch (err) {
           item = null;
         }
@@ -84,7 +93,7 @@ const CaseStudyDetail = () => {
       if (!item) {
         // Fall back to the new case-study API
         try {
-          const res = await axiosInstance.get(case_study_detail_url(idOrSlug));
+          const res = await axiosInstance.get(case_study_detail_url(idOrSlug), { signal: controller.signal });
           const data = res.data;
           item = {
             ...data,
@@ -98,6 +107,29 @@ const CaseStudyDetail = () => {
         }
       }
 
+      let availableSlugs = [];
+      if (item && /-\d+$/.test(String(item.slug || "").trim())) {
+        // Only numbered-suffix records need the extra index lookup. This mirrors
+        // the sitemap rule without adding requests to ordinary case-study views.
+        const oldIndexRequest = oldCaseStudyRecords !== null
+          ? Promise.resolve(oldCaseStudyRecords)
+          : axiosInstance.get("/api/case-studies/", { signal: controller.signal }).then((res) => normalizeCollectionResponse(res.data));
+        const newIndexRequest = axiosInstance.get(case_study_url, { signal: controller.signal })
+          .then((res) => normalizeCollectionResponse(res.data));
+        const [oldIndexResult, newIndexResult] = await Promise.allSettled([
+          oldIndexRequest,
+          newIndexRequest,
+        ]);
+        if (cancelled) return;
+        const oldIndex = oldIndexResult.status === "fulfilled" ? oldIndexResult.value : [];
+        const newIndex = newIndexResult.status === "fulfilled" ? newIndexResult.value : [];
+        availableSlugs = [...oldIndex, ...newIndex]
+          .map((record) => String(record?.slug || "").trim().toLowerCase())
+          .filter(Boolean);
+      }
+      if (cancelled) return;
+      setAvailableCaseStudySlugs(availableSlugs);
+
       if (!item) {
         return;
       }
@@ -107,25 +139,41 @@ const CaseStudyDetail = () => {
       setIsNewSystem(fromNewSystem);
 
     } catch (error) {
-      console.error("Error fetching case study:", error);
-      alert("Unable to load case study.");
+      if (!cancelled) {
+        console.error("Error fetching case study:", error);
+        alert("Unable to load case study.");
+      }
     } finally {
-      setLoading(false);
+      if (!cancelled) setLoading(false);
     }
   };
 
   const fetchDestinations = async () => {
     try {
-      const res = await axiosInstance.get("/api/destinations/");
-      setDestinations(res.data.slice(0, 5));
+      const res = await axiosInstance.get("/api/destinations/", { signal: controller.signal });
+      if (!cancelled) setDestinations(normalizeCollectionResponse(res.data).slice(0, 5));
     } catch (err) {
-      console.error("Error fetching destinations:", err);
+      if (!cancelled) console.error("Error fetching destinations:", err);
     }
   };
 
-  fetchCaseStudy();
-  fetchDestinations();
+  if (isPlaceholderCaseStudySlug(idOrSlug)) {
+    // Known placeholder records are not public content; avoid unnecessary API requests.
+    setCaseStudy(null);
+    setAvailableCaseStudySlugs([]);
+    setCaseStudyId(null);
+    setIsNewSystem(false);
+    setDestinations([]);
+    setLoading(false);
+  } else {
+    fetchCaseStudy();
+    fetchDestinations();
+  }
 
+  return () => {
+    cancelled = true;
+    controller.abort();
+  };
 }, [idOrSlug]);
 
   useEffect(() => {
@@ -140,11 +188,20 @@ const CaseStudyDetail = () => {
       return;
     }
 
+    const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
+
+    if (!isIndexableCaseStudySlug(caseStudy.slug, availableCaseStudySlugs)) {
+      // Keep legacy ID pages and numbered duplicate aliases accessible, but do not index them.
+      document.title = titleText + " | ExpressEarth Case Study";
+      if (robotsMeta) robotsMeta.setAttribute("content", "noindex, follow");
+      const staleCanonical = document.head.querySelector('link[rel="canonical"]');
+      if (staleCanonical) staleCanonical.remove();
+      return;
+    }
+
     if (robotsMeta) {
       robotsMeta.setAttribute("content", "index, follow, max-image-preview:large");
     }
-
-    const titleText = String(caseStudy.name || caseStudy.title || "Corporate MICE Case Study").trim();
     const rawDescription = caseStudy.short_description || caseStudy.description || caseStudy.comment || caseStudy.content || "";
     const descriptionText = String(rawDescription)
       .replace(/<[^>]*>/g, " ")
@@ -176,7 +233,7 @@ const CaseStudyDetail = () => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", canonicalUrl);
-  }, [caseStudy, idOrSlug, loading]);
+  }, [caseStudy, idOrSlug, loading, availableCaseStudySlugs]);
 
   /* ✅ FIXED DELETE */
   const handleDelete = async () => {
@@ -241,10 +298,17 @@ const CaseStudyDetail = () => {
 
   return (
     <div className="case-study-detail-container">
-      <div
-        className="case-study-detail-banner"
-        style={{ backgroundImage: `url(${caseStudy.image})` }}
-      />
+      <div className="case-study-detail-banner">
+        {typeof caseStudy.image === "string" && caseStudy.image.trim() ? (
+          <img
+            src={caseStudy.image}
+            alt={(caseStudy.name || "Corporate MICE") + " case study featured image"}
+            className="case-study-detail-banner-image"
+            loading="eager"
+            decoding="async"
+          />
+        ) : null}
+      </div>
 
       {canManageCaseStudies && (
         <div className="d-flex gap-2 justify-content-end px-4 pt-4">
@@ -270,7 +334,7 @@ const CaseStudyDetail = () => {
       )}
 
       <div className="case-study-detail-content">
-        <h2>{caseStudy.name}</h2>
+        <h1>{caseStudy.name}</h1>
 
         {destinationName && (
           <p>
@@ -295,10 +359,23 @@ const CaseStudyDetail = () => {
                 alt={`${caseStudy.name} ${index + 1}`}
                 src={img.image}
                 className="case-study-gallery-image"
+                loading="lazy"
+                decoding="async"
               />
             ))}
           </div>
         )}
+        <section className="case-study-detail-cta" aria-labelledby="case-study-detail-cta-title">
+          <h2 id="case-study-detail-cta-title">Planning a corporate MICE programme?</h2>
+          <p>
+            Share your programme type, expected group size, preferred dates and destination
+            with ExpressEarth. Explore the service options or send your brief to the team.
+          </p>
+          <div className="case-study-detail-cta-actions">
+            <Link to="/contact">Discuss your programme</Link>
+            <Link to="/mice-services">Explore MICE services</Link>
+          </div>
+        </section>
       </div>
     </div>
   );

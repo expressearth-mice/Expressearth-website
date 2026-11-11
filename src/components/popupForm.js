@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './popupForm.css';
 import axiosInstance from '../api/axios';
-import { trackContact } from '../utils/fbPixel';
+import { trackConfirmedLead } from '../utils/leadTracking';
+import { isSuccessfulContactResponse } from '../utils/contactResponse';
 
 const PopupForm = ({ onClose }) => {
   const [type, setType] = useState('company');
@@ -65,16 +65,6 @@ const PopupForm = ({ onClose }) => {
       type: type,
     };
 
-    trackContact({
-      name: formData.full_name,
-      email: formData.email,
-      phone: formData.phone,
-      company: formData.company_name,
-      type: "PopupForm",
-    });
-
-    console.log("Submitting:", formattedFormData); // For debugging
-
     try {
       const response = await axiosInstance.post(
         "/api/contact/",
@@ -86,7 +76,11 @@ const PopupForm = ({ onClose }) => {
         }
       );
 
-      if (response?.data?.success) {
+      if (isSuccessfulContactResponse(response)) {
+        trackConfirmedLead({
+          serviceType: "popup_mice_enquiry",
+          formLocation: "popup",
+        });
         setSubmitted(true);
         setFormData({
           full_name: '',
@@ -97,7 +91,7 @@ const PopupForm = ({ onClose }) => {
         setErrors({});
         setErrorMessage('');
       } else {
-        setErrorMessage(response.data.error || "Failed to send message. Please try again.");
+        setErrorMessage(response?.data?.error || "Failed to send message. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);

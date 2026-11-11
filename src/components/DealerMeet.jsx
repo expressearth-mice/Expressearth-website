@@ -8,7 +8,10 @@ import IT_6 from "../assests/IT_Team(1).jpg";
 import bg from "../assests/dealerbg.png";
 import axiosInstance from "../api/axios";
 import PopupForm from "./popupForm";
-import { trackFormSubmit, trackContact } from "../utils/fbPixel";
+import { trackFormSubmit } from "../utils/fbPixel";
+import { trackConfirmedLead } from "../utils/leadTracking";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
   {
@@ -71,6 +74,8 @@ function DealerMeet() {
   const inputRef = useRef(null);
   const [showPopup, setShowPopup] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFaqSubmitting, setIsFaqSubmitting] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -89,6 +94,7 @@ function DealerMeet() {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -101,6 +107,8 @@ function DealerMeet() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const payload = {
@@ -113,15 +121,17 @@ function DealerMeet() {
         type: formData.type,
       };
 
-      trackContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        type: "DealerMeet",
-      });
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
 
-      await axiosInstance.post("/api/contact/", payload);
+      trackConfirmedLead({
+        serviceType: "dealer_meet",
+        formLocation: "primary",
+        serviceSourcePage: "/dealermeet",
+      });
 
       alert("Form Submitted Successfully");
 
@@ -132,12 +142,10 @@ function DealerMeet() {
         type: "Company",
         company: "",
       });
-    } catch (error) {
-      console.log(
-        "DealerMeet submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting form");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -145,23 +153,11 @@ function DealerMeet() {
     e.preventDefault();
 
     try {
-      trackFormSubmit({
-        name: "Newsletter Subscription",
+      await axiosInstance.post("/api/subscribe/", {
         email: subscribeEmail,
-        type: "DealerMeet_Email",
       });
 
-      const payload = {
-        full_name: subscribeEmail,
-        company_name: null,
-        email: subscribeEmail,
-        phone: "1234567890",
-        event_date: null,
-        event_type: "Other",
-        type: "Individual",
-      };
-
-      await axiosInstance.post("/api/contact/", payload);
+      trackFormSubmit({ type: "DealerMeet_Email", form_location: "newsletter" });
 
       alert("Subscribed Successfully");
 
@@ -181,39 +177,43 @@ function DealerMeet() {
 
   const handleFaqSubmit = async (e) => {
     e.preventDefault();
+    if (isFaqSubmitting) return;
+    setIsFaqSubmitting(true);
 
     try {
-      trackFormSubmit({
-        name: "DealerMeet FAQ Inquiry",
-        email: faqForm.email,
-        message: faqForm.message,
-        type: "DealerMeet_FAQ",
-      });
-
       const payload = {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "Dealer Meet FAQ Question",
         type: "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
+
+      trackConfirmedLead({
+        serviceType: "dealer_meet",
+        formLocation: "faq_question",
+        serviceSourcePage: "/dealermeet",
+      });
 
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "DealerMeet FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting your question");
+    } finally {
+      setIsFaqSubmitting(false);
     }
   };
 
@@ -260,6 +260,12 @@ function DealerMeet() {
 
   return (
     <>
+      <ServiceStructuredData
+        name="Dealer and Distributor Meet Management"
+        serviceType="Corporate dealer meets, distributor conferences and channel partner events"
+        description="ExpressEarth plans dealer meets and distributor conferences for businesses in Delhi NCR and across India. Programmes can include business updates, product launches, training, recognition and relationship-building, with venue, stage and AV, branding, agenda, delegate travel, accommodation, hospitality and on-site operations coordinated according to the agreed scope."
+        url="https://www.expressearth.com/dealermeet"
+      />
       {/* -------- SECTION 1 -------- */}
 
       {showPopup && <PopupForm onClose={handleClosePopup} />}
@@ -287,13 +293,15 @@ function DealerMeet() {
         </div>
 
         <div className="dealer-right" ref={formRef}>
-          <form className="form-card" onSubmit={handleSubmit}>
+          <form className="form-card" onSubmit={handleSubmit} aria-busy={isSubmitting}>
             <h2>Get in Touch</h2>
 
             <input
               ref={inputRef}
               type="text"
               name="name"
+              autoComplete="name"
+              aria-label="Full name"
               placeholder="Full Name"
               value={formData.name}
               onChange={handleChange}
@@ -303,6 +311,8 @@ function DealerMeet() {
             <input
               type="email"
               name="email"
+              autoComplete="email"
+              aria-label="Work email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
@@ -310,8 +320,11 @@ function DealerMeet() {
             />
 
             <input
-              type="text"
+              type="tel"
               name="phone"
+              inputMode="tel"
+              autoComplete="tel"
+              aria-label="Phone number"
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
@@ -345,13 +358,16 @@ function DealerMeet() {
             <input
               type="text"
               name="company"
+              autoComplete="organization"
+              aria-label="Company name"
               placeholder="Company Name"
+              required={formData.type === "Company"}
               value={formData.company}
               onChange={handleChange}
             />
 
-            <button type="submit" className="submit-btn">
-              Submit
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
@@ -571,11 +587,12 @@ function DealerMeet() {
             <div className="dealer-faq-form-wrap">
               <h3 className="dealer-faq-form-title">Ask a different question</h3>
 
-              <form className="dealer-faq-form" onSubmit={handleFaqSubmit}>
+              <form className="dealer-faq-form" onSubmit={handleFaqSubmit} aria-busy={isFaqSubmitting}>
                 <label className="dealer-faq-field">
                   <span>Name</span>
                   <input
                     type="text"
+                    autoComplete="name"
                     value={faqForm.name}
                     onChange={handleFaqFormChange("name")}
                     required
@@ -586,8 +603,21 @@ function DealerMeet() {
                   <span>Email Address</span>
                   <input
                     type="email"
+                    autoComplete="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="dealer-faq-field">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>
@@ -602,8 +632,8 @@ function DealerMeet() {
                   />
                 </label>
 
-                <button type="submit" className="dealer-faq-submit">
-                  Submit
+                <button type="submit" className="dealer-faq-submit" disabled={isFaqSubmitting}>
+                  {isFaqSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

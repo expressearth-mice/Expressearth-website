@@ -1,13 +1,71 @@
-// CorporateEvents.jsx
 import React from "react";
 import { Briefcase, Rocket, Award, Wine, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 import "./CorporateEvents.css";
 import HorizontalSlider from "./ui/HorizontalSlider";
+import ServiceStructuredData from "./ServiceStructuredData";
+
+const serviceDescription =
+  "ExpressEarth plans corporate event programmes in Delhi NCR and across India, including product launches, annual day celebrations, employee family days, gala dinners, award ceremonies and networking events. Coordination can include venue planning, production, branding, guest logistics and on-ground event operations based on the brief.";
+
+const eventServices = [
+  {
+    icon: <Wine size={28} className="service-icon" />,
+    title: "Gala Dinners & Milestone Celebrations",
+    description:
+      "Coordinate venue, lighting, decor, entertainment, cuisine and guest logistics for corporate dinners and milestone events.",
+  },
+  {
+    icon: <Users size={28} className="service-icon" />,
+    title: "Networking Events & Business Mixers",
+    description:
+      "Plan business gatherings with venue layouts, registration, guest communication, hospitality and event-day coordination.",
+  },
+  {
+    icon: <Award size={28} className="service-icon" />,
+    title: "Corporate Anniversaries",
+    description:
+      "Develop event formats for company milestones, including programme flow, stage content, branding and guest arrangements.",
+  },
+  {
+    icon: <Rocket size={28} className="service-icon" />,
+    title: "Product Launches & Brand Activations",
+    description:
+      "Coordinate launch venues, product presentation areas, staging, AV, branding and attendee movement around the launch brief.",
+  },
+  {
+    icon: <Award size={28} className="service-icon" />,
+    title: "Award Ceremonies",
+    description:
+      "Plan award-night formats with stage and AV, award presentation flow, guest management, hospitality and production requirements.",
+  },
+];
+
+const deliveryScope = [
+  "Confirm the event objective, audience, format, destination, dates and budget.",
+  "Coordinate venue options, staging, AV, lighting, branding and event production based on the brief.",
+  "Plan guest registration, travel, accommodation, hospitality and attendee communication where required.",
+  "Agree supplier responsibilities, the event schedule and event-day operating contacts.",
+];
+
+const relatedServices = [
+  { label: "Dealer & distributor meets", to: "/dealermeet" },
+  { label: "Meetings & conferences", to: "/meetings-and-conferences" },
+  { label: "Corporate offsites", to: "/corporateoffsites" },
+  { label: "Employee & family days", to: "/family-day-events" },
+  { label: "Incentive travel", to: "/incentive-travel" },
+];
 
 const CorporateEvents = () => {
   return (
     <div className="corporate-events-container">
-      {/* Hero Section */}
+      <ServiceStructuredData
+        name="Corporate Event Management"
+        serviceType="Corporate events, product launches, annual days and employee events"
+        description={serviceDescription}
+        url="https://www.expressearth.com/corporate-events"
+      />
+
       <section
         className="hero-section"
         style={{
@@ -17,144 +75,78 @@ const CorporateEvents = () => {
       >
         <h1>Corporate Event Management in Delhi NCR</h1>
         <h4>Product Launches | Annual Days | Employee Family Days | Conferences</h4>
-        <a href="/contact" className="cta-button">
-          Let's Curate Something Iconic
-        </a>
+        <Link to="/contact?service=corporate_events" className="cta-button">
+          Discuss Your Corporate Event
+        </Link>
       </section>
 
-      {/* Intro */}
       <section className="intro-section">
         <h2>
-          <Briefcase size={32} /> Where Business Meets Celebration
+          <Briefcase size={32} /> Corporate Events Planned Around Your Brief
         </h2>
-        <div className="text-cen">
-          ExpressEarth plans corporate event management programmes in Delhi NCR and across India, including product launches, annual day celebrations, employee family days, gala dinners, award ceremonies and networking events. We coordinate venue planning, production, branding, guest logistics and on-ground execution around your brief, audience and business objectives.
-          <br />
-          <br />
-          Because first impressions last - and we make sure yours is
-          extraordinary.
-        </div>
+        <p className="text-cen">{serviceDescription}</p>
       </section>
 
-      {/* Signature Services */}
       <section className="signature-services">
         <h2>
-          <Rocket size={32} /> Our Signature Corporate Event Services
+          <Rocket size={32} /> Corporate Event Formats
         </h2>
         <p>
-          As one of the most trusted names in luxury MICE, ExpressEarth brings
-          innovation, elegance, and flawless execution to every kind of
-          corporate gathering.
+          Choose a format and share the audience, objective, location, dates
+          and production requirements. The agreed scope can then be shaped
+          around your programme.
         </p>
 
-        <HorizontalSlider className="services-grid" itemCount={5}>
-          <div className="service-item">
-            <Wine size={28} className="service-icon" />
-            <h3>Gala Dinners & Milestone Celebrations</h3>
-            <p>
-              Looking to host an exquisite evening? Our team of seasoned
-              corporate gala dinner organizers ensures every detail - from
-              lighting and decor to entertainment and cuisine - is nothing short
-              of spectacular.
-            </p>
-            <a href="/gallery" className="cta-link">
-              Plan a Night to Remember
-            </a>
-          </div>
-
-          <div className="service-item">
-            <Users size={28} className="service-icon" />
-            <h3>Networking Events & Business Mixers</h3>
-            <p>
-              With our professional networking event planning services, we
-              create atmospheres where meaningful connections happen. From
-              stylish venues to curated guest experiences, we focus on setting
-              the perfect tone for corporate engagement.
-            </p>
-            <a href="/gallery" className="cta-link">
-              Make Every Conversation Count
-            </a>
-          </div>
-
-          <div className="service-item">
-            <Award size={28} className="service-icon" />
-            <h3>Corporate Anniversaries</h3>
-            <p>
-              Celebrate your journey with finesse. As experienced corporate
-              anniversary event planners, we bring your company's story to life
-              through themed setups, legacy displays, and unforgettable
-              presentations.
-            </p>
-            <a href="/gallery" className="cta-link">
-              Celebrate in Style
-            </a>
-          </div>
-
-          <div className="service-item">
-            <Rocket size={28} className="service-icon" />
-            <h3>Product Launches & Brand Activations</h3>
-            <p>
-              Launch your innovations with impact, media buzz, and experiential
-              showcases.
-            </p>
-            <a href="/gallery" className="cta-link">
-              Launch with Impact
-            </a>
-          </div>
-
-          <div className="service-item">
-            <Award size={28} className="service-icon" />
-            <h3>Award Ceremonies</h3>
-            <p>
-              Honor your top achievers with class. As luxury corporate award
-              ceremony organizers, we deliver prestigious experiences that
-              inspire excellence and loyalty - complete with staging, AV,
-              gifting, and red-carpet flair.
-            </p>
-            <a href="/achievements" className="cta-link">
-              Celebrate Success Right
-            </a>
-          </div>
+        <HorizontalSlider className="services-grid" itemCount={eventServices.length}>
+          {eventServices.map((service) => (
+            <div className="service-item" key={service.title}>
+              {service.icon}
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <Link to="/contact?service=corporate_events" className="cta-link">
+                Discuss This Event Format
+              </Link>
+            </div>
+          ))}
         </HorizontalSlider>
       </section>
 
-      {/* Why Choose Us Section */}
       <section className="why-choose-us">
-        <h2>Why Choose ExpressEarth?</h2>
+        <h2>Planning and Delivery Scope</h2>
         <ul>
-          <li>
-            <strong>Luxury Brand Experience</strong> - We align every detail
-            with your brand's tone, prestige, and purpose.
-          </li>
-          <li>
-            <strong>Creative Concepts & Storytelling</strong> - Your event is
-            more than logistics - it's a narrative. And we tell it beautifully.
-          </li>
-          <li>
-            <strong>Global Venue Curation</strong> - From rooftop lounges to
-            heritage castles, we source the perfect setting anywhere in the
-            world.
-          </li>
-          <li>
-            <strong>End-to-End Services</strong> - One expert partner. Complete
-            event execution from ideation to applause.
-          </li>
+          {deliveryScope.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
-        <a href="/contact" className="cta-button">
-          Let's Bring Your Vision to Life
-        </a>
+        <Link to="/contact?service=corporate_events" className="cta-button">
+          Share Your Event Brief
+        </Link>
       </section>
 
-      {/* Final CTA Section */}
+      <section className="related-services container py-5">
+        <h2>Related Corporate Programme Services</h2>
+        <div className="d-flex flex-wrap gap-3">
+          {relatedServices.map((service) => (
+            <Link
+              key={service.to}
+              to={service.to}
+              className="btn btn-outline-primary"
+            >
+              {service.label}
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section className="final-cta">
-        <h2>Let's Design Your Next Signature Event</h2>
+        <h2>Plan Your Next Corporate Event</h2>
         <p>
-          Whether you're planning a landmark celebration or launching your next
-          innovation, our team is here to make it magnificent.
+          Share your event type, expected attendance, destination, dates and
+          required services to discuss the next planning steps.
         </p>
-        <a href="/contact" className="cta-button">
-          Speak to Our Corporate Event Specialists Today
-        </a>
+        <Link to="/contact?service=corporate_events" className="cta-button">
+          Contact ExpressEarth
+        </Link>
       </section>
     </div>
   );

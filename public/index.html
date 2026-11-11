@@ -5,8 +5,20 @@
     <link rel="icon" href="/Images/express_earth_logoo-removebg-preview.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ffffff" />
-    <meta name="description" content="ExpressEarth is a corporate MICE and event management company in Gurugram, India, delivering incentive travel, corporate offsites, dealer meets, conferences and events across India and international destinations." />
+    <meta name="description" content="Plan corporate MICE in Delhi NCR with ExpressEarth, a Gurugram-based partner for incentive travel, dealer meets, conferences, offsites and exhibitions across India." />
     <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://www.expressearth.com/" />
+    <script>
+      // Apply the development-host noindex directive before the React app hydrates.
+      var currentHost = window.location.hostname.toLowerCase();
+      var productionHosts = ["expressearth.com", "www.expressearth.com"];
+      if (!productionHosts.includes(currentHost)) {
+        var developmentRobotsMeta = document.querySelector('meta[name="robots"]');
+        if (developmentRobotsMeta) {
+          developmentRobotsMeta.setAttribute("content", "noindex, follow");
+        }
+      }
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -20,11 +32,38 @@
               "@type": "ImageObject",
               "url": "https://www.expressearth.com/Images/express_earth_logoo-removebg-preview.png"
             },
-            "description": "ExpressEarth is a corporate MICE and event management company in Gurugram, India, delivering incentive travel, corporate offsites, dealer meets, conferences and events across India and international destinations.",
-            "areaServed": {
-              "@type": "Country",
-              "name": "India"
+            "description": "ExpressEarth plans corporate MICE programmes, including meetings and conferences, incentive travel, dealer and distributor meets, corporate offsites and business events in Delhi NCR and across India.",
+            "telephone": "+91-92660-56660",
+            "email": "enquiry@expressearth.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "22, Ground Floor, Vipul Trade Center, Sector 48",
+              "addressLocality": "Gurugram",
+              "addressRegion": "Haryana",
+              "addressCountry": "IN"
             },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "Corporate and MICE enquiries",
+              "telephone": "+91-92660-56660",
+              "email": "enquiry@expressearth.com"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/expressearthdigitalservicespvtltd/",
+              "https://www.instagram.com/expressearthgroup/",
+              "https://x.com/ExpressEarth",
+              "https://www.youtube.com/@Expressearthworld"
+            ],
+            "areaServed": [
+              {
+                "@type": "AdministrativeArea",
+                "name": "Delhi NCR"
+              },
+              {
+                "@type": "Country",
+                "name": "India"
+              }
+            ],
             "knowsAbout": [
               "Corporate MICE",
               "Corporate incentive travel",
@@ -32,6 +71,7 @@
               "Corporate offsites",
               "Corporate conferences",
               "Corporate event management",
+              "Employee and corporate family day events",
               "Group travel management"
             ]
           },
@@ -48,16 +88,16 @@
         ]
       }
     </script>
-    <!-- Canonical URL is added by route-aware metadata in App.jsx. -->
+    <!-- Static homepage canonical; route-aware metadata updates it for client-side navigation. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ExpressEarth" />
-    <meta property="og:title" content="ExpressEarth | Corporate MICE, Incentive Travel &amp; Events" />
-    <meta property="og:description" content="Corporate incentive travel, offsites, dealer meets, conferences and event management across India and international destinations." />
+    <meta property="og:title" content="Corporate MICE &amp; Event Management Company in Delhi NCR | ExpressEarth" />
+    <meta property="og:description" content="Plan corporate MICE in Delhi NCR with ExpressEarth, a Gurugram-based partner for incentive travel, dealer meets, conferences, offsites and exhibitions across India." />
     <meta property="og:url" content="https://www.expressearth.com/" />
     <meta property="og:image" content="https://www.expressearth.com/Images/express_earth_logoo-removebg-preview.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ExpressEarth | Corporate MICE, Incentive Travel &amp; Events" />
-    <meta name="twitter:description" content="Corporate incentive travel, offsites, dealer meets, conferences and event management across India and international destinations." />
+    <meta name="twitter:title" content="Corporate MICE &amp; Event Management Company in Delhi NCR | ExpressEarth" />
+    <meta name="twitter:description" content="Plan corporate MICE in Delhi NCR with ExpressEarth, a Gurugram-based partner for incentive travel, dealer meets, conferences, offsites and exhibitions across India." />
     <meta name="twitter:image" content="https://www.expressearth.com/Images/express_earth_logoo-removebg-preview.png" />
     <link rel="apple-touch-icon" href="/Images/express_earth_logoo-removebg-preview.png" />
     <!--
@@ -88,17 +128,21 @@
       Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
- <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=GTM-WMJCBMGG"
-    ></script>
+ <!-- Google Tag Manager: the existing GTM container ID is retained. -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "GTM-WMJCBMGG");
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var firstScript = d.getElementsByTagName(s)[0];
+        var tagScript = d.createElement(s);
+        var dataLayerParam = l !== "dataLayer" ? "&l=" + l : "";
+        tagScript.async = true;
+        tagScript.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dataLayerParam;
+        firstScript.parentNode.insertBefore(tagScript, firstScript);
+      })(window, document, "script", "dataLayer", "GTM-WMJCBMGG");
+      window.gtag = window.gtag || function () {
+        window.dataLayer.push(arguments);
+      };
     </script>
 
     <!-- Facebook Pixel Code - Pixel 1 -->
@@ -139,10 +183,45 @@
     </noscript>
     <!-- End Facebook Pixel Code - Pixel 2 -->
 
-    <title>ExpressEarth | Corporate MICE, Incentive Travel &amp; Events</title>
+    <title>Corporate MICE &amp; Event Management Company in Delhi NCR | ExpressEarth</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMJCBMGG" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <noscript>
+      <main>
+        <h1>Corporate MICE and Event Management in Delhi NCR | ExpressEarth</h1>
+        <p>
+          ExpressEarth plans corporate meetings and conferences, incentive
+          travel, dealer and distributor meets, corporate offsites, exhibitions
+          and business events in Delhi NCR and across India. Planning can
+          include venues, group travel, accommodation, event production and
+          on-ground logistics based on the programme brief.
+        </p>
+        <nav aria-label="ExpressEarth corporate MICE services">
+          <ul>
+            <li><a href="/mice-services">Corporate MICE services</a></li>
+            <li><a href="/meetings-and-conferences">Corporate meetings and business gatherings</a></li>
+            <li><a href="/conferencemanagement">Conference management</a></li>
+            <li><a href="/incentive-travel">Corporate incentive travel</a></li>
+            <li><a href="/dealermeet">Dealer and distributor meets</a></li>
+            <li><a href="/corporateoffsites">Corporate offsites</a></li>
+            <li><a href="/corporate-events">Corporate events</a></li>
+            <li><a href="/family-day-events">Employee and company family days</a></li>
+            <li><a href="/exhibitions-and-trade-shows">Exhibitions and trade shows</a></li>
+            <li><a href="/destination-management">Destination management</a></li>
+            <li><a href="/internationalgrouptravel">International group travel</a></li>
+          </ul>
+        </nav>
+        <p>
+          Corporate enquiries:
+          <a href="tel:+919266056660">+91-92660 56660</a> ·
+          <a href="mailto:enquiry@expressearth.com">enquiry@expressearth.com</a>
+        </p>
+        <p><a href="/contact">Contact ExpressEarth</a></p>
+      </main>
+    </noscript>
     <div id="root"></div>
     <!--
       This HTML file is a template.

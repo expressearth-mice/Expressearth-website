@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axiosInstance from "../api/axios";
+import { isSuccessfulContactResponse } from "../utils/contactResponse";
+import { trackConfirmedLead } from "../utils/leadTracking";
 
 import second from "../assests/Co_second.png";
 
@@ -7,31 +9,32 @@ import "./CorporateOffsitesPage.css";
 import BgImage from "../assests/Co_Team_Bg.jpg";
 
 import PopupForm from "./popupForm";
+import ServiceStructuredData from "./ServiceStructuredData";
 
 const services = [
   {
     title: "Team Offsites",
-    text: "Give your teams a much-needed reset with engaging team offsites crafted for bonding, collaboration, and fun.",
+    text: "Plan team offsites around group objectives, travel dates, destination and preferred activities.",
     btn: "Share Your Offsite Brief",
   },
   {
     title: "Team Building Activities",
-    text: "We offer curated indoor & outdoor team building activities, team bonding activities, and teamwork games, all tailored to strengthen team dynamics.",
+    text: "Coordinate indoor and outdoor team activities based on venue, group size, participant profile and programme schedule.",
     btn: "Talk to an Activity Specialist",
   },
   {
     title: "Leadership Retreats",
-    text: "Exclusive corporate retreat programs designed for strategy, innovation, and high-impact decision-making in premium settings.",
+    text: "Plan leadership retreats around strategy sessions, leadership discussions, team activities and venue requirements.",
     btn: "Plan a Leadership Retreat",
   },
   {
     title: "Corporate Retreat Destinations",
-    text: "Handpicked global & domestic retreats; hills, beaches, wellness stays, heritage resorts, vineyards, and more.",
+    text: "Compare hill, beach, wellness and heritage settings in India and overseas, subject to availability and group requirements.",
     btn: "Browse Retreat Options",
   },
   {
     title: "Engagement & Productivity Sessions",
-    text: "Structured sessions for communication, collaboration, leadership, and team success; run by expert facilitators.",
+    text: "Plan structured communication, collaboration and leadership sessions with facilitators and activities agreed in the event brief.",
     btn: "Request a Session Plan",
   },
 ];
@@ -72,6 +75,8 @@ const faqs = [
 function CorporateOffsitesPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFaqSubmitting, setIsFaqSubmitting] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(() =>
@@ -90,6 +95,7 @@ function CorporateOffsitesPage() {
   const [faqForm, setFaqForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
@@ -129,6 +135,8 @@ function CorporateOffsitesPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const payload = {
@@ -142,8 +150,17 @@ function CorporateOffsitesPage() {
         type: form.companyType === "corporate" ? "Company" : "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your enquiry. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "corporate_offsite",
+        formLocation: "primary",
+        serviceSourcePage: "/corporateoffsites",
+      });
       alert("Form Submitted Successfully");
 
       setForm({
@@ -153,12 +170,10 @@ function CorporateOffsitesPage() {
         companyType: "corporate",
         companyName: "",
       });
-    } catch (error) {
-      console.log(
-        "CorporateOffsitesPage submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting form");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -166,17 +181,9 @@ function CorporateOffsitesPage() {
     e.preventDefault();
 
     try {
-      const payload = {
-        full_name: newsletterEmail,
-        company_name: null,
+      await axiosInstance.post("/api/subscribe/", {
         email: newsletterEmail,
-        phone: "1234567890",
-        event_date: null,
-        event_type: "Other",
-        type: "Individual",
-      };
-
-      await axiosInstance.post("/api/contact/", payload);
+      });
 
       alert("Subscribed Successfully");
       setNewsletterEmail("");
@@ -195,32 +202,42 @@ function CorporateOffsitesPage() {
 
   const handleFaqSubmit = async (e) => {
     e.preventDefault();
+    if (isFaqSubmitting) return;
+    setIsFaqSubmitting(true);
 
     try {
       const payload = {
         full_name: faqForm.name,
         company_name: null,
         email: faqForm.email,
-        phone: "1234567890",
+        phone: faqForm.phone,
         event_date: null,
         event_type: faqForm.message || "Corporate Offsite FAQ Question",
         type: "Individual",
       };
 
-      await axiosInstance.post("/api/contact/", payload);
+      const response = await axiosInstance.post("/api/contact/", payload);
+      if (!isSuccessfulContactResponse(response)) {
+        alert(response?.data?.error || "We couldn't confirm your question. Please try again.");
+        return;
+      }
 
+      trackConfirmedLead({
+        serviceType: "corporate_offsite",
+        formLocation: "faq_question",
+        serviceSourcePage: "/corporateoffsites",
+      });
       alert("Your question has been submitted successfully");
       setFaqForm({
         name: "",
         email: "",
+        phone: "",
         message: "",
       });
-    } catch (error) {
-      console.log(
-        "CorporateOffsitesPage FAQ submit error:",
-        error.response?.data || error.message || error,
-      );
+    } catch {
       alert("Error submitting your question");
+    } finally {
+      setIsFaqSubmitting(false);
     }
   };
 
@@ -243,6 +260,12 @@ function CorporateOffsitesPage() {
 
   return (
     <div className="offsitePage">
+      <ServiceStructuredData
+        name="Corporate Offsite and Team Retreat Planning"
+        serviceType="Corporate offsites, team retreats and leadership retreats"
+        description="ExpressEarth plans corporate offsites and team retreats for organisations in Delhi NCR and across India. Selected 1-night, 2-day packages for groups of 40–100 start at ₹7,000 per person, including twin-share accommodation, all meals and round-trip transportation; taxes extra. Final pricing depends on destination, dates, availability and confirmed inclusions."
+        url="https://www.expressearth.com/corporateoffsites"
+      />
       {showPopup && <PopupForm onClose={handleClosePopup} />}
 
       {/* HERO */}
@@ -283,7 +306,7 @@ function CorporateOffsitesPage() {
             <div className="formCard" ref={formRef}>
               <div className="formTitle">Get in Touch</div>
 
-              <form onSubmit={handleSubmit} className="formGrid">
+              <form onSubmit={handleSubmit} className="formGrid" aria-busy={isSubmitting}>
                 <div className="field">
                   <input
                     ref={firstInputRef}
@@ -291,6 +314,8 @@ function CorporateOffsitesPage() {
                     onChange={onChange("fullName")}
                     placeholder="Full Name"
                     type="text"
+                    autoComplete="name"
+                    aria-label="Full name"
                     required
                   />
                 </div>
@@ -301,6 +326,8 @@ function CorporateOffsitesPage() {
                     onChange={onChange("email")}
                     placeholder="Email"
                     type="email"
+                    autoComplete="email"
+                    aria-label="Work email"
                     required
                   />
                 </div>
@@ -311,6 +338,9 @@ function CorporateOffsitesPage() {
                     onChange={onChange("phone")}
                     placeholder="Phone number"
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    aria-label="Phone number"
                     required
                   />
                 </div>
@@ -347,11 +377,14 @@ function CorporateOffsitesPage() {
                     onChange={onChange("companyName")}
                     placeholder="Company Name"
                     type="text"
+                    autoComplete="organization"
+                    aria-label="Company name"
+                    required={form.companyType === "corporate"}
                   />
                 </div>
 
-                <button className="btnPrimary" type="submit">
-                  Submit
+                <button className="btnPrimary" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>
@@ -472,26 +505,26 @@ function CorporateOffsitesPage() {
               <div className="whyItem">
                 <div className="whyItemTitle">End-to-End Planning</div>
                 <div className="whyItemText">
-                  From travel to stay, activities to sessions, everything is
-                  managed with precision.
+                  The agreed scope can include travel, accommodation, activities, venue
+                  arrangements and event-day coordination.
                 </div>
               </div>
             </div>
 
             <div className="whyRight">
               <div className="whyBullet">
-                <div className="whyBulletTitle">Premium Experience Design</div>
+                <div className="whyBulletTitle">Programme and Activity Planning</div>
                 <div className="whyBulletText">
-                  We craft thoughtful, well-balanced corporate off-sites with
-                  the right mix of fun, learning, and relaxation.
+                  Shape the agenda, venue and activities around the objectives,
+                  dates and group profile shared in the brief.
                 </div>
               </div>
 
               <div className="whyBullet">
                 <div className="whyBulletTitle">Tailor-Made for Your Goals</div>
                 <div className="whyBulletText">
-                  Each corporate offsite is customized to boost synergy,
-                  motivation, and team alignment.
+                  Confirm the programme format, destination, group size and budget
+                  before finalising the activity and travel plan.
                 </div>
               </div>
 
@@ -500,8 +533,8 @@ function CorporateOffsitesPage() {
                   Expert Team Building & Team Bonding Activities
                 </div>
                 <div className="whyBulletText">
-                  Professional guidance ensures meaningful engagement, not just
-                  another outing.
+                  Coordinate team activities and group sessions around the event
+                  schedule, location and participant profile.
                 </div>
               </div>
             </div>
@@ -555,11 +588,12 @@ function CorporateOffsitesPage() {
             <div className="offsiteFaqFormWrap">
               <h3 className="offsiteFaqFormTitle">Ask a different question</h3>
 
-              <form className="offsiteFaqForm" onSubmit={handleFaqSubmit}>
+              <form className="offsiteFaqForm" onSubmit={handleFaqSubmit} aria-busy={isFaqSubmitting}>
                 <label className="offsiteFaqField">
                   <span>Name</span>
                   <input
                     type="text"
+                    autoComplete="name"
                     value={faqForm.name}
                     onChange={handleFaqFormChange("name")}
                     required
@@ -570,8 +604,21 @@ function CorporateOffsitesPage() {
                   <span>Email Address</span>
                   <input
                     type="email"
+                    autoComplete="email"
                     value={faqForm.email}
                     onChange={handleFaqFormChange("email")}
+                    required
+                  />
+                </label>
+
+                <label className="offsiteFaqField">
+                  <span>Phone Number</span>
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={faqForm.phone}
+                    onChange={handleFaqFormChange("phone")}
                     required
                   />
                 </label>
@@ -586,8 +633,8 @@ function CorporateOffsitesPage() {
                   />
                 </label>
 
-                <button type="submit" className="offsiteFaqSubmit">
-                  Submit
+                <button type="submit" className="offsiteFaqSubmit" disabled={isFaqSubmitting}>
+                  {isFaqSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

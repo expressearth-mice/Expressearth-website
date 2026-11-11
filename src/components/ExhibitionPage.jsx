@@ -1,119 +1,129 @@
 import React from "react";
-import "./ExhibitionPage.css";
+import { Link } from "react-router-dom";
 import { FaMapMarkedAlt, FaPaintBrush, FaGlobe, FaRocket } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import HorizontalSlider from "./ui/HorizontalSlider";
+import ServiceStructuredData from "./ServiceStructuredData";
+import "./ExhibitionPage.css";
+
+const serviceDescription =
+  "ExpressEarth supports corporate exhibition and trade show participation in India and international destinations. Depending on the brief, coordination can include booth planning and fabrication requirements, venue and organiser liaison, registration and documentation, travel, material logistics and on-site support.";
+
+const exhibitionServices = [
+  {
+    icon: <FaMapMarkedAlt className="card-icon" />,
+    title: "Exhibition Participation Planning",
+    description:
+      "Coordinate event research, participation requirements, organiser communication, registration timelines and exhibitor documentation.",
+  },
+  {
+    icon: <FaPaintBrush className="card-icon" />,
+    title: "Booth Design and Fabrication Coordination",
+    description:
+      "Plan booth layouts, design briefs, branding, fabrication requirements, technical services and supplier coordination.",
+  },
+  {
+    icon: <MdEventNote className="card-icon" />,
+    title: "Product Showcases",
+    description:
+      "Coordinate product presentation areas, launch schedules, visitor flow, AV requirements and supporting event logistics.",
+  },
+  {
+    icon: <FaGlobe className="card-icon" />,
+    title: "Trade Fair and Exhibitor Logistics",
+    description:
+      "Plan travel, accommodation, material movement, venue access and local arrangements for exhibition teams.",
+  },
+  {
+    icon: <FaRocket className="card-icon" />,
+    title: "On-site Exhibition Support",
+    description:
+      "Agree supplier responsibilities, installation schedules, event-day contacts and support requirements before the exhibition.",
+  },
+];
 
 const ExhibitionPage = () => {
   return (
     <div className="exhibition-page">
-      
-      {/* Hero Section */}
+      <ServiceStructuredData
+        name="Exhibition and Trade Show Management"
+        serviceType="Corporate exhibition participation, booth planning and trade show logistics"
+        description={serviceDescription}
+        url="https://www.expressearth.com/exhibitions-and-trade-shows"
+      />
+
       <section className="exhibition-hero-section">
         <div className="hero-overlay">
-          <h1>Exhibitions & Trade Shows</h1>
-          <p>Global Participation & Bespoke Booth Management</p>
+          <h1>Exhibition &amp; Trade Show Management in Delhi NCR &amp; India</h1>
+          <p>Exhibition participation | Booth planning | Trade fair logistics</p>
         </div>
       </section>
 
-      {/* Intro Section */}
       <section className="intro-section container">
-        <h2>Make Your Brand the Center of Attention</h2>
-        <p>
-        At ExpressEarth, we take your brand to the global stage — seamlessly. Our exhibition and trade show solutions are designed to position your business at the forefront of your industry. From conceptual booth design to end-to-end logistics, we deliver striking, results-driven presentations that stand out and make connections happen.
-        </p>
+        <h2>Plan Your Next Exhibition or Trade Show</h2>
+        <p>{serviceDescription}</p>
         <p className="italic-text">
-          Where your brand takes the spotlight — with zero stress.
+          Share the exhibition name, location, dates, booth requirements and
+          expected team size to discuss the planning scope.
         </p>
-        <a href="/contact" className="cta-button">Request a Free Exhibition Consultation</a>
+        <Link to="/contact" className="cta-button">
+          Discuss Your Exhibition Brief
+        </Link>
       </section>
 
-      {/* Expertise Section */}
       <section className="expertise-section container">
-        <h2>Our Exhibition & Trade Show Expertise</h2>
+        <h2>Exhibition and Trade Show Services</h2>
         <p>
-        As one of India’s leading trade fair organizers and a global MICE force, we help companies navigate complex exhibition landscapes with elegance and ease.
+          The delivery plan is built around the organiser's requirements, the
+          exhibitor manual, booth specifications, travel needs and the
+          responsibilities agreed with your team.
         </p>
 
-        <HorizontalSlider className="expertise-cards" itemCount={6}>
-
-          <div className="exhibition-card">
-            <FaMapMarkedAlt className="card-icon" />
-            <h3>Expo Planning Services</h3>
-            <p>
-            Leave the complexities to us. Our all-inclusive expo planning services handle everything from registration and documentation to coordination with international organizers.            </p>
-            <a href="/contact" className="cta-link">Simplify the Process → Book Your Planning Session</a>
-          </div>
-
-          <div className="exhibition-card">
-            <FaPaintBrush className="card-icon" />
-            <h3>Booth Fabrication Services</h3>
-            <p>
-            Your booth is your brand’s physical presence. We provide high-end, customized booth fabrication services, blending aesthetics, functionality, and brand messaging seamlessly.
-            </p>
-            <a href="/contact" className="cta-link">Design That Delivers → Get a 3D Concept Today</a>
-          </div>
-
-          <div className="exhibition-card">
-            <MdEventNote className="card-icon" />
-            <h3>Product Showcase Event Planners            </h3>
-            <p>
-            Planning to unveil your latest innovation? As expert product showcase event planners, we create experiences that attract attention, tell your product story, and drive engagement.
-            </p>
-            <a href="/contact" className="cta-link"> Launch Your Product Right →Schedule a Showcase Strategy</a>
-          </div>
-
-          <div className="exhibition-card">
-            <FaGlobe className="card-icon" />
-            <h3>Trade Fair Organizers in India & Beyond            </h3>
-            <p>
-            From Auto Expo in Delhi to Beautyworld in Dubai, our seasoned team of trade fair organizers in India helps you exhibit confidently at major global expos.
-            </p>
-            <a href="/contact" className="cta-link"> Go Global with Confidence → Explore Upcoming International Expos</a>
-          </div>
-
-          <div className="exhibition-card">
-            <FaRocket className="card-icon" />
-            <h3> Industry Exhibition Planning Services</h3>
-            <p>
-            We take a 360° approach — strategy, creative, logistics, staffing, branding, lead tracking, making your participation smooth and successful with our full-scale industry exhibition planning services.
-            </p>
-            <a href="/contact" className="cta-link"> Maximize ROI → Let’s Build Your Trade Show Strategy</a>
-          </div>
-
-          <div className="exhibition-card">
-            <FaRocket className="card-icon" />
-            <h3> End-to-End Coordination & Support            </h3>
-            <p>
-            From the initial planning stages to on-ground execution, our team provides seamless coordination every step of the way, so you can focus on showcasing your brand while we handle the rest.
-            </p>
-            <a href="/contact" className="cta-link"> Stress-Free Execution → Talk to Our Event Support Team</a>
-          </div>
-
+        <HorizontalSlider className="expertise-cards" itemCount={exhibitionServices.length}>
+          {exhibitionServices.map((service) => (
+            <div className="exhibition-card" key={service.title}>
+              {service.icon}
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <Link to="/contact" className="cta-link">
+                Discuss This Requirement
+              </Link>
+            </div>
+          ))}
         </HorizontalSlider>
       </section>
 
-      {/* Why Choose Us Section */}
       <section className="why-choose-section container">
-        <h2>Why Brands Choose ExpressEarth</h2>
+        <h2>Planning Checklist</h2>
         <ul>
-          <li><strong>Global Reach, Local Expertise:</strong>  We manage exhibitions across continents, with cultural fluency and logistical expertise.</li>
-          <li><strong>Custom-Built Booths & Brand Storytelling:</strong>Stand out in the crowd with booths designed to engage and convert.</li>
-          <li><strong>End-to-End Participation Management:</strong>From flight bookings to on-ground staffing, everything is handled in-house.</li>
-          <li><strong>Lead-Driven Strategy:</strong>Beyond visuals, we focus on footfall, interest, and high-value connections.</li>
+          <li>Confirm exhibition dates, venue, organiser deadlines and participation format.</li>
+          <li>Review booth size, design brief, branding, utilities and technical requirements.</li>
+          <li>Agree fabrication, shipping, installation, dismantling and supplier responsibilities.</li>
+          <li>Plan exhibitor travel, accommodation, staffing and on-site contact arrangements.</li>
         </ul>
-        <a href="/contact" className="cta-button"> Let’s Take Your Brand Global → Connect with Exhibition Experts</a>
+        <Link to="/contact" className="cta-button">
+          Share Your Trade Show Brief
+        </Link>
       </section>
 
-      {/* Final CTA Section */}
       <section className="final-cta-section container">
-        <h2> Let’s Elevate Your Next Showcase</h2>
+        <h2>Related Corporate Event Services</h2>
         <p>
-        Whether you're a first-time exhibitor or a seasoned player going global — trust ExpressEarth to make your trade show presence impactful, effortless, and unforgettable.
+          Exhibition participation can also sit alongside product launches,
+          conferences and corporate events.
         </p>
-        <a href="/contact" className="cta-button">Speak to Our Exhibition Specialists Today</a>
+        <div className="d-flex flex-wrap gap-3">
+          <Link to="/corporate-events" className="cta-link">
+            Corporate event management
+          </Link>
+          <Link to="/meetings-and-conferences" className="cta-link">
+            Meetings and conferences
+          </Link>
+          <Link to="/mice-services" className="cta-link">
+            All MICE services
+          </Link>
+        </div>
       </section>
-
     </div>
   );
 };
